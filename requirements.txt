@@ -1,0 +1,15 @@
+# Core dependencies
+flask
+psutil
+
+# LED Service dependencies
+tinytuya
+sounddevice
+numpy
+
+# Raspberry Pi hardware dependencies (optional)
+adafruit-circuitpython-veml7700
+adafruit-blinka
+
+# Radio service dependencies (if any specific libraries are needed)
+# Add any radio-specific libraries here

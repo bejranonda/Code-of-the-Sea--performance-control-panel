@@ -1,0 +1,27 @@
+{
+  "LED Service": {
+    "mode": "Manual LED",
+    "brightness": 0,
+    "status_file": "led/led_status.json"
+  },
+  "Radio Service": {
+    "mode": "Fixed",
+    "frequency": 95.5,
+    "direction": "Up",
+    "status_file": "radio/radio_status.json"
+  },
+  "Fan Service": {
+    "mode": "Random",
+    "speed": 13,
+    "status_file": "fan/fan_status.json"
+  },
+  "_metadata": {
+    "last_updated": "2025-09-08T22:33:13.115682",
+    "version": "1.0"
+  },
+  "Broadcast Service": {
+    "mode": "Loop",
+    "volume": 33,
+    "status_file": "broadcast/broadcast_status.json"
+  }
+}

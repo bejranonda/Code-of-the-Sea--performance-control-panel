@@ -1,0 +1,22 @@
+{
+  "LED Service": {
+    "mode": "Manual LED",
+    "brightness": 4
+  },
+  "Radio Service": {
+    "mode": "Search",
+    "frequency": 96.7,
+    "direction": "Up"
+  },
+  "Fan Service": {
+    "mode": "Fixed",
+    "speed": 50
+  },
+  "Broadcast Service": {
+    "mode": "Loop",
+    "volume": 50
+  },
+  "Light Sensor Service": {
+    "mode": "Auto"
+  }
+}

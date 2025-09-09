@@ -1,0 +1,226 @@
+import subprocess
+import os
+import signal
+import json
+import time
+import psutil
+import traceback
+from datetime import datetime
+from typing import Dict, Any, Optional
+
+
+class ServiceManager:
+    """Unified service management for all Raspberry Pi services"""
+    
+    def __init__(self, log_file: str = "service_manager.log"):
+        self.processes: Dict[str, subprocess.Popen] = {}
+        self.log_file = log_file
+        
+    def log_event(self, message: str, level: str = "INFO"):
+        """Log events with timestamp"""
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        try:
+            with open(self.log_file, "a") as f:
+                f.write(f"[{timestamp}] {level}: {message}\n")
+        except Exception as e:
+            print(f"Failed to write to log file: {e}")
+    
+    def log_error(self, message: str, exception: Exception = None):
+        """Log errors with traceback"""
+        if exception:
+            tb = traceback.format_exc()
+            self.log_event(f"{message}\nException: {str(exception)}\nTraceback:\n{tb}", "ERROR")
+        else:
+            self.log_event(message, "ERROR")
+    
+    def cleanup_processes(self):
+        """Remove dead processes from tracking"""
+        dead = []
+        for name, proc in self.processes.items():
+            try:
+                # Check if process exists and is not zombie
+                if not psutil.pid_exists(proc.pid):
+                    dead.append(name)
+                else:
+                    # Check if process is zombie
+                    try:
+                        p = psutil.Process(proc.pid)
+                        if p.status() == psutil.STATUS_ZOMBIE:
+                            dead.append(name)
+                            self.log_event(f"Found zombie process for {name}")
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        dead.append(name)
+            except Exception as e:
+                self.log_error(f"Error checking process status for {name}", e)
+                dead.append(name)
+        
+        for name in dead:
+            self.processes.pop(name, None)
+            self.log_event(f"Removed dead/zombie process: {name}")
+    
+    def start_service(self, name: str, script_path: str, working_dir: str = None) -> bool:
+        """Start a service with comprehensive error handling"""
+        try:
+            self.cleanup_processes()
+            
+            # Stop any existing instance of this service before starting
+            if name in self.processes and psutil.pid_exists(self.processes[name].pid):
+                self.log_event(f"Stopping existing instance of {name} before starting new one")
+                self.stop_service(name)
+                # Give some time for the service to stop cleanly
+                time.sleep(1)
+            
+            # Set working directory
+            if not working_dir:
+                working_dir = os.path.dirname(script_path) or "."
+            
+            self.log_event(f"Script path: {script_path}, Working dir: {working_dir}, Full path: {os.path.abspath(working_dir)}")
+            
+            # Check if virtual environment should be used
+            venv_python = self._get_venv_python()
+            
+            # Use absolute path for script to avoid path resolution issues
+            abs_script_path = os.path.abspath(script_path)
+            
+            if venv_python:
+                cmd = [venv_python, abs_script_path]
+                self.log_event(f"Using virtual environment: {venv_python}")
+            else:
+                cmd = ["python3", abs_script_path]
+            
+            # All services redirect stdout/stderr to null to avoid broken pipe errors
+            proc = subprocess.Popen(
+                cmd,
+                preexec_fn=os.setsid,
+                cwd=working_dir,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                stdin=subprocess.DEVNULL
+            )
+            
+            self.processes[name] = proc
+            self.log_event(f"Started service: {name} (PID: {proc.pid})")
+            
+            # For LED service debugging, capture initial output
+            if name == "LED Service" and hasattr(proc, 'stdout') and proc.stdout is not None:
+                import threading
+                
+                def capture_output():
+                    time.sleep(0.5)  # Give process time to start
+                    try:
+                        if proc.poll() is None:  # Process still running
+                            output = proc.stdout.read(1000)  # Read first 1000 chars
+                            if output:
+                                self.log_event(f"LED Service initial output: {output[:500]}")
+                        else:
+                            # Process already exited
+                            returncode = proc.poll()
+                            self.log_event(f"LED Service exited immediately with code: {returncode}")
+                    except Exception as e:
+                        self.log_error(f"Error capturing LED service output", e)
+                
+                thread = threading.Thread(target=capture_output, daemon=True)
+                thread.start()
+            
+            return True
+            
+        except Exception as e:
+            self.log_error(f"Error starting service {name}", e)
+            return False
+    
+    def _get_venv_python(self) -> str:
+        """Find virtual environment Python executable"""
+        # Check common venv locations
+        venv_paths = [
+            "venv/bin/python",
+            "venv/bin/python3",
+            "../venv/bin/python", 
+            "../venv/bin/python3",
+            "/home/payas/venv/bin/python",
+            "/home/payas/venv/bin/python3",
+            "env/bin/python",
+            "env/bin/python3"
+        ]
+        
+        for venv_path in venv_paths:
+            full_path = os.path.abspath(venv_path)
+            if os.path.exists(full_path) and os.access(full_path, os.X_OK):
+                return full_path
+        
+        return None
+    
+    def stop_service(self, name: str) -> bool:
+        """Stop a service with comprehensive error handling"""
+        try:
+            if name not in self.processes:
+                self.log_event(f"Service {name} not running")
+                return True
+            
+            proc = self.processes[name]
+            try:
+                # Graceful shutdown
+                os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
+                self.log_event(f"Stopped service: {name}")
+                
+                # Wait for graceful shutdown
+                time.sleep(0.5)
+                
+                # Force kill if still running
+                if psutil.pid_exists(proc.pid):
+                    os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+                    self.log_event(f"Force killed service: {name}")
+                    
+            except ProcessLookupError:
+                self.log_event(f"Process for {name} already terminated")
+            except Exception as e:
+                self.log_error(f"Error stopping service {name}", e)
+            
+            self.processes.pop(name, None)
+            return True
+            
+        except Exception as e:
+            self.log_error(f"Unexpected error stopping service {name}", e)
+            return False
+    
+    def is_service_running(self, name: str) -> bool:
+        """Check if a service is currently running"""
+        if name not in self.processes:
+            return False
+        try:
+            if not psutil.pid_exists(self.processes[name].pid):
+                return False
+            # Check if process is not zombie
+            p = psutil.Process(self.processes[name].pid)
+            return p.status() != psutil.STATUS_ZOMBIE
+        except (psutil.NoSuchProcess, psutil.AccessDenied, Exception):
+            return False
+    
+    def get_service_pid(self, name: str) -> Optional[int]:
+        """Get PID of running service"""
+        if name in self.processes and self.is_service_running(name):
+            return self.processes[name].pid
+        return None
+    
+    def get_all_services_status(self) -> Dict[str, Dict[str, Any]]:
+        """Get status of all tracked services"""
+        self.cleanup_processes()
+        status = {}
+        
+        for name, proc in self.processes.items():
+            try:
+                is_running = psutil.pid_exists(proc.pid)
+                status[name] = {
+                    'running': is_running,
+                    'pid': proc.pid if is_running else None,
+                    'started': getattr(proc, 'start_time', None)
+                }
+            except Exception as e:
+                self.log_error(f"Error getting status for {name}", e)
+                status[name] = {'running': False, 'pid': None, 'error': str(e)}
+        
+        return status
+    
+    def stop_all_services(self):
+        """Stop all running services"""
+        for service_name in list(self.processes.keys()):
+            self.stop_service(service_name)
