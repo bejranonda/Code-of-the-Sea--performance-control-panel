@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs and runtime files
+*.log
+*.tmp
+*.pid
+*.lock
+*.cache
+
+# OS files
+.DS_Store
+Thumbs.db
+*.bak
+
+# Project specific
+unified_app.log
+broadcast_log.txt
+control_signal.txt
+/media_samples/
+broadcast/media/*.mp3
+broadcast/media/*.wav
+broadcast/media/*.ogg
+
+# Status files (generated at runtime)
+*_status.json
+
+# Service files (user specific)
+cos-control-panel.service
+
+# Local configuration overrides
+*_local.json
+*_private.json

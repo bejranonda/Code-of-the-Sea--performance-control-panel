@@ -1,0 +1,12 @@
+[2025-09-05 11:57:30] INFO: Fan speed set to 50.0%
+[2025-09-05 11:57:30] INFO: Configuration changed: {'mode': 'Fixed', 'speed': 50}
+[2025-09-05 11:57:30] INFO: GPIO 18 configured for PWM at 25000 Hz
+[2025-09-05 11:57:30] INFO: Fan service starting
+[2025-09-05 09:49:59] INFO: Fan speed set to 50.0%
+[2025-09-05 09:49:59] INFO: Configuration changed: {'mode': 'Fixed', 'speed': 50}
+[2025-09-05 09:49:59] INFO: GPIO 18 configured for PWM at 25000 Hz
+[2025-09-05 09:49:59] INFO: Fan service starting
+[2025-09-05 09:49:07] INFO: Fan speed set to 50.0%
+[2025-09-05 09:49:07] INFO: Configuration changed: {'mode': 'Fixed', 'speed': 50}
+[2025-09-05 09:49:07] INFO: GPIO 18 configured for PWM at 25000 Hz
+[2025-09-05 09:49:07] INFO: Fan service starting
