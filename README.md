@@ -1,6 +1,9 @@
 # Code of the Sea
 ## Raspberry Pi Control Panel for Interactive Art Installation
 
+<img width="1439" height="485" alt="Code of the Sea - Control Panel" src="https://github.com/user-attachments/assets/fc4e5a73-d628-48de-a57d-d57067611a71" />
+
+
 **An art project collaboration between:**
 - **Werapol Bejranonda** (Engineer) 
 - **Eunji Lee** (Artist)
