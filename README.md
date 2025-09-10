@@ -86,6 +86,88 @@ Code of the Sea Control Panel
     └── Status displays
 ```
 
+## 🔌 Hardware Connections
+
+### **Raspberry Pi GPIO Pinout**
+
+The Code of the Sea system uses the following hardware components connected to specific GPIO pins:
+
+```
+┌─────────────────────────────────────┐
+│           Raspberry Pi 4            │
+│  ┌─────┬──────────┬──────────┬─────┐│
+│  │ 3V3 │    1   2 │    5V    │     ││  
+│  │ SDA │    3   4 │    5V    │     ││  ← I2C Data (GPIO2)
+│  │ SCL │    5   6 │    GND   │     ││  ← I2C Clock (GPIO3)
+│  │     │    7   8 │          │     ││
+│  │ GND │    9  10 │          │     ││
+│  │     │   11  12 │  GPIO18  │ PWM ││  ← Fan Control
+│  │     │   13  14 │    GND   │     ││
+│  │     │   15  16 │          │     ││
+│  │ 3V3 │   17  18 │          │     ││
+│  │     │   19  20 │    GND   │     ││
+│  └─────┴──────────┴──────────┴─────┘│
+└─────────────────────────────────────┘
+```
+
+### **Connected Devices**
+
+#### **🌈 VEML7700 Light Sensor** (LED Service)
+```
+Raspberry Pi  →  VEML7700
+Pin 1  (3V3)  →  VIN
+Pin 6  (GND)  →  GND  
+Pin 3  (SDA)  →  SDA (I2C Data)
+Pin 5  (SCL)  →  SCL (I2C Clock)
+```
+- **Purpose**: Ambient light sensing for automatic LED brightness control
+- **Interface**: I2C Bus 1
+- **Used by**: LED lighting service for responsive brightness adjustment
+
+#### **📻 TEA5767 FM Radio Module**
+```
+Module: TEA5767 FM Radio Tuner
+I2C Bus: 1
+I2C Address: 0x60
+Connection: Via I2C (GPIO2/GPIO3)
+```
+- **Purpose**: FM radio reception and tuning
+- **Interface**: I2C communication
+- **Used by**: Radio service for FM broadcast reception
+
+#### **🌀 Fan Control System**
+```
+Module: Seeed Grove MOSFET (CJQ4435)
+Control Pin: GPIO18 (PWM)
+PWM Frequency: 10 Hz
+```
+- **Purpose**: System cooling and ventilation
+- **Control**: PWM-based speed control
+- **Algorithm**: Located in `fan_mic_option.py`
+- **Temperature Sensor**: None (algorithmic control only)
+
+#### **🎵 Audio Output**
+```
+Audio Interface: 3.5mm jack / HDMI / USB
+Player: mpg123
+Media Directory: broadcast/media/
+Supported Formats: MP3, WAV, OGG
+```
+- **Purpose**: Audio broadcast for art installation
+- **Control**: Web-based playback controls (play, pause, next, previous)
+- **Exhibition Ready**: Reliable track navigation without service interruptions
+
+### **I2C Device Summary**
+| Device | Address | Purpose | GPIO Pins |
+|--------|---------|---------|-----------|
+| VEML7700 | 0x10 | Light sensor | SDA(2), SCL(3) |
+| TEA5767 | 0x60 | FM radio | SDA(2), SCL(3) |
+
+### **PWM Output Summary**
+| Device | Pin | Frequency | Purpose |
+|--------|-----|-----------|---------|
+| Fan MOSFET | GPIO18 | 10 Hz | Cooling control |
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -191,19 +273,45 @@ code-of-the-sea/
 
 ## 🔧 Configuration
 
-### Main Configuration
+### Device Configuration (Secure Setup)
+
+**🔐 Important**: Device credentials are stored separately from code for security.
+
+1. **Copy Configuration Template**
+   ```bash
+   cp config/devices.example.json config/devices.json
+   ```
+
+2. **Update Device Credentials**
+   Edit `config/devices.json` with your actual device information:
+   ```json
+   {
+     "led": {
+       "tuya_controller": {
+         "device_id": "your_device_id_from_tinytuya_wizard",
+         "device_ip": "192.168.1.XXX",
+         "device_key": "your_device_key_from_tinytuya_wizard"
+       }
+     },
+     "fan": {
+       "grove_mosfet": {
+         "fan_pwm_pin": 18,
+         "pwm_frequency": 10
+       }
+     }
+   }
+   ```
+
+3. **Security Note**: The `config/devices.json` file is automatically excluded from git commits to protect your credentials.
+
+### Main Application Configuration
 Edit `unified_config.json` for global settings:
 
 ```json
 {
     "mode": "dashboard",
     "debug": false,
-    "auto_start_services": ["broadcast", "led"],
-    "hardware": {
-        "audio_output": "auto",
-        "led_pin": 18,
-        "fan_pin": 12
-    }
+    "auto_start_services": ["broadcast", "led"]
 }
 ```
 

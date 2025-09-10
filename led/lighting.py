@@ -7,11 +7,20 @@ import numpy as np
 import collections
 import asyncio # Import asyncio
 
-# --- Tuya Device Configuration (REPLACE THESE WITH YOUR DEVICE'S INFO) ---
-# These values are confirmed by your working test_led.py script and tinytuya wizard output.
-DEVICE_ID = "bf549c1fed6b2bbd43l1ow"
-DEVICE_IP = "192.168.178.42"  # Your device's current IP address
-DEVICE_KEY = "73b0K93QaO&EI=dB" # Your device's current local key
+# --- Tuya Device Configuration (LOADED FROM CONFIG FILE) ---
+# Device credentials are loaded from config/devices.json for security
+from core.device_config import get_device_config
+
+try:
+    config = get_device_config()
+    DEVICE_ID, DEVICE_IP, DEVICE_KEY, PROTOCOL_VERSION = config.get_tuya_credentials()
+except Exception as e:
+    print(f"Error loading device config: {e}")
+    # Fallback for testing - remove in production
+    DEVICE_ID = "your_device_id_here"
+    DEVICE_IP = "192.168.1.100" 
+    DEVICE_KEY = "your_device_key_here"
+    PROTOCOL_VERSION = "3.5"
 
 # --- Tuya Data Point (DP) IDs (CONFIRMED from your wizard output!) ---
 # These DPs are now verified to be correct for your device.
