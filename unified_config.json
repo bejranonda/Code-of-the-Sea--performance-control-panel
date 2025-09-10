@@ -1,7 +1,7 @@
 {
   "LED Service": {
-    "mode": "Manual LED",
-    "brightness": 0,
+    "mode": "Musical LED",
+    "brightness": 85,
     "status_file": "led/led_status.json"
   },
   "Radio Service": {
@@ -16,7 +16,7 @@
     "status_file": "fan/fan_status.json"
   },
   "_metadata": {
-    "last_updated": "2025-09-08T22:33:13.115682",
+    "last_updated": "2025-09-09T23:14:20.101641",
     "version": "1.0"
   },
   "Broadcast Service": {
