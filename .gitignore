@@ -64,6 +64,13 @@ broadcast/media/*.ogg
 # Service files (user specific)
 cos-control-panel.service
 
+# Device configurations (SENSITIVE - contains credentials)
+config/devices.json
+config/devices.local.json
+config/*_credentials.json
+snapshot.json
+devices.json
+
 # Local configuration overrides
 *_local.json
 *_private.json
