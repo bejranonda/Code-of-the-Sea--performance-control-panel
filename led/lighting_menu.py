@@ -63,8 +63,8 @@ STATUS_FILE = os.path.join(os.path.dirname(__file__), "led_status.json")
 
 # --- Tuya Device Configuration ---
 DEVICE_ID = "bf549c1fed6b2bbd43l1ow"
-DEVICE_IP = "192.168.178.42"
-DEVICE_KEY = "73b0K93QaO&EI=dB"
+DEVICE_IP = "192.168.0.80"
+DEVICE_KEY = "[L7c*$TBS:_XxPr6"
 
 # --- Tuya Data Point IDs ---
 DP_ID_POWER = 20
