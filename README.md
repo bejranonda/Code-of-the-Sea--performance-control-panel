@@ -18,72 +18,178 @@ This technical implementation serves as the backbone for immersive art installat
 
 ## ✨ Features
 
-### 🎵 **Broadcast System**
+### 🎵 **Broadcast Service**
 - **Audio Playback Control**: Play, pause, stop, next/previous track navigation
-- **Multi-format Support**: MP3, WAV, OGG audio files
-- **Web Interface**: Browser-based control panel for easy operation
-- **Exhibition Ready**: Reliable track navigation without service interruptions
-- **Auto-loop Capability**: Seamless audio experiences for installations
+- **Multi-format Support**: MP3, WAV, OGG, M4A, FLAC audio files
+- **Playlist Management**: Dynamic file upload, deletion, and organization
+- **Web Audio Player**: Browser-based audio preview for current tracks
+- **Loop & Random Modes**: Automatic playback modes for exhibitions
+- **Volume Control**: Adjustable audio output levels (0-100%)
+- **Real-time Status**: Current track, playlist position, playback state
 
-### 💡 **LED Lighting Control**
-- **Dynamic Lighting**: Programmable LED strip control
-- **Color Patterns**: Custom lighting sequences and effects
-- **Real-time Control**: Immediate response to user interactions
-- **Installation Integration**: Synchronized with other system components
+### 🎙️ **Mixing Service**
+- **Real-time Audio Mixing**: Live microphone recording mixed with master audio tracks
+- **Configurable Recording Duration**: 10-300 second recording segments
+- **Dual Volume Control**: Independent master audio and microphone volume (0-100%)
+- **Auto/Manual Modes**: Continuous auto-mixing or single manual sessions
+- **Position-based Mixing**: Sequential audio segments from different master track positions
+- **Output Generation**: Mixed audio files saved as timestamped MP3s
+- **Status Monitoring**: Real-time recording/mixing status and file counts
 
-### 📻 **FM Radio Integration**
-- **Radio Control**: FM radio tuning and playback
-- **Station Management**: Save and recall favorite stations
-- **Audio Routing**: Integration with main audio system
+### 💡 **LED Service**
+- **Smart Lighting Control**: VEML7700 light sensor integration with configurable lux ranges
+- **Multiple Modes**: Musical LED (audio-reactive), Lux sensor (ambient), Manual LED (direct control)
+- **Brightness Control**: Adjustable intensity levels (0-100%) with real-time lux level display
+- **Auto-brightness**: Responds to ambient light conditions with configurable min/max lux thresholds
+- **Real-time Control**: Immediate response to user interactions and environmental changes
+- **Power Management**: On/off control with status monitoring and current light level feedback
 
-### 🌡️ **Environmental Monitoring**
-- **Hardware Monitoring**: CPU temperature, memory usage
-- **System Health**: Real-time system status monitoring
-- **Fan Control**: Automated cooling system management
+### 📻 **Radio Service**
+- **FM Radio Control**: TEA5767 module integration for stable radio reception
+- **Station Scanning**: Full FM band scan (87-108 MHz) with intelligent signal strength detection
+- **Manual Tuning**: Precise frequency control with 0.1 MHz steps and passive frequency stability
+- **Station Memory**: Found stations list with signal quality indicators and stereo detection
+- **Stable Audio**: Passive frequency mode prevents I2C interference for continuous clear audio
+- **Mode Switching**: Fixed frequency (passive) or scan modes with automatic station selection
+- **Smart Detection**: Minimum RSSI threshold filtering and stereo preference for optimal stations
+
+### 🌀 **Fan Service**
+- **Cooling Management**: PWM-controlled fan speed regulation with 5V Grove MOSFET
+- **Multiple Modes**:
+  - **Fixed**: Constant speed (0-100%)
+  - **Cycle**: Sine wave pattern (0→100%→0%) over 2-minute periods
+  - **Random**: Random speed changes every 20 seconds
+  - **Lux Sensor**: Light-reactive speed control (more light = lower speed) with configurable lux ranges
+- **Smart Lux Integration**: VEML7700 sensor with configurable min/max lux values for speed mapping
+- **Speed Control**: Variable fan speed (0-100%) with real-time feedback and current lux display
+- **Temperature Monitoring**: System temperature awareness for cooling decisions
+- **GPIO Integration**: Hardware PWM control via GPIO18 (requires 5V power supply)
+
+### 🌱 **Light Sensor Service**
+- **Ambient Light Detection**: VEML7700 high-accuracy light sensor
+- **Auto Mode**: Automatic brightness adjustment based on environmental conditions
+- **I2C Integration**: Hardware communication via GPIO2/GPIO3
+- **Real-time Monitoring**: Continuous light level feedback
 
 ### 🖥️ **Unified Web Interface**
-- **Dashboard Mode**: Comprehensive control panel
-- **Simple Mode**: Streamlined interface for basic operations  
-- **Enhanced Mode**: Advanced controls for technical users
-- **Mobile Responsive**: Works on tablets and smartphones
+- **Comprehensive Dashboard**: Single-page control for all services
+- **Real-time Status**: Live service health monitoring and updates
+- **Service Management**: Start, stop, and restart individual services
+- **Configuration Management**: Persistent settings for all modules
+- **Hardware Monitoring**: CPU, memory, temperature, and uptime tracking
+- **Mobile Responsive**: Optimized for tablets and smartphones
+- **Exhibition Monitor**: Dedicated monitoring interface for installations
+
+## 💡 Recommended Lux Configuration
+
+The VEML7700 light sensor enables intelligent control of both LED brightness and fan speed based on ambient light levels. The following configurations provide optimal performance for different environments:
+
+### **LED Service - Lux-to-Brightness Mapping**
+
+**Default Configuration:**
+- **Min Lux (100% brightness)**: 20 lux
+- **Max Lux (0% brightness)**: 1500 lux
+
+**Recommended Settings by Environment:**
+
+| Environment | Min Lux | Max Lux | Description |
+|-------------|---------|---------|-------------|
+| **Indoor Office** | 20 lux | 800 lux | Typical office lighting (200-500 lux) |
+| **Home Interior** | 10 lux | 400 lux | Living rooms, bedrooms (50-200 lux) |
+| **Art Gallery** | 50 lux | 1000 lux | Museum lighting (150-300 lux) |
+| **Outdoor Display** | 100 lux | 5000 lux | Variable daylight conditions |
+| **Stage/Performance** | 5 lux | 2000 lux | Dramatic lighting changes |
+
+**Typical Lux Values for Reference:**
+- 0.1 lux: Moonlight
+- 1 lux: Candle at 1 meter
+- 10-50 lux: Dimly lit room
+- 100-300 lux: Well-lit indoor space
+- 500-1000 lux: Bright office lighting
+- 1000-5000 lux: Cloudy day outdoors
+- 10000+ lux: Direct sunlight
+
+### **Fan Service - Lux-to-Speed Mapping**
+
+**Default Configuration:**
+- **Min Lux (100% speed)**: 1 lux
+- **Max Lux (0% speed)**: 1000 lux
+
+**Recommended Settings by Use Case:**
+
+| Use Case | Min Lux | Max Lux | Description |
+|----------|---------|---------|-------------|
+| **Energy Efficient** | 10 lux | 500 lux | Moderate cooling in normal conditions |
+| **Performance Cooling** | 1 lux | 300 lux | Aggressive cooling for high-performance systems |
+| **Exhibition Space** | 50 lux | 800 lux | Quiet operation during bright gallery hours |
+| **Outdoor Installation** | 5 lux | 2000 lux | Full range for day/night cycles |
+| **Server Room** | 1 lux | 100 lux | Maximum cooling in low-light environments |
+
+**Configuration Tips:**
+1. **Min Lux**: Set to the darkest condition where maximum response is needed
+2. **Max Lux**: Set to the brightest condition where minimum response is acceptable
+3. **Range Selection**: Wider ranges provide more gradual transitions
+4. **Testing**: Monitor actual lux values in your environment using the dashboard
 
 ## 🏗️ System Architecture
 
 ```
 Code of the Sea Control Panel
 │
-├── 🎵 Broadcast Module (broadcast/)
-│   ├── Audio playback engine (mpg123 integration)
-│   ├── Playlist management
-│   ├── Media file scanning
-│   └── Web API endpoints
+├── 🎵 Broadcast Service (broadcast/)
+│   ├── broadcast_menu.py - Main controller and mpg123 integration
+│   ├── media/ - Audio file storage directory
+│   ├── Web player controls (play, pause, next, previous)
+│   ├── File management (upload, delete)
+│   └── Status: current_file, playing, playlist, volume
 │
-├── 💡 LED Module (led/)
-│   ├── Hardware control (GPIO/SPI)
-│   ├── Pattern generation
-│   ├── Color management
-│   └── Effect scheduling
+├── 🎙️ Mixing Service (mixing/)
+│   ├── mixing_menu.py - Audio recording and mixing engine
+│   ├── Real-time microphone recording (arecord)
+│   ├── FFmpeg audio processing and volume control
+│   ├── Position-based master audio segmentation
+│   ├── mixing_status.json - Real-time status tracking
+│   └── Output: timestamped mixed audio files
 │
-├── 📻 Radio Module (radio/)
-│   ├── FM radio control
-│   ├── Station presets
-│   └── Audio routing
+├── 💡 LED Service (led/)
+│   ├── lighting_menu.py - VEML7700 sensor integration with configurable lux ranges
+│   ├── led_config.json - Device configuration
+│   ├── led_status.json - Current state tracking with lux level
+│   ├── Modes: Musical LED, Lux sensor (ambient), Manual LED
+│   └── I2C hardware communication (GPIO2/GPIO3)
 │
-├── 🌡️ Hardware Module (fan/)
-│   ├── Temperature monitoring
-│   ├── Fan control
-│   └── System metrics
+├── 📻 Radio Service (radio/)
+│   ├── fm-radio_menu.py - TEA5767 radio module control with passive frequency stability
+│   ├── FM band scanning (87-108 MHz) with intelligent station detection
+│   ├── Signal strength monitoring with RSSI thresholds
+│   ├── Station memory and selection with stereo preference
+│   └── I2C communication (GPIO2/GPIO3) with interference prevention
 │
-├── 🔧 Core System (core/)
-│   ├── Configuration management
-│   ├── Service orchestration
-│   ├── Logging system
-│   └── Hardware abstraction
+├── 🌀 Fan Service (fan/)
+│   ├── fan_mic_menu.py - PWM fan control with VEML7700 integration
+│   ├── fan_status.json - Speed, mode tracking, and lux level
+│   ├── Modes: Fixed, Cycle, Random, Lux Sensor (configurable ranges)
+│   ├── GPIO18 PWM control (10Hz frequency)
+│   └── Temperature-based speed adjustment with real-time lux display
+│
+├── 🌱 Light Sensor Service (light_sensor/)
+│   ├── Ambient light monitoring (VEML7700)
+│   ├── Auto-brightness integration
+│   └── I2C sensor communication
+│
+├── 🔧 Core System
+│   ├── unified_app.py - Flask web server and routing
+│   ├── service_config.json - Global service configuration
+│   ├── Service health monitoring and management
+│   ├── Hardware status tracking (CPU, memory, temperature)
+│   └── Unified logging and error handling
 │
 └── 🌐 Web Interface (templates/)
-    ├── Dashboard UI
-    ├── Control interfaces
-    └── Status displays
+    ├── dashboard.html - Main control interface
+    ├── exhibition/dashboard.html - Exhibition monitoring
+    ├── Real-time service status updates
+    ├── Interactive sliders and controls
+    └── Mobile-responsive design
 ```
 
 ## 🔌 Hardware Connections
@@ -116,15 +222,17 @@ The Code of the Sea system uses the following hardware components connected to s
 ```
 Raspberry Pi  →  VEML7700
 Pin 1  (3V3)  →  VIN
-Pin 6  (GND)  →  GND  
+Pin 6  (GND)  →  GND
 Pin 3  (SDA)  →  SDA (I2C Data)
 Pin 5  (SCL)  →  SCL (I2C Clock)
 ```
 - **Purpose**: Ambient light sensing for automatic LED brightness control
-- **Interface**: I2C Bus 1
-- **Used by**: LED lighting service for responsive brightness adjustment
+- **Interface**: I2C Bus 1 (Address: 0x10)
+- **Used by**: LED Service for responsive brightness adjustment
+- **Modes**: Auto-brightness in Lighting LED mode
+- **Status Tracking**: Real-time light level monitoring
 
-#### **📻 TEA5767 FM Radio Module**
+#### **📻 TEA5767 FM Radio Module** (Radio Service)
 ```
 Module: TEA5767 FM Radio Tuner
 I2C Bus: 1
@@ -133,29 +241,53 @@ Connection: Via I2C (GPIO2/GPIO3)
 ```
 - **Purpose**: FM radio reception and tuning
 - **Interface**: I2C communication
-- **Used by**: Radio service for FM broadcast reception
+- **Used by**: Radio Service for FM broadcast reception
+- **Features**: Full band scanning, signal strength detection, stereo detection
+- **Range**: 87.0-108.0 MHz with 0.1 MHz precision
 
-#### **🌀 Fan Control System**
+#### **🌀 Fan Control System** (Fan Service)
 ```
 Module: Seeed Grove MOSFET (CJQ4435)
 Control Pin: GPIO18 (PWM)
 PWM Frequency: 10 Hz
+Control Range: 0-100% duty cycle
 ```
 - **Purpose**: System cooling and ventilation
-- **Control**: PWM-based speed control
-- **Algorithm**: Located in `fan_mic_option.py`
-- **Temperature Sensor**: None (algorithmic control only)
+- **Control**: PWM-based speed control via fan_mic_menu.py
+- **Modes**: Fixed speed, Cycle, Random patterns, Sound-reactive
+- **Temperature Integration**: CPU temperature monitoring for automatic speed adjustment
+- **Real-time Feedback**: Current and target speed monitoring
 
-#### **🎵 Audio Output**
+#### **🎵 Audio System** (Broadcast & Mixing Services)
 ```
-Audio Interface: 3.5mm jack / HDMI / USB
-Player: mpg123
-Media Directory: broadcast/media/
-Supported Formats: MP3, WAV, OGG
+Broadcast Audio:
+  Interface: 3.5mm jack / HDMI / USB
+  Player: mpg123
+  Media Directory: broadcast/media/
+  Supported Formats: MP3, WAV, OGG, M4A, FLAC
+
+Mixing Audio:
+  Input: USB microphone (arecord)
+  Processing: FFmpeg audio mixing
+  Output: Mixed MP3 files in mixing/
+  Recording Duration: 10-300 seconds (configurable)
 ```
-- **Purpose**: Audio broadcast for art installation
-- **Control**: Web-based playback controls (play, pause, next, previous)
-- **Exhibition Ready**: Reliable track navigation without service interruptions
+- **Broadcast Purpose**: Audio playback for art installations
+- **Mixing Purpose**: Real-time audio interaction and recording
+- **Control**: Web-based playback controls and volume adjustment
+- **Status**: Real-time playback state, file position, mixing progress
+
+#### **💾 USB Audio Device** (Mixing Service)
+```
+Device: USB microphone or audio interface
+Capture Tool: arecord (ALSA)
+Sample Rate: 44.1 kHz
+Format: WAV (converted to MP3)
+```
+- **Purpose**: Live audio capture for mixing with master tracks
+- **Integration**: Automatic device detection and configuration
+- **Processing**: Real-time volume control and audio mixing
+- **Output**: Synchronized mixed audio files with timestamps
 
 ### **I2C Device Summary**
 | Device | Address | Purpose | GPIO Pins |
@@ -204,72 +336,215 @@ Supported Formats: MP3, WAV, OGG
 ```
 code-of-the-sea/
 │
-├── README.md                    # This file
-├── setup.sh                    # Initial setup script
-├── install-service.sh           # System service installer
-├── run.py                      # Application launcher
-├── unified_app.py              # Main Flask application
-├── cos-control-panel.service   # Systemd service configuration
+├── README.md                    # This file - Complete system documentation
+├── setup.sh                    # Initial setup script (if exists)
+├── run.py                      # Application launcher - Service startup
+├── unified_app.py              # Main Flask web application
+├── service_config.json         # Global service configuration
+├── app_menu.py                 # Menu system integration
 │
 ├── broadcast/                  # Audio broadcast system
-│   ├── broadcast_menu.py       # Main broadcast controller
-│   ├── media/                  # Audio files directory
-│   └── README.md              # Broadcast system docs
+│   ├── broadcast_menu.py       # Main controller - mpg123 integration
+│   ├── broadcast_status.json   # Current playback status
+│   ├── media/                  # Audio files directory (MP3, WAV, OGG, etc.)
+│   └── playlist management and web controls
 │
-├── led/                       # LED lighting control
-│   ├── lighting_menu.py       # LED controller
-│   ├── lighting.py           # Hardware interface
-│   └── led_config.json       # LED configuration
+├── mixing/                     # Real-time audio mixing system
+│   ├── mixing_menu.py          # Audio recording and mixing engine
+│   ├── mixing_status.json      # Real-time recording/mixing status
+│   ├── mixing_log.txt          # Detailed operation logs
+│   ├── Microphone recording (arecord integration)
+│   ├── FFmpeg audio processing and volume control
+│   └── Output: mixed_audio_YYYYMMDD_HHMMSS.mp3
 │
-├── radio/                     # FM radio module
-│   ├── fm-radio_menu.py      # Radio controller
-│   └── radio_config.json     # Radio settings
+├── led/                        # LED lighting control system
+│   ├── lighting_menu.py        # VEML7700 sensor and LED controller
+│   ├── led_config.json         # Device configuration and credentials
+│   ├── led_status.json         # Current brightness, mode, power state
+│   ├── tinytuya.json           # Tuya device integration
+│   └── I2C light sensor integration
 │
-├── fan/                       # Environmental control
-│   ├── fan_mic_menu.py       # Fan and monitoring
-│   └── fan_status.json       # System metrics
+├── radio/                      # FM radio control system
+│   ├── fm-radio_menu.py        # TEA5767 radio module controller
+│   ├── radio_status.json       # Current frequency, signal, mode
+│   ├── FM band scanning (87-108 MHz)
+│   ├── Station memory and signal strength monitoring
+│   └── I2C radio module communication
 │
-├── core/                      # Core system modules
-│   ├── config_manager.py     # Configuration management
-│   ├── service_manager.py    # Service orchestration
-│   ├── hardware_monitor.py   # Hardware monitoring
-│   └── logging_setup.py      # Logging configuration
+├── fan/                        # Environmental control system
+│   ├── fan_mic_menu.py         # PWM fan control and monitoring
+│   ├── fan_status.json         # Speed, mode, temperature tracking
+│   ├── GPIO18 PWM control (10Hz frequency)
+│   ├── Multiple modes: Fixed, Cycle, Random, Lux (light-reactive)
+│   └── CPU temperature monitoring integration
 │
-├── templates/                 # Web interface templates
-│   ├── dashboard.html        # Main dashboard
-│   ├── simple.html          # Simplified interface
-│   └── enhanced.html         # Advanced controls
+├── light_sensor/               # Light sensor service (if separate)
+│   ├── Ambient light monitoring
+│   ├── VEML7700 sensor integration
+│   └── Auto-brightness functionality
 │
-└── media_samples/            # Example media files (not in repo)
+├── templates/                  # Web interface templates
+│   ├── dashboard.html          # Main control dashboard
+│   ├── exhibition/
+│   │   └── dashboard.html      # Exhibition monitoring interface
+│   ├── Real-time status displays
+│   ├── Interactive control sliders
+│   └── Mobile-responsive design
+│
+├── logs/                       # System logs and diagnostics
+│   ├── wifi_diagnostics_*.json # Network monitoring logs
+│   ├── Service-specific log files
+│   └── Error tracking and debugging
+│
+├── scripts/                    # Utility scripts
+│   ├── start_wifi_monitor.sh   # Network monitoring
+│   └── System maintenance scripts
+│
+└── static/                     # Web assets (CSS, JS, images)
+    ├── CSS styling and responsive design
+    ├── JavaScript for interactive controls
+    └── Media file serving
+```
+
+## 🔄 Complete System Workflow
+
+### Service Startup and Management
+
+The Code of the Sea system follows a comprehensive startup and management workflow:
+
+```
+1. System Boot
+   └── Auto-start main application (if service installed)
+   └── Initialize hardware resources (GPIO, I2C, PWM)
+   └── Load service configurations from JSON files
+   └── Start Flask web server (port 5000)
+
+2. Service Initialization
+   ├── Broadcast Service: Load media files, initialize mpg123
+   ├── Mixing Service: Detect USB audio devices, setup recording
+   ├── LED Service: Connect to VEML7700 sensor, initialize Tuya device
+   ├── Radio Service: Initialize TEA5767, perform communication test
+   ├── Fan Service: Setup GPIO18 PWM, initialize VEML7700
+   └── Light Sensor: VEML7700 I2C initialization
+
+3. Runtime Operation
+   ├── Web Interface: Real-time status updates every 15 seconds
+   ├── Service Monitoring: Health checks and automatic restart on failure
+   ├── Configuration Persistence: Auto-save settings on user changes
+   └── Hardware Monitoring: CPU, memory, temperature tracking
+
+4. Service Communication
+   ├── Inter-service JSON file communication
+   ├── Hardware I2C bus sharing (VEML7700 + TEA5767)
+   ├── Independent GPIO control (PWM, LED)
+   └── Web API endpoints for real-time control
+```
+
+### Monitoring and Diagnostics Workflow
+
+```
+Real-time Monitoring Pipeline:
+├── Hardware Status Collection (every 15s)
+│   ├── CPU usage, temperature, memory
+│   ├── Disk space and system uptime
+│   └── GPIO and I2C device status
+
+├── Service Health Monitoring (continuous)
+│   ├── Process existence and PID tracking
+│   ├── Service-specific status files
+│   ├── Error count accumulation
+│   └── Color-coded health indicators
+
+├── Environmental Monitoring (continuous)
+│   ├── VEML7700 lux level readings
+│   ├── Automatic brightness/speed adjustments
+│   └── Real-time dashboard updates
+
+└── Error Handling and Recovery
+    ├── Automatic service restart on failure
+    ├── I2C communication retry mechanisms
+    ├── Configuration fallback to defaults
+    └── Comprehensive logging and alerts
 ```
 
 ## 🎛️ Usage Guide
 
-### Web Interface
+### Web Interface Access
 
-1. **Dashboard Mode** - Complete control panel with all features
-2. **Simple Mode** - Basic controls for easy operation
-3. **Enhanced Mode** - Advanced technical controls
+1. **Main Dashboard** (`http://pi-ip:5000/`) - Complete control panel with all services
+2. **Exhibition Monitor** (`http://pi-ip:5000/exhibition/dashboard`) - Monitoring interface for installations
+3. **System Logs** (`http://pi-ip:5000/logs`) - Comprehensive logging and debugging
 
-### Broadcast System
+### Service Operation
 
-- **Start Playback**: Click play button or use API endpoint
-- **Track Navigation**: Use next/previous buttons
-- **File Management**: Upload files to `broadcast/media/` directory
-- **Status Monitoring**: Real-time playback status and playlist info
+#### **🎵 Broadcast Service**
+- **Playback Control**: Play, pause, stop, next, previous track buttons
+- **File Management**: Web-based file upload (drag & drop) and deletion
+- **Playlist Navigation**: Visual playlist with current track highlighting
+- **Volume Control**: Adjustable output volume (0-100%)
+- **Mode Selection**: Loop (sequential) or Random playback
+- **Web Audio Player**: Browser preview of current track
+- **Status Monitoring**: Real-time track position, playlist info, playback state
 
-### LED Control
+#### **🎙️ Mixing Service**
+- **Recording Control**: Auto mode (continuous) or Once mode (manual)
+- **Duration Settings**: Configurable recording length (10-300 seconds)
+- **Volume Mixing**: Independent master audio (0-100%) and microphone (0-100%) levels
+- **Real-time Status**: Recording/mixing progress, file counts, current operation
+- **Output Files**: Timestamped mixed audio files (mixed_audio_YYYYMMDD_HHMMSS.mp3)
+- **Position Tracking**: Sequential master audio segments for varied mixing
 
-- **Pattern Selection**: Choose from predefined lighting patterns
-- **Color Control**: RGB color picker and presets
-- **Brightness**: Adjustable intensity levels
-- **Timing**: Configure pattern speeds and transitions
+#### **💡 LED Service**
+- **Mode Selection**: Musical LED (audio-reactive), Lighting LED (ambient), Manual LED (direct)
+- **Brightness Control**: Manual brightness adjustment (0-100%) in Manual LED mode
+- **Auto-brightness**: VEML7700 sensor integration for ambient light response
+- **Power Control**: On/off switching with status feedback
+- **Connection Status**: Real-time device communication monitoring
 
-### System Monitoring
+#### **📻 Radio Service**
+- **Tuning Control**: Manual frequency slider (87.0-108.0 MHz, 0.1 MHz steps) with passive stability
+- **Station Scanning**: Full FM band scan with intelligent signal strength detection and stereo preference
+- **Station Selection**: Click-to-tune from scanned station list with automatic station memory
+- **Signal Monitoring**: Real-time signal strength bars and quality indicators
+- **Mode Switching**: Fixed frequency (passive) or scan mode with automatic best station selection
+- **Stereo Detection**: Visual indicators for stereo broadcasts with quality-based filtering
+- **Stable Operation**: Passive frequency mode prevents I2C interference for continuous clear audio
+- **Smart Scanning**: Configurable RSSI thresholds and automatic station quality assessment
 
-- **Hardware Status**: CPU temperature, memory usage
-- **Service Health**: Individual module status monitoring
-- **Error Logging**: Comprehensive system logs
+#### **🌀 Fan Service**
+- **Mode Selection**: Fixed, Cycle, Random, Lux Sensor (light-reactive with configurable ranges)
+- **Speed Control**: Manual fan speed (0-100%) in Fixed mode with real-time current lux display
+- **Auto Modes**:
+  - **Cycle**: Sine wave pattern (0→100%→0%) over 2-minute cycles
+  - **Random**: Random speed changes every 20 seconds
+  - **Lux Sensor**: Light-reactive speed control with configurable min/max lux thresholds (more light = lower speed)
+- **Smart Configuration**: Configurable lux ranges for different environments (1-5000 lux range)
+- **Hardware Requirements**: 5V power supply for Grove MOSFET module, VEML7700 sensor
+- **Temperature Integration**: CPU temperature monitoring for automatic adjustments
+- **Real-time Feedback**: Current speed, target speed, mode status, and ambient light level
+
+### System Management
+
+#### **Service Control**
+- **Individual Services**: Start, stop, restart each service independently
+- **Service Health**: Color-coded status indicators (Healthy, Warning, Error)
+- **Process Monitoring**: Real-time PID tracking and service state
+- **Configuration Persistence**: Settings saved automatically on change
+
+#### **Hardware Monitoring**
+- **CPU Usage**: Real-time processor utilization with progress bars
+- **Memory Usage**: RAM utilization tracking
+- **CPU Temperature**: Thermal monitoring with color-coded warnings
+- **Disk Usage**: Storage utilization monitoring
+- **System Uptime**: Hours and minutes since last boot
+- **Active Services**: Count of running services
+
+#### **Logging and Diagnostics**
+- **Service Logs**: Individual log files for each service
+- **Main System Logs**: Unified application logging
+- **Error Tracking**: Error count monitoring and reporting
+- **WiFi Diagnostics**: Network connectivity monitoring
+- **Real-time Updates**: Auto-refreshing status every 15 seconds
 
 ## 🔧 Configuration
 
@@ -367,23 +642,59 @@ Each module has its own configuration file in the respective directory.
 
 ### API Endpoints
 
-The system provides RESTful API endpoints for all controls:
+The system provides comprehensive RESTful API endpoints:
 
 ```bash
-# Broadcast controls
-POST /broadcast_control/play
-POST /broadcast_control/pause  
-POST /broadcast_control/next
-GET  /broadcast_status
+# Broadcast Service Controls
+POST /broadcast_control/play          # Start playback
+POST /broadcast_control/pause         # Pause current track
+POST /broadcast_control/stop          # Stop playback
+POST /broadcast_control/next          # Next track
+POST /broadcast_control/previous      # Previous track
+POST /upload_broadcast_file           # Upload audio file
+POST /delete_broadcast_file           # Delete audio file
+GET  /serve_media/<filename>          # Stream audio file
 
-# LED controls
-POST /led_control/pattern/<pattern_name>
-POST /led_control/color
-GET  /led_status
+# Service Management
+POST /start_service/<service_name>    # Start individual service
+POST /stop_service/<service_name>     # Stop individual service
+POST /save_service_config/<service>   # Update service configuration
+GET  /service_logs/<service_name>     # Get service-specific logs
 
-# System status
-GET  /system_status
-GET  /service_health
+# Radio Service
+POST /radio_stop_scan                 # Stop FM scan operation
+GET  /radio_scan_partial              # Get partial scan results
+
+# System Controls
+POST /restart_pi                      # Restart Raspberry Pi
+GET  /logs                            # Main system logs
+GET  /health/<service_name>           # Individual service health
+
+# Web Interface Routes
+GET  /                                # Main dashboard
+GET  /exhibition/dashboard            # Exhibition monitoring interface
+GET  /dashboard                       # Alternative dashboard route
+
+# Status and Monitoring
+GET  /system_status                   # Hardware and system metrics
+GET  /service_health                  # All services health status
+```
+
+### Configuration Files
+
+Service configurations are managed through JSON files:
+
+```bash
+# Global Configuration
+service_config.json                   # All service settings
+
+# Service-Specific Status Files
+broadcast/broadcast_status.json      # Playback state, playlist
+mixing/mixing_status.json            # Recording state, file counts
+led/led_status.json                  # Brightness, mode, power
+led/led_config.json                  # Device credentials
+radio/radio_status.json              # Frequency, signal, stations
+fan/fan_status.json                  # Speed, mode, temperature
 ```
 
 ## 🔍 Troubleshooting

@@ -461,10 +461,42 @@
 <body>
   <div class="container">
     <h1><i class="fas fa-microchip"></i> Code of the Sea : Control Panel</h1>
+    
+    <!-- Navigation Links -->
+    <div style="text-align: center; margin: 20px 0;">
+      <a href="/exhibition/dashboard" style="
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin: 0 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+      " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <i class="fas fa-chart-line"></i> Exhibition Monitor
+      </a>
+      <a href="/logs" style="
+        display: inline-block;
+        background: #6b7280;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin: 0 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+      " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <i class="fas fa-file-alt"></i> System Logs
+      </a>
+    </div>
 
     <div class="dashboard-grid">
       <div class="card hardware-info">
-        <h2><i class="fas fa-server"></i> Hardware Information</h2>
+        <h2><i class="fas fa-server"></i> System and Environment Information</h2>
         <div class="info-grid">
           <div class="info-item">
             <div class="info-value">{{ "%.1f"|format(hardware_info.cpu_percent) }}%</div>
@@ -524,6 +556,7 @@
         </div>
       </div>
 
+
       {% for service_name, script_path in scripts.items() %}
       <div class="card">
         <h2>
@@ -535,6 +568,8 @@
             🌪️
           {% elif service_name == "Broadcast Service" %}
             📡
+          {% elif service_name == "Mixing Service" %}
+            🎙️
           {% endif %}
           {{ service_name }}
         </h2>
@@ -600,6 +635,10 @@
               <span><strong>{{ "%.1f"|format(status.get('brightness', 0)|float) }}%</strong></span>
             </div>
             <div class="service-status-item">
+              <span>Current Light Level:</span>
+              <span><strong>{{ "%.1f"|format(status.get('lux_level', 0)) }} lux</strong></span>
+            </div>
+            <div class="service-status-item">
               <span>Power:</span>
               <span class="status {{ 'running' if status.get('power_state') else 'stopped' }}">
                 {{ 'ON' if status.get('power_state') else 'OFF' }}
@@ -618,7 +657,19 @@
             </div>
             <div class="service-status-item">
               <span>Frequency:</span>
-              <span><strong>{{ "%.2f"|format(status.get('frequency', 0)) }} MHz</strong></span>
+              <span><strong>{{ "%.2f"|format(status.get('frequency', 0)) }} MHz</strong>
+                {% if status.get('requested_frequency') and status.get('frequency_difference') is not none %}
+                  {% if status.get('frequency_error') %}
+                    <span style="color: #dc2626; font-size: 12px;">
+                      ⚠️ (req: {{ "%.2f"|format(status.get('requested_frequency')) }} MHz, diff: {{ "%.3f"|format(status.get('frequency_difference')) }})
+                    </span>
+                  {% else %}
+                    <span style="color: #10b981; font-size: 12px;">
+                      ✓ (diff: {{ "%.3f"|format(status.get('frequency_difference')) }} MHz)
+                    </span>
+                  {% endif %}
+                {% endif %}
+              </span>
             </div>
             <div class="service-status-item">
               <span>Signal Level:</span>
@@ -643,10 +694,10 @@
               <span>Target Speed:</span>
               <span><strong>{{ "%.1f"|format(status.get('target_speed', 0)) }}%</strong></span>
             </div>
-            {% if status.get('mode') == 'Sounding' %}
+            {% if status.get('mode') == 'Lux' %}
             <div class="service-status-item">
-              <span>Sound Level:</span>
-              <span><strong>{{ status.get('sound_level', 0) }}</strong></span>
+              <span>Light Level:</span>
+              <span><strong>{{ "%.2f"|format(status.get('lux_level', 0)) }} lux</strong></span>
             </div>
             {% endif %}
             <div class="service-status-item">
@@ -685,16 +736,6 @@
             <div class="broadcast-playlist" style="margin-top: 15px;">
               <h4 style="margin: 10px 0; color: #374151;">📁 Playlist Files</h4>
               
-              <!-- File Upload Form -->
-              <form action="{{ url_for('upload_broadcast_file') }}" method="post" enctype="multipart/form-data" style="margin-bottom: 15px;">
-                <div style="display: flex; gap: 10px; align-items: center;">
-                  <input type="file" name="audio_file" accept=".mp3,.wav,.ogg,.m4a,.flac" required 
-                         style="flex: 1; padding: 5px; border: 1px solid #d1d5db; border-radius: 3px;">
-                  <button type="submit" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 3px; cursor: pointer;">
-                    📤 Upload
-                  </button>
-                </div>
-              </form>
               
               <!-- MP3 Player Controls -->
               <div style="margin-bottom: 15px; padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
@@ -762,6 +803,21 @@
                     </button>
                   </form>
                 </div>
+
+                <!-- Web Audio Player -->
+                {% if status.get('current_file') %}
+                <div style="margin-top: 15px; text-align: center;">
+                  <h5 style="margin: 10px 0; color: #374151;">🎧 Web Playback</h5>
+                  <audio controls style="width: 100%; max-width: 400px;">
+                    <source src="{{ url_for('serve_media', filename=status.get('current_file')) }}" type="audio/mpeg">
+                    <source src="{{ url_for('serve_media', filename=status.get('current_file')) }}" type="audio/wav">
+                    Your browser does not support the audio element.
+                  </audio>
+                  <div style="color: #6b7280; font-size: 12px; margin-top: 5px;">
+                    Click play to listen to the current broadcast audio in your web browser
+                  </div>
+                </div>
+                {% endif %}
               </div>
               
               <!-- Playlist Display -->
@@ -828,7 +884,7 @@
                 <label class="form-label">Mode:</label>
                 <select name="mode" class="form-select" required onchange="toggleSliders(this.value, '{{ service_name }}')">
                   <option value="Musical LED" {% if configs[service_name]["mode"]=="Musical LED" %}selected{% endif %}>Musical LED</option>
-                  <option value="Lighting LED" {% if configs[service_name]["mode"]=="Lighting LED" %}selected{% endif %}>Lighting LED</option>
+                  <option value="Lux sensor" {% if configs[service_name]["mode"] in ["Lighting LED", "Lux sensor"] %}selected{% endif %}>Lux sensor</option>
                   <option value="Manual LED" {% if configs[service_name]["mode"]=="Manual LED" %}selected{% endif %}>Manual LED</option>
                 </select>
               </div>
@@ -840,36 +896,107 @@
                   <span class="slider-value" id="brightnessValue">{{ configs[service_name]['brightness'] }}%</span>
                 </div>
               </div>
+              <!-- Lux Range Configuration for Lux sensor mode -->
+              <div class="form-group" id="ledLuxRangeGroup" style="display: {% if configs[service_name]['mode'] in ['Lighting LED', 'Lux sensor'] %}block{% else %}none{% endif %};">
+                <label class="form-label">Lux Range Configuration:</label>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 10px;">
+                  <div style="color: #6b7280; font-size: 12px; margin-bottom: 10px;">
+                    Configure the light range for brightness control: low lux = high brightness, high lux = low brightness
+                  </div>
+
+                  <div style="margin-bottom: 10px;">
+                    <label class="form-label" style="font-size: 14px; margin-bottom: 5px;">Min Lux (100% brightness):</label>
+                    <div class="slider-container">
+                      <input type="range" name="lux_min" min="1" max="500" step="1" value="{{ configs[service_name].get('lux_min', 20) }}"
+                             class="slider" id="luxMinSlider" oninput="updateSliderValue('luxMinSlider', 'luxMinValue')">
+                      <span class="slider-value" id="luxMinValue">{{ configs[service_name].get('lux_min', 20) }} lux</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="form-label" style="font-size: 14px; margin-bottom: 5px;">Max Lux (0% brightness):</label>
+                    <div class="slider-container">
+                      <input type="range" name="lux_max" min="100" max="5000" step="50" value="{{ configs[service_name].get('lux_max', 1500) }}"
+                             class="slider" id="luxMaxSlider" oninput="updateSliderValue('luxMaxSlider', 'luxMaxValue')">
+                      <span class="slider-value" id="luxMaxValue">{{ configs[service_name].get('lux_max', 1500) }} lux</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             {% elif service_name == "Radio Service" %}
+              <!-- Current Station Display -->
               <div class="form-group">
-                <label class="form-label">Mode:</label>
-                <select name="mode" class="form-select" required onchange="toggleSliders(this.value, '{{ service_name }}')">
-                  <option value="Fixed" {% if configs[service_name]["mode"]=="Fixed" %}selected{% endif %}>Fixed</option>
-                  <option value="Search" {% if configs[service_name]["mode"]=="Search" %}selected{% endif %}>Search</option>
+                <label class="form-label">Current Station:</label>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 2px solid #e2e8f0; text-align: center;">
+                  <div style="font-size: 24px; font-weight: bold; color: #1f2937; margin-bottom: 5px;">
+                    📻
+                    {% if service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('frequency') %}
+                      {{ "%.1f"|format(service_statuses[service_name]['frequency']) }} MHz
+                    {% else %}
+                      {{ "%.1f"|format(configs[service_name]['frequency']) }} MHz
+                    {% endif %}
+                  </div>
+                  <div style="font-size: 14px; color: #6b7280;">
+                    Mode:
+                    {% if service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') %}
+                      {{ service_statuses[service_name]['mode'] }}
+                    {% else %}
+                      {{ configs[service_name]['mode'] }}
+                    {% endif %}
+                    {% if service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('signal_level') is not none %}
+                      • Signal: {{ service_statuses[service_name]['signal_level'] }}/15
+                      <span style="color: {% if service_statuses[service_name]['signal_level'] >= 12 %}#10b981{% elif service_statuses[service_name]['signal_level'] >= 8 %}#f59e0b{% else %}#ef4444{% endif %}; font-family: monospace; margin-left: 8px;">
+                        {% set signal = service_statuses[service_name]['signal_level'] %}
+                        {% for i in range(5) %}
+                          {% if i < (signal / 3) %}█{% else %}░{% endif %}
+                        {% endfor %}
+                      </span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Radio Mode Selection -->
+              <div class="form-group">
+                <label class="form-label">Radio Mode:</label>
+                <select name="mode_selector" class="form-select" onchange="setRadioMode(this.value)" style="margin-bottom: 15px;">
+                  <option value="Fixed" {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') == 'Fixed') or (configs[service_name]['mode'] == 'Fixed') %}selected{% endif %}>Manual Frequency</option>
+                  <option value="Scan" {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') in ['Scan', 'Scanning', 'Scanned']) or (configs[service_name]['mode'] == 'Scan') %}selected{% endif %}>Scan Once</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label class="form-label">Frequency:</label>
-                <div class="slider-container">
-                  <input type="range" name="frequency" min="87.0" max="108.0" step="0.1" value="{{ configs[service_name]['frequency'] }}" 
-                         class="slider" id="frequencySlider" oninput="updateSliderValue('frequencySlider', 'frequencyValue')">
-                  <span class="slider-value" id="frequencyValue">{{ configs[service_name]['frequency'] }} MHz</span>
+
+              <!-- Found Stations List -->
+              <div class="form-group" id="stationsList" style="display: block;">
+                <label class="form-label">Found Stations:</label>
+                <div id="stationsContainer" style="max-height: 200px; overflow-y: auto; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px; background: #f8fafc;">
+                  <!-- Stations will be populated here -->
+                  <div style="text-align: center; padding: 20px; color: #6b7280;" id="defaultStationsMessage">
+                    {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') == 'Scanned') %}
+                      <i class="fas fa-radio"></i> Loading station list...
+                    {% else %}
+                      <i class="fas fa-info-circle"></i> Select "Scan Once" to find all stations
+                    {% endif %}
+                  </div>
                 </div>
               </div>
-              <div class="form-group" id="searchDirectionGroup" style="display: {% if configs[service_name]['mode'] == 'Search' %}block{% else %}none{% endif %};">
-                <label class="form-label">Search Direction:</label>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                  <button type="button" class="btn btn-info" onclick="setDirection('Down')" style="flex: 1;">
-                    <i class="fas fa-arrow-left"></i> Search Down
-                  </button>
-                  <select name="direction" class="form-select" required style="flex: 1;">
-                    <option value="Up" {% if configs[service_name]["direction"]=="Up" %}selected{% endif %}>Up</option>
-                    <option value="Down" {% if configs[service_name]["direction"]=="Down" %}selected{% endif %}>Down</option>
-                  </select>
-                  <button type="button" class="btn btn-info" onclick="setDirection('Up')" style="flex: 1;">
-                    <i class="fas fa-arrow-right"></i> Search Up
-                  </button>
+
+              <!-- Manual Frequency Control -->
+              <div class="form-group">
+                <label class="form-label">Manual Frequency:</label>
+                <div class="slider-container">
+                  <input type="range" name="frequency" min="87.0" max="108.0" step="0.1"
+                         value="{% if service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('frequency') %}{{ service_statuses[service_name]['frequency'] }}{% else %}{{ configs[service_name]['frequency'] }}{% endif %}"
+                         class="slider" id="frequencySlider" oninput="updateSliderValue('frequencySlider', 'frequencyValue')">
+                  <span class="slider-value" id="frequencyValue">
+                    {% if service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('frequency') %}
+                      {{ "%.1f"|format(service_statuses[service_name]['frequency']) }} MHz
+                    {% else %}
+                      {{ configs[service_name]['frequency'] }} MHz
+                    {% endif %}
+                  </span>
                 </div>
+                <input type="hidden" name="mode" id="hiddenMode" value="Fixed">
+                <input type="hidden" name="direction" value="Up">
               </div>
             {% elif service_name == "Fan Service" %}
               <div class="form-group">
@@ -878,7 +1005,7 @@
                   <option value="Fixed" {% if configs[service_name]["mode"]=="Fixed" %}selected{% endif %}>Fixed</option>
                   <option value="Cycle" {% if configs[service_name]["mode"]=="Cycle" %}selected{% endif %}>Cycle</option>
                   <option value="Random" {% if configs[service_name]["mode"]=="Random" %}selected{% endif %}>Random</option>
-                  <option value="Sounding" {% if configs[service_name]["mode"]=="Sounding" %}selected{% endif %}>Sounding</option>
+                  <option value="Lux sensor" {% if configs[service_name]["mode"] in ["Lux", "Lux sensor"] %}selected{% endif %}>Lux sensor</option>
                 </select>
               </div>
               <div class="form-group" id="fanSpeedGroup" style="display: {% if configs[service_name]['mode'] == 'Fixed' %}block{% else %}none{% endif %};">
@@ -887,6 +1014,33 @@
                   <input type="range" name="speed" min="0" max="100" value="{{ configs[service_name]['speed'] }}" 
                          class="slider" id="speedSlider" oninput="updateSliderValue('speedSlider', 'speedValue')">
                   <span class="slider-value" id="speedValue">{{ configs[service_name]['speed'] }}%</span>
+                </div>
+              </div>
+              <!-- Lux Range Configuration for Lux sensor mode -->
+              <div class="form-group" id="fanLuxRangeGroup" style="display: {% if configs[service_name]['mode'] in ['Lux', 'Lux sensor'] %}block{% else %}none{% endif %};">
+                <label class="form-label">Lux Range Configuration:</label>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 10px;">
+                  <div style="color: #6b7280; font-size: 12px; margin-bottom: 10px;">
+                    Configure the light range for fan speed control: low lux = high speed, high lux = low speed
+                  </div>
+
+                  <div style="margin-bottom: 10px;">
+                    <label class="form-label" style="font-size: 14px; margin-bottom: 5px;">Min Lux (100% speed):</label>
+                    <div class="slider-container">
+                      <input type="range" name="lux_min" min="1" max="100" step="1" value="{{ configs[service_name].get('lux_min', 1) }}"
+                             class="slider" id="fanLuxMinSlider" oninput="updateSliderValue('fanLuxMinSlider', 'fanLuxMinValue')">
+                      <span class="slider-value" id="fanLuxMinValue">{{ configs[service_name].get('lux_min', 1) }} lux</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="form-label" style="font-size: 14px; margin-bottom: 5px;">Max Lux (0% speed):</label>
+                    <div class="slider-container">
+                      <input type="range" name="lux_max" min="100" max="5000" step="50" value="{{ configs[service_name].get('lux_max', 1000) }}"
+                             class="slider" id="fanLuxMaxSlider" oninput="updateSliderValue('fanLuxMaxSlider', 'fanLuxMaxValue')">
+                      <span class="slider-value" id="fanLuxMaxValue">{{ configs[service_name].get('lux_max', 1000) }} lux</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             {% elif service_name == "Broadcast Service" %}
@@ -903,6 +1057,41 @@
                   <input type="range" name="volume" min="0" max="100" value="{{ configs[service_name]['volume'] }}" 
                          class="slider" id="volumeSlider" oninput="updateSliderValue('volumeSlider', 'volumeValue')">
                   <span class="slider-value" id="volumeValue">{{ configs[service_name]['volume'] }}%</span>
+                </div>
+              </div>
+            {% elif service_name == "Mixing Service" %}
+              <div class="form-group">
+                <label class="form-label">Mode:</label>
+                <select name="mode" class="form-select" required>
+                  <option value="Auto" {% if configs[service_name]["mode"]=="Auto" %}selected{% endif %}>Auto</option>
+                  <option value="Once" {% if configs[service_name]["mode"]=="Once" %}selected{% endif %}>Once</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Master Volume:</label>
+                <div class="slider-container">
+                  <input type="range" name="master_volume" min="0" max="100" value="{{ configs[service_name]['master_volume'] }}"
+                         class="slider" id="masterVolumeSlider" oninput="updateSliderValue('masterVolumeSlider', 'masterVolumeValue')">
+                  <span class="slider-value" id="masterVolumeValue">{{ configs[service_name]['master_volume'] }}%</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Microphone Volume:</label>
+                <div class="slider-container">
+                  <input type="range" name="mic_volume" min="0" max="100" value="{{ configs[service_name]['mic_volume'] }}"
+                         class="slider" id="micVolumeSlider" oninput="updateSliderValue('micVolumeSlider', 'micVolumeValue')">
+                  <span class="slider-value" id="micVolumeValue">{{ configs[service_name]['mic_volume'] }}%</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Recording Duration:</label>
+                <div class="slider-container">
+                  <input type="range" name="recording_duration" min="10" max="300" step="10" value="{{ configs[service_name]['recording_duration'] if configs[service_name].get('recording_duration') else 30 }}"
+                         class="slider" id="recordingDurationSlider" oninput="updateSliderValue('recordingDurationSlider', 'recordingDurationValue')">
+                  <span class="slider-value" id="recordingDurationValue">{{ configs[service_name]['recording_duration'] if configs[service_name].get('recording_duration') else 30 }}s</span>
+                </div>
+                <div style="color: #6b7280; font-size: 12px; margin-top: 5px;">
+                  Duration of each microphone recording and master audio segment (10-300 seconds)
                 </div>
               </div>
             {% endif %}
@@ -936,6 +1125,10 @@
       
       if (sliderId === 'frequencySlider') {
         valueElement.textContent = value + ' MHz';
+      } else if (sliderId === 'recordingDurationSlider') {
+        valueElement.textContent = value + 's';
+      } else if (sliderId === 'luxMinSlider' || sliderId === 'luxMaxSlider' || sliderId === 'fanLuxMinSlider' || sliderId === 'fanLuxMaxSlider') {
+        valueElement.textContent = value + ' lux';
       } else {
         valueElement.textContent = value + '%';
       }
@@ -944,13 +1137,17 @@
     function toggleSliders(mode, serviceName) {
       if (serviceName === 'LED Service') {
         const brightnessGroup = document.getElementById('ledBrightnessGroup');
+        const luxRangeGroup = document.getElementById('ledLuxRangeGroup');
         brightnessGroup.style.display = (mode === 'Manual LED') ? 'block' : 'none';
+        luxRangeGroup.style.display = (mode === 'Lux sensor' || mode === 'Lighting LED') ? 'block' : 'none';
       } else if (serviceName === 'Radio Service') {
         const directionGroup = document.getElementById('searchDirectionGroup');
         directionGroup.style.display = (mode === 'Search') ? 'block' : 'none';
       } else if (serviceName === 'Fan Service') {
         const speedGroup = document.getElementById('fanSpeedGroup');
+        const fanLuxRangeGroup = document.getElementById('fanLuxRangeGroup');
         speedGroup.style.display = (mode === 'Fixed') ? 'block' : 'none';
+        fanLuxRangeGroup.style.display = (mode === 'Lux sensor' || mode === 'Lux') ? 'block' : 'none';
       }
     }
 
@@ -959,6 +1156,169 @@
       if (directionSelect) {
         directionSelect.value = direction;
       }
+    }
+
+    // Continuous search function removed - only Fixed and Scan modes supported
+
+    // Old button-based scan functions removed - now using mode selector
+
+    function displayFoundStations(stations) {
+      const stationsContainer = document.getElementById('stationsContainer');
+
+      if (stations.length === 0) {
+        stationsContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: #6b7280;">No stations found with sufficient signal strength</div>';
+        return;
+      }
+
+      let html = '<div style="display: grid; gap: 8px;">';
+      stations.forEach(station => {
+        const signalBars = '█'.repeat(Math.min(5, Math.floor(station.signal / 3)));
+        const stereoIcon = station.stereo ? '🎵' : '📻';
+        const qualityColor = station.signal >= 12 ? '#10b981' : station.signal >= 9 ? '#f59e0b' : '#6b7280';
+
+        html += `
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: white; border-radius: 6px; border: 1px solid #e5e7eb; cursor: pointer; transition: all 0.2s;"
+               onclick="tuneToStation(${station.frequency})"
+               onmouseover="this.style.backgroundColor='#f3f4f6'"
+               onmouseout="this.style.backgroundColor='white'">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 16px;">${stereoIcon}</span>
+              <div>
+                <div style="font-weight: bold; color: #1f2937;">${station.frequency} MHz</div>
+                <div style="font-size: 12px; color: #6b7280;">${station.quality}</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="color: ${qualityColor}; font-family: monospace; font-size: 12px;">${signalBars}</span>
+              <span style="color: #6b7280; font-size: 12px;">${station.signal}/15</span>
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+
+      stationsContainer.innerHTML = html;
+    }
+
+    function tuneToStation(frequency) {
+      const formData = new FormData();
+      formData.append('mode', 'Fixed');
+      formData.append('mode_selector', 'Fixed'); // Ensure mode_selector is also set to Fixed
+      formData.append('frequency', frequency);
+      formData.append('direction', 'Up');
+
+      fetch('{{ url_for("save_service_config", service="Radio Service") }}', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          // Update the dropdown to show Fixed mode
+          const modeSelector = document.querySelector('select[name="mode_selector"]');
+          if (modeSelector) {
+            modeSelector.value = 'Fixed';
+          }
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+        }
+      })
+      .catch(error => {
+        console.error('Error tuning to station:', error);
+      });
+    }
+
+    function stopScan() {
+      fetch('/radio_stop_scan', {
+        method: 'POST'
+      })
+      .then(response => {
+        if (response.ok) {
+          // Update scanning message to show stopping
+          document.getElementById('stationsContainer').innerHTML = '<div style="text-align: center; padding: 20px; color: #6b7280;"><i class="fas fa-spinner fa-spin"></i> Stopping scan and loading found stations...</div>';
+
+          // Start loading stations after a short delay
+          setTimeout(() => {
+            loadStationsList();
+          }, 2000);
+        }
+      })
+      .catch(error => {
+        console.error('Error stopping scan:', error);
+      });
+    }
+
+    function setRadioMode(mode) {
+      const formData = new FormData();
+      formData.append('mode', mode);
+      formData.append('frequency', document.getElementById('frequencySlider').value || 99.5);
+      formData.append('direction', 'Up');
+
+      // Show/hide controls based on mode
+      const stationsList = document.getElementById('stationsList');
+
+      if (mode === 'Scan') {
+        stationsList.style.display = 'block';
+        // Show scanning message with stop button
+        document.getElementById('stationsContainer').innerHTML = `
+          <div style="text-align: center; padding: 20px; color: #6b7280;">
+            <i class="fas fa-spinner fa-spin"></i> Scanning entire FM band (87-108 MHz)...
+            <br><br>
+            <button onclick="stopScan()" class="btn btn-secondary" style="background: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">
+              <i class="fas fa-stop"></i> Stop Scan
+            </button>
+          </div>
+        `;
+      } else {
+        // Keep stations list visible - don't hide it when switching to manual mode
+        stationsList.style.display = 'block';
+        // Load any existing stations when switching to manual mode
+        loadStationsList();
+      }
+
+      fetch('{{ url_for("save_service_config", service="Radio Service") }}', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          // For scan mode, wait longer and then load results
+          if (mode === 'Scan') {
+            setTimeout(() => {
+              loadStationsList();
+            }, 2000); // Check for results every 2 seconds
+          } else {
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error setting radio mode:', error);
+      });
+    }
+
+    function loadStationsList() {
+      fetch('/radio_scan_partial', {
+        method: 'GET'
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.stations && data.stations.length > 0) {
+          displayFoundStations(data.stations);
+        } else if (data.partial && !data.stations) {
+          // No stations found yet, show message
+          document.getElementById('stationsContainer').innerHTML = '<div style="text-align: center; padding: 20px; color: #6b7280;"><i class="fas fa-search"></i> No previous scan results. Start a new scan to see stations.</div>';
+        } else {
+          // Still scanning, check again in 2 seconds
+          setTimeout(loadStationsList, 2000);
+        }
+      })
+      .catch(error => {
+        console.error('Error loading stations list:', error);
+        document.getElementById('stationsContainer').innerHTML = '<div style="text-align: center; padding: 20px; color: #6b7280;"><i class="fas fa-search"></i> No previous scan results. Start a new scan to see stations.</div>';
+      });
     }
 
     // Save scroll position before form submission
@@ -1008,10 +1368,34 @@
     window.onload = function() {
       // Restore scroll position if returning from form submission
       restoreScrollPosition();
-      
+
       updateSliderValue('brightnessSlider', 'brightnessValue');
       updateSliderValue('frequencySlider', 'frequencyValue');
       updateSliderValue('speedSlider', 'speedValue');
+      updateSliderValue('volumeSlider', 'volumeValue');
+      updateSliderValue('masterVolumeSlider', 'masterVolumeValue');
+      updateSliderValue('micVolumeSlider', 'micVolumeValue');
+      updateSliderValue('recordingDurationSlider', 'recordingDurationValue');
+      updateSliderValue('luxMinSlider', 'luxMinValue');
+      updateSliderValue('luxMaxSlider', 'luxMaxValue');
+      updateSliderValue('fanLuxMinSlider', 'fanLuxMinValue');
+      updateSliderValue('fanLuxMaxSlider', 'fanLuxMaxValue');
+
+      // Always try to load stations list for radio service
+      const stationsList = document.getElementById('stationsList');
+      if (stationsList) {
+        loadStationsList();
+      }
+
+      // Update hidden mode field based on mode selector
+      const modeSelector = document.querySelector('select[name="mode_selector"]');
+      const hiddenMode = document.getElementById('hiddenMode');
+      if (modeSelector && hiddenMode) {
+        hiddenMode.value = modeSelector.value;
+        modeSelector.addEventListener('change', function() {
+          hiddenMode.value = this.value;
+        });
+      }
       
       // Add scroll preservation to all forms except broadcast controls
       document.querySelectorAll('form').forEach(function(form) {
@@ -1067,6 +1451,9 @@
           console.error(`Error checking health for ${serviceName}:`, error);
         });
     }
+
   </script>
+
+
 </body>
 </html>

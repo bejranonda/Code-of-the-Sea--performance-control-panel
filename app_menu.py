@@ -185,11 +185,11 @@ def index():
         
         # Log successful page load
         log_event("Dashboard loaded successfully")
-        
+
         return render_template('dashboard.html',
-                               scripts=SCRIPTS, 
+                               scripts=SCRIPTS,
                                processes=processes,
-                               configs=configs, 
+                               configs=configs,
                                hardware_info=hardware_info,
                                service_statuses=service_statuses)
     except Exception as e:

@@ -12,6 +12,12 @@ import sys
 import traceback
 from datetime import datetime
 
+# Add core modules to path for device configuration
+core_path = os.path.join(os.path.dirname(__file__), '..', 'core')
+core_path = os.path.abspath(core_path)
+if core_path not in sys.path:
+    sys.path.insert(0, core_path)
+
 # Disable colorama and stdout/stderr to prevent broken pipe errors in background service
 if not sys.stdout.isatty():
     os.environ['TERM'] = 'dumb'
@@ -62,9 +68,26 @@ LOG_FILE = os.path.join(os.path.dirname(__file__), "led_log.txt")
 STATUS_FILE = os.path.join(os.path.dirname(__file__), "led_status.json")
 
 # --- Tuya Device Configuration ---
-DEVICE_ID = "bf549c1fed6b2bbd43l1ow"
-DEVICE_IP = "192.168.0.80"
-DEVICE_KEY = "[L7c*$TBS:_XxPr6"
+# Load device configuration from config file
+try:
+    from device_config import DeviceConfig
+    # Use absolute path to config file since LED service runs from led/ directory
+    config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'devices.json')
+    config_path = os.path.abspath(config_path)
+    config = DeviceConfig(config_path)
+    led_config = config.get_led_config()
+    tuya_config = led_config['tuya_controller']
+    
+    DEVICE_ID = tuya_config['device_id']
+    DEVICE_IP = tuya_config['device_ip'] 
+    DEVICE_KEY = tuya_config['device_key']
+    PROTOCOL_VERSION = float(tuya_config.get('protocol_version', '3.5'))
+    
+    print(f"✅ LED service loaded device config: {DEVICE_ID}")
+except Exception as e:
+    print(f"❌ Failed to load device config: {e}")
+    print("❌ LED service cannot start without valid device configuration")
+    sys.exit(1)
 
 # --- Tuya Data Point IDs ---
 DP_ID_POWER = 20
@@ -109,6 +132,7 @@ current_status = {
     "mode": "Manual LED",
     "brightness": 0,
     "power_state": False,
+    "lux_level": 0,  # Add lux level tracking
     "last_update": None,
     "error_count": 0,
     "connection_status": "disconnected"
@@ -245,10 +269,23 @@ def get_brightness_from_rms(rms):
         log_error(f"Error calculating brightness from RMS {rms}", e)
         return 1  # Return 1% instead of 0% on error
 
-def get_brightness_from_lux(lux_value):
-    """Maps lux value to LED brightness for Lighting LED mode (inverse)."""
+def get_brightness_from_lux(lux_value, config=None):
+    """Maps lux value to LED brightness for Lux sensor mode (inverse)."""
     try:
-        brightness_percent = map_range(lux_value, SENSOR_LUX_MIN, SENSOR_LUX_MAX, 100, 0)
+        # Get configurable min/max lux values, with fallback to defaults
+        if config:
+            lux_min = config.get("lux_min", SENSOR_LUX_MIN)
+            lux_max = config.get("lux_max", SENSOR_LUX_MAX)
+        else:
+            lux_min = SENSOR_LUX_MIN
+            lux_max = SENSOR_LUX_MAX
+
+        # Inverse mapping: low lux = high brightness, high lux = low brightness
+        brightness_percent = map_range(lux_value, lux_min, lux_max, 100, 0)
+
+        # Update status with current lux level
+        update_status(lux_level=lux_value)
+
         return max(0, min(100, brightness_percent))
     except Exception as e:
         log_error(f"Error calculating brightness from lux {lux_value}", e)
@@ -364,12 +401,12 @@ async def musical_led_mode():
         log_error("Error starting Musical LED mode", e)
 
 async def lighting_led_mode():
-    """Lighting LED mode - brightness reacts to light sensor (inverse)."""
-    log_event("Starting Lighting LED mode")
-    update_status(mode="Lighting LED")
+    """Lux sensor mode - brightness reacts to light sensor (inverse)."""
+    log_event("Starting Lux sensor mode")
+    update_status(mode="Lux sensor")
     
     if not VEML7700_AVAILABLE:
-        log_error("VEML7700 libraries not available for Lighting LED mode")
+        log_error("VEML7700 libraries not available for Lux sensor mode")
         return
     
     try:
@@ -385,17 +422,17 @@ async def lighting_led_mode():
     while True:
         # Check if mode changed
         config = load_config()
-        if config["mode"] != "Lighting LED":
+        if config["mode"] not in ["Lighting LED", "Lux sensor"]:  # Support both names during transition
             break
-            
+
         try:
             lux_value = veml7700.lux
-            brightness_percent = get_brightness_from_lux(lux_value)
+            brightness_percent = get_brightness_from_lux(lux_value, config)
             await set_brightness_and_power(brightness_percent)
-            
+
             # Log only significant changes
             if abs(brightness_percent - current_status.get("brightness", 0)) > 5:
-                log_event(f"Lighting LED - Lux: {lux_value:.2f} -> Brightness: {brightness_percent:.1f}%")
+                log_event(f"Lux sensor - Lux: {lux_value:.2f} -> Brightness: {brightness_percent:.1f}%")
             
             await asyncio.sleep(0.5)
             
@@ -439,9 +476,9 @@ async def initialize_tuya_device():
     global d, power_on_state
     
     try:
-        log_event("Initializing Tuya device connection")
+        log_event(f"Initializing Tuya device connection (Device ID: {DEVICE_ID})")
         d = tinytuya.BulbDevice(dev_id=DEVICE_ID, address=DEVICE_IP, local_key=DEVICE_KEY)
-        d.set_version(3.5)
+        d.set_version(PROTOCOL_VERSION)
         d.set_socketPersistent(True)
         
         # Test connection
@@ -487,7 +524,7 @@ async def main():
                 
                 if mode == "Musical LED":
                     await musical_led_mode()
-                elif mode == "Lighting LED":
+                elif mode in ["Lighting LED", "Lux sensor"]:  # Support both names during transition
                     await lighting_led_mode()
                 elif mode == "Manual LED":
                     await manual_led_mode()
