@@ -63,7 +63,7 @@ except ImportError as e:
         pass  # Ignore broken pipe errors in background service
 
 # --- Configuration Files ---
-CONFIG_FILE = "../unified_config.json"  # Look in parent directory
+CONFIG_FILE = os.path.join(os.path.dirname(__file__), "..", "unified_config.json")  # Absolute path to parent directory
 LOG_FILE = os.path.join(os.path.dirname(__file__), "led_log.txt")
 STATUS_FILE = os.path.join(os.path.dirname(__file__), "led_status.json")
 

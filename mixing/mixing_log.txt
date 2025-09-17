@@ -1,3 +1,93 @@
+[2025-09-17 21:08:20] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:08:20] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:08:20] INFO: Mixing service started
+[2025-09-17 21:08:10] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:08:10] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:08:10] INFO: Mixing service started
+[2025-09-17 21:07:59] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:07:59] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:07:59] INFO: Mixing service started
+[2025-09-17 21:07:49] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:07:49] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:07:49] INFO: Mixing service started
+[2025-09-17 21:07:39] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:07:39] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:07:39] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:07:36] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:07:36] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:07:36] INFO: Mixing service started
+[2025-09-17 21:07:25] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:07:25] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:07:25] INFO: Mixing service started
+[2025-09-17 21:07:15] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:07:15] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:07:15] INFO: Mixing service started
+[2025-09-17 21:07:05] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:07:05] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:07:05] INFO: Mixing service started
+[2025-09-17 21:06:54] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:06:54] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:06:54] INFO: Mixing service started
+[2025-09-17 21:06:44] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:06:44] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:06:44] INFO: Mixing service started
+[2025-09-17 21:06:34] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:06:34] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:06:34] INFO: Mixing service started
+[2025-09-17 21:06:24] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:06:24] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:06:24] INFO: Mixing service started
+[2025-09-17 21:06:13] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:06:13] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:06:13] INFO: Mixing service started
+[2025-09-17 21:06:03] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:06:03] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:06:03] INFO: Mixing service started
+[2025-09-17 21:05:53] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:05:53] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:05:53] INFO: Mixing service started
+[2025-09-17 21:05:43] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:05:43] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:05:43] INFO: Mixing service started
+[2025-09-17 21:05:33] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:05:33] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:05:33] INFO: Mixing service started
+[2025-09-17 21:05:22] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:05:22] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:05:22] INFO: Mixing service started
+[2025-09-17 21:05:12] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:05:12] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:05:12] INFO: Mixing service started
+[2025-09-17 21:05:01] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:05:01] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:05:01] INFO: Mixing service started
+[2025-09-17 21:04:51] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:04:51] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:04:51] INFO: Mixing service started
+[2025-09-17 21:04:41] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:04:41] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:04:41] INFO: Mixing service started
+[2025-09-17 21:04:31] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:04:31] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:04:31] INFO: Mixing service started
+[2025-09-17 21:04:21] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:04:21] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:04:21] INFO: Mixing service started
+[2025-09-17 21:04:11] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:04:11] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:04:11] INFO: Mixing service started
+[2025-09-17 21:04:01] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:04:01] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:04:01] INFO: Mixing service started
+[2025-09-17 21:03:51] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:03:51] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:03:51] INFO: Mixing service started
+[2025-09-17 21:03:41] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:03:41] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:03:41] INFO: Mixing service started
+[2025-09-17 21:03:31] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:03:31] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:03:31] INFO: Mixing service started
 [2025-09-17 21:03:21] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
 [2025-09-17 21:03:21] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
 [2025-09-17 21:03:21] INFO: Mixing service started
