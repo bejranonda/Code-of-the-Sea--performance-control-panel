@@ -1,0 +1,15 @@
+{
+  "min_signal_strength": 10,
+  "description": "Minimum signal strength for station selection (0-15 scale)",
+  "search_settings": {
+    "step_size": 0.1,
+    "settling_time": 0.1,
+    "prefer_stereo": true,
+    "stereo_bonus_threshold": 2
+  },
+  "display_settings": {
+    "show_signal_bars": true,
+    "show_stereo_indicator": true,
+    "max_stations_in_list": 30
+  }
+}

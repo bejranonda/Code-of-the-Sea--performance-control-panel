@@ -44,6 +44,27 @@ venv.bak/
 *.lock
 *.cache
 
+# Service logs and diagnostics
+*/logs/
+logs/
+*_log.txt
+*_diagnostics_*.json
+wifi_diagnostics_*.json
+
+# Audio files (generated content)
+*.wav
+*.mp3
+*.ogg
+*.flac
+mixed_output/
+master_audio/
+
+# Temporary and test files
+test_*.wav
+test.log
+found_stations.json
+tinytuya.json
+
 # OS files
 .DS_Store
 Thumbs.db
