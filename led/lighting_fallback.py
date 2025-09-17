@@ -128,13 +128,33 @@ async def initialize_device():
     
     if TINYTUYA_AVAILABLE:
         try:
-            log_event("Attempting to connect to real Tuya device")
+            # Load device configuration from config file
+            import sys
+            import os
+            core_path = os.path.join(os.path.dirname(__file__), '..', 'core')
+            core_path = os.path.abspath(core_path)
+            if core_path not in sys.path:
+                sys.path.insert(0, core_path)
+            
+            from device_config import DeviceConfig
+            config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'devices.json')
+            config_path = os.path.abspath(config_path)
+            config = DeviceConfig(config_path)
+            led_config = config.get_led_config()
+            tuya_config = led_config['tuya_controller']
+            
+            device_id = tuya_config['device_id']
+            device_ip = tuya_config['device_ip']
+            device_key = tuya_config['device_key']
+            protocol_version = float(tuya_config.get('protocol_version', '3.5'))
+            
+            log_event(f"Attempting to connect to real Tuya device (Device ID: {device_id})")
             d = tinytuya.BulbDevice(
-                dev_id="bf549c1fed6b2bbd43l1ow",
-                address="192.168.178.42", 
-                local_key="73b0K93QaO&EI=dB"
+                dev_id=device_id,
+                address=device_ip, 
+                local_key=device_key
             )
-            d.set_version(3.5)
+            d.set_version(protocol_version)
             d.set_socketPersistent(True)
             
             # Test connection

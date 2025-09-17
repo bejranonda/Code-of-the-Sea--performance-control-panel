@@ -7,9 +7,10 @@
   },
   "Radio Service": {
     "mode": "Fixed",
-    "frequency": 96.6,
+    "frequency": 99.4,
     "direction": "Up",
-    "mode_selector": "Fixed"
+    "mode_selector": "Fixed",
+    "loop_duration": "30"
   },
   "Fan Service": {
     "mode": "Lux sensor",
@@ -27,7 +28,7 @@
   "Mixing Service": {
     "mode": "Auto",
     "master_volume": "100",
-    "mic_volume": "65",
+    "mic_volume": "55",
     "recording_duration": "30"
   }
 }
