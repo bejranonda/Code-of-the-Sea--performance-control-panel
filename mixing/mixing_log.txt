@@ -1,217 +1,382 @@
-[2025-09-17 21:08:20] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:08:20] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:08:20] INFO: Mixing service started
-[2025-09-17 21:08:10] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:08:10] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:08:10] INFO: Mixing service started
-[2025-09-17 21:07:59] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:07:59] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:07:59] INFO: Mixing service started
-[2025-09-17 21:07:49] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:07:49] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:07:49] INFO: Mixing service started
-[2025-09-17 21:07:39] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 21:07:39] INFO: Detected microphone device: hw:1,0
-[2025-09-17 21:07:39] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 21:07:36] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:07:36] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:07:36] INFO: Mixing service started
-[2025-09-17 21:07:25] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:07:25] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:07:25] INFO: Mixing service started
-[2025-09-17 21:07:15] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:07:15] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:07:15] INFO: Mixing service started
-[2025-09-17 21:07:05] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:07:05] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:07:05] INFO: Mixing service started
-[2025-09-17 21:06:54] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:06:54] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:06:54] INFO: Mixing service started
-[2025-09-17 21:06:44] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:06:44] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:06:44] INFO: Mixing service started
-[2025-09-17 21:06:34] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:06:34] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:06:34] INFO: Mixing service started
-[2025-09-17 21:06:24] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:06:24] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:06:24] INFO: Mixing service started
-[2025-09-17 21:06:13] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:06:13] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:06:13] INFO: Mixing service started
-[2025-09-17 21:06:03] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:06:03] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:06:03] INFO: Mixing service started
-[2025-09-17 21:05:53] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:05:53] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:05:53] INFO: Mixing service started
-[2025-09-17 21:05:43] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:05:43] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:05:43] INFO: Mixing service started
-[2025-09-17 21:05:33] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:05:33] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:05:33] INFO: Mixing service started
-[2025-09-17 21:05:22] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:05:22] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:05:22] INFO: Mixing service started
-[2025-09-17 21:05:12] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:05:12] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:05:12] INFO: Mixing service started
-[2025-09-17 21:05:01] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:05:01] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:05:01] INFO: Mixing service started
-[2025-09-17 21:04:51] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:04:51] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:04:51] INFO: Mixing service started
-[2025-09-17 21:04:41] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:04:41] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:04:41] INFO: Mixing service started
-[2025-09-17 21:04:31] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:04:31] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:04:31] INFO: Mixing service started
-[2025-09-17 21:04:21] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:04:21] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:04:21] INFO: Mixing service started
-[2025-09-17 21:04:11] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:04:11] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:04:11] INFO: Mixing service started
-[2025-09-17 21:04:01] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:04:01] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:04:01] INFO: Mixing service started
-[2025-09-17 21:03:51] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:03:51] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:03:51] INFO: Mixing service started
-[2025-09-17 21:03:41] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:03:41] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:03:41] INFO: Mixing service started
-[2025-09-17 21:03:31] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:03:31] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:03:31] INFO: Mixing service started
-[2025-09-17 21:03:21] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:03:21] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:03:21] INFO: Mixing service started
-[2025-09-17 21:03:11] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:03:11] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:03:11] INFO: Mixing service started
-[2025-09-17 21:02:58] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 21:02:58] INFO: Detected microphone device: hw:1,0
-[2025-09-17 21:02:58] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 21:02:57] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:02:57] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:02:57] INFO: Mixing service started
-[2025-09-17 21:02:53] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:02:53] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:02:53] INFO: Mixing service started
-[2025-09-17 21:02:45] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 21:02:45] INFO: Detected microphone device: hw:1,0
-[2025-09-17 21:02:45] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 21:02:42] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:02:42] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:02:42] INFO: Mixing service started
-[2025-09-17 21:02:19] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:02:19] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:02:19] INFO: Mixing service started
-[2025-09-17 21:02:03] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:02:03] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:02:03] INFO: Mixing service started
-[2025-09-17 21:01:53] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:01:53] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:01:53] INFO: Mixing service started
-[2025-09-17 21:01:43] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:01:43] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:01:43] INFO: Mixing service started
-[2025-09-17 21:01:33] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:01:33] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:01:33] INFO: Mixing service started
-[2025-09-17 21:01:23] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:01:23] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:01:23] INFO: Mixing service started
-[2025-09-17 21:01:13] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:01:13] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:01:13] INFO: Mixing service started
-[2025-09-17 21:01:03] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:01:03] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:01:03] INFO: Mixing service started
-[2025-09-17 21:00:53] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:00:53] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:00:53] INFO: Mixing service started
-[2025-09-17 21:00:45] INFO: Starting microphone recording (30s) - attempt 2/3
-[2025-09-17 21:00:45] INFO: Detected microphone device: hw:1,0
-[2025-09-17 21:00:43] WARNING: Microphone device busy (attempt 1), retrying in 2s
-[2025-09-17 21:00:43] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 21:00:43] INFO: Detected microphone device: hw:1,0
-[2025-09-17 21:00:43] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 21:00:43] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:00:43] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:00:43] INFO: Mixing service started
-[2025-09-17 21:00:40] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 21:00:40] INFO: Detected microphone device: hw:1,0
-[2025-09-17 21:00:40] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 21:00:36] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:00:36] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:00:36] INFO: Mixing service started
-[2025-09-17 21:00:27] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 21:00:27] INFO: Detected microphone device: hw:1,0
-[2025-09-17 21:00:27] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 21:00:24] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:00:24] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:00:24] INFO: Mixing service started
-[2025-09-17 21:00:05] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 21:00:05] INFO: Detected microphone device: hw:1,0
-[2025-09-17 21:00:05] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 21:00:02] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 21:00:02] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 21:00:02] INFO: Mixing service started
-[2025-09-17 20:51:26] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 20:51:26] INFO: Detected microphone device: hw:1,0
-[2025-09-17 20:51:26] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 20:51:23] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 20:51:23] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 20:51:23] INFO: Mixing service started
-[2025-09-17 20:46:38] INFO: Removed old file: mixed_audio_20250917_202810.mp3
-[2025-09-17 20:46:38] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_204635.mp3
-[2025-09-17 20:46:37] INFO: Volume levels: Master 100.0% (0.0dB), Mic 75.0% (-15.0dB)
-[2025-09-17 20:46:37] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_204635.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_204635.mp3
-[2025-09-17 20:46:37] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_204635.wav
-[2025-09-17 20:46:35] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 20:46:35] INFO: Detected microphone device: hw:3,0
-[2025-09-17 20:46:35] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 20:46:32] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 20:46:32] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 20:46:32] INFO: Mixing service started
-[2025-09-17 20:45:13] INFO: Removed old file: mixed_audio_20250917_202708.mp3
-[2025-09-17 20:45:13] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_204505.mp3
-[2025-09-17 20:45:08] INFO: Volume levels: Master 100.0% (0.0dB), Mic 75.0% (-15.0dB)
-[2025-09-17 20:45:08] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_204505.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_204505.mp3
-[2025-09-17 20:45:08] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_204505.wav
-[2025-09-17 20:45:05] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 20:45:05] INFO: Detected microphone device: hw:1,0
-[2025-09-17 20:45:05] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 20:45:01] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 20:45:01] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 20:45:01] INFO: Mixing service started
-[2025-09-17 20:37:37] INFO: Removed old file: mixed_audio_20250917_202606.mp3
-[2025-09-17 20:37:37] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_203734.mp3
-[2025-09-17 20:37:35] INFO: Volume levels: Master 100.0% (0.0dB), Mic 75.0% (-15.0dB)
-[2025-09-17 20:37:35] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_203734.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_203734.mp3
-[2025-09-17 20:37:35] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_203734.wav
-[2025-09-17 20:37:34] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 20:37:34] INFO: Detected microphone device: hw:1,0
-[2025-09-17 20:37:34] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 20:37:30] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 20:37:30] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 20:37:30] INFO: Mixing service started
-[2025-09-17 20:33:43] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 20:32:54] INFO: Removed old file: mic_recording_20250917_162609.wav
-[2025-09-17 20:32:54] INFO: Removed old file: mixed_audio_20250917_202505.mp3
-[2025-09-17 20:32:54] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_203246.mp3
-[2025-09-17 20:32:52] INFO: Volume levels: Master 100.0% (0.0dB), Mic 75.0% (-15.0dB)
-[2025-09-17 20:32:52] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_203246.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_203246.mp3
-[2025-09-17 20:32:52] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_203246.wav
-[2025-09-17 20:32:46] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 20:32:46] INFO: Detected microphone device: hw:3,0
-[2025-09-17 20:32:46] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 20:32:42] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 20:32:42] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
-[2025-09-17 20:32:42] INFO: Mixing service started
+[2025-09-17 21:29:39] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:29:39] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:29:39] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:29:39] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:29:38] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:29:38] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:29:38] INFO: Mixing service started
+[2025-09-17 21:29:22] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:29:22] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:29:20] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:29:20] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:29:20] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:29:20] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:29:19] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:29:19] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:29:19] INFO: Mixing service started
+[2025-09-17 21:28:59] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 21:28:59] WARNING: Microphone device busy (attempt 3), retrying in 2s
+[2025-09-17 21:28:59] INFO: Killed stuck arecord processes before retry 3
+[2025-09-17 21:28:57] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:28:57] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:28:55] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:28:55] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:28:53] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:28:53] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:28:51] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:28:51] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:28:51] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:28:51] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:28:51] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:28:51] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:28:51] INFO: Mixing service started
+[2025-09-17 21:28:40] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 21:28:40] WARNING: Microphone device busy (attempt 3), retrying in 2s
+[2025-09-17 21:28:40] INFO: Killed stuck arecord processes before retry 3
+[2025-09-17 21:28:38] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:28:38] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:28:35] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:28:35] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:28:33] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:28:33] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:28:31] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:28:31] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:28:31] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:28:31] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:28:31] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:28:31] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:28:31] INFO: Mixing service started
+[2025-09-17 21:28:23] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:28:23] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:28:21] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:28:21] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:28:21] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:28:21] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:28:21] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:28:21] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:28:21] INFO: Mixing service started
+[2025-09-17 21:28:03] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:28:03] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:28:01] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:28:01] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:27:59] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:27:59] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:27:59] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:27:59] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:27:58] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:27:58] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:27:58] INFO: Mixing service started
+[2025-09-17 21:27:44] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:27:44] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:27:42] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:27:42] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:27:40] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:27:40] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:27:40] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:27:40] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:27:39] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:27:39] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:27:39] INFO: Mixing service started
+[2025-09-17 21:27:22] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:27:22] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:27:22] INFO: Mixing service started
+[2025-09-17 21:27:05] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:27:05] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:27:03] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:27:03] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:27:03] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:27:03] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:27:02] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:27:02] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:27:02] INFO: Mixing service started
+[2025-09-17 21:26:41] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 21:26:41] WARNING: Microphone device busy (attempt 3), retrying in 2s
+[2025-09-17 21:26:41] INFO: Killed stuck arecord processes before retry 3
+[2025-09-17 21:26:39] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:26:39] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:26:36] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:26:36] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:26:34] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:26:34] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:26:32] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:26:32] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:26:32] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:26:32] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:26:32] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:26:32] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:26:32] INFO: Mixing service started
+[2025-09-17 21:26:23] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:26:23] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:26:21] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:26:21] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:26:19] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:26:19] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:26:19] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:26:19] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:26:19] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:26:19] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:26:19] INFO: Mixing service started
+[2025-09-17 21:26:05] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 21:26:05] WARNING: Microphone device busy (attempt 3), retrying in 2s
+[2025-09-17 21:26:05] INFO: Killed stuck arecord processes before retry 3
+[2025-09-17 21:26:03] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:26:03] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:26:01] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:26:01] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:25:59] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:25:59] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:25:57] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:25:57] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:25:57] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:25:57] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:25:56] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:25:56] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:25:56] INFO: Mixing service started
+[2025-09-17 21:25:43] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 21:25:43] WARNING: Microphone device busy (attempt 3), retrying in 2s
+[2025-09-17 21:25:43] INFO: Killed stuck arecord processes before retry 3
+[2025-09-17 21:25:41] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:25:41] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:25:39] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:25:39] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:25:37] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:25:37] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:25:35] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:25:35] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:25:35] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:25:35] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:25:34] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:25:34] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:25:34] INFO: Mixing service started
+[2025-09-17 21:25:27] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 21:25:27] WARNING: Microphone device busy (attempt 3), retrying in 2s
+[2025-09-17 21:25:27] INFO: Killed stuck arecord processes before retry 3
+[2025-09-17 21:25:25] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:25:25] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:25:23] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:25:23] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:25:21] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:25:21] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:25:19] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:25:19] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:25:19] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:25:19] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:25:19] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:25:19] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:25:19] INFO: Mixing service started
+[2025-09-17 21:25:09] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:25:09] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:25:07] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:25:07] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:25:05] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:25:05] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:25:03] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:25:03] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:25:03] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:25:03] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:25:00] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:25:00] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:25:00] INFO: Mixing service started
+[2025-09-17 21:24:49] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:24:49] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:24:47] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:24:47] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:24:47] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:24:47] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:24:44] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:24:44] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:24:44] INFO: Mixing service started
+[2025-09-17 21:24:27] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:24:27] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:24:25] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:24:25] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:24:23] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:24:23] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:24:23] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:24:23] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:24:20] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:24:20] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:24:20] INFO: Mixing service started
+[2025-09-17 21:24:08] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:24:08] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:24:06] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:24:06] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:24:04] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:24:04] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:24:04] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:24:04] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:24:01] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:24:01] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:24:01] INFO: Mixing service started
+[2025-09-17 21:23:50] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:23:50] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:23:48] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:23:48] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:23:48] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:23:48] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:23:45] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:23:45] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:23:45] INFO: Mixing service started
+[2025-09-17 21:23:31] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 21:23:31] WARNING: Microphone device busy (attempt 3), retrying in 2s
+[2025-09-17 21:23:31] INFO: Killed stuck arecord processes before retry 3
+[2025-09-17 21:23:29] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:23:29] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:23:27] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:23:27] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:23:25] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:23:25] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:23:23] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:23:23] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:23:23] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:23:23] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:23:20] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:23:20] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:23:20] INFO: Mixing service started
+[2025-09-17 21:23:12] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 21:23:12] WARNING: Microphone device busy (attempt 3), retrying in 2s
+[2025-09-17 21:23:12] INFO: Killed stuck arecord processes before retry 3
+[2025-09-17 21:23:10] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:23:10] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:23:08] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:23:08] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:23:06] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:23:06] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:23:04] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:23:04] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:23:04] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:23:04] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:23:01] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:23:01] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:23:01] INFO: Mixing service started
+[2025-09-17 21:22:53] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 21:22:53] WARNING: Microphone device busy (attempt 3), retrying in 2s
+[2025-09-17 21:22:53] INFO: Killed stuck arecord processes before retry 3
+[2025-09-17 21:22:51] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:22:51] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:22:49] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:22:49] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:22:47] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:22:47] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:22:45] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:22:45] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:22:45] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:22:45] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:22:42] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:22:42] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:22:42] INFO: Mixing service started
+[2025-09-17 21:22:35] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 21:22:35] WARNING: Microphone device busy (attempt 3), retrying in 2s
+[2025-09-17 21:22:35] INFO: Killed stuck arecord processes before retry 3
+[2025-09-17 21:22:33] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:22:33] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:22:31] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:22:31] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:22:29] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:22:29] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:22:27] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:22:27] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:22:27] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:22:27] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:22:23] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:22:23] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:22:23] INFO: Mixing service started
+[2025-09-17 21:22:13] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:22:13] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:22:13] INFO: Mixing service started
+[2025-09-17 21:21:54] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:21:54] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:21:54] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:21:50] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:21:50] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:21:50] INFO: Mixing service started
+[2025-09-17 21:21:31] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:21:31] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:21:31] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:21:28] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:21:28] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:21:28] INFO: Mixing service started
+[2025-09-17 21:21:12] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 21:21:12] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:21:10] WARNING: Microphone device busy (attempt 2), retrying in 2s
+[2025-09-17 21:21:10] INFO: Killed stuck arecord processes before retry 2
+[2025-09-17 21:21:08] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:21:08] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:21:06] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:21:05] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:21:05] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:21:05] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:21:02] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:21:02] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:21:02] INFO: Mixing service started
+[2025-09-17 21:20:50] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:20:50] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:20:50] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:20:50] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:20:46] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:20:46] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:20:46] INFO: Mixing service started
+[2025-09-17 21:20:22] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:20:22] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:20:22] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:20:18] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:20:18] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:20:18] INFO: Mixing service started
+[2025-09-17 21:20:02] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:20:02] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:20:02] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:19:59] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:19:59] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:19:59] INFO: Mixing service started
+[2025-09-17 21:19:46] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:19:46] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:19:46] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:19:42] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:19:42] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:19:42] INFO: Mixing service started
+[2025-09-17 21:19:26] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:19:26] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:19:26] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:19:23] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:19:23] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:19:23] INFO: Mixing service started

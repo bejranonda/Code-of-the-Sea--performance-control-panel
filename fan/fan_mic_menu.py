@@ -415,9 +415,10 @@ def main():
     update_status(mode="Initializing", connection_status="connecting")
     
     # Initialize hardware
-    if not initialize_gpio():
-        log_error("Failed to initialize GPIO, service cannot start")
-        return
+    gpio_available = initialize_gpio()
+    if not gpio_available:
+        log_error("Failed to initialize GPIO, continuing in monitoring-only mode")
+        # Don't exit - continue running in monitoring mode without GPIO control
 
     # Initialize VEML7700 sensor for Lux mode (optional)
     veml7700_initialized = initialize_veml7700()
