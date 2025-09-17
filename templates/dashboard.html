@@ -962,7 +962,42 @@
                 <select name="mode_selector" class="form-select" onchange="setRadioMode(this.value)" style="margin-bottom: 15px;">
                   <option value="Fixed" {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') == 'Fixed') or (configs[service_name]['mode'] == 'Fixed') %}selected{% endif %}>Manual Frequency</option>
                   <option value="Scan" {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') in ['Scan', 'Scanning', 'Scanned']) or (configs[service_name]['mode'] == 'Scan') %}selected{% endif %}>Scan Once</option>
+                  <option value="Loop" {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') == 'Loop') or (configs[service_name]['mode'] == 'Loop') %}selected{% endif %}>Loop Stations</option>
                 </select>
+              </div>
+
+              <!-- Loop Duration Control -->
+              <div class="form-group" id="loopDurationGroup" style="display: {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') == 'Loop') or (configs[service_name]['mode'] == 'Loop') %}block{% else %}none{% endif %};">
+                <label class="form-label">Loop Duration (seconds per station):</label>
+                <div class="slider-container">
+                  <input type="range" name="loop_duration" min="1" max="300" step="1"
+                         value="{% if service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('loop_duration') %}{{ service_statuses[service_name]['loop_duration'] }}{% else %}{{ configs[service_name].get('loop_duration', 30) }}{% endif %}"
+                         class="slider" id="loopDurationSlider" oninput="updateLoopDurationSlider(); updateLoopDuration();">
+                  <span class="slider-value" id="loopDurationValue">
+                    {% if service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('loop_duration') %}{{ service_statuses[service_name]['loop_duration'] }}{% else %}{{ configs[service_name].get('loop_duration', 30) }}{% endif %}s
+                  </span>
+                </div>
+              </div>
+
+              <!-- Loop Status Display -->
+              <div class="form-group" id="loopStatusGroup" style="display: {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') == 'Loop') %}block{% else %}none{% endif %};">
+                <label class="form-label">Loop Status:</label>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 2px solid #e2e8f0;">
+                  <div id="loopStatus">
+                    {% if service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') == 'Loop' %}
+                      <div style="font-size: 14px; color: #1f2937; margin-bottom: 8px;">
+                        🔄 Station {{ (service_statuses[service_name].get('current_station_index', 0) + 1) }} of {{ service_statuses[service_name].get('stations', [])|length }}
+                      </div>
+                      <div style="font-size: 12px; color: #6b7280;">
+                        Time remaining: {{ service_statuses[service_name].get('time_remaining', 0)|round }}s
+                      </div>
+                    {% else %}
+                      <div style="font-size: 14px; color: #6b7280; text-align: center;">
+                        Select Loop mode to cycle through stations
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
               </div>
 
               <!-- Found Stations List -->
@@ -1254,11 +1289,20 @@
       formData.append('frequency', document.getElementById('frequencySlider').value || 99.5);
       formData.append('direction', 'Up');
 
+      // Add loop duration if in Loop mode
+      if (mode === 'Loop') {
+        formData.append('loop_duration', document.getElementById('loopDurationSlider').value || 30);
+      }
+
       // Show/hide controls based on mode
       const stationsList = document.getElementById('stationsList');
+      const loopDurationGroup = document.getElementById('loopDurationGroup');
+      const loopStatusGroup = document.getElementById('loopStatusGroup');
 
       if (mode === 'Scan') {
         stationsList.style.display = 'block';
+        loopDurationGroup.style.display = 'none';
+        loopStatusGroup.style.display = 'none';
         // Show scanning message with stop button
         document.getElementById('stationsContainer').innerHTML = `
           <div style="text-align: center; padding: 20px; color: #6b7280;">
@@ -1269,9 +1313,25 @@
             </button>
           </div>
         `;
-      } else {
-        // Keep stations list visible - don't hide it when switching to manual mode
+      } else if (mode === 'Loop') {
         stationsList.style.display = 'block';
+        loopDurationGroup.style.display = 'block';
+        loopStatusGroup.style.display = 'block';
+        // Show loop mode message
+        document.getElementById('stationsContainer').innerHTML = `
+          <div style="text-align: center; padding: 20px; color: #6b7280;">
+            <i class="fas fa-sync fa-spin"></i> Starting Loop mode...
+            <br><br>
+            <div style="font-size: 12px;">Will cycle through found stations every ${document.getElementById('loopDurationSlider').value || 30} seconds</div>
+          </div>
+        `;
+        // Load any existing stations
+        loadStationsList();
+      } else {
+        // Fixed mode
+        stationsList.style.display = 'block';
+        loopDurationGroup.style.display = 'none';
+        loopStatusGroup.style.display = 'none';
         // Load any existing stations when switching to manual mode
         loadStationsList();
       }
@@ -1287,6 +1347,11 @@
             setTimeout(() => {
               loadStationsList();
             }, 2000); // Check for results every 2 seconds
+          } else if (mode === 'Loop') {
+            // For loop mode, wait a bit then reload to get updated status
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
           } else {
             setTimeout(() => {
               window.location.reload();
@@ -1297,6 +1362,38 @@
       .catch(error => {
         console.error('Error setting radio mode:', error);
       });
+    }
+
+    function updateLoopDuration() {
+      const duration = document.getElementById('loopDurationSlider').value;
+      const formData = new FormData();
+      formData.append('mode', 'Loop');
+      formData.append('loop_duration', duration);
+      formData.append('frequency', document.getElementById('frequencySlider').value || 99.5);
+      formData.append('direction', 'Up');
+
+      fetch('{{ url_for("save_service_config", service="Radio Service") }}', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Loop duration updated to:', duration, 'seconds');
+        }
+      })
+      .catch(error => {
+        console.error('Error updating loop duration:', error);
+      });
+    }
+
+    function updateLoopDurationSlider() {
+      const slider = document.getElementById('loopDurationSlider');
+      const valueDisplay = document.getElementById('loopDurationValue');
+
+      if (slider && valueDisplay) {
+        const value = slider.value;
+        valueDisplay.textContent = value + 's';  // Always show 's' for seconds
+      }
     }
 
     function loadStationsList() {

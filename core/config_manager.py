@@ -56,7 +56,7 @@ class ConfigManager:
                 'last_updated': datetime.now().isoformat(),
                 'version': '1.0'
             }
-            
+
             # Use atomic write: write to temp file then rename
             temp_file = self.config_file + ".tmp"
             with open(temp_file, "w") as f:
@@ -64,6 +64,10 @@ class ConfigManager:
             
             # Atomic rename
             os.rename(temp_file, self.config_file)
+
+            # Also update service_config.json for backward compatibility with radio service
+            self._update_service_config_file()
+
             return True
         except Exception as e:
             print(f"Error saving configurations: {e}")
@@ -98,6 +102,34 @@ class ConfigManager:
         except Exception as e:
             print(f"Error updating config for {service_name}: {e}")
             return False
+
+    def _update_service_config_file(self):
+        """Update service_config.json for backward compatibility with radio service"""
+        try:
+            service_config_file = "service_config.json"
+
+            # Load existing service_config.json if it exists
+            if os.path.exists(service_config_file):
+                with open(service_config_file, "r") as f:
+                    service_config = json.load(f)
+            else:
+                service_config = {}
+
+            # Update with current configs (excluding metadata)
+            for service_name, config in self.configs.items():
+                if service_name != '_metadata':
+                    # Create a clean copy without status_file
+                    clean_config = {k: v for k, v in config.items() if k != 'status_file'}
+                    service_config[service_name] = clean_config
+
+            # Save updated service_config.json
+            with open(service_config_file, "w") as f:
+                json.dump(service_config, f, indent=2)
+
+            print(f"✅ Updated {service_config_file} for backward compatibility")
+
+        except Exception as e:
+            print(f"⚠️ Warning: Could not update service_config.json: {e}")
     
     def _process_config_values(self, service_name: str, updates: Dict[str, Any]) -> Dict[str, Any]:
         """Convert string values to appropriate types based on service"""
