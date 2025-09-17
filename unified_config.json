@@ -1,27 +1,39 @@
 {
   "LED Service": {
-    "mode": "Musical LED",
-    "brightness": 85,
-    "status_file": "led/led_status.json"
+    "mode": "Lux sensor",
+    "brightness": 100,
+    "status_file": "led/led_status.json",
+    "lux_min": "20",
+    "lux_max": "1500"
   },
   "Radio Service": {
-    "mode": "Fixed",
-    "frequency": 95.5,
+    "mode": "Scan",
+    "frequency": 91.5,
     "direction": "Up",
-    "status_file": "radio/radio_status.json"
+    "status_file": "radio/radio_status.json",
+    "mode_selector": "Scan",
+    "loop_duration": "30"
   },
   "Fan Service": {
-    "mode": "Random",
-    "speed": 13,
-    "status_file": "fan/fan_status.json"
+    "mode": "Lux sensor",
+    "speed": 1,
+    "status_file": "fan/fan_status.json",
+    "lux_min": "1",
+    "lux_max": "1000"
   },
   "_metadata": {
-    "last_updated": "2025-09-09T23:14:20.101641",
+    "last_updated": "2025-09-17T11:32:08.430856",
     "version": "1.0"
   },
   "Broadcast Service": {
     "mode": "Loop",
     "volume": 33,
     "status_file": "broadcast/broadcast_status.json"
+  },
+  "Mixing Service": {
+    "mode": "Auto",
+    "master_volume": "100",
+    "mic_volume": "55",
+    "recording_duration": "30"
   }
 }

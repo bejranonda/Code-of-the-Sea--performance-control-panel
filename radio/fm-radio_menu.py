@@ -40,7 +40,11 @@ current_status = {
     "signal_level": 0,
     "last_update": None,
     "error_count": 0,
-    "connection_status": "disconnected"
+    "connection_status": "disconnected",
+    "loop_duration": 30,  # Default loop duration in seconds
+    "current_station_index": 0,
+    "loop_start_time": None,
+    "stations": []  # List of found stations for looping
 }
 
 # -------------------------------
@@ -487,6 +491,59 @@ def stop_scan():
         log_error("Error creating stop signal", e)
 
 # -------------------------------
+# Loop Mode Functions
+# -------------------------------
+def handle_loop_mode():
+    """Handle Loop mode station cycling with configurable duration"""
+    try:
+        stations = current_status.get("stations", [])
+        if not stations or len(stations) == 0:
+            log_event("No stations available for looping, switching to Fixed mode")
+            current_status["mode"] = "Fixed"
+            return
+
+        loop_duration = float(current_status.get("loop_duration", 30))  # Convert to float
+        loop_start_time = current_status.get("loop_start_time", time.time())
+        current_station_index = current_status.get("current_station_index", 0)
+
+        # Check if it's time to switch to the next station
+        elapsed_time = time.time() - loop_start_time
+
+        if elapsed_time >= loop_duration:
+            # Time to switch to next station
+            current_station_index = (current_station_index + 1) % len(stations)
+            current_station = stations[current_station_index]
+
+            # Set the new frequency - PASSIVE MODE like Manual Frequency
+            # Don't read anything from I2C to prevent frequency corruption
+            freq = float(current_station["frequency"])
+            if set_frequency(freq):
+                # No time.sleep() needed - just set and move on like Manual mode
+                # No signal reading or I2C operations to avoid corruption
+
+                # Update status with new station
+                current_status["current_station_index"] = current_station_index
+                current_status["loop_start_time"] = time.time()
+                current_status["frequency"] = freq
+
+                update_status(
+                    current_station_index=current_station_index,
+                    loop_start_time=time.time(),
+                    frequency=freq
+                )
+
+                log_event(f"Loop: Station {current_station_index + 1}/{len(stations)} - {freq:.1f} MHz ({current_station.get('quality', 'Unknown')})")
+            else:
+                log_error(f"Failed to set loop frequency {freq:.2f} MHz")
+
+        # Update time remaining for dashboard display
+        time_remaining = max(0, loop_duration - elapsed_time)
+        current_status["time_remaining"] = time_remaining
+
+    except Exception as e:
+        log_error("Error in loop mode handler", e)
+
+# -------------------------------
 # Main Loop
 # -------------------------------
 def main():
@@ -534,8 +591,24 @@ def main():
                                 # Set to first (strongest) station
                                 best_station = stations[0]
                                 cfg["frequency"] = best_station["frequency"]
-                                cfg["mode"] = "Fixed"  # Switch to Fixed mode with best station
-                                cfg["mode_selector"] = "Fixed"  # Set mode_selector to Fixed
+
+                                # Check if we should go to Loop mode or Fixed mode
+                                original_config = read_config()
+                                target_mode = original_config.get("mode_selector", original_config.get("mode", "Fixed"))
+
+                                if target_mode == "Loop":
+                                    # Keep Loop mode and set up station cycling
+                                    cfg["mode"] = "Loop"
+                                    cfg["mode_selector"] = "Loop"
+                                    current_status["stations"] = stations
+                                    current_status["current_station_index"] = 0
+                                    log_event(f"Scan complete: {len(stations)} stations found, switching to Loop mode")
+                                else:
+                                    # Switch to Fixed mode with best station
+                                    cfg["mode"] = "Fixed"
+                                    cfg["mode_selector"] = "Fixed"
+                                    log_event(f"Scan complete: {len(stations)} stations found, switching to Fixed mode")
+
                                 write_config(cfg)
 
                                 log_event(f"Scan complete: {len(stations)} stations found, will tune to {best_station['frequency']:.1f} MHz")
@@ -564,19 +637,56 @@ def main():
                             write_config(cfg)
                             update_status(mode="Fixed")
 
-                    # "Scanned" mode removed - after scan completes, it switches to "Fixed" mode
+                    elif mode == "Loop":
+                        # Loop mode - cycle through found stations with configurable duration
+                        loop_duration = float(cfg.get("loop_duration", 30))  # Convert to float from config
+
+                        # Check if we have stations to loop through
+                        if current_status.get("stations") and len(current_status["stations"]) > 0:
+                            log_event(f"Starting Loop mode with {len(current_status['stations'])} stations, {loop_duration}s per station")
+                            update_status(
+                                mode="Loop",
+                                loop_duration=loop_duration,
+                                loop_start_time=time.time()
+                            )
+                        else:
+                            log_event("Loop mode requested but no stations available, scanning first...")
+                            # No stations available, perform scan first
+                            stations = search_all_stations()
+                            if stations:
+                                current_status["stations"] = stations
+                                current_status["current_station_index"] = 0
+                                log_event(f"Scan complete: {len(stations)} stations found, starting loop mode")
+                                update_status(
+                                    mode="Loop",
+                                    loop_duration=loop_duration,
+                                    loop_start_time=time.time(),
+                                    stations=stations,
+                                    current_station_index=0
+                                )
+                            else:
+                                log_event("No stations found, falling back to Fixed mode")
+                                cfg["mode"] = "Fixed"
+                                cfg["mode_selector"] = "Fixed"
+                                write_config(cfg)
+                                update_status(mode="Fixed")
 
                     last_config = cfg.copy()
 
-                # PASSIVE MODE: Do absolutely nothing after frequency is set
-                # Just like the working fm-radio.py - set frequency and leave it alone
-                # No I2C reading, no file I/O, no status updates - complete radio silence
-
+                # MODE-SPECIFIC OPERATIONS
                 current_mode = current_status.get("mode", "")
+
                 if current_mode == "Fixed":
-                    # In Fixed mode, be completely passive - just wait for config changes
+                    # PASSIVE MODE: Do absolutely nothing after frequency is set
+                    # Just like the working fm-radio.py - set frequency and leave it alone
                     # No logging, no I2C operations, no file operations - radio silence
                     time.sleep(5)  # Sleep longer to reduce any potential interference
+
+                elif current_mode == "Loop":
+                    # LOOP MODE: Cycle through stations with timing
+                    handle_loop_mode()
+                    time.sleep(1)  # Check every second for timing
+
                 else:
                     # In other modes (like Scanning), minimal operations
                     time.sleep(1)

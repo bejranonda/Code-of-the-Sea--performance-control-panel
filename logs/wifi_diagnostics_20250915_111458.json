@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-09-15T11:14:58.667582",
+  "connection_status": {},
+  "signal_info": {},
+  "power_management": {},
+  "driver_info": {},
+  "network_config": {},
+  "interference": {},
+  "errors": [
+    "iwconfig error: [Errno 2] No such file or directory: 'iwconfig'",
+    "Signal info error: [Errno 2] No such file or directory: 'cat'",
+    "Power management check error: [Errno 2] No such file or directory: 'iwconfig'",
+    "Driver info error: [Errno 2] No such file or directory: 'lsusb'",
+    "Network config error: [Errno 2] No such file or directory: 'ip'",
+    "Interference check error: [Errno 2] No such file or directory: 'cat'"
+  ]
+}

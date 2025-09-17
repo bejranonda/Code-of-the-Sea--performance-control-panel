@@ -1,0 +1,13 @@
+[Unit]
+Description=WiFi Stability Fixes
+After=network.target wpa_supplicant.service
+Wants=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/payas/cos/scripts/disable-wifi-powersave.sh
+RemainAfterExit=yes
+User=root
+
+[Install]
+WantedBy=multi-user.target

@@ -69,6 +69,18 @@ class ServiceManager:
                 self.stop_service(name)
                 # Give some time for the service to stop cleanly
                 time.sleep(1)
+
+            # Also kill any other instances of the same script (prevents conflicts with other unified apps)
+            script_name = os.path.basename(script_path)
+            try:
+                existing_pids = subprocess.run(['pgrep', '-f', script_name], capture_output=True, text=True)
+                if existing_pids.returncode == 0 and existing_pids.stdout.strip():
+                    pids = existing_pids.stdout.strip().split('\n')
+                    self.log_event(f"Found existing instances of {script_name}: {pids}")
+                    subprocess.run(['pkill', '-f', script_name], capture_output=True)
+                    time.sleep(1)
+            except Exception as e:
+                self.log_event(f"Error checking for existing {script_name} processes: {e}")
             
             # Set working directory
             if not working_dir:
@@ -184,17 +196,67 @@ class ServiceManager:
     
     def is_service_running(self, name: str) -> bool:
         """Check if a service is currently running"""
-        if name not in self.processes:
-            return False
-        try:
-            if not psutil.pid_exists(self.processes[name].pid):
+        # First check if we have the process tracked
+        if name in self.processes:
+            try:
+                if not psutil.pid_exists(self.processes[name].pid):
+                    # Process died, remove from tracking
+                    del self.processes[name]
+                    return False
+                # Check if process is not zombie
+                p = psutil.Process(self.processes[name].pid)
+                if p.status() == psutil.STATUS_ZOMBIE:
+                    del self.processes[name]
+                    return False
+                return True
+            except (psutil.NoSuchProcess, psutil.AccessDenied, Exception):
+                # Process died, remove from tracking
+                if name in self.processes:
+                    del self.processes[name]
                 return False
-            # Check if process is not zombie
-            p = psutil.Process(self.processes[name].pid)
-            return p.status() != psutil.STATUS_ZOMBIE
-        except (psutil.NoSuchProcess, psutil.AccessDenied, Exception):
+
+        # If not tracked, check if process exists by looking for running processes
+        return self._find_existing_service(name)
+
+    def _find_existing_service(self, name: str) -> bool:
+        """Find if service is running by searching for process by name"""
+        try:
+            # Define script mappings for services
+            script_patterns = {
+                "LED Service": ["lighting_menu.py", "lighting.py"],
+                "Radio Service": ["fm-radio_menu.py", "fm-radio.py"],
+                "Fan Service": ["fan_mic_menu.py", "fan.py"],
+                "Broadcast Service": ["broadcast_menu.py", "broadcast.py"]
+            }
+
+            if name not in script_patterns:
+                return False
+
+            patterns = script_patterns[name]
+
+            # Search through all Python processes
+            for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+                try:
+                    if proc.info['name'] in ['python', 'python3']:
+                        cmdline = proc.info['cmdline']
+                        if cmdline and len(cmdline) > 1:
+                            # Check if any of our script patterns match the command line
+                            for pattern in patterns:
+                                if any(pattern in arg for arg in cmdline):
+                                    # Found a matching process - create a mock Popen object for tracking
+                                    mock_process = type('MockProcess', (), {'pid': proc.info['pid']})()
+                                    self.processes[name] = mock_process
+                                    self.log_event(f"Found existing {name} process (PID: {proc.info['pid']})")
+                                    return True
+                except (psutil.NoSuchProcess, psutil.AccessDenied, IndexError):
+                    continue
+
             return False
-    
+
+        except Exception as e:
+            self.log_error(f"Error finding existing service {name}", e)
+            return False
+
     def get_service_pid(self, name: str) -> Optional[int]:
         """Get PID of running service"""
         if name in self.processes and self.is_service_running(name):
