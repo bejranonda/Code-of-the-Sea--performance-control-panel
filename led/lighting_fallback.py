@@ -37,7 +37,7 @@ except ImportError:
     print("Warning: VEML7700 libraries not available - light sensor disabled")
 
 # Configuration Files
-CONFIG_FILE = "../unified_config.json"
+CONFIG_FILE = os.path.join(os.path.dirname(__file__), "..", "unified_config.json")
 LOG_FILE = os.path.join(os.path.dirname(__file__), "led_log.txt")
 STATUS_FILE = os.path.join(os.path.dirname(__file__), "led_status.json")
 

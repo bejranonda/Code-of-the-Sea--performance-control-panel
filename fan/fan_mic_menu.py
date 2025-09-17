@@ -40,7 +40,7 @@ except ImportError as e:
 FAN_PIN = 18   # Use GPIO18 (supports hardware PWM)
 PWM_FREQUENCY = 200  # 25 kHz PWM (good for fans)
 
-CONFIG_FILE = "../service_config.json"  # Look in parent directory
+CONFIG_FILE = os.path.join(os.path.dirname(__file__), "..", "service_config.json")  # Absolute path to parent directory
 LOG_FILE = os.path.join(os.path.dirname(__file__), "fan_log.txt")
 STATUS_FILE = os.path.join(os.path.dirname(__file__), "fan_status.json")
 
