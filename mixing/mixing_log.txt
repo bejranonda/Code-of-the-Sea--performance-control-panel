@@ -1,3 +1,299 @@
+[2025-09-17 15:00:27] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 15:00:27] ERROR: Error during microphone recording (attempt 3)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 15:00:27] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 15:00:27] INFO: Detected microphone device: hw:3,0
+[2025-09-17 15:00:27] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 15:00:25] ERROR: Error during microphone recording (attempt 2)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 15:00:25] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 15:00:25] INFO: Detected microphone device: hw:3,0
+[2025-09-17 15:00:25] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 15:00:23] ERROR: Error during microphone recording (attempt 1)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 15:00:23] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 15:00:23] INFO: Detected microphone device: hw:3,0
+[2025-09-17 15:00:23] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 15:00:23] WARNING: Could not determine master file duration, using full file mixing
+[2025-09-17 15:00:23] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 15:00:16] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 15:00:16] ERROR: Error during microphone recording (attempt 3)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 15:00:16] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 15:00:16] INFO: Detected microphone device: hw:3,0
+[2025-09-17 15:00:16] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 15:00:14] ERROR: Error during microphone recording (attempt 2)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 15:00:14] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 15:00:14] INFO: Detected microphone device: hw:3,0
+[2025-09-17 15:00:14] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 15:00:12] ERROR: Error during microphone recording (attempt 1)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 15:00:12] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 15:00:12] INFO: Detected microphone device: hw:3,0
+[2025-09-17 15:00:12] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 15:00:12] WARNING: Could not determine master file duration, using full file mixing
+[2025-09-17 15:00:12] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 15:00:12] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '55', 'recording_duration': '30'}
+[2025-09-17 15:00:12] INFO: Mixing service started
+[2025-09-17 15:00:07] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 15:00:07] ERROR: Error during microphone recording (attempt 3)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 15:00:07] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 15:00:07] INFO: Detected microphone device: hw:3,0
+[2025-09-17 15:00:07] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 15:00:05] ERROR: Error during microphone recording (attempt 2)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 15:00:05] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 15:00:05] INFO: Detected microphone device: hw:3,0
+[2025-09-17 15:00:05] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 15:00:03] ERROR: Error during microphone recording (attempt 1)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 15:00:03] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 15:00:03] INFO: Detected microphone device: hw:3,0
+[2025-09-17 15:00:03] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 15:00:03] WARNING: Could not determine master file duration, using full file mixing
+[2025-09-17 15:00:03] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 14:59:59] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 14:59:59] INFO: Detected microphone device: hw:3,0
+[2025-09-17 14:59:59] INFO: Master file position: 270s / 2778.22s
+[2025-09-17 14:59:58] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 14:59:56] ERROR: Microphone recording failed after all retry attempts
+Exception: Max retries exceeded
+Traceback:
+NoneType: None
+
+[2025-09-17 14:59:56] ERROR: Error during microphone recording (attempt 3)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 14:59:56] INFO: Starting microphone recording (30s) - attempt 3/3
+[2025-09-17 14:59:56] INFO: Detected microphone device: hw:3,0
+[2025-09-17 14:59:56] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 14:59:54] ERROR: Error during microphone recording (attempt 2)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 14:59:54] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 14:59:54] INFO: Detected microphone device: hw:3,0
+[2025-09-17 14:59:54] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 14:59:52] ERROR: Error during microphone recording (attempt 1)
+Exception: [Errno 2] No such file or directory: 'arecord'
+Traceback:
+Traceback (most recent call last):
+  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
+
+[2025-09-17 14:59:52] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 14:59:52] INFO: Detected microphone device: hw:3,0
+[2025-09-17 14:59:52] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
+[2025-09-17 14:59:52] WARNING: Could not determine master file duration, using full file mixing
+[2025-09-17 14:59:52] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 14:59:52] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '55', 'recording_duration': '30'}
+[2025-09-17 14:59:52] INFO: Mixing service started
+[2025-09-17 14:59:29] INFO: Removed old file: mixed_audio_20250917_145350.mp3
+[2025-09-17 14:59:29] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145857.mp3
+[2025-09-17 14:59:27] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
+[2025-09-17 14:59:27] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 240s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145857.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145857.mp3
+[2025-09-17 14:59:27] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145857.wav
+[2025-09-17 14:58:57] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 14:58:57] INFO: Detected microphone device: hw:3,0
+[2025-09-17 14:58:57] INFO: Master file position: 240s / 2778.22s
+[2025-09-17 14:58:57] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 14:58:28] INFO: Removed old file: mixed_audio_20250917_145249.mp3
+[2025-09-17 14:58:28] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145756.mp3
+[2025-09-17 14:58:26] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
+[2025-09-17 14:58:26] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 210s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145756.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145756.mp3
+[2025-09-17 14:58:26] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145756.wav
+[2025-09-17 14:57:56] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 14:57:56] INFO: Detected microphone device: hw:3,0
+[2025-09-17 14:57:56] INFO: Master file position: 210s / 2778.22s
+[2025-09-17 14:57:55] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 14:57:26] INFO: Removed old file: mixed_audio_20250917_145147.mp3
+[2025-09-17 14:57:26] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145655.mp3
+[2025-09-17 14:57:25] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
+[2025-09-17 14:57:25] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 180s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145655.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145655.mp3
+[2025-09-17 14:57:25] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145655.wav
+[2025-09-17 14:56:55] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 14:56:55] INFO: Detected microphone device: hw:3,0
+[2025-09-17 14:56:55] INFO: Master file position: 180s / 2778.22s
+[2025-09-17 14:56:54] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 14:56:25] INFO: Removed old file: mixed_audio_20250917_145046.mp3
+[2025-09-17 14:56:25] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145553.mp3
+[2025-09-17 14:56:23] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
+[2025-09-17 14:56:23] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 150s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145553.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145553.mp3
+[2025-09-17 14:56:23] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145553.wav
 [2025-09-17 14:55:53] INFO: Starting microphone recording (30s) - attempt 1/3
 [2025-09-17 14:55:53] INFO: Detected microphone device: hw:3,0
 [2025-09-17 14:55:53] INFO: Master file position: 150s / 2778.22s
