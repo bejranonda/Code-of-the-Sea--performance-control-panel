@@ -1,6 +1,6 @@
 {
   "LED Service": {
-    "mode": "Manual LED",
+    "mode": "Musical LED",
     "brightness": 100,
     "lux_min": "20",
     "lux_max": "1500"
@@ -28,7 +28,7 @@
   "Mixing Service": {
     "mode": "Auto",
     "master_volume": "100",
-    "mic_volume": "75",
+    "mic_volume": "65",
     "recording_duration": "30",
     "volume": "75"
   }

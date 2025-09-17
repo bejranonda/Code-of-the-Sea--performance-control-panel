@@ -462,6 +462,19 @@ async def musical_led_mode():
     # Turn on LED at start
     await set_brightness_and_power(50, force_update=True)  # Start with 50% brightness
     
+    # Try to use audio input with error resilience
+    audio_available = False
+    try:
+        # Test audio device availability first
+        with sd.InputStream(samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE) as test_stream:
+            audio_available = True
+            log_event("Audio input device available for Musical LED mode")
+    except Exception as e:
+        log_error("Audio device unavailable for Musical LED mode, falling back to lux monitoring", e)
+        # Fall back to lux-based lighting instead of crashing
+        await lighting_led_mode()
+        return
+
     try:
         with sd.InputStream(samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE) as stream:
             while True:
@@ -498,7 +511,14 @@ async def musical_led_mode():
                     await asyncio.sleep(0.1)
                     
     except Exception as e:
-        log_error("Error starting Musical LED mode", e)
+        log_error("Error starting Musical LED mode, falling back to lux monitoring", e)
+        # Don't let the service crash - fall back to lux monitoring
+        try:
+            await lighting_led_mode()
+        except Exception as fallback_e:
+            log_error("Fallback to lux mode also failed, continuing with basic operation", fallback_e)
+            # Keep service running with basic LED functionality
+            await asyncio.sleep(1)
 
 async def lighting_led_mode():
     """Lux sensor mode - brightness reacts to light sensor (inverse)."""
