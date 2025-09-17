@@ -128,6 +128,13 @@ previous_brightness_percent = -1
 # --- Global Variables ---
 d = None
 power_on_state = False
+lux_history = []
+last_recorded_lux = None
+LUX_HISTORY_FILE = os.path.join(os.path.dirname(__file__), "lux_history.json")
+LUX_CHANGE_THRESHOLD = 50  # Only record when lux changes by 50 or more
+MAX_HISTORY_ENTRIES = 5000  # Maximum number of history entries to keep
+MAX_FILE_SIZE_MB = 1  # Maximum file size in MB before trimming
+
 current_status = {
     "mode": "Manual LED",
     "brightness": 0,
@@ -135,7 +142,8 @@ current_status = {
     "lux_level": 0,  # Add lux level tracking
     "last_update": None,
     "error_count": 0,
-    "connection_status": "disconnected"
+    "connection_status": "disconnected",
+    "tuya_available": False
 }
 
 def log_event(message, level="INFO"):
@@ -201,12 +209,103 @@ def make_serializable(obj):
     else:
         return str(obj)
 
+def check_and_trim_history():
+    """Check file size and trim history if needed"""
+    global lux_history
+
+    try:
+        # Check if file exists and get its size
+        if os.path.exists(LUX_HISTORY_FILE):
+            file_size_mb = os.path.getsize(LUX_HISTORY_FILE) / (1024 * 1024)
+
+            # If file is too large or we have too many entries, trim it
+            if file_size_mb > MAX_FILE_SIZE_MB or len(lux_history) > MAX_HISTORY_ENTRIES:
+                # Keep only the most recent entries (half of max to avoid frequent trimming)
+                entries_to_keep = MAX_HISTORY_ENTRIES // 2
+                lux_history = lux_history[-entries_to_keep:]
+
+                # Save trimmed history
+                try:
+                    with open(LUX_HISTORY_FILE, "w") as f:
+                        json.dump(lux_history, f, indent=2)
+                    log_event(f"Lux history trimmed to {len(lux_history)} entries (was {file_size_mb:.2f}MB)")
+                except Exception as e:
+                    log_error("Failed to save trimmed lux history", e)
+
+    except Exception as e:
+        log_error("Error in check_and_trim_history", e)
+
+def save_lux_history(lux_value):
+    """Save lux value to history if it changed significantly"""
+    global last_recorded_lux, lux_history
+
+    try:
+        # Check if we should record this lux value
+        should_record = False
+        if last_recorded_lux is None:
+            should_record = True  # First reading
+        elif abs(lux_value - last_recorded_lux) >= LUX_CHANGE_THRESHOLD:
+            should_record = True  # Significant change
+
+        if should_record:
+            timestamp = datetime.now().isoformat()
+            lux_entry = {
+                "timestamp": timestamp,
+                "lux": round(lux_value, 2),
+                "change": round(lux_value - last_recorded_lux, 2) if last_recorded_lux is not None else 0
+            }
+
+            # Add to memory
+            lux_history.append(lux_entry)
+
+            # Check and trim if needed (do this before limiting in memory to be safe)
+            check_and_trim_history()
+
+            # Also limit in memory as backup
+            if len(lux_history) > MAX_HISTORY_ENTRIES:
+                lux_history = lux_history[-MAX_HISTORY_ENTRIES:]
+
+            # Save to file
+            try:
+                with open(LUX_HISTORY_FILE, "w") as f:
+                    json.dump(lux_history, f, indent=2)
+                log_event(f"Lux history recorded: {lux_value:.2f} (change: {lux_entry['change']:.2f})")
+            except Exception as e:
+                log_error("Failed to save lux history file", e)
+
+            last_recorded_lux = lux_value
+
+    except Exception as e:
+        log_error("Error in save_lux_history", e)
+
+def load_lux_history():
+    """Load lux history from file"""
+    global lux_history, last_recorded_lux
+
+    try:
+        with open(LUX_HISTORY_FILE, "r") as f:
+            lux_history = json.load(f)
+            if lux_history:
+                last_recorded_lux = lux_history[-1]["lux"]
+                log_event(f"Loaded {len(lux_history)} lux history entries")
+
+                # Check and trim on startup if needed
+                check_and_trim_history()
+    except FileNotFoundError:
+        lux_history = []
+        last_recorded_lux = None
+        log_event("No lux history file found, starting fresh")
+    except Exception as e:
+        log_error("Error loading lux history", e)
+        lux_history = []
+        last_recorded_lux = None
+
 def update_status(**kwargs):
     """Update current status and save to file"""
     global current_status
     current_status.update(kwargs)
     current_status["last_update"] = datetime.now().isoformat()
-    
+
     try:
         serializable_status = make_serializable(current_status)
         with open(STATUS_FILE, "w") as f:
@@ -274,8 +373,8 @@ def get_brightness_from_lux(lux_value, config=None):
     try:
         # Get configurable min/max lux values, with fallback to defaults
         if config:
-            lux_min = config.get("lux_min", SENSOR_LUX_MIN)
-            lux_max = config.get("lux_max", SENSOR_LUX_MAX)
+            lux_min = float(config.get("lux_min", SENSOR_LUX_MIN))
+            lux_max = float(config.get("lux_max", SENSOR_LUX_MAX))
         else:
             lux_min = SENSOR_LUX_MIN
             lux_max = SENSOR_LUX_MAX
@@ -283,8 +382,9 @@ def get_brightness_from_lux(lux_value, config=None):
         # Inverse mapping: low lux = high brightness, high lux = low brightness
         brightness_percent = map_range(lux_value, lux_min, lux_max, 100, 0)
 
-        # Update status with current lux level
+        # Update status with current lux level and save history
         update_status(lux_level=lux_value)
+        save_lux_history(lux_value)
 
         return max(0, min(100, brightness_percent))
     except Exception as e:
@@ -404,11 +504,17 @@ async def lighting_led_mode():
     """Lux sensor mode - brightness reacts to light sensor (inverse)."""
     log_event("Starting Lux sensor mode")
     update_status(mode="Lux sensor")
-    
+
+    # Load lux history on startup
+    load_lux_history()
+
     if not VEML7700_AVAILABLE:
         log_error("VEML7700 libraries not available for Lux sensor mode")
+        update_status(tuya_available=False)
         return
-    
+
+    # Try to initialize light sensor
+    veml7700 = None
     try:
         i2c = busio.I2C(board.SCL, board.SDA)
         veml7700 = adafruit_veml7700.VEML7700(i2c)
@@ -417,8 +523,12 @@ async def lighting_led_mode():
         log_event("VEML7700 sensor initialized successfully")
     except Exception as e:
         log_error("Error initializing VEML7700 sensor", e)
+        update_status(tuya_available=False)
         return
-    
+
+    # Check if Tuya LED is available
+    tuya_available = current_status.get("connection_status") == "connected"
+
     while True:
         # Check if mode changed
         config = load_config()
@@ -426,16 +536,28 @@ async def lighting_led_mode():
             break
 
         try:
+            # Always read and display lux value
             lux_value = veml7700.lux
             brightness_percent = get_brightness_from_lux(lux_value, config)
-            await set_brightness_and_power(brightness_percent)
 
-            # Log only significant changes
-            if abs(brightness_percent - current_status.get("brightness", 0)) > 5:
-                log_event(f"Lux sensor - Lux: {lux_value:.2f} -> Brightness: {brightness_percent:.1f}%")
-            
+            # Try to control Tuya LED if available
+            if tuya_available and d is not None:
+                try:
+                    await set_brightness_and_power(brightness_percent)
+                    # Log only significant changes when controlling LED
+                    if abs(brightness_percent - current_status.get("brightness", 0)) > 5:
+                        log_event(f"Lux sensor - Lux: {lux_value:.2f} -> Brightness: {brightness_percent:.1f}%")
+                except Exception as e:
+                    log_error("Error controlling Tuya LED, continuing with lux monitoring", e)
+                    tuya_available = False
+                    update_status(tuya_available=False)
+            else:
+                # Just monitor lux without controlling LED
+                if abs(lux_value - current_status.get("lux_level", 0)) > 10:
+                    log_event(f"Lux monitoring - Current lux: {lux_value:.2f} (LED control unavailable)")
+
             await asyncio.sleep(0.5)
-            
+
         except Exception as e:
             log_error("Error reading lux sensor", e)
             await asyncio.sleep(1)
@@ -474,41 +596,42 @@ async def manual_led_mode():
 async def initialize_tuya_device():
     """Initialize Tuya device with comprehensive error handling"""
     global d, power_on_state
-    
+
     try:
         log_event(f"Initializing Tuya device connection (Device ID: {DEVICE_ID})")
         d = tinytuya.BulbDevice(dev_id=DEVICE_ID, address=DEVICE_IP, local_key=DEVICE_KEY)
         d.set_version(PROTOCOL_VERSION)
         d.set_socketPersistent(True)
-        
+
         # Test connection
         status_data = await asyncio.wait_for(asyncio.to_thread(d.status), timeout=5.0)
         power_on_state = status_data.get('dps', {}).get(str(DP_ID_POWER), False)
-        
+
         log_event(f"Connected to Tuya device - Initial status: {status_data}")
-        update_status(connection_status="connected", power_state=power_on_state)
+        update_status(connection_status="connected", power_state=power_on_state, tuya_available=True)
         return True
-        
+
     except asyncio.TimeoutError:
-        log_error("Tuya device connection timed out")
-        update_status(connection_status="timeout")
+        log_error("Tuya device connection timed out - continuing with lux monitoring only")
+        update_status(connection_status="timeout", tuya_available=False)
         return False
     except Exception as e:
-        log_error("Error connecting to Tuya device", e)
-        update_status(connection_status="error")
+        log_error(f"Error connecting to Tuya device - continuing with lux monitoring only: {e}")
+        update_status(connection_status="error", tuya_available=False)
         return False
 
 async def main():
     """Main function that switches between modes based on config."""
     global d, power_on_state
-    
+
     log_event("LED Service starting")
     update_status(mode="Initializing", connection_status="connecting")
-    
-    # Initialize Tuya device
-    if not await initialize_tuya_device():
-        log_error("Failed to initialize Tuya device, service cannot start")
-        return
+
+    # Try to initialize Tuya device, but continue even if it fails
+    tuya_initialized = await initialize_tuya_device()
+    if not tuya_initialized:
+        log_event("Tuya LED not available, continuing with lux monitoring only")
+        update_status(tuya_available=False)
     
     try:
         while True:

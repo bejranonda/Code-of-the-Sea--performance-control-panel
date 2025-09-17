@@ -1,0 +1,53 @@
+{
+  "mode": "dashboard",
+  "service_configs": {
+    "LED Service": {
+      "mode": "Lux sensor",
+      "brightness": 100,
+      "status_file": "led/led_status.json",
+      "lux_min": "20",
+      "lux_max": "1500",
+      "last_updated": "2025-09-17T20:11:40.010765"
+    },
+    "Radio Service": {
+      "mode": "Loop",
+      "frequency": 103.2,
+      "direction": "Up",
+      "status_file": "radio/radio_status.json",
+      "mode_selector": "Loop",
+      "loop_duration": "10",
+      "last_updated": "2025-09-17T20:11:40.012326"
+    },
+    "Fan Service": {
+      "mode": "Lux sensor",
+      "speed": 1,
+      "status_file": "fan/fan_status.json",
+      "lux_min": "1",
+      "lux_max": "1000",
+      "last_updated": "2025-09-17T20:11:40.015409"
+    },
+    "Broadcast Service": {
+      "mode": "Loop",
+      "volume": 5,
+      "status_file": "broadcast/broadcast_status.json",
+      "last_updated": "2025-09-17T20:11:40.018313"
+    },
+    "Mixing Service": {
+      "mode": "Auto",
+      "master_volume": "100",
+      "mic_volume": "68",
+      "recording_duration": "30",
+      "volume": "75",
+      "last_updated": "2025-09-17T20:11:40.021770"
+    }
+  },
+  "ui_preferences": {
+    "theme": "default",
+    "auto_refresh": true,
+    "refresh_interval": 5
+  },
+  "last_active_services": [],
+  "user_selections": {},
+  "timestamp": "2025-09-17T20:11:40.022006",
+  "version": "2.0.0"
+}
