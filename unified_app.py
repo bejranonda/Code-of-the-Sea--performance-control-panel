@@ -17,6 +17,15 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'core'))
 from service_manager import ServiceManager
 from config_manager import ConfigManager
 from hardware_monitor import HardwareMonitor
+from service_persistence import ServicePersistenceManager
+from dashboard_state import DashboardStateManager
+
+# Import version information
+try:
+    from version_info import get_version
+    APP_VERSION = get_version()
+except ImportError:
+    APP_VERSION = "2.1.0"
 
 app = Flask(__name__)
 
@@ -48,6 +57,8 @@ SERVICES = {
 service_manager = ServiceManager("unified_app.log")
 config_manager = ConfigManager("unified_config.json")
 hardware_monitor = HardwareMonitor()
+persistence_manager = ServicePersistenceManager()
+dashboard_state = DashboardStateManager()
 
 # Initialize exhibition watchdog
 try:
@@ -78,21 +89,12 @@ APP_MODES = {
 }
 
 def get_current_mode():
-    """Get current application mode from config"""
-    try:
-        with open('app_mode.json', 'r') as f:
-            return json.load(f).get('mode', 'dashboard')
-    except:
-        return 'dashboard'
+    """Get current application mode from dashboard state"""
+    return dashboard_state.get_mode()
 
 def set_current_mode(mode: str):
     """Set application mode"""
-    try:
-        with open('app_mode.json', 'w') as f:
-            json.dump({'mode': mode, 'updated': time.time()}, f)
-        return True
-    except:
-        return False
+    return dashboard_state.save_mode(mode)
 
 def check_service_health(service_name: str) -> Dict[str, Any]:
     """Check comprehensive health of a service"""
@@ -172,14 +174,25 @@ def index():
     
     try:
         service_manager.cleanup_processes()
-        
+
+        # Force refresh of all service statuses (checks PID files and processes)
+        for service_name in SERVICES.keys():
+            try:
+                # Small delay to ensure PID files are readable
+                time.sleep(0.1)
+                is_running = service_manager.is_service_running(service_name)
+                service_manager.log_event(f"Dashboard refresh: {service_name} = {is_running}")
+            except Exception as e:
+                service_manager.log_error(f"Error refreshing {service_name} status", e)
+
         # Prepare context based on mode features
         context = {
             'scripts': {name: info['script'] for name, info in SERVICES.items()},
             'processes': service_manager.processes,
             'configs': config_manager.get_all_configs(),
             'current_mode': mode,
-            'available_modes': APP_MODES
+            'available_modes': APP_MODES,
+            'app_version': APP_VERSION
         }
         
         if 'hardware_monitoring' in mode_config['features']:
@@ -225,12 +238,18 @@ def start_service(service):
         script_path = SERVICES[service]['script']
         working_dir = os.path.dirname(script_path) or "."
         success = service_manager.start_service(service, script_path, working_dir)
-        
+
         if not success:
             service_manager.log_error(f"Failed to start {service}")
+        else:
+            # Update persistent service state after successful start
+            try:
+                persistence_manager.update_running_services()
+            except Exception as e:
+                service_manager.log_error(f"Failed to update service state after starting {service}", e)
     else:
         service_manager.log_error(f"Unknown service: {service}")
-    
+
     return redirect(url_for("index"))
 
 @app.route("/stop/<service>", methods=["POST"])
@@ -240,9 +259,15 @@ def stop_service(service):
         success = service_manager.stop_service(service)
         if not success:
             service_manager.log_error(f"Failed to stop {service}")
+        else:
+            # Update persistent service state after successful stop
+            try:
+                persistence_manager.update_running_services()
+            except Exception as e:
+                service_manager.log_error(f"Failed to update service state after stopping {service}", e)
     else:
         service_manager.log_error(f"Unknown service: {service}")
-    
+
     return redirect(url_for("index"))
 
 @app.route("/save/<service>", methods=["POST"])
@@ -251,14 +276,19 @@ def save_service_config(service):
     if service in SERVICES:
         data = request.form.to_dict()
         success = config_manager.update_service_config(service, data)
-        
+
         if success:
             service_manager.log_event(f"Updated config for {service}: {data}")
+            # Also save to dashboard state for persistence
+            try:
+                dashboard_state.save_service_config(service, data)
+            except Exception as e:
+                service_manager.log_error(f"Failed to save {service} config to dashboard state", e)
         else:
             service_manager.log_error(f"Failed to update config for {service}")
     else:
         service_manager.log_error(f"Unknown service: {service}")
-    
+
     return redirect(url_for("index"))
 
 # Legacy routes for backward compatibility
@@ -1122,16 +1152,89 @@ def radio_stop_scan():
             "message": str(e)
         }), 500
 
+def restore_services_on_startup():
+    """Start all services automatically for exhibition reliability"""
+    try:
+        print("🔄 Starting all services for exhibition mode...")
+        service_manager.log_event("Starting automatic service startup (all services)")
+
+        # Wait a moment for system to stabilize
+        time.sleep(2)
+
+        # Restore dashboard configurations first
+        print("📋 Restoring dashboard configurations...")
+        dashboard_state.restore_unified_config(config_manager)
+
+        # Start all services by default (exhibition mode)
+        restored_services = persistence_manager.restore_services(force_all_services=True)
+
+        if restored_services:
+            print(f"✅ Restored services: {', '.join(restored_services)}")
+            service_manager.log_event(f"Successfully restored services: {restored_services}")
+        else:
+            print("ℹ️  No services to restore or all services already running")
+            service_manager.log_event("No services to restore")
+
+        # Update current state
+        persistence_manager.update_running_services()
+
+        # Backup current configuration state
+        dashboard_state.backup_current_config(config_manager)
+
+    except Exception as e:
+        print(f"❌ Error during service restoration: {e}")
+        service_manager.log_error("Failed to restore services on startup", e)
+
+def save_services_on_shutdown():
+    """Save current service state before shutdown"""
+    try:
+        print("💾 Saving service state before shutdown...")
+
+        # Save service running state
+        current_services = persistence_manager.get_currently_running_services()
+        persistence_manager.save_service_state(current_services)
+
+        # Save dashboard configuration state
+        dashboard_state.backup_current_config(config_manager)
+
+        service_manager.log_event(f"Service state saved before shutdown: {current_services}")
+    except Exception as e:
+        print(f"❌ Error saving service state: {e}")
+        service_manager.log_error("Failed to save service state on shutdown", e)
+
 if __name__ == "__main__":
     try:
         service_manager.log_event("Unified Control Panel starting")
-        print(f"Starting Raspberry Pi Control Panel")
+        print(f"🚀 Starting Raspberry Pi Control Panel")
         print(f"Available modes: {', '.join(APP_MODES.keys())}")
         print(f"Current mode: {get_current_mode()}")
-        print(f"Access at: http://0.0.0.0:5000")
-        
+
+        # Restore services that were running before shutdown/restart
+        restore_services_on_startup()
+
+        print(f"🌐 Access at: http://0.0.0.0:5000")
+
+        # Register shutdown handler
+        import atexit
+        atexit.register(save_services_on_shutdown)
+
+        # Register signal handlers for graceful shutdown
+        import signal
+        def signal_handler(signum, frame):
+            print(f"\n⚠️  Received signal {signum}, shutting down gracefully...")
+            save_services_on_shutdown()
+            sys.exit(0)
+
+        signal.signal(signal.SIGTERM, signal_handler)
+        signal.signal(signal.SIGINT, signal_handler)
+
         app.run(host="0.0.0.0", port=5000, debug=False)
+    except KeyboardInterrupt:
+        print("\n⚠️  Keyboard interrupt received, shutting down gracefully...")
+        save_services_on_shutdown()
+        sys.exit(0)
     except Exception as e:
         service_manager.log_error("Fatal error in control panel", e)
-        print(f"Fatal error: {e}")
+        print(f"❌ Fatal error: {e}")
+        save_services_on_shutdown()
         sys.exit(1)

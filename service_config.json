@@ -1,26 +1,26 @@
 {
   "LED Service": {
-    "mode": "Lux sensor",
+    "mode": "Manual LED",
     "brightness": 100,
     "lux_min": "20",
     "lux_max": "1500"
   },
   "Radio Service": {
-    "mode": "Fixed",
-    "frequency": 99.4,
+    "mode": "Loop",
+    "frequency": 103.2,
     "direction": "Up",
-    "mode_selector": "Fixed",
-    "loop_duration": "30"
+    "mode_selector": "Loop",
+    "loop_duration": "10"
   },
   "Fan Service": {
-    "mode": "Lux sensor",
+    "mode": "Cycle",
     "speed": 1,
     "lux_min": "1",
     "lux_max": "1000"
   },
   "Broadcast Service": {
     "mode": "Loop",
-    "volume": 33
+    "volume": 5
   },
   "Light Sensor Service": {
     "mode": "Auto"
@@ -28,7 +28,8 @@
   "Mixing Service": {
     "mode": "Auto",
     "master_volume": "100",
-    "mic_volume": "55",
-    "recording_duration": "30"
+    "mic_volume": "75",
+    "recording_duration": "30",
+    "volume": "75"
   }
 }

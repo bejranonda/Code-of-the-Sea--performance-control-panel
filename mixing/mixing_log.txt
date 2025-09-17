@@ -1,859 +1,127 @@
-[2025-09-17 15:00:27] ERROR: Microphone recording failed after all retry attempts
-Exception: Max retries exceeded
-Traceback:
-NoneType: None
-
-[2025-09-17 15:00:27] ERROR: Error during microphone recording (attempt 3)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 15:00:27] INFO: Starting microphone recording (30s) - attempt 3/3
-[2025-09-17 15:00:27] INFO: Detected microphone device: hw:3,0
-[2025-09-17 15:00:27] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 15:00:25] ERROR: Error during microphone recording (attempt 2)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 15:00:25] INFO: Starting microphone recording (30s) - attempt 2/3
-[2025-09-17 15:00:25] INFO: Detected microphone device: hw:3,0
-[2025-09-17 15:00:25] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 15:00:23] ERROR: Error during microphone recording (attempt 1)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 15:00:23] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 15:00:23] INFO: Detected microphone device: hw:3,0
-[2025-09-17 15:00:23] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 15:00:23] WARNING: Could not determine master file duration, using full file mixing
-[2025-09-17 15:00:23] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 15:00:16] ERROR: Microphone recording failed after all retry attempts
-Exception: Max retries exceeded
-Traceback:
-NoneType: None
-
-[2025-09-17 15:00:16] ERROR: Error during microphone recording (attempt 3)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 15:00:16] INFO: Starting microphone recording (30s) - attempt 3/3
-[2025-09-17 15:00:16] INFO: Detected microphone device: hw:3,0
-[2025-09-17 15:00:16] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 15:00:14] ERROR: Error during microphone recording (attempt 2)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 15:00:14] INFO: Starting microphone recording (30s) - attempt 2/3
-[2025-09-17 15:00:14] INFO: Detected microphone device: hw:3,0
-[2025-09-17 15:00:14] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 15:00:12] ERROR: Error during microphone recording (attempt 1)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 15:00:12] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 15:00:12] INFO: Detected microphone device: hw:3,0
-[2025-09-17 15:00:12] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 15:00:12] WARNING: Could not determine master file duration, using full file mixing
-[2025-09-17 15:00:12] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 15:00:12] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '55', 'recording_duration': '30'}
-[2025-09-17 15:00:12] INFO: Mixing service started
-[2025-09-17 15:00:07] ERROR: Microphone recording failed after all retry attempts
-Exception: Max retries exceeded
-Traceback:
-NoneType: None
-
-[2025-09-17 15:00:07] ERROR: Error during microphone recording (attempt 3)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 15:00:07] INFO: Starting microphone recording (30s) - attempt 3/3
-[2025-09-17 15:00:07] INFO: Detected microphone device: hw:3,0
-[2025-09-17 15:00:07] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 15:00:05] ERROR: Error during microphone recording (attempt 2)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 15:00:05] INFO: Starting microphone recording (30s) - attempt 2/3
-[2025-09-17 15:00:05] INFO: Detected microphone device: hw:3,0
-[2025-09-17 15:00:05] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 15:00:03] ERROR: Error during microphone recording (attempt 1)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 15:00:03] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 15:00:03] INFO: Detected microphone device: hw:3,0
-[2025-09-17 15:00:03] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 15:00:03] WARNING: Could not determine master file duration, using full file mixing
-[2025-09-17 15:00:03] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:59:59] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:59:59] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:59:59] INFO: Master file position: 270s / 2778.22s
-[2025-09-17 14:59:58] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:59:56] ERROR: Microphone recording failed after all retry attempts
-Exception: Max retries exceeded
-Traceback:
-NoneType: None
-
-[2025-09-17 14:59:56] ERROR: Error during microphone recording (attempt 3)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 14:59:56] INFO: Starting microphone recording (30s) - attempt 3/3
-[2025-09-17 14:59:56] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:59:56] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 14:59:54] ERROR: Error during microphone recording (attempt 2)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 14:59:54] INFO: Starting microphone recording (30s) - attempt 2/3
-[2025-09-17 14:59:54] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:59:54] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 14:59:52] ERROR: Error during microphone recording (attempt 1)
-Exception: [Errno 2] No such file or directory: 'arecord'
-Traceback:
-Traceback (most recent call last):
-  File "/home/payas/cos/mixing/mixing_menu.py", line 259, in record_microphone
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 548, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1024, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1901, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'arecord'
-
-[2025-09-17 14:59:52] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:59:52] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:59:52] WARNING: Error detecting microphone: [Errno 2] No such file or directory: 'arecord'
-[2025-09-17 14:59:52] WARNING: Could not determine master file duration, using full file mixing
-[2025-09-17 14:59:52] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:59:52] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '55', 'recording_duration': '30'}
-[2025-09-17 14:59:52] INFO: Mixing service started
-[2025-09-17 14:59:29] INFO: Removed old file: mixed_audio_20250917_145350.mp3
-[2025-09-17 14:59:29] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145857.mp3
-[2025-09-17 14:59:27] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:59:27] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 240s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145857.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145857.mp3
-[2025-09-17 14:59:27] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145857.wav
-[2025-09-17 14:58:57] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:58:57] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:58:57] INFO: Master file position: 240s / 2778.22s
-[2025-09-17 14:58:57] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:58:28] INFO: Removed old file: mixed_audio_20250917_145249.mp3
-[2025-09-17 14:58:28] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145756.mp3
-[2025-09-17 14:58:26] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:58:26] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 210s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145756.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145756.mp3
-[2025-09-17 14:58:26] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145756.wav
-[2025-09-17 14:57:56] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:57:56] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:57:56] INFO: Master file position: 210s / 2778.22s
-[2025-09-17 14:57:55] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:57:26] INFO: Removed old file: mixed_audio_20250917_145147.mp3
-[2025-09-17 14:57:26] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145655.mp3
-[2025-09-17 14:57:25] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:57:25] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 180s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145655.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145655.mp3
-[2025-09-17 14:57:25] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145655.wav
-[2025-09-17 14:56:55] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:56:55] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:56:55] INFO: Master file position: 180s / 2778.22s
-[2025-09-17 14:56:54] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:56:25] INFO: Removed old file: mixed_audio_20250917_145046.mp3
-[2025-09-17 14:56:25] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145553.mp3
-[2025-09-17 14:56:23] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:56:23] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 150s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145553.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145553.mp3
-[2025-09-17 14:56:23] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145553.wav
-[2025-09-17 14:55:53] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:55:53] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:55:53] INFO: Master file position: 150s / 2778.22s
-[2025-09-17 14:55:53] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:55:23] INFO: Removed old file: mixed_audio_20250917_144945.mp3
-[2025-09-17 14:55:23] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145452.mp3
-[2025-09-17 14:55:22] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:55:22] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 120s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145452.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145452.mp3
-[2025-09-17 14:55:22] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145452.wav
-[2025-09-17 14:54:52] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:54:52] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:54:52] INFO: Master file position: 120s / 2778.22s
-[2025-09-17 14:54:51] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:54:22] INFO: Removed old file: mixed_audio_20250917_144844.mp3
-[2025-09-17 14:54:22] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145350.mp3
-[2025-09-17 14:54:20] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:54:20] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 90s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145350.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145350.mp3
-[2025-09-17 14:54:20] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145350.wav
-[2025-09-17 14:53:50] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:53:50] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:53:50] INFO: Master file position: 90s / 2778.22s
-[2025-09-17 14:53:50] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:53:21] INFO: Removed old file: mixed_audio_20250917_144744.mp3
-[2025-09-17 14:53:21] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145249.mp3
-[2025-09-17 14:53:19] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:53:19] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 60s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145249.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145249.mp3
-[2025-09-17 14:53:19] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145249.wav
-[2025-09-17 14:52:49] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:52:49] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:52:49] INFO: Master file position: 60s / 2778.22s
-[2025-09-17 14:52:48] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:52:19] INFO: Removed old file: mixed_audio_20250917_144642.mp3
-[2025-09-17 14:52:19] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145147.mp3
-[2025-09-17 14:52:18] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:52:18] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 30s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145147.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145147.mp3
-[2025-09-17 14:52:18] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145147.wav
-[2025-09-17 14:51:47] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:51:47] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:51:47] INFO: Master file position: 30s / 2778.22s
-[2025-09-17 14:51:47] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:51:18] INFO: Removed old file: mixed_audio_20250917_144541.mp3
-[2025-09-17 14:51:18] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145046.mp3
-[2025-09-17 14:51:16] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:51:16] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145046.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_145046.mp3
-[2025-09-17 14:51:16] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_145046.wav
-[2025-09-17 14:50:46] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:50:46] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:50:46] INFO: Master file position: 0s / 2778.22s
-[2025-09-17 14:50:46] INFO: Master file reached end (2778.22s), restarting from beginning
-[2025-09-17 14:50:46] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:50:17] INFO: Removed old file: mixed_audio_20250917_144439.mp3
-[2025-09-17 14:50:17] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144945.mp3
-[2025-09-17 14:50:15] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:50:15] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2760s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144945.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144945.mp3
-[2025-09-17 14:50:15] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144945.wav
-[2025-09-17 14:49:45] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:49:45] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:49:45] INFO: Master file position: 2760s / 2778.22s
-[2025-09-17 14:49:44] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:49:17] INFO: Removed old file: mixed_audio_20250917_144337.mp3
-[2025-09-17 14:49:17] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144844.mp3
-[2025-09-17 14:49:14] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:49:14] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2730s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144844.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144844.mp3
-[2025-09-17 14:49:14] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144844.wav
-[2025-09-17 14:48:44] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:48:44] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:48:44] INFO: Master file position: 2730s / 2778.22s
-[2025-09-17 14:48:44] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:48:17] INFO: Removed old file: mixed_audio_20250917_144236.mp3
-[2025-09-17 14:48:17] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144744.mp3
-[2025-09-17 14:48:14] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:48:14] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2700s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144744.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144744.mp3
-[2025-09-17 14:48:14] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144744.wav
-[2025-09-17 14:47:44] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:47:44] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:47:44] INFO: Master file position: 2700s / 2778.22s
-[2025-09-17 14:47:43] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:47:14] INFO: Removed old file: mixed_audio_20250917_144134.mp3
-[2025-09-17 14:47:14] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144642.mp3
-[2025-09-17 14:47:12] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:47:12] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2670s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144642.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144642.mp3
-[2025-09-17 14:47:12] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144642.wav
-[2025-09-17 14:46:42] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:46:42] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:46:42] INFO: Master file position: 2670s / 2778.22s
-[2025-09-17 14:46:42] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:46:13] INFO: Removed old file: mixed_audio_20250917_144033.mp3
-[2025-09-17 14:46:13] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144541.mp3
-[2025-09-17 14:46:11] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:46:11] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2640s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144541.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144541.mp3
-[2025-09-17 14:46:11] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144541.wav
-[2025-09-17 14:45:41] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:45:41] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:45:41] INFO: Master file position: 2640s / 2778.22s
-[2025-09-17 14:45:40] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:45:11] INFO: Removed old file: mixed_audio_20250917_143931.mp3
-[2025-09-17 14:45:11] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144439.mp3
-[2025-09-17 14:45:09] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:45:09] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2610s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144439.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144439.mp3
-[2025-09-17 14:45:09] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144439.wav
-[2025-09-17 14:44:39] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:44:39] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:44:39] INFO: Master file position: 2610s / 2778.22s
-[2025-09-17 14:44:38] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:44:09] INFO: Removed old file: mixed_audio_20250917_143829.mp3
-[2025-09-17 14:44:09] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144337.mp3
-[2025-09-17 14:44:07] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:44:07] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2580s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144337.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144337.mp3
-[2025-09-17 14:44:07] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144337.wav
-[2025-09-17 14:43:37] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:43:37] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:43:37] INFO: Master file position: 2580s / 2778.22s
-[2025-09-17 14:43:37] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:43:08] INFO: Removed old file: mixed_audio_20250917_143728.mp3
-[2025-09-17 14:43:08] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144236.mp3
-[2025-09-17 14:43:06] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:43:06] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2550s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144236.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144236.mp3
-[2025-09-17 14:43:06] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144236.wav
-[2025-09-17 14:42:36] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:42:36] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:42:36] INFO: Master file position: 2550s / 2778.22s
-[2025-09-17 14:42:35] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:42:06] INFO: Removed old file: mixed_audio_20250917_143626.mp3
-[2025-09-17 14:42:06] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144134.mp3
-[2025-09-17 14:42:04] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:42:04] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2520s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144134.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144134.mp3
-[2025-09-17 14:42:04] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144134.wav
-[2025-09-17 14:41:34] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:41:34] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:41:34] INFO: Master file position: 2520s / 2778.22s
-[2025-09-17 14:41:34] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:41:05] INFO: Removed old file: mixed_audio_20250917_143525.mp3
-[2025-09-17 14:41:05] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144033.mp3
-[2025-09-17 14:41:03] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:41:03] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2490s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144033.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_144033.mp3
-[2025-09-17 14:41:03] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_144033.wav
-[2025-09-17 14:40:33] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:40:33] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:40:33] INFO: Master file position: 2490s / 2778.22s
-[2025-09-17 14:40:32] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:40:03] INFO: Removed old file: mixed_audio_20250917_143423.mp3
-[2025-09-17 14:40:03] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143931.mp3
-[2025-09-17 14:40:01] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:40:01] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2460s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143931.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143931.mp3
-[2025-09-17 14:40:01] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143931.wav
-[2025-09-17 14:39:31] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:39:31] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:39:31] INFO: Master file position: 2460s / 2778.22s
-[2025-09-17 14:39:30] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:39:01] INFO: Removed old file: mixed_audio_20250917_143322.mp3
-[2025-09-17 14:39:01] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143829.mp3
-[2025-09-17 14:38:59] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:38:59] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2430s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143829.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143829.mp3
-[2025-09-17 14:38:59] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143829.wav
-[2025-09-17 14:38:29] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:38:29] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:38:29] INFO: Master file position: 2430s / 2778.22s
-[2025-09-17 14:38:29] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:38:00] INFO: Removed old file: mixed_audio_20250917_143220.mp3
-[2025-09-17 14:38:00] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143728.mp3
-[2025-09-17 14:37:58] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:37:58] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2400s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143728.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143728.mp3
-[2025-09-17 14:37:58] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143728.wav
-[2025-09-17 14:37:28] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:37:28] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:37:28] INFO: Master file position: 2400s / 2778.22s
-[2025-09-17 14:37:27] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:36:58] INFO: Removed old file: mixed_audio_20250917_143119.mp3
-[2025-09-17 14:36:58] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143626.mp3
-[2025-09-17 14:36:56] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:36:56] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2370s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143626.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143626.mp3
-[2025-09-17 14:36:56] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143626.wav
-[2025-09-17 14:36:26] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:36:26] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:36:26] INFO: Master file position: 2370s / 2778.22s
-[2025-09-17 14:36:26] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:35:57] INFO: Removed old file: mixed_audio_20250917_143017.mp3
-[2025-09-17 14:35:57] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143525.mp3
-[2025-09-17 14:35:55] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:35:55] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2340s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143525.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143525.mp3
-[2025-09-17 14:35:55] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143525.wav
-[2025-09-17 14:35:25] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:35:25] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:35:25] INFO: Master file position: 2340s / 2778.22s
-[2025-09-17 14:35:24] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:34:55] INFO: Removed old file: mixed_audio_20250917_142915.mp3
-[2025-09-17 14:34:55] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143423.mp3
-[2025-09-17 14:34:53] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:34:53] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2310s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143423.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143423.mp3
-[2025-09-17 14:34:53] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143423.wav
-[2025-09-17 14:34:23] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:34:23] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:34:23] INFO: Master file position: 2310s / 2778.22s
-[2025-09-17 14:34:23] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:33:54] INFO: Removed old file: mixed_audio_20250917_142814.mp3
-[2025-09-17 14:33:54] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143322.mp3
-[2025-09-17 14:33:52] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:33:52] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2280s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143322.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143322.mp3
-[2025-09-17 14:33:52] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143322.wav
-[2025-09-17 14:33:22] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:33:22] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:33:22] INFO: Master file position: 2280s / 2778.22s
-[2025-09-17 14:33:21] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:32:52] INFO: Removed old file: mixed_audio_20250917_142712.mp3
-[2025-09-17 14:32:52] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143220.mp3
-[2025-09-17 14:32:50] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:32:50] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2250s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143220.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143220.mp3
-[2025-09-17 14:32:50] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143220.wav
-[2025-09-17 14:32:20] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:32:20] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:32:20] INFO: Master file position: 2250s / 2778.22s
-[2025-09-17 14:32:20] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:31:51] INFO: Removed old file: mixed_audio_20250917_142611.mp3
-[2025-09-17 14:31:51] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143119.mp3
-[2025-09-17 14:31:49] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:31:49] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2220s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143119.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143119.mp3
-[2025-09-17 14:31:49] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143119.wav
-[2025-09-17 14:31:19] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:31:19] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:31:18] INFO: Master file position: 2220s / 2778.22s
-[2025-09-17 14:31:18] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:30:49] INFO: Removed old file: mixed_audio_20250917_142509.mp3
-[2025-09-17 14:30:49] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143017.mp3
-[2025-09-17 14:30:47] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:30:47] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2190s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143017.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_143017.mp3
-[2025-09-17 14:30:47] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_143017.wav
-[2025-09-17 14:30:17] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:30:17] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:30:17] INFO: Master file position: 2190s / 2778.22s
-[2025-09-17 14:30:16] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:29:47] INFO: Removed old file: mixed_audio_20250917_142408.mp3
-[2025-09-17 14:29:47] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142915.mp3
-[2025-09-17 14:29:45] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:29:45] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2160s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142915.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142915.mp3
-[2025-09-17 14:29:45] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142915.wav
-[2025-09-17 14:29:15] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:29:15] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:29:15] INFO: Master file position: 2160s / 2778.22s
-[2025-09-17 14:29:15] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:28:46] INFO: Removed old file: mixed_audio_20250917_142306.mp3
-[2025-09-17 14:28:46] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142814.mp3
-[2025-09-17 14:28:44] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:28:44] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2130s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142814.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142814.mp3
-[2025-09-17 14:28:44] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142814.wav
-[2025-09-17 14:28:14] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:28:14] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:28:14] INFO: Master file position: 2130s / 2778.22s
-[2025-09-17 14:28:13] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:27:44] INFO: Removed old file: mixed_audio_20250917_142205.mp3
-[2025-09-17 14:27:44] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142712.mp3
-[2025-09-17 14:27:43] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:27:43] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2100s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142712.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142712.mp3
-[2025-09-17 14:27:43] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142712.wav
-[2025-09-17 14:27:12] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:27:12] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:27:12] INFO: Master file position: 2100s / 2778.22s
-[2025-09-17 14:27:12] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:26:43] INFO: Removed old file: mixed_audio_20250917_142103.mp3
-[2025-09-17 14:26:43] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142611.mp3
-[2025-09-17 14:26:41] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:26:41] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2070s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142611.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142611.mp3
-[2025-09-17 14:26:41] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142611.wav
-[2025-09-17 14:26:11] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:26:11] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:26:11] INFO: Master file position: 2070s / 2778.22s
-[2025-09-17 14:26:11] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:25:41] INFO: Removed old file: mixed_audio_20250917_142002.mp3
-[2025-09-17 14:25:41] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142509.mp3
-[2025-09-17 14:25:40] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:25:39] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2040s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142509.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142509.mp3
-[2025-09-17 14:25:39] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142509.wav
-[2025-09-17 14:25:09] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:25:09] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:25:09] INFO: Master file position: 2040s / 2778.22s
-[2025-09-17 14:25:09] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:24:40] INFO: Removed old file: mixed_audio_20250917_141900.mp3
-[2025-09-17 14:24:40] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142408.mp3
-[2025-09-17 14:24:38] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:24:38] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2010s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142408.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142408.mp3
-[2025-09-17 14:24:38] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142408.wav
-[2025-09-17 14:24:08] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:24:08] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:24:08] INFO: Master file position: 2010s / 2778.22s
-[2025-09-17 14:24:07] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:23:38] INFO: Removed old file: mixed_audio_20250917_141759.mp3
-[2025-09-17 14:23:38] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142306.mp3
-[2025-09-17 14:23:36] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:23:36] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1980s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142306.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142306.mp3
-[2025-09-17 14:23:36] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142306.wav
-[2025-09-17 14:23:06] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:23:06] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:23:06] INFO: Master file position: 1980s / 2778.22s
-[2025-09-17 14:23:06] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:22:37] INFO: Removed old file: mixed_audio_20250917_141657.mp3
-[2025-09-17 14:22:37] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142205.mp3
-[2025-09-17 14:22:35] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:22:35] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1950s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142205.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142205.mp3
-[2025-09-17 14:22:35] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142205.wav
-[2025-09-17 14:22:05] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:22:05] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:22:05] INFO: Master file position: 1950s / 2778.22s
-[2025-09-17 14:22:04] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:21:35] INFO: Removed old file: mixed_audio_20250917_141556.mp3
-[2025-09-17 14:21:35] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142103.mp3
-[2025-09-17 14:21:33] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:21:33] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1920s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142103.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142103.mp3
-[2025-09-17 14:21:33] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142103.wav
-[2025-09-17 14:21:03] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:21:03] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:21:03] INFO: Master file position: 1920s / 2778.22s
-[2025-09-17 14:21:03] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:20:34] INFO: Removed old file: mixed_audio_20250917_141454.mp3
-[2025-09-17 14:20:34] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142002.mp3
-[2025-09-17 14:20:32] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:20:32] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1890s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142002.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_142002.mp3
-[2025-09-17 14:20:32] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_142002.wav
-[2025-09-17 14:20:02] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:20:02] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:20:02] INFO: Master file position: 1890s / 2778.22s
-[2025-09-17 14:20:01] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:19:32] INFO: Removed old file: mixed_audio_20250917_141353.mp3
-[2025-09-17 14:19:32] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141900.mp3
-[2025-09-17 14:19:30] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:19:30] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1860s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141900.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141900.mp3
-[2025-09-17 14:19:30] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141900.wav
-[2025-09-17 14:19:00] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:19:00] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:19:00] INFO: Master file position: 1860s / 2778.22s
-[2025-09-17 14:19:00] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:18:31] INFO: Removed old file: mixed_audio_20250917_141251.mp3
-[2025-09-17 14:18:31] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141759.mp3
-[2025-09-17 14:18:29] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:18:29] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1830s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141759.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141759.mp3
-[2025-09-17 14:18:29] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141759.wav
-[2025-09-17 14:17:59] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:17:59] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:17:59] INFO: Master file position: 1830s / 2778.22s
-[2025-09-17 14:17:58] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:17:29] INFO: Removed old file: mixed_audio_20250917_141150.mp3
-[2025-09-17 14:17:29] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141657.mp3
-[2025-09-17 14:17:27] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:17:27] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1800s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141657.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141657.mp3
-[2025-09-17 14:17:27] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141657.wav
-[2025-09-17 14:16:57] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:16:57] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:16:57] INFO: Master file position: 1800s / 2778.22s
-[2025-09-17 14:16:57] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:16:28] INFO: Removed old file: mixed_audio_20250917_141048.mp3
-[2025-09-17 14:16:28] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141556.mp3
-[2025-09-17 14:16:26] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:16:26] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1770s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141556.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141556.mp3
-[2025-09-17 14:16:26] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141556.wav
-[2025-09-17 14:15:56] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:15:56] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:15:56] INFO: Master file position: 1770s / 2778.22s
-[2025-09-17 14:15:55] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:15:26] INFO: Removed old file: mixed_audio_20250917_140947.mp3
-[2025-09-17 14:15:26] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141454.mp3
-[2025-09-17 14:15:24] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:15:24] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1740s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141454.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141454.mp3
-[2025-09-17 14:15:24] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141454.wav
-[2025-09-17 14:14:54] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:14:54] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:14:54] INFO: Master file position: 1740s / 2778.22s
-[2025-09-17 14:14:54] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:14:25] INFO: Removed old file: mixed_audio_20250917_140845.mp3
-[2025-09-17 14:14:25] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141353.mp3
-[2025-09-17 14:14:23] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:14:23] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1710s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141353.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141353.mp3
-[2025-09-17 14:14:23] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141353.wav
-[2025-09-17 14:13:53] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:13:53] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:13:53] INFO: Master file position: 1710s / 2778.22s
-[2025-09-17 14:13:52] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:13:23] INFO: Removed old file: mixed_audio_20250917_140744.mp3
-[2025-09-17 14:13:23] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141251.mp3
-[2025-09-17 14:13:21] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:13:21] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1680s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141251.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141251.mp3
-[2025-09-17 14:13:21] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141251.wav
-[2025-09-17 14:12:51] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:12:51] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:12:51] INFO: Master file position: 1680s / 2778.22s
-[2025-09-17 14:12:51] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:12:22] INFO: Removed old file: mixed_audio_20250917_140642.mp3
-[2025-09-17 14:12:22] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141150.mp3
-[2025-09-17 14:12:20] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:12:20] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1650s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141150.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141150.mp3
-[2025-09-17 14:12:20] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141150.wav
-[2025-09-17 14:11:50] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:11:50] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:11:50] INFO: Master file position: 1650s / 2778.22s
-[2025-09-17 14:11:49] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:11:20] INFO: Removed old file: mixed_audio_20250917_140541.mp3
-[2025-09-17 14:11:20] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141048.mp3
-[2025-09-17 14:11:18] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:11:18] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1620s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141048.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_141048.mp3
-[2025-09-17 14:11:18] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_141048.wav
-[2025-09-17 14:10:48] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:10:48] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:10:48] INFO: Master file position: 1620s / 2778.22s
-[2025-09-17 14:10:48] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:10:19] INFO: Removed old file: mixed_audio_20250917_140440.mp3
-[2025-09-17 14:10:19] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140947.mp3
-[2025-09-17 14:10:17] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:10:17] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1590s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140947.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140947.mp3
-[2025-09-17 14:10:17] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140947.wav
-[2025-09-17 14:09:47] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:09:47] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:09:47] INFO: Master file position: 1590s / 2778.22s
-[2025-09-17 14:09:46] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:09:17] INFO: Removed old file: mixed_audio_20250917_140338.mp3
-[2025-09-17 14:09:17] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140845.mp3
-[2025-09-17 14:09:16] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:09:16] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1560s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140845.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140845.mp3
-[2025-09-17 14:09:16] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140845.wav
-[2025-09-17 14:08:45] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:08:45] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:08:45] INFO: Master file position: 1560s / 2778.22s
-[2025-09-17 14:08:45] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:08:16] INFO: Removed old file: mixed_audio_20250917_140237.mp3
-[2025-09-17 14:08:16] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140744.mp3
-[2025-09-17 14:08:14] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:08:14] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1530s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140744.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140744.mp3
-[2025-09-17 14:08:14] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140744.wav
-[2025-09-17 14:07:44] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:07:44] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:07:44] INFO: Master file position: 1530s / 2778.22s
-[2025-09-17 14:07:44] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:07:15] INFO: Removed old file: mixed_audio_20250917_140135.mp3
-[2025-09-17 14:07:15] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140642.mp3
-[2025-09-17 14:07:13] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:07:13] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1500s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140642.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140642.mp3
-[2025-09-17 14:07:13] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140642.wav
-[2025-09-17 14:06:42] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:06:42] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:06:42] INFO: Master file position: 1500s / 2778.22s
-[2025-09-17 14:06:42] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:06:13] INFO: Removed old file: mixed_audio_20250917_140034.mp3
-[2025-09-17 14:06:13] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140541.mp3
-[2025-09-17 14:06:11] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:06:11] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1470s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140541.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140541.mp3
-[2025-09-17 14:06:11] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140541.wav
-[2025-09-17 14:05:41] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:05:41] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:05:41] INFO: Master file position: 1470s / 2778.22s
-[2025-09-17 14:05:41] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:05:12] INFO: Removed old file: mixed_audio_20250917_135933.mp3
-[2025-09-17 14:05:12] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140440.mp3
-[2025-09-17 14:05:10] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:05:10] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1440s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140440.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140440.mp3
-[2025-09-17 14:05:10] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140440.wav
-[2025-09-17 14:04:40] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:04:40] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:04:40] INFO: Master file position: 1440s / 2778.22s
-[2025-09-17 14:04:39] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:04:10] INFO: Removed old file: mixed_audio_20250917_135831.mp3
-[2025-09-17 14:04:10] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140338.mp3
-[2025-09-17 14:04:08] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:04:08] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1410s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140338.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140338.mp3
-[2025-09-17 14:04:08] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140338.wav
-[2025-09-17 14:03:38] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:03:38] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:03:38] INFO: Master file position: 1410s / 2778.22s
-[2025-09-17 14:03:38] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:03:09] INFO: Removed old file: mixed_audio_20250917_135730.mp3
-[2025-09-17 14:03:09] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140237.mp3
-[2025-09-17 14:03:07] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:03:07] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1380s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140237.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140237.mp3
-[2025-09-17 14:03:07] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140237.wav
-[2025-09-17 14:02:37] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:02:37] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:02:37] INFO: Master file position: 1380s / 2778.22s
-[2025-09-17 14:02:36] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:02:07] INFO: Removed old file: mixed_audio_20250917_135628.mp3
-[2025-09-17 14:02:07] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140135.mp3
-[2025-09-17 14:02:05] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:02:05] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1350s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140135.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140135.mp3
-[2025-09-17 14:02:05] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140135.wav
-[2025-09-17 14:01:35] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:01:35] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:01:35] INFO: Master file position: 1350s / 2778.22s
-[2025-09-17 14:01:35] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:01:06] INFO: Removed old file: mixed_audio_20250917_135527.mp3
-[2025-09-17 14:01:06] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140034.mp3
-[2025-09-17 14:01:04] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:01:04] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1320s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140034.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_140034.mp3
-[2025-09-17 14:01:04] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_140034.wav
-[2025-09-17 14:00:34] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 14:00:34] INFO: Detected microphone device: hw:3,0
-[2025-09-17 14:00:34] INFO: Master file position: 1320s / 2778.22s
-[2025-09-17 14:00:33] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 14:00:04] INFO: Removed old file: mixed_audio_20250917_135426.mp3
-[2025-09-17 14:00:04] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135933.mp3
-[2025-09-17 14:00:03] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 14:00:03] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1290s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135933.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135933.mp3
-[2025-09-17 14:00:03] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135933.wav
-[2025-09-17 13:59:33] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 13:59:33] INFO: Detected microphone device: hw:3,0
-[2025-09-17 13:59:33] INFO: Master file position: 1290s / 2778.22s
-[2025-09-17 13:59:32] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 13:59:03] INFO: Removed old file: mixed_audio_20250917_135324.mp3
-[2025-09-17 13:59:03] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135831.mp3
-[2025-09-17 13:59:01] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 13:59:01] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1260s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135831.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135831.mp3
-[2025-09-17 13:59:01] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135831.wav
-[2025-09-17 13:58:31] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 13:58:31] INFO: Detected microphone device: hw:3,0
-[2025-09-17 13:58:31] INFO: Master file position: 1260s / 2778.22s
-[2025-09-17 13:58:31] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 13:58:02] INFO: Removed old file: mixed_audio_20250917_135223.mp3
-[2025-09-17 13:58:02] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135730.mp3
-[2025-09-17 13:58:00] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 13:58:00] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1230s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135730.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135730.mp3
-[2025-09-17 13:58:00] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135730.wav
-[2025-09-17 13:57:30] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 13:57:30] INFO: Detected microphone device: hw:3,0
-[2025-09-17 13:57:30] INFO: Master file position: 1230s / 2778.22s
-[2025-09-17 13:57:29] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 13:57:00] INFO: Removed old file: mixed_audio_20250917_135121.mp3
-[2025-09-17 13:57:00] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135628.mp3
-[2025-09-17 13:56:58] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 13:56:58] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1200s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135628.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135628.mp3
-[2025-09-17 13:56:58] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135628.wav
-[2025-09-17 13:56:28] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 13:56:28] INFO: Detected microphone device: hw:3,0
-[2025-09-17 13:56:28] INFO: Master file position: 1200s / 2778.22s
-[2025-09-17 13:56:28] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 13:55:59] INFO: Removed old file: mixed_audio_20250917_135019.mp3
-[2025-09-17 13:55:59] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135527.mp3
-[2025-09-17 13:55:57] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 13:55:57] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1170s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135527.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135527.mp3
-[2025-09-17 13:55:57] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135527.wav
-[2025-09-17 13:55:27] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 13:55:27] INFO: Detected microphone device: hw:3,0
-[2025-09-17 13:55:27] INFO: Master file position: 1170s / 2778.22s
-[2025-09-17 13:55:27] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 13:54:58] INFO: Removed old file: mixed_audio_20250917_134918.mp3
-[2025-09-17 13:54:58] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135426.mp3
-[2025-09-17 13:54:56] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 13:54:56] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1140s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135426.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135426.mp3
-[2025-09-17 13:54:56] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135426.wav
-[2025-09-17 13:54:26] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 13:54:26] INFO: Detected microphone device: hw:3,0
-[2025-09-17 13:54:26] INFO: Master file position: 1140s / 2778.22s
-[2025-09-17 13:54:25] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 13:53:56] INFO: Removed old file: mixed_audio_20250917_134816.mp3
-[2025-09-17 13:53:56] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135324.mp3
-[2025-09-17 13:53:54] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 13:53:54] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1110s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135324.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135324.mp3
-[2025-09-17 13:53:54] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135324.wav
-[2025-09-17 13:53:24] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 13:53:24] INFO: Detected microphone device: hw:3,0
-[2025-09-17 13:53:24] INFO: Master file position: 1110s / 2778.22s
-[2025-09-17 13:53:24] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-17 13:52:55] INFO: Removed old file: mixed_audio_20250917_134715.mp3
-[2025-09-17 13:52:55] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135223.mp3
-[2025-09-17 13:52:53] INFO: Volume levels: Master 100.0% (0.0dB), Mic 55.0% (-27.0dB)
-[2025-09-17 13:52:53] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1080s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135223.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_135223.mp3
-[2025-09-17 13:52:53] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_135223.wav
-[2025-09-17 13:52:23] INFO: Starting microphone recording (30s) - attempt 1/3
-[2025-09-17 13:52:23] INFO: Detected microphone device: hw:3,0
-[2025-09-17 13:52:23] INFO: Master file position: 1080s / 2778.22s
-[2025-09-17 13:52:22] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:03:21] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:03:21] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:03:21] INFO: Mixing service started
+[2025-09-17 21:03:11] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:03:11] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:03:11] INFO: Mixing service started
+[2025-09-17 21:02:58] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:02:58] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:02:58] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:02:57] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:02:57] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:02:57] INFO: Mixing service started
+[2025-09-17 21:02:53] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:02:53] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:02:53] INFO: Mixing service started
+[2025-09-17 21:02:45] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:02:45] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:02:45] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:02:42] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:02:42] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:02:42] INFO: Mixing service started
+[2025-09-17 21:02:19] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:02:19] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:02:19] INFO: Mixing service started
+[2025-09-17 21:02:03] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:02:03] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:02:03] INFO: Mixing service started
+[2025-09-17 21:01:53] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:01:53] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:01:53] INFO: Mixing service started
+[2025-09-17 21:01:43] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:01:43] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:01:43] INFO: Mixing service started
+[2025-09-17 21:01:33] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:01:33] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:01:33] INFO: Mixing service started
+[2025-09-17 21:01:23] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:01:23] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:01:23] INFO: Mixing service started
+[2025-09-17 21:01:13] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:01:13] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:01:13] INFO: Mixing service started
+[2025-09-17 21:01:03] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:01:03] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:01:03] INFO: Mixing service started
+[2025-09-17 21:00:53] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:00:53] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:00:53] INFO: Mixing service started
+[2025-09-17 21:00:45] INFO: Starting microphone recording (30s) - attempt 2/3
+[2025-09-17 21:00:45] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:00:43] WARNING: Microphone device busy (attempt 1), retrying in 2s
+[2025-09-17 21:00:43] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:00:43] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:00:43] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:00:43] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:00:43] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:00:43] INFO: Mixing service started
+[2025-09-17 21:00:40] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:00:40] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:00:40] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:00:36] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:00:36] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:00:36] INFO: Mixing service started
+[2025-09-17 21:00:27] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:00:27] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:00:27] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:00:24] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:00:24] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:00:24] INFO: Mixing service started
+[2025-09-17 21:00:05] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 21:00:05] INFO: Detected microphone device: hw:1,0
+[2025-09-17 21:00:05] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 21:00:02] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 21:00:02] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 21:00:02] INFO: Mixing service started
+[2025-09-17 20:51:26] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 20:51:26] INFO: Detected microphone device: hw:1,0
+[2025-09-17 20:51:26] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 20:51:23] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 20:51:23] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 20:51:23] INFO: Mixing service started
+[2025-09-17 20:46:38] INFO: Removed old file: mixed_audio_20250917_202810.mp3
+[2025-09-17 20:46:38] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_204635.mp3
+[2025-09-17 20:46:37] INFO: Volume levels: Master 100.0% (0.0dB), Mic 75.0% (-15.0dB)
+[2025-09-17 20:46:37] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_204635.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_204635.mp3
+[2025-09-17 20:46:37] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_204635.wav
+[2025-09-17 20:46:35] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 20:46:35] INFO: Detected microphone device: hw:3,0
+[2025-09-17 20:46:35] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 20:46:32] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 20:46:32] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 20:46:32] INFO: Mixing service started
+[2025-09-17 20:45:13] INFO: Removed old file: mixed_audio_20250917_202708.mp3
+[2025-09-17 20:45:13] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_204505.mp3
+[2025-09-17 20:45:08] INFO: Volume levels: Master 100.0% (0.0dB), Mic 75.0% (-15.0dB)
+[2025-09-17 20:45:08] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_204505.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_204505.mp3
+[2025-09-17 20:45:08] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_204505.wav
+[2025-09-17 20:45:05] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 20:45:05] INFO: Detected microphone device: hw:1,0
+[2025-09-17 20:45:05] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 20:45:01] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 20:45:01] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 20:45:01] INFO: Mixing service started
+[2025-09-17 20:37:37] INFO: Removed old file: mixed_audio_20250917_202606.mp3
+[2025-09-17 20:37:37] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_203734.mp3
+[2025-09-17 20:37:35] INFO: Volume levels: Master 100.0% (0.0dB), Mic 75.0% (-15.0dB)
+[2025-09-17 20:37:35] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_203734.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_203734.mp3
+[2025-09-17 20:37:35] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_203734.wav
+[2025-09-17 20:37:34] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 20:37:34] INFO: Detected microphone device: hw:1,0
+[2025-09-17 20:37:34] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 20:37:30] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 20:37:30] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 20:37:30] INFO: Mixing service started
+[2025-09-17 20:33:43] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 20:32:54] INFO: Removed old file: mic_recording_20250917_162609.wav
+[2025-09-17 20:32:54] INFO: Removed old file: mixed_audio_20250917_202505.mp3
+[2025-09-17 20:32:54] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_203246.mp3
+[2025-09-17 20:32:52] INFO: Volume levels: Master 100.0% (0.0dB), Mic 75.0% (-15.0dB)
+[2025-09-17 20:32:52] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_203246.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250917_203246.mp3
+[2025-09-17 20:32:52] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250917_203246.wav
+[2025-09-17 20:32:46] INFO: Starting microphone recording (30s) - attempt 1/3
+[2025-09-17 20:32:46] INFO: Detected microphone device: hw:3,0
+[2025-09-17 20:32:46] INFO: Master file position: 0s / 2778.22s
+[2025-09-17 20:32:42] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-17 20:32:42] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '75', 'recording_duration': '30', 'volume': '75'}
+[2025-09-17 20:32:42] INFO: Mixing service started
