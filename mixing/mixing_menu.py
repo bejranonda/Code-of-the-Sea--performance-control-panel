@@ -27,7 +27,7 @@ MIC_DURATION = 30  # seconds for microphone recording
 def detect_usb_microphone():
     """Automatically detect any USB audio input device"""
     try:
-        result = subprocess.run(['arecord', '-l'], capture_output=True, text=True)
+        result = subprocess.run(['/usr/bin/arecord', '-l'], capture_output=True, text=True)
         if result.returncode == 0:
             lines = result.stdout.split('\n')
             # Look for any USB audio device with capture capability
@@ -44,7 +44,7 @@ def detect_usb_microphone():
                                 return device
 
             # Fallback: try all available cards for USB devices
-            cards_result = subprocess.run(['cat', '/proc/asound/cards'], capture_output=True, text=True)
+            cards_result = subprocess.run(['/usr/bin/cat', '/proc/asound/cards'], capture_output=True, text=True)
             if cards_result.returncode == 0:
                 for line in cards_result.stdout.split('\n'):
                     if 'USB-Audio' in line or 'USB Audio' in line:
@@ -76,7 +76,7 @@ def test_audio_device(device):
             return False
 
         # Check if card exists
-        cards_result = subprocess.run(['cat', '/proc/asound/cards'], capture_output=True, text=True)
+        cards_result = subprocess.run(['/usr/bin/cat', '/proc/asound/cards'], capture_output=True, text=True)
         if cards_result.returncode != 0:
             return False
 
@@ -246,8 +246,14 @@ def record_microphone(output_file, duration=MIC_DURATION):
                 except:
                     pass
 
+            # Use full path to arecord to avoid PATH issues
+            arecord_path = "/usr/bin/arecord"
+            if not os.path.exists(arecord_path):
+                # Fallback to PATH-based lookup
+                arecord_path = "arecord"
+
             cmd = [
-                "arecord",
+                arecord_path,
                 "-D", mic_device,
                 "-f", "S16_LE",
                 "-r", str(MIC_SAMPLE_RATE),
@@ -256,7 +262,11 @@ def record_microphone(output_file, duration=MIC_DURATION):
                 output_file
             ]
 
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10)
+            # Ensure proper environment is passed
+            env = os.environ.copy()
+            env['PATH'] = '/usr/bin:/bin:/usr/local/bin:' + env.get('PATH', '')
+
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10, env=env)
 
             # Check if output file was created successfully (better indicator than return code)
             if os.path.exists(output_file) and os.path.getsize(output_file) > 1000:  # At least 1KB
@@ -326,7 +336,7 @@ def mix_audio_files(master_file, mic_file, output_file, master_volume=70, mic_vo
         log_event(f"Volume levels: Master {master_vol}% ({master_db}dB), Mic {mic_vol}% ({mic_db}dB)")
 
         cmd = [
-            "ffmpeg",
+            "/usr/bin/ffmpeg",
             "-y",  # Overwrite output file
             "-i", master_file,
             "-i", mic_file,
@@ -378,7 +388,7 @@ def mix_audio_with_position(master_file, mic_file, output_file, start_position=0
         log_event(f"Volume levels: Master {master_vol}% ({master_db}dB), Mic {mic_vol}% ({mic_db}dB)")
 
         cmd = [
-            "ffmpeg",
+            "/usr/bin/ffmpeg",
             "-y",  # Overwrite output file
             "-ss", str(start_position),  # Start position in master file
             "-t", str(duration),     # Configurable duration

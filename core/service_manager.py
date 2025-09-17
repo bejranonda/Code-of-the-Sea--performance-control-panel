@@ -219,14 +219,20 @@ class ServiceManager:
         return self._find_existing_service(name)
 
     def _find_existing_service(self, name: str) -> bool:
-        """Find if service is running by searching for process by name"""
+        """Find if service is running by checking PID files first, then process search"""
         try:
+            # First check PID files (more reliable for shell-script managed services)
+            if self._check_service_pid_file(name):
+                return True
+
+            # Fall back to process detection
             # Define script mappings for services
             script_patterns = {
                 "LED Service": ["lighting_menu.py", "lighting.py"],
                 "Radio Service": ["fm-radio_menu.py", "fm-radio.py"],
                 "Fan Service": ["fan_mic_menu.py", "fan.py"],
-                "Broadcast Service": ["broadcast_menu.py", "broadcast.py"]
+                "Broadcast Service": ["broadcast_menu.py", "broadcast.py"],
+                "Mixing Service": ["mixing_menu.py", "mixing.py"]
             }
 
             if name not in script_patterns:
@@ -255,6 +261,45 @@ class ServiceManager:
 
         except Exception as e:
             self.log_error(f"Error finding existing service {name}", e)
+            return False
+
+    def _check_service_pid_file(self, name: str) -> bool:
+        """Check if service is running by examining PID files from shell scripts"""
+        try:
+            # Map service names to PID file names
+            service_to_pidfile = {
+                "LED Service": "/tmp/led_service.pid",
+                "Radio Service": "/tmp/radio_service.pid",
+                "Fan Service": "/tmp/fan_service.pid",
+                "Broadcast Service": "/tmp/broadcast_service.pid",
+                "Mixing Service": "/tmp/mixing_service.pid"
+            }
+
+            pid_file = service_to_pidfile.get(name)
+            if not pid_file or not os.path.exists(pid_file):
+                return False
+
+            # Read PID from file
+            with open(pid_file, 'r') as f:
+                pid = int(f.read().strip())
+
+            # Check if process with this PID exists and is not zombie
+            if psutil.pid_exists(pid):
+                try:
+                    proc = psutil.Process(pid)
+                    if proc.status() != psutil.STATUS_ZOMBIE:
+                        # Create mock process object for tracking
+                        mock_process = type('MockProcess', (), {'pid': pid})()
+                        self.processes[name] = mock_process
+                        self.log_event(f"Found {name} via PID file (PID: {pid})")
+                        return True
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    pass
+
+            return False
+
+        except Exception as e:
+            self.log_error(f"Error checking PID file for {name}", e)
             return False
 
     def get_service_pid(self, name: str) -> Optional[int]:

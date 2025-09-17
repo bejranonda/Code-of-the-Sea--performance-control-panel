@@ -94,17 +94,22 @@ class ServicePersistenceManager:
         except Exception:
             return False
 
-    def restore_services(self, base_path: str = "/home/payas/cos") -> List[str]:
-        """Restore previously running services"""
+    def restore_services(self, base_path: str = "/home/payas/cos", force_all_services: bool = True) -> List[str]:
+        """Restore previously running services or start all services by default"""
         restored = []
         failed = []
 
-        # Load the service state
-        target_services = self.load_service_state()
-
-        if not target_services:
-            print("No services to restore")
-            return restored
+        if force_all_services:
+            # Start ALL services by default (for exhibition reliability)
+            print("🚀 Starting all services by default for exhibition mode...")
+            target_services = set(self.services_script_map.keys())
+            print(f"Target services for auto-start: {target_services}")
+        else:
+            # Load the service state (original behavior)
+            target_services = self.load_service_state()
+            if not target_services:
+                print("No services to restore")
+                return restored
 
         # Get currently running services to avoid duplicates
         currently_running = self.get_currently_running_services()
@@ -203,9 +208,9 @@ def save_current_service_state():
     return manager.save_service_state(current_services)
 
 def restore_previous_services():
-    """Restore services that were running before shutdown"""
+    """Start all services by default for exhibition reliability"""
     manager = ServicePersistenceManager()
-    return manager.restore_services()
+    return manager.restore_services(force_all_services=True)
 
 if __name__ == "__main__":
     import sys
