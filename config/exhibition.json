@@ -1,0 +1,27 @@
+{
+  "monitoring": {
+    "check_interval": 60,
+    "memory_threshold": 85,
+    "cpu_threshold": 90,
+    "disk_threshold": 95,
+    "temp_threshold": 75,
+    "max_restarts_per_hour": 3,
+    "service_timeout": 30
+  },
+  "recovery": {
+    "auto_restart": true,
+    "cleanup_on_restart": true,
+    "network_recovery": true,
+    "hardware_reset": true
+  },
+  "maintenance": {
+    "daily_restart_time": "06:00",
+    "log_rotation_days": 7,
+    "cleanup_temp_files": true,
+    "disk_cleanup_threshold": 90
+  },
+  "alerts": {
+    "log_critical_events": true,
+    "health_check_endpoint": true
+  }
+}
