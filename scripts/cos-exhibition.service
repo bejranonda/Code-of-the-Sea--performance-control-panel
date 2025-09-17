@@ -1,0 +1,40 @@
+[Unit]
+Description=Code of the Sea Exhibition Control Panel
+Documentation=https://github.com/your-repo/code-of-the-sea
+After=network.target sound.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=payas
+Group=payas
+WorkingDirectory=/home/payas/cos
+Environment=PYTHONPATH=/home/payas/cos:/home/payas/cos/core
+Environment=FLASK_ENV=production
+
+# Startup command - just run the main app (startup checks integrated)
+ExecStart=/usr/bin/python3 /home/payas/cos/unified_app.py
+ExecReload=/bin/kill -HUP $MAINPID
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Resource limits for stability
+MemoryMax=512M
+CPUQuota=80%
+TasksMax=100
+
+# Security settings - relaxed for home directory access
+NoNewPrivileges=false
+ReadWritePaths=/home/payas/cos /tmp /var/log /home/payas
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cos-exhibition
+
+[Install]
+WantedBy=multi-user.target

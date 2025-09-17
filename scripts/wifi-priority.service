@@ -1,0 +1,27 @@
+[Unit]
+Description=WiFi Interface Priority Manager
+After=network.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/home/payas/cos/scripts/wifi_interface_priority.sh monitor
+Restart=always
+RestartSec=10
+User=root
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=wifi-priority
+
+# Security settings
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/home/payas/cos/network
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-09-15T12:45:31.527196",
+  "connection_status": {
+    "connected": false,
+    "ssid": "off/any"
+  },
+  "signal_info": {},
+  "power_management": {
+    "enabled": false
+  },
+  "driver_info": {
+    "usb_devices": [],
+    "recent_kernel_messages": []
+  },
+  "network_config": {
+    "has_ip_address": false,
+    "interface_up": false,
+    "has_default_route": false
+  },
+  "interference": {
+    "rx_dropped": 447,
+    "tx_errors": 0,
+    "nearby_networks_count": 16,
+    "same_channel_networks": 542
+  },
+  "errors": []
+}

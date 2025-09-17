@@ -1,0 +1,5 @@
+#!/bin/bash
+# services - Convenience script for managing COS services
+# Usage: ./services {start|stop|restart|status} [service_name]
+
+exec /home/payas/cos/scripts/manage_all_services.sh "$@"
