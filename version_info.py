@@ -2,17 +2,31 @@
 Version information for Code of the Sea
 """
 
-VERSION = "2.0.0"
+VERSION = "2.1.0"
 VERSION_INFO = {
     "major": 2,
-    "minor": 0,
+    "minor": 1,
     "patch": 0,
     "release_type": "stable",
     "build_date": "2025-09-17",
-    "codename": "Service Management Revolution"
+    "codename": "Enhanced Persistence & Environmental Monitoring"
 }
 
 RELEASE_NOTES = {
+    "2.1.0": {
+        "date": "2025-09-17",
+        "type": "minor",
+        "highlights": [
+            "Automatic service restoration across system restarts",
+            "Dashboard configuration persistence and state management",
+            "Enhanced LED service with comprehensive lux history (5000 entries)",
+            "Intelligent file size management with automatic trimming",
+            "Robust environmental monitoring even without hardware LED",
+            "Exhibition-grade reliability for uninterrupted art installations"
+        ],
+        "breaking_changes": False,
+        "upgrade_required": False
+    },
     "2.0.0": {
         "date": "2025-09-17",
         "type": "major",

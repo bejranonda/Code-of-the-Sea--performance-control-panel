@@ -851,6 +851,37 @@ For technical support or artistic collaboration inquiries:
 - **v1.1** - Enhanced broadcast system with reliable track navigation
 - **v1.2** - Improved LED control and web interface
 - **v2.0** - Major system overhaul with comprehensive service management
+- **v2.1.0** - Enhanced persistence & environmental monitoring
+
+### **✨ v2.1.0 Release Notes**
+
+**Enhanced Persistence & Environmental Monitoring:**
+
+#### **Service Persistence System**
+- ✅ **Automatic Service Restoration**: Services automatically restart after system reboot, power outage, or crash
+- ✅ **Dashboard Configuration Persistence**: User settings, modes, and configurations persist across restarts
+- ✅ **Exhibition-Grade Reliability**: Bulletproof operation for 24/7 art installations without manual intervention
+- ✅ **Intelligent State Management**: Comprehensive tracking of service states and configurations
+- ✅ **Seamless Recovery**: Services restore to exact previous state including volume levels, modes, and settings
+
+#### **Enhanced Environmental Monitoring**
+- ✅ **Extended Lux History**: 5000-entry capacity (increased from 100) for comprehensive light monitoring
+- ✅ **Smart History Management**: Automatic file size control with intelligent trimming to prevent storage issues
+- ✅ **Threshold-Based Recording**: Only records significant lux changes (>50 lux difference) to reduce noise
+- ✅ **Robust LED Service**: Continues lux monitoring even when Tuya LED hardware is unavailable
+- ✅ **Real-time Environmental Data**: Continuous light level tracking for responsive art installations
+
+#### **System Reliability Improvements**
+- ✅ **Dashboard Mode Control**: Default dashboard interface instead of enhanced mode for cleaner presentation
+- ✅ **Persistent Storage Migration**: Moved critical state files from temporary to permanent storage
+- ✅ **Enhanced Error Recovery**: Improved handling of hardware communication failures
+- ✅ **Version Consistency**: Comprehensive version tracking across all system components
+
+**Technical Achievements:**
+- 🌟 **Zero Data Loss**: Complete persistence across unexpected shutdowns
+- 📊 **Extended Monitoring**: 50x increase in environmental data capacity
+- 🎯 **Exhibition Ready**: Fully autonomous operation for art installations
+- 🔄 **Intelligent Recovery**: Smart service restoration with configuration preservation
 
 ### **🚀 v2.0 Release Notes**
 
