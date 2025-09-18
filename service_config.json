@@ -14,7 +14,7 @@
   },
   "Fan Service": {
     "mode": "Lux sensor",
-    "speed": 1,
+    "speed": 0,
     "lux_min": "1",
     "lux_max": "1000"
   },

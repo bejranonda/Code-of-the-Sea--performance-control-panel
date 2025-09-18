@@ -16,13 +16,13 @@
   },
   "Fan Service": {
     "mode": "Lux sensor",
-    "speed": 1,
+    "speed": 0,
     "status_file": "fan/fan_status.json",
     "lux_min": "1",
     "lux_max": "1000"
   },
   "_metadata": {
-    "last_updated": "2025-09-18T10:15:39.492320",
+    "last_updated": "2025-09-18T13:04:44.576090",
     "version": "1.0"
   },
   "Broadcast Service": {
