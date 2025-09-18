@@ -123,41 +123,79 @@ def update_status(**kwargs):
         log_error("Failed to update status file", e)
 
 def read_config():
-    """Read configuration from JSON file with error handling"""
-    try:
-        if not os.path.exists(CONFIG_FILE):
-            log_event("Config file not found, using defaults", "WARNING")
-            return {"mode": "Fixed", "speed": 50}
-        
-        with open(CONFIG_FILE, "r") as f:
-            config = json.load(f)
-            fan_config = config.get("Fan Service", {"mode": "Fixed", "speed": 50})
-            
-            # Normalize mode names
-            mode_mapping = {
-                "fixed": "Fixed",
-                "Fixed": "Fixed",
-                "cycle": "Cycle",
-                "Cycle": "Cycle",
-                "random": "Random",
-                "Random": "Random",
-                "sounding": "Sounding",
-                "Sounding": "Sounding",
-                "lux": "Lux sensor",
-                "Lux": "Lux sensor",
-                "lux sensor": "Lux sensor",
-                "Lux sensor": "Lux sensor"
-            }
-            fan_config["mode"] = mode_mapping.get(fan_config.get("mode", "Fixed"), "Fixed")
-            
-            return fan_config
-            
-    except json.JSONDecodeError as e:
-        log_error("Config file JSON decode error", e)
-        return {"mode": "Fixed", "speed": 50}
-    except Exception as e:
-        log_error("Unexpected error reading config", e)
-        return {"mode": "Fixed", "speed": 50}
+    """Read configuration from JSON file with error handling and retry logic"""
+    max_retries = 3
+    retry_delay = 0.1
+
+    for attempt in range(max_retries):
+        try:
+            if not os.path.exists(CONFIG_FILE):
+                log_event("Config file not found, using defaults", "WARNING")
+                return {"mode": "Fixed", "speed": 50}
+
+            # Check if file is empty or too small
+            file_size = os.path.getsize(CONFIG_FILE)
+            if file_size == 0:
+                if attempt < max_retries - 1:
+                    log_event(f"Config file is empty, retrying in {retry_delay}s (attempt {attempt + 1}/{max_retries})", "WARNING")
+                    time.sleep(retry_delay)
+                    continue
+                else:
+                    log_event("Config file is consistently empty, using defaults", "WARNING")
+                    return {"mode": "Fixed", "speed": 50}
+
+            with open(CONFIG_FILE, "r") as f:
+                file_content = f.read().strip()
+                if not file_content:
+                    if attempt < max_retries - 1:
+                        log_event(f"Config file content is empty, retrying in {retry_delay}s (attempt {attempt + 1}/{max_retries})", "WARNING")
+                        time.sleep(retry_delay)
+                        continue
+                    else:
+                        log_event("Config file content is consistently empty, using defaults", "WARNING")
+                        return {"mode": "Fixed", "speed": 50}
+
+                config = json.loads(file_content)
+                fan_config = config.get("Fan Service", {"mode": "Fixed", "speed": 50})
+
+                # Normalize mode names
+                mode_mapping = {
+                    "fixed": "Fixed",
+                    "Fixed": "Fixed",
+                    "cycle": "Cycle",
+                    "Cycle": "Cycle",
+                    "random": "Random",
+                    "Random": "Random",
+                    "sounding": "Sounding",
+                    "Sounding": "Sounding",
+                    "lux": "Lux sensor",
+                    "Lux": "Lux sensor",
+                    "lux sensor": "Lux sensor",
+                    "Lux sensor": "Lux sensor"
+                }
+                fan_config["mode"] = mode_mapping.get(fan_config.get("mode", "Fixed"), "Fixed")
+
+                return fan_config
+
+        except json.JSONDecodeError as e:
+            if attempt < max_retries - 1:
+                log_event(f"Config file JSON decode error, retrying in {retry_delay}s (attempt {attempt + 1}/{max_retries}): {e}", "WARNING")
+                time.sleep(retry_delay)
+                continue
+            else:
+                log_error("Config file JSON decode error after all retries", e)
+                return {"mode": "Fixed", "speed": 50}
+        except Exception as e:
+            if attempt < max_retries - 1:
+                log_event(f"Unexpected error reading config, retrying in {retry_delay}s (attempt {attempt + 1}/{max_retries}): {e}", "WARNING")
+                time.sleep(retry_delay)
+                continue
+            else:
+                log_error("Unexpected error reading config after all retries", e)
+                return {"mode": "Fixed", "speed": 50}
+
+    # This should never be reached, but just in case
+    return {"mode": "Fixed", "speed": 50}
 
 def write_config(cfg):
     """Write configuration to JSON file with error handling"""

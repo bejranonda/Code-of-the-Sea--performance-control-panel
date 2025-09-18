@@ -1,5 +1,5 @@
 {
-  "min_signal_strength": 10,
+  "min_signal_strength": 12,
   "description": "Minimum signal strength for station selection (0-15 scale)",
   "search_settings": {
     "step_size": 0.1,
