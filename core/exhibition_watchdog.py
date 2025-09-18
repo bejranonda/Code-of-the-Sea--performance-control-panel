@@ -15,6 +15,10 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional
 from dataclasses import dataclass, asdict
 
+# Fix PATH environment for subprocess calls
+if '/usr/bin' not in os.environ.get('PATH', ''):
+    os.environ['PATH'] = '/usr/bin:/usr/sbin:/bin:/sbin:' + os.environ.get('PATH', '')
+
 @dataclass
 class SystemHealth:
     """System health metrics"""
