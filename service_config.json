@@ -13,14 +13,14 @@
     "loop_duration": "8"
   },
   "Fan Service": {
-    "mode": "Lux sensor",
+    "mode": "Random",
     "speed": 0,
     "lux_min": "1",
     "lux_max": "850"
   },
   "Broadcast Service": {
     "mode": "Loop",
-    "volume": 83
+    "volume": 100
   },
   "Light Sensor Service": {
     "mode": "Auto"

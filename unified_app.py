@@ -64,7 +64,7 @@ dashboard_state = DashboardStateManager()
 try:
     from core.exhibition_watchdog import get_watchdog, start_watchdog
     exhibition_watchdog = start_watchdog()
-    print("✅ Exhibition watchdog started")
+    print("✅ Exhibition watchdog initialized successfully")
 except Exception as e:
     print(f"⚠️  Exhibition watchdog failed to start: {e}")
     exhibition_watchdog = None
