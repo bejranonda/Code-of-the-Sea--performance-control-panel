@@ -16,7 +16,7 @@
     "mode": "Lux sensor",
     "speed": 0,
     "lux_min": "1",
-    "lux_max": "1000"
+    "lux_max": "850"
   },
   "Broadcast Service": {
     "mode": "Loop",

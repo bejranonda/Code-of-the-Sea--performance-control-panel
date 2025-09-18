@@ -6,6 +6,7 @@ import time
 import random
 import math
 import traceback
+import fcntl
 from datetime import datetime
 
 # Try importing hardware libraries with error handling
@@ -123,7 +124,7 @@ def update_status(**kwargs):
         log_error("Failed to update status file", e)
 
 def read_config():
-    """Read configuration from JSON file with error handling and retry logic"""
+    """Read configuration from JSON file with file locking and retry logic"""
     max_retries = 3
     retry_delay = 0.1
 
@@ -145,37 +146,51 @@ def read_config():
                     return {"mode": "Fixed", "speed": 50}
 
             with open(CONFIG_FILE, "r") as f:
-                file_content = f.read().strip()
-                if not file_content:
+                try:
+                    # Use file locking to prevent race conditions
+                    fcntl.flock(f.fileno(), fcntl.LOCK_SH | fcntl.LOCK_NB)
+                    file_content = f.read().strip()
+
+                    if not file_content:
+                        if attempt < max_retries - 1:
+                            log_event(f"Config file content is empty, retrying in {retry_delay}s (attempt {attempt + 1}/{max_retries})", "WARNING")
+                            time.sleep(retry_delay)
+                            continue
+                        else:
+                            log_event("Config file content is consistently empty, using defaults", "WARNING")
+                            return {"mode": "Fixed", "speed": 50}
+
+                    config = json.loads(file_content)
+                    fan_config = config.get("Fan Service", {"mode": "Fixed", "speed": 50})
+
+                    # Normalize mode names
+                    mode_mapping = {
+                        "fixed": "Fixed",
+                        "Fixed": "Fixed",
+                        "cycle": "Cycle",
+                        "Cycle": "Cycle",
+                        "random": "Random",
+                        "Random": "Random",
+                        "sounding": "Sounding",
+                        "Sounding": "Sounding",
+                        "lux": "Lux sensor",
+                        "Lux": "Lux sensor",
+                        "lux sensor": "Lux sensor",
+                        "Lux sensor": "Lux sensor"
+                    }
+                    fan_config["mode"] = mode_mapping.get(fan_config.get("mode", "Fixed"), "Fixed")
+
+                    return fan_config
+
+                except BlockingIOError:
+                    # File is locked by another process, retry
                     if attempt < max_retries - 1:
-                        log_event(f"Config file content is empty, retrying in {retry_delay}s (attempt {attempt + 1}/{max_retries})", "WARNING")
+                        log_event(f"Config file is locked, retrying in {retry_delay}s (attempt {attempt + 1}/{max_retries})", "WARNING")
                         time.sleep(retry_delay)
                         continue
                     else:
-                        log_event("Config file content is consistently empty, using defaults", "WARNING")
+                        log_event("Config file is consistently locked, using defaults", "WARNING")
                         return {"mode": "Fixed", "speed": 50}
-
-                config = json.loads(file_content)
-                fan_config = config.get("Fan Service", {"mode": "Fixed", "speed": 50})
-
-                # Normalize mode names
-                mode_mapping = {
-                    "fixed": "Fixed",
-                    "Fixed": "Fixed",
-                    "cycle": "Cycle",
-                    "Cycle": "Cycle",
-                    "random": "Random",
-                    "Random": "Random",
-                    "sounding": "Sounding",
-                    "Sounding": "Sounding",
-                    "lux": "Lux sensor",
-                    "Lux": "Lux sensor",
-                    "lux sensor": "Lux sensor",
-                    "Lux sensor": "Lux sensor"
-                }
-                fan_config["mode"] = mode_mapping.get(fan_config.get("mode", "Fixed"), "Fixed")
-
-                return fan_config
 
         except json.JSONDecodeError as e:
             if attempt < max_retries - 1:
@@ -198,23 +213,54 @@ def read_config():
     return {"mode": "Fixed", "speed": 50}
 
 def write_config(cfg):
-    """Write configuration to JSON file with error handling"""
-    try:
-        # Load existing config
-        if os.path.exists(CONFIG_FILE):
-            with open(CONFIG_FILE, "r") as f:
-                full_config = json.load(f)
-        else:
+    """Write configuration to JSON file with file locking and error handling"""
+    max_retries = 3
+    retry_delay = 0.1
+
+    for attempt in range(max_retries):
+        try:
+            # Load existing config
             full_config = {}
-        
-        # Update fan service config
-        full_config["Fan Service"] = cfg
-        
-        with open(CONFIG_FILE, "w") as f:
-            json.dump(full_config, f, indent=2)
-            
-    except Exception as e:
-        log_error("Error writing config", e)
+            if os.path.exists(CONFIG_FILE):
+                with open(CONFIG_FILE, "r") as f:
+                    try:
+                        fcntl.flock(f.fileno(), fcntl.LOCK_SH | fcntl.LOCK_NB)
+                        full_config = json.load(f)
+                    except BlockingIOError:
+                        if attempt < max_retries - 1:
+                            log_event(f"Config file is locked for reading, retrying in {retry_delay}s (attempt {attempt + 1}/{max_retries})", "WARNING")
+                            time.sleep(retry_delay)
+                            continue
+                        else:
+                            log_error("Config file is consistently locked for reading, cannot update config")
+                            return
+
+            # Update fan service config
+            full_config["Fan Service"] = cfg
+
+            # Write config with exclusive lock
+            with open(CONFIG_FILE, "w") as f:
+                try:
+                    fcntl.flock(f.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    json.dump(full_config, f, indent=2)
+                    return  # Success
+                except BlockingIOError:
+                    if attempt < max_retries - 1:
+                        log_event(f"Config file is locked for writing, retrying in {retry_delay}s (attempt {attempt + 1}/{max_retries})", "WARNING")
+                        time.sleep(retry_delay)
+                        continue
+                    else:
+                        log_error("Config file is consistently locked for writing, cannot update config")
+                        return
+
+        except Exception as e:
+            if attempt < max_retries - 1:
+                log_event(f"Error writing config, retrying in {retry_delay}s (attempt {attempt + 1}/{max_retries}): {e}", "WARNING")
+                time.sleep(retry_delay)
+                continue
+            else:
+                log_error("Error writing config after all retries", e)
+                return
 
 # -------------------------------
 # Hardware Control Functions

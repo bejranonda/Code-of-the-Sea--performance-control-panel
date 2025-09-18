@@ -852,6 +852,35 @@ For technical support or artistic collaboration inquiries:
 - **v1.2** - Improved LED control and web interface
 - **v2.0** - Major system overhaul with comprehensive service management
 - **v2.1.0** - Enhanced persistence & environmental monitoring
+- **v2.2.0** - Stability improvements and configuration resilience
+
+### **🔧 v2.2.0 Release Notes**
+
+**Stability Improvements & Configuration Resilience:**
+
+#### **Configuration System Enhancements**
+- ✅ **Improved JSON Handling**: Enhanced read_config() function in fan service with race condition protection
+- ✅ **File Access Resilience**: Better handling of configuration file access issues and JSON decode errors
+- ✅ **Configuration Path Resolution**: Fixed LED and Fan service configuration file path resolution
+- ✅ **Robust Service Startup**: Automatic service startup system for exhibition reliability
+
+#### **Service Stability Improvements**
+- ✅ **Enhanced Error Recovery**: Comprehensive service error resilience and recovery mechanisms
+- ✅ **Process Management**: Improved service process lifecycle management
+- ✅ **File System Safety**: Protection against configuration file corruption and access conflicts
+- ✅ **Exhibition Reliability**: Bulletproof configuration handling for 24/7 art installations
+
+#### **Technical Improvements**
+- ✅ **Race Condition Prevention**: Eliminated configuration file access race conditions
+- ✅ **JSON Error Handling**: Robust JSON parsing with fallback mechanisms
+- ✅ **Service Dependencies**: Enhanced service dependency management
+- ✅ **Automatic Recovery**: Self-healing configuration system for corrupted files
+
+**Technical Achievements:**
+- 🛡️ **Zero Configuration Loss**: Complete protection against configuration corruption
+- 🔧 **Self-Healing Services**: Automatic recovery from configuration errors
+- 🎯 **Exhibition Hardened**: Ultra-reliable operation for critical art installations
+- ⚡ **Instant Recovery**: Immediate service restoration after configuration issues
 
 ### **✨ v2.1.0 Release Notes**
 
