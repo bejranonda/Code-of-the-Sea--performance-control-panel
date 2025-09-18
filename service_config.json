@@ -1,6 +1,6 @@
 {
   "LED Service": {
-    "mode": "Lux sensor",
+    "mode": "Manual LED",
     "brightness": 100,
     "lux_min": "20",
     "lux_max": "1500"
@@ -20,7 +20,7 @@
   },
   "Broadcast Service": {
     "mode": "Loop",
-    "volume": 50
+    "volume": 3
   },
   "Light Sensor Service": {
     "mode": "Auto"

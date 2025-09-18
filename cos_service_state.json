@@ -1,6 +1,14 @@
 {
-  "timestamp": "2025-09-18T20:48:26.979725",
-  "running_services": [],
-  "manually_stopped": [],
+  "timestamp": "2025-09-18T22:20:26.327751",
+  "running_services": [
+    "fan",
+    "broadcast",
+    "mixing",
+    "radio",
+    "led"
+  ],
+  "manually_stopped": [
+    "Broadcast Service"
+  ],
   "version": "2.1.0"
 }
