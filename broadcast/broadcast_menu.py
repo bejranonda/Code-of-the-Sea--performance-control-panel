@@ -105,22 +105,54 @@ def update_status(**kwargs):
     except Exception as e:
         log_error("Failed to update status file", e)
 
+def check_pulseaudio_connection():
+    """Check if PulseAudio is available and responsive"""
+    try:
+        result = subprocess.run(['pactl', 'info'], capture_output=True, text=True, timeout=5)
+        return result.returncode == 0
+    except (subprocess.TimeoutExpired, Exception):
+        return False
+
 def set_system_volume(volume_percent):
-    """Set system volume using PulseAudio"""
+    """Set system volume using PulseAudio with retry logic"""
     try:
         # Ensure volume is within valid range
         volume_percent = max(0, min(100, volume_percent))
 
-        # Use pactl to set system volume
-        result = subprocess.run(['pactl', 'set-sink-volume', '@DEFAULT_SINK@', f'{volume_percent}%'],
-                              capture_output=True, text=True)
-
-        if result.returncode == 0:
-            log_event(f"System volume set to {volume_percent}%")
-            return True
-        else:
-            log_error(f"Failed to set system volume: {result.stderr}")
+        # Check PulseAudio connection first
+        if not check_pulseaudio_connection():
+            log_event("PulseAudio not ready, skipping volume control", "WARNING")
             return False
+
+        # Try to set volume with retry logic
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                result = subprocess.run(['pactl', 'set-sink-volume', '@DEFAULT_SINK@', f'{volume_percent}%'],
+                                      capture_output=True, text=True, timeout=5)
+
+                if result.returncode == 0:
+                    log_event(f"System volume set to {volume_percent}%")
+                    return True
+                else:
+                    if "Connection refused" in result.stderr:
+                        if attempt < max_retries - 1:
+                            log_event(f"PulseAudio connection refused, retrying in 1 second (attempt {attempt + 1}/{max_retries})")
+                            time.sleep(1)
+                            continue
+                    log_error(f"Failed to set system volume: {result.stderr}")
+                    return False
+
+            except subprocess.TimeoutExpired:
+                if attempt < max_retries - 1:
+                    log_event(f"Volume control timeout, retrying (attempt {attempt + 1}/{max_retries})")
+                    time.sleep(1)
+                    continue
+                else:
+                    log_error("Volume control timeout after retries")
+                    return False
+
+        return False
 
     except Exception as e:
         log_error("Error setting system volume", e)
@@ -455,8 +487,14 @@ def broadcast_loop():
             # Get and update playlist (only every 10 seconds to reduce log flooding)
             current_time = time.time()
             if current_time - last_playlist_check >= 10.0:
+                old_playlist = playlist
                 playlist = get_playlist()
                 last_playlist_check = current_time
+
+                # Check if playlist has changed and reset index if needed
+                if old_playlist != playlist:
+                    log_event(f"Playlist changed - resetting current index from {current_index} to 0")
+                    current_index = 0
 
                 # Update status with playlist
                 if playlist:
@@ -521,6 +559,14 @@ def broadcast_loop():
             log_event(f"DEBUG: Checking if should play - playlist={len(playlist) if playlist else 0}, current_index={current_index}, playback_process={playback_process is not None}")
             if playlist and current_index < len(playlist):
                 file_path = playlist[current_index]
+
+                # Double-check file exists before trying to play
+                if not os.path.exists(file_path):
+                    log_error(f"File no longer exists: {os.path.basename(file_path)}, refreshing playlist")
+                    playlist = get_playlist()
+                    current_index = 0
+                    continue
+
                 log_event(f"DEBUG: About to play file: {os.path.basename(file_path)}")
                 # Try to play the file, but don't crash if it fails
                 try:
@@ -589,11 +635,13 @@ def main():
         log_error("Failed to create media directory", e)
         return
     
-    # Check for media files
+    # Check for media files and ensure initial playlist is loaded
     playlist = get_playlist()
     if not playlist:
         log_event("No media files found in media directory", "WARNING")
         log_event(f"Please add audio files to: {MEDIA_DIR}")
+    else:
+        log_event(f"Initial playlist loaded with {len(playlist)} files")
 
     # Set initial system volume based on config
     config = read_config()
