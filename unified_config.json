@@ -22,12 +22,12 @@
     "lux_max": "850"
   },
   "_metadata": {
-    "last_updated": "2025-09-18T20:52:33.423849",
+    "last_updated": "2025-09-18T21:03:23.461392",
     "version": "1.0"
   },
   "Broadcast Service": {
     "mode": "Loop",
-    "volume": 100,
+    "volume": 50,
     "status_file": "broadcast/broadcast_status.json"
   },
   "Mixing Service": {

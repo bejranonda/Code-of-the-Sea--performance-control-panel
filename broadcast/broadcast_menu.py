@@ -105,18 +105,39 @@ def update_status(**kwargs):
     except Exception as e:
         log_error("Failed to update status file", e)
 
+def set_system_volume(volume_percent):
+    """Set system volume using PulseAudio"""
+    try:
+        # Ensure volume is within valid range
+        volume_percent = max(0, min(100, volume_percent))
+
+        # Use pactl to set system volume
+        result = subprocess.run(['pactl', 'set-sink-volume', '@DEFAULT_SINK@', f'{volume_percent}%'],
+                              capture_output=True, text=True)
+
+        if result.returncode == 0:
+            log_event(f"System volume set to {volume_percent}%")
+            return True
+        else:
+            log_error(f"Failed to set system volume: {result.stderr}")
+            return False
+
+    except Exception as e:
+        log_error("Error setting system volume", e)
+        return False
+
 def read_config():
     """Read configuration from JSON file with error handling"""
     try:
         if not os.path.exists(CONFIG_FILE):
             log_event(f"Config file not found at {CONFIG_FILE}, using defaults", "WARNING")
             return {"mode": "Loop", "volume": 50}
-        
+
         with open(CONFIG_FILE, "r") as f:
             config = json.load(f)
             broadcast_config = config.get("Broadcast Service", {"mode": "Loop", "volume": 50})
             return broadcast_config
-            
+
     except json.JSONDecodeError as e:
         log_error("Config file JSON decode error", e)
         return {"mode": "Loop", "volume": 50}
@@ -212,31 +233,31 @@ def play_file(file_path, volume=50):
         
         if file_ext == '.mp3':
             players = [
-                ['mpg123', '-a', 'pulse', '--gain', str(volume_percent), file_path],  # Use pulse audio output with volume
-                ['ffplay', '-nodisp', '-autoexit', '-af', f'aresample=48000,volume={volume_decimal}', file_path],  # Force 48kHz + volume
-                ['cvlc', '--intf', 'dummy', '--play-and-exit', '--gain', str(volume_decimal), file_path],
-                ['mpg123', '--gain', str(volume_percent), file_path]  # Fallback without pulse but with volume
+                ['mpg123', '-a', 'pulse', file_path],  # Use pulse audio output (volume controlled at system level)
+                ['ffplay', '-nodisp', '-autoexit', '-af', f'aresample=48000', file_path],  # Force 48kHz
+                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path],
+                ['mpg123', file_path]  # Basic fallback
             ]
         elif file_ext in ['.wav']:
             players = [
-                ['aplay', '-D', 'pulse', file_path],  # Note: aplay doesn't have built-in volume control
-                ['ffplay', '-nodisp', '-autoexit', '-af', f'volume={volume_decimal}', file_path],
-                ['cvlc', '--intf', 'dummy', '--play-and-exit', '--gain', str(volume_decimal), file_path],
-                ['aplay', file_path]  # Fallback without pulse
+                ['aplay', '-D', 'pulse', file_path],  # Use pulse audio output (volume controlled at system level)
+                ['ffplay', '-nodisp', '-autoexit', file_path],
+                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path],
+                ['aplay', file_path]  # Basic fallback
             ]
         elif file_ext == '.ogg':
             players = [
-                ['ogg123', '--volume', str(volume_percent), file_path],
-                ['ffplay', '-nodisp', '-autoexit', '-af', f'volume={volume_decimal}', file_path],
-                ['cvlc', '--intf', 'dummy', '--play-and-exit', '--gain', str(volume_decimal), file_path]
+                ['ogg123', file_path],  # Volume controlled at system level
+                ['ffplay', '-nodisp', '-autoexit', file_path],
+                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path]
             ]
         else:
-            # For other formats, try universal players with pulse audio and volume
+            # For other formats, try universal players
             players = [
-                ['ffplay', '-nodisp', '-autoexit', '-af', f'aresample=48000,volume={volume_decimal}', file_path],
-                ['cvlc', '--intf', 'dummy', '--play-and-exit', '--gain', str(volume_decimal), file_path],
-                ['mpg123', '-a', 'pulse', '--gain', str(volume_percent), file_path],  # Might work for some formats
-                ['aplay', '-D', 'pulse', file_path]    # Last resort with pulse (no volume control)
+                ['ffplay', '-nodisp', '-autoexit', '-af', f'aresample=48000', file_path],
+                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path],
+                ['mpg123', '-a', 'pulse', file_path],  # Might work for some formats
+                ['aplay', '-D', 'pulse', file_path]    # Last resort with pulse
             ]
         
         for player_cmd in players:
@@ -446,6 +467,11 @@ def broadcast_loop():
             config = read_config()
             volume = config.get("volume", 50)
 
+            # Update system volume if it's different from current status
+            if current_status.get("volume") != volume:
+                log_event(f"Volume changed from {current_status.get('volume')} to {volume}, updating system volume")
+                set_system_volume(volume)
+
             # Update status with current volume
             update_status(volume=volume)
             
@@ -568,8 +594,14 @@ def main():
     if not playlist:
         log_event("No media files found in media directory", "WARNING")
         log_event(f"Please add audio files to: {MEDIA_DIR}")
-    
-    update_status(connection_status="connected")
+
+    # Set initial system volume based on config
+    config = read_config()
+    initial_volume = config.get("volume", 50)
+    log_event(f"Setting initial system volume to {initial_volume}%")
+    set_system_volume(initial_volume)
+
+    update_status(connection_status="connected", volume=initial_volume)
     
     try:
         # Start broadcast loop in background thread

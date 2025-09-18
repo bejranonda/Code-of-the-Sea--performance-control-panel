@@ -28,8 +28,8 @@
     },
     "Broadcast Service": {
       "mode": "Loop",
-      "volume": "100",
-      "last_updated": "2025-09-18T20:52:33.428050"
+      "volume": "50",
+      "last_updated": "2025-09-18T21:03:23.466330"
     },
     "Mixing Service": {
       "mode": "Auto",
@@ -48,6 +48,6 @@
   },
   "last_active_services": [],
   "user_selections": {},
-  "timestamp": "2025-09-18T20:52:33.428380",
+  "timestamp": "2025-09-18T21:03:23.466661",
   "version": "2.1.0"
 }
