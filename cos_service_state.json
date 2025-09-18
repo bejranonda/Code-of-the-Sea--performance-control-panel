@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-09-18T14:15:07.561791",
+  "timestamp": "2025-09-18T17:13:19.297645",
   "running_services": [
-    "led",
-    "fan",
     "mixing",
+    "led",
     "radio",
+    "fan",
     "broadcast"
   ],
   "manually_stopped": [

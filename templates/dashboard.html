@@ -845,8 +845,57 @@
                 </div>
               {% endif %}
             </div>
+          {% elif service_name == "Mixing Service" %}
+            <div class="service-status-item">
+              <span>Mode:</span>
+              <span><strong>{{ status.get('mode', 'Unknown') }}</strong></span>
+            </div>
+            <div class="service-status-item">
+              <span>Status:</span>
+              <span class="status {{ 'running' if status.get('status') in ['recording', 'mixing', 'preparing'] else ('success' if status.get('status') == 'completed' else 'stopped') }}">
+                {% if status.get('status') == 'recording' %}
+                  🎙️ Recording
+                {% elif status.get('status') == 'mixing' %}
+                  🎛️ Mixing
+                {% elif status.get('status') == 'preparing' %}
+                  ⚙️ Preparing
+                {% elif status.get('status') == 'completed' %}
+                  ✅ Completed
+                {% elif status.get('status') == 'waiting' %}
+                  ⏳ Waiting
+                {% else %}
+                  {{ status.get('status', 'Unknown').title() }}
+                {% endif %}
+              </span>
+            </div>
+            <div class="service-status-item">
+              <span>Master Volume:</span>
+              <span><strong>{{ status.get('master_volume', 0) }}%</strong></span>
+            </div>
+            <div class="service-status-item">
+              <span>Mic Volume:</span>
+              <span><strong>{{ status.get('mic_volume', 0) }}%</strong></span>
+            </div>
+            <div class="service-status-item">
+              <span>Mixed Files:</span>
+              <span><strong>{{ status.get('mixed_files_count', 0) }} files</strong></span>
+            </div>
+            {% if status.get('latest_output_file') %}
+            <div class="service-status-item">
+              <span>Latest Output:</span>
+              <span><strong>{{ status.get('latest_output_file') }}</strong></span>
+            </div>
+            {% endif %}
+            {% if status.get('master_duration') and status.get('master_position') is not none %}
+            <div class="service-status-item">
+              <span>Master Position:</span>
+              <span><strong>{{ "%.0f"|format(status.get('master_position', 0)) }}s / {{ "%.0f"|format(status.get('master_duration', 0)) }}s</strong>
+                <small style="color: #6b7280;">({{ "%.1f"|format((status.get('master_position', 0) / status.get('master_duration', 1)) * 100) }}%)</small>
+              </span>
+            </div>
+            {% endif %}
           {% endif %}
-          
+
           {% if status.get('error_count', 0) > 0 %}
           <div class="service-status-item">
             <span>Errors:</span>
