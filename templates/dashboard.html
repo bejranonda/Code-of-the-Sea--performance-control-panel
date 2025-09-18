@@ -726,6 +726,10 @@
               <span><strong>{{ status.get('playlist', [])|length }} files</strong></span>
             </div>
             <div class="service-status-item">
+              <span>Volume:</span>
+              <span><strong>{{ status.get('volume', 50) }}%</strong></span>
+            </div>
+            <div class="service-status-item">
               <span>Connection:</span>
               <span class="status {{ 'running' if status.get('connection_status') == 'connected' else 'error' }}">
                 {{ status.get('connection_status', 'Unknown').upper() }}

@@ -32,6 +32,7 @@ current_status = {
     "paused": False,
     "playlist": [],
     "current_index": 0,
+    "volume": 50,
     "last_update": None,
     "error_count": 0,
     "connection_status": "disconnected"
@@ -191,46 +192,51 @@ def get_playlist():
         log_error("Error scanning media directory", e)
         return []
 
-def play_file(file_path):
-    """Play a single audio file using system audio player"""
+def play_file(file_path, volume=50):
+    """Play a single audio file using system audio player with volume control"""
     global playback_process
-    log_event(f"DEBUG: play_file called with: {os.path.basename(file_path)}")
-    
+    log_event(f"DEBUG: play_file called with: {os.path.basename(file_path)}, volume: {volume}%")
+
     try:
         if not os.path.exists(file_path):
             log_error(f"Media file not found: {file_path}")
             return False
-        
+
+        # Convert volume percentage (0-100) to appropriate format for different players
+        # Most players use 0-1 or 0-100 scale
+        volume_decimal = volume / 100.0  # For players that use 0-1 scale
+        volume_percent = int(volume)     # For players that use 0-100 scale
+
         # Select appropriate player based on file extension
         file_ext = os.path.splitext(file_path)[1].lower()
         
         if file_ext == '.mp3':
             players = [
-                ['mpg123', '-a', 'pulse', file_path],  # Use pulse audio output
-                ['ffplay', '-nodisp', '-autoexit', '-af', 'aresample=48000', file_path],  # Force 48kHz for compatibility
-                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path],
-                ['mpg123', file_path]  # Fallback without pulse
+                ['mpg123', '-a', 'pulse', '--gain', str(volume_percent), file_path],  # Use pulse audio output with volume
+                ['ffplay', '-nodisp', '-autoexit', '-af', f'aresample=48000,volume={volume_decimal}', file_path],  # Force 48kHz + volume
+                ['cvlc', '--intf', 'dummy', '--play-and-exit', '--gain', str(volume_decimal), file_path],
+                ['mpg123', '--gain', str(volume_percent), file_path]  # Fallback without pulse but with volume
             ]
         elif file_ext in ['.wav']:
             players = [
-                ['aplay', '-D', 'pulse', file_path],  # Use pulse audio device
-                ['ffplay', '-nodisp', '-autoexit', file_path],
-                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path],
+                ['aplay', '-D', 'pulse', file_path],  # Note: aplay doesn't have built-in volume control
+                ['ffplay', '-nodisp', '-autoexit', '-af', f'volume={volume_decimal}', file_path],
+                ['cvlc', '--intf', 'dummy', '--play-and-exit', '--gain', str(volume_decimal), file_path],
                 ['aplay', file_path]  # Fallback without pulse
             ]
         elif file_ext == '.ogg':
             players = [
-                ['ogg123', file_path],
-                ['ffplay', '-nodisp', '-autoexit', file_path],
-                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path]
+                ['ogg123', '--volume', str(volume_percent), file_path],
+                ['ffplay', '-nodisp', '-autoexit', '-af', f'volume={volume_decimal}', file_path],
+                ['cvlc', '--intf', 'dummy', '--play-and-exit', '--gain', str(volume_decimal), file_path]
             ]
         else:
-            # For other formats, try universal players with pulse audio
+            # For other formats, try universal players with pulse audio and volume
             players = [
-                ['ffplay', '-nodisp', '-autoexit', '-af', 'aresample=48000', file_path],
-                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path],
-                ['mpg123', '-a', 'pulse', file_path],  # Might work for some formats
-                ['aplay', '-D', 'pulse', file_path]    # Last resort with pulse
+                ['ffplay', '-nodisp', '-autoexit', '-af', f'aresample=48000,volume={volume_decimal}', file_path],
+                ['cvlc', '--intf', 'dummy', '--play-and-exit', '--gain', str(volume_decimal), file_path],
+                ['mpg123', '-a', 'pulse', '--gain', str(volume_percent), file_path],  # Might work for some formats
+                ['aplay', '-D', 'pulse', file_path]    # Last resort with pulse (no volume control)
             ]
         
         for player_cmd in players:
@@ -430,11 +436,18 @@ def broadcast_loop():
             if current_time - last_playlist_check >= 10.0:
                 playlist = get_playlist()
                 last_playlist_check = current_time
-                
+
                 # Update status with playlist
                 if playlist:
                     playlist_names = [os.path.basename(f) for f in playlist]
                     update_status(playlist=playlist_names)
+
+            # Read volume configuration
+            config = read_config()
+            volume = config.get("volume", 50)
+
+            # Update status with current volume
+            update_status(volume=volume)
             
             if not playlist:
                 update_status(playlist=[], playing=False, paused=False, current_file="")
@@ -485,9 +498,9 @@ def broadcast_loop():
                 log_event(f"DEBUG: About to play file: {os.path.basename(file_path)}")
                 # Try to play the file, but don't crash if it fails
                 try:
-                    if play_file(file_path):
+                    if play_file(file_path, volume):
                         update_status(playing=True, paused=False, current_file=os.path.basename(file_path))
-                        log_event(f"Playing: {os.path.basename(file_path)}")
+                        log_event(f"Playing: {os.path.basename(file_path)} at {volume}% volume")
                         # Give the process a moment to initialize
                         time.sleep(1.0)
                         
