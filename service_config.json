@@ -20,7 +20,7 @@
   },
   "Broadcast Service": {
     "mode": "Loop",
-    "volume": 100
+    "volume": 50
   },
   "Light Sensor Service": {
     "mode": "Auto"
