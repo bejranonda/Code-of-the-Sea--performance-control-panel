@@ -19,10 +19,10 @@
     "speed": 0,
     "status_file": "fan/fan_status.json",
     "lux_min": "1",
-    "lux_max": "1000"
+    "lux_max": "850"
   },
   "_metadata": {
-    "last_updated": "2025-09-18T13:04:44.576090",
+    "last_updated": "2025-09-18T14:15:07.503658",
     "version": "1.0"
   },
   "Broadcast Service": {
@@ -35,6 +35,7 @@
     "master_volume": "100",
     "mic_volume": "65",
     "recording_duration": "120",
-    "volume": "75"
+    "volume": "75",
+    "status_file": "mixing/mixing_status.json"
   }
 }

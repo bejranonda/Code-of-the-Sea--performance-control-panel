@@ -33,6 +33,13 @@ class ConfigManager:
                 "mode": "Loop",
                 "volume": 50,
                 "status_file": "broadcast/broadcast_status.json"
+            },
+            "Mixing Service": {
+                "mode": "Auto",
+                "master_volume": 100,
+                "mic_volume": 65,
+                "recording_duration": 30,
+                "status_file": "mixing/mixing_status.json"
             }
         }
     
