@@ -4,6 +4,13 @@
 RADIO_SCRIPT="/home/payas/cos/radio/fm-radio_menu.py"
 PYTHON_PATH="/home/payas/venv/bin/python"
 PIDFILE="/tmp/radio_service.pid"
+LOGFILE="/home/payas/cos/radio/radio_service_management.log"
+
+# Function to log events with timestamp
+log_event() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] RADIO SERVICE SCRIPT: $1" >> "$LOGFILE"
+    echo "RADIO SERVICE SCRIPT: $1"
+}
 
 start_service() {
     # First kill any existing instances

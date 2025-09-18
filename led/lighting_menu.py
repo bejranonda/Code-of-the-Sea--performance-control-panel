@@ -454,14 +454,29 @@ async def set_brightness_and_power(brightness_percent, force_update=False, verbo
         log_error("Unexpected error in set_brightness_and_power", e)
         current_status["error_count"] += 1
 
+def check_mixing_service_active():
+    """Check if mixing service is currently recording and needs audio device"""
+    try:
+        # Check mixing service status file
+        mixing_status_file = os.path.join(os.path.dirname(__file__), "..", "mixing", "mixing_status.json")
+        if os.path.exists(mixing_status_file):
+            with open(mixing_status_file, 'r') as f:
+                mixing_status = json.load(f)
+                # If mixing service is recording, yield audio device
+                if mixing_status.get("recording", False) or mixing_status.get("status") == "recording":
+                    return True
+        return False
+    except Exception:
+        return False
+
 async def musical_led_mode():
-    """Musical LED mode - brightness reacts to sound level."""
-    log_event("Starting Musical LED mode")
+    """Musical LED mode - brightness reacts to sound level with mixing service coordination."""
+    log_event("Starting Musical LED mode with mixing service coordination")
     update_status(mode="Musical LED")
-    
+
     # Turn on LED at start
     await set_brightness_and_power(50, force_update=True)  # Start with 50% brightness
-    
+
     # Try to use audio input with error resilience
     audio_available = False
     try:
@@ -476,40 +491,93 @@ async def musical_led_mode():
         return
 
     try:
-        with sd.InputStream(samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE) as stream:
-            while True:
-                # Check if mode changed
-                config = load_config()
-                if config["mode"] != "Musical LED":
-                    break
-                
+        # Initialize audio stream
+        stream = sd.InputStream(samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE)
+        stream.start()
+        fallback_mode = False
+        last_mixing_check = 0
+
+        while True:
+            # Check if mode changed
+            config = load_config()
+            if config["mode"] != "Musical LED":
+                break
+
+            current_time = time.time()
+
+            # Check mixing service status every 2 seconds
+            if current_time - last_mixing_check >= 2:
+                if check_mixing_service_active():
+                    if stream is not None:
+                        log_event("Mixing service recording detected - temporarily releasing audio device")
+                        stream.close()
+                        stream = None
+                        fallback_mode = True
+
+                    # Use lux-based lighting while mixing service is recording
+                    if fallback_mode:
+                        try:
+                            lux = await read_lux_sensor()
+                            brightness_percent = get_brightness_from_lux(lux)
+                            await set_brightness_and_power(brightness_percent)
+
+                            if current_time % 10 < 1:  # Log every ~10 seconds
+                                log_event(f"Musical LED (fallback) - Lux: {lux:.1f}, Brightness: {brightness_percent:.1f}%")
+
+                        except Exception as e:
+                            log_error("Error in Musical LED fallback mode", e)
+
+                        await asyncio.sleep(1)
+                        last_mixing_check = current_time
+                        continue
+
+                else:
+                    # Mixing service not recording, return to audio mode if needed
+                    if fallback_mode and stream is None:
+                        try:
+                            log_event("Mixing service recording finished - resuming audio input")
+                            stream = sd.InputStream(samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE)
+                            stream.start()
+                            fallback_mode = False
+                        except Exception as e:
+                            log_error("Failed to resume audio input, staying in fallback mode", e)
+                            fallback_mode = True
+
+                last_mixing_check = current_time
+
+            # If we're in fallback mode, continue with lux-based lighting
+            if fallback_mode or stream is None:
+                await asyncio.sleep(0.5)
+                continue
+
+            try:
+                data, overflowed = stream.read(BLOCKSIZE)
+                if overflowed:
+                    log_event("Audio buffer overflowed", "WARNING")
+
+                current_rms = np.sqrt(np.mean(data**2))
+                rms_history.append(current_rms)
+                smoothed_rms = np.mean(rms_history)
+
+                brightness_percent = get_brightness_from_rms(smoothed_rms)
+
+                # Log significant brightness changes in Musical LED mode
+                if abs(brightness_percent - previous_brightness_percent) >= 10:  # Log changes >= 10%
+                    log_event(f"Musical LED - Brightness: {brightness_percent:.1f}% (RMS: {smoothed_rms:.4f})")
+
+                await set_brightness_and_power(brightness_percent, verbose_logging=False)
+
                 try:
-                    data, overflowed = stream.read(BLOCKSIZE)
-                    if overflowed:
-                        log_event("Audio buffer overflowed", "WARNING")
-                    
-                    current_rms = np.sqrt(np.mean(data**2))
-                    rms_history.append(current_rms)
-                    smoothed_rms = np.mean(rms_history)
-                    
-                    brightness_percent = get_brightness_from_rms(smoothed_rms)
-                    
-                    # Log significant brightness changes in Musical LED mode
-                    if abs(brightness_percent - previous_brightness_percent) >= 10:  # Log changes >= 10%
-                        log_event(f"Musical LED - Brightness: {brightness_percent:.1f}% (RMS: {smoothed_rms:.4f})")
-                    
-                    await set_brightness_and_power(brightness_percent, verbose_logging=False)
-                    
-                    try:
-                        print(f"Musical LED - RMS: {smoothed_rms:.4f} -> Brightness: {brightness_percent:.1f}%", end='\r')
-                    except (BrokenPipeError, OSError):
-                        pass  # Ignore broken pipe errors in background service
-                    await asyncio.sleep(0.01)
-                    
-                except Exception as e:
-                    log_error("Error in musical LED processing", e)
-                    await asyncio.sleep(0.1)
-                    
+                    print(f"Musical LED - RMS: {smoothed_rms:.4f} -> Brightness: {brightness_percent:.1f}%", end='\r')
+                except (BrokenPipeError, OSError):
+                    pass  # Ignore broken pipe errors in background service
+
+                await asyncio.sleep(0.01)
+
+            except Exception as e:
+                log_error("Error in musical LED processing", e)
+                await asyncio.sleep(0.1)
+
     except Exception as e:
         log_error("Error starting Musical LED mode, falling back to lux monitoring", e)
         # Don't let the service crash - fall back to lux monitoring
@@ -519,6 +587,13 @@ async def musical_led_mode():
             log_error("Fallback to lux mode also failed, continuing with basic operation", fallback_e)
             # Keep service running with basic LED functionality
             await asyncio.sleep(1)
+    finally:
+        # Clean up stream if it exists
+        if 'stream' in locals() and stream is not None:
+            try:
+                stream.close()
+            except Exception:
+                pass
 
 async def lighting_led_mode():
     """Lux sensor mode - brightness reacts to light sensor (inverse)."""

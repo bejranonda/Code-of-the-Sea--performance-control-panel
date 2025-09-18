@@ -508,17 +508,17 @@ class ExhibitionWatchdog:
             return {'error': str(e), 'timestamp': datetime.now().isoformat()}
     
     def check_service_health(self) -> bool:
-        """Check if main service is running and responding"""
+        """Check if main service is running and responding (but don't restart individual services)"""
         try:
             # Check if systemd service is active
             result = subprocess.run(
                 ['systemctl', 'is-active', 'cos-control-panel'],
                 capture_output=True, text=True
             )
-            
+
             if result.returncode != 0:
                 return False
-            
+
             # Check if web interface is responding
             try:
                 import requests
@@ -527,12 +527,12 @@ class ExhibitionWatchdog:
             except:
                 # If requests fails, try curl
                 curl_result = subprocess.run(
-                    ['curl', '-s', '-o', '/dev/null', '-w', '%{http_code}', 
+                    ['curl', '-s', '-o', '/dev/null', '-w', '%{http_code}',
                      'http://localhost:5000/', '--connect-timeout', '3'],
                     capture_output=True, text=True
                 )
                 return curl_result.stdout.strip() == '200'
-                
+
         except Exception as e:
             self.logger.warning(f"Service health check failed: {e}")
             return False
@@ -1188,10 +1188,12 @@ class ExhibitionWatchdog:
             self.logger.warning(f"High temperature: {health.cpu_temperature}°C")
             # Could trigger fan control or throttling
         
-        # Service not healthy
+        # Service not healthy (only restart main unified app, not individual services)
         if not health.services_healthy:
-            self.logger.warning("Service health check failed")
-            self.restart_service("Service health check failed")
+            self.logger.warning("Main unified service health check failed")
+            # Only restart the main control panel service, not individual services
+            # Individual services should be managed by the user via dashboard
+            self.restart_service("Main unified service health check failed")
             return
         
         # High error count

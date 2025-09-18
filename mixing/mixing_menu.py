@@ -4,6 +4,7 @@
 import time
 import json
 import os
+import sys
 import subprocess
 import shutil
 import traceback
@@ -25,53 +26,80 @@ MIC_SAMPLE_RATE = 44100
 MIC_DURATION = 30  # seconds for microphone recording
 
 def detect_usb_microphone():
-    """Automatically detect any USB audio input device"""
+    """Automatically detect best USB audio input device with PulseAudio compatibility"""
     try:
+        # For systems with PulseAudio running, always prefer pulse device for reliability
+        # Check if PulseAudio is running
+        pulse_running = False
+        try:
+            result = subprocess.run(['pgrep', '-f', 'pulseaudio'], capture_output=True, text=True)
+            pulse_running = result.returncode == 0
+        except:
+            pass
+
+        if pulse_running:
+            log_event("PulseAudio detected - using pulse device for better compatibility")
+            # Test pulse device first
+            if test_audio_device_recording("pulse"):
+                log_event("Successfully detected working microphone: pulse")
+                return "pulse"
+
+        # Fallback: Try other devices if pulse doesn't work
+        devices_to_test = []
+
+        # Method 1: arecord -l for capture devices
         result = subprocess.run(['/usr/bin/arecord', '-l'], capture_output=True, text=True)
         if result.returncode == 0:
             lines = result.stdout.split('\n')
-            # Look for any USB audio device with capture capability
             for line in lines:
-                if 'card' in line and ('USB' in line or 'Audio' in line):
-                    # Extract card number from line like "card 3: Device [USB Audio Device]"
+                if 'card' in line and ('USB' in line or 'Audio' in line or 'Microphone' in line):
+                    # Extract card number
                     parts = line.split()
                     for i, part in enumerate(parts):
                         if part.startswith('card'):
                             card_num = parts[i+1].rstrip(':')
-                            device = f"hw:{card_num},0"
-                            # Test if device actually works for recording
-                            if test_audio_device(device):
-                                return device
+                            # Prefer plughw over hw for better compatibility
+                            plughw_device = f"plughw:{card_num},0"
+                            hw_device = f"hw:{card_num},0"
+                            if plughw_device not in devices_to_test:
+                                devices_to_test.append(plughw_device)
+                            if hw_device not in devices_to_test:
+                                devices_to_test.append(hw_device)
 
-            # Fallback: try all available cards for USB devices
-            cards_result = subprocess.run(['/usr/bin/cat', '/proc/asound/cards'], capture_output=True, text=True)
-            if cards_result.returncode == 0:
-                for line in cards_result.stdout.split('\n'):
-                    if 'USB-Audio' in line or 'USB Audio' in line:
-                        # Extract card number from line like " 3 [Device         ]: USB-Audio"
-                        parts = line.strip().split()
-                        if parts and parts[0].isdigit():
-                            card_num = parts[0]
-                            device = f"hw:{card_num},0"
-                            if test_audio_device(device):
-                                return device
+        # Method 2: Add common compatible devices
+        common_devices = ["default", "plughw:1,0", "plughw:2,0", "plughw:3,0"]
+        for device in common_devices:
+            if device not in devices_to_test:
+                devices_to_test.append(device)
 
-        # Last resort: try common card numbers
-        for card_num in [3, 1, 2, 0]:
-            device = f"hw:{card_num},0"
-            if test_audio_device(device):
+        # Test each device with longer recording test to catch intermittent failures
+        for device in devices_to_test:
+            if test_audio_device_recording(device, test_duration=3):  # 3 second test
+                log_event(f"Successfully detected working microphone: {device}")
                 return device
 
-        return "hw:3,0"  # Final fallback
+        log_event("No working microphone found, using pulse fallback", "WARNING")
+        return "pulse"  # PulseAudio fallback for better compatibility
+
     except Exception as e:
         log_event(f"Error detecting microphone: {e}", "WARNING")
-        return "hw:3,0"  # Final fallback
+        return "pulse"  # PulseAudio fallback for better compatibility
 
 def test_audio_device(device):
     """Test if an audio device exists and is accessible"""
     try:
-        # First check if device exists in /proc/asound
-        card_num = device.split(':')[1].split(',')[0]
+        # Handle different device formats
+        if device == 'pulse':
+            return True  # PulseAudio device should always be testable
+        elif device == 'default':
+            return True  # Default device should always be testable
+        elif device.startswith('plughw:'):
+            card_num = device.split(':')[1].split(',')[0]
+        elif device.startswith('hw:'):
+            card_num = device.split(':')[1].split(',')[0]
+        else:
+            return False
+
         if not card_num.isdigit():
             return False
 
@@ -86,6 +114,44 @@ def test_audio_device(device):
                 return True
         return False
     except:
+        return False
+
+def test_audio_device_recording(device, test_duration=1):
+    """Test if device can actually record audio with configurable duration test"""
+    try:
+        # Configurable duration recording test
+        test_file = f"/tmp/mic_test_{device.replace(':', '_').replace('/', '_')}.wav"
+        cmd = [
+            "/usr/bin/arecord",
+            "-D", device,
+            "-f", "S16_LE",
+            "-r", "44100",
+            "-c", "1",
+            "-d", str(test_duration),
+            test_file
+        ]
+
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=test_duration + 5)
+
+        # Check if recording was successful and completed the full duration
+        expected_min_size = int(test_duration * 44100 * 2 * 0.8)  # 80% of expected size
+        success = (result.returncode == 0 and
+                  os.path.exists(test_file) and
+                  os.path.getsize(test_file) >= expected_min_size and
+                  "read error" not in result.stderr and
+                  "No such device" not in result.stderr)
+
+        # Clean up test file
+        if os.path.exists(test_file):
+            os.remove(test_file)
+
+        if not success and result.stderr:
+            log_event(f"Device {device} test failed: {result.stderr.strip()}", "WARNING")
+
+        return success
+
+    except Exception as e:
+        log_event(f"Device {device} test exception: {e}", "WARNING")
         return False
 
 # Global status
@@ -228,30 +294,30 @@ def record_microphone(output_file, duration=MIC_DURATION):
 
     for attempt in range(max_retries):
         try:
-            # Auto-detect microphone device
+            # Auto-detect microphone device fresh each attempt
             mic_device = detect_usb_microphone()
             log_event(f"Detected microphone device: {mic_device}")
             log_event(f"Starting microphone recording ({duration}s) - attempt {attempt + 1}/{max_retries}")
+            log_event(f"Recording start time: {datetime.now().strftime('%H:%M:%S.%f')[:-3]}")
             update_status(recording=True, status="recording")
 
             # Kill any stuck arecord processes before starting
-            if attempt > 0:
-                try:
-                    # More aggressive cleanup on retries
-                    subprocess.run(['pkill', '-9', '-f', 'arecord'], timeout=5, capture_output=True)
-                    # Also kill any processes holding audio devices
-                    subprocess.run(['fuser', '-k', '/dev/snd/*'], timeout=5, capture_output=True)
-                    time.sleep(2)  # Give processes time to die and release devices
-                    log_event(f"Killed stuck arecord processes before retry {attempt + 1}")
-                except:
-                    pass
+            try:
+                subprocess.run(['pkill', '-9', '-f', 'arecord'], timeout=5, capture_output=True)
+                # Reset audio system if on retry
+                if attempt > 0:
+                    subprocess.run(['sudo', 'alsa', 'force-reload'], timeout=10, capture_output=True)
+                    time.sleep(2)
+                    log_event(f"Reset audio system before retry {attempt + 1}")
+            except:
+                pass
 
-            # Use full path to arecord to avoid PATH issues
+            # Use full path to arecord
             arecord_path = "/usr/bin/arecord"
             if not os.path.exists(arecord_path):
-                # Fallback to PATH-based lookup
                 arecord_path = "arecord"
 
+            # More robust recording command with better error handling
             cmd = [
                 arecord_path,
                 "-D", mic_device,
@@ -259,42 +325,80 @@ def record_microphone(output_file, duration=MIC_DURATION):
                 "-r", str(MIC_SAMPLE_RATE),
                 "-c", "1",  # Mono
                 "-d", str(duration),
+                "--max-file-time", str(duration + 5),  # Allow extra time for file writes
                 output_file
             ]
 
-            # Ensure proper environment is passed
+            # Ensure proper environment
             env = os.environ.copy()
             env['PATH'] = '/usr/bin:/bin:/usr/local/bin:' + env.get('PATH', '')
+            env['ALSA_PCM_CARD'] = mic_device.split(':')[1].split(',')[0] if ':' in mic_device else '1'
 
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=int(duration) + 10, env=env)
+            log_event(f"Executing arecord command: {' '.join(cmd)}")
+            start_time = time.time()
 
-            # Check if output file was created successfully (better indicator than return code)
-            if os.path.exists(output_file) and os.path.getsize(output_file) > 1000:  # At least 1KB
+            # Extended timeout to allow for full recording + buffer
+            timeout_duration = int(duration) + 15
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_duration, env=env)
+
+            end_time = time.time()
+            actual_duration = end_time - start_time
+
+            log_event(f"Recording end time: {datetime.now().strftime('%H:%M:%S.%f')[:-3]}")
+            log_event(f"Actual recording duration: {actual_duration:.2f}s (expected: {duration}s)")
+            log_event(f"arecord return code: {result.returncode}")
+            if result.stdout:
+                log_event(f"arecord stdout: {result.stdout}")
+            if result.stderr:
+                log_event(f"arecord stderr: {result.stderr}")
+
+            # Check if recording was successful
+            success = False
+            if os.path.exists(output_file):
+                file_size = os.path.getsize(output_file)
+                log_event(f"Output file size: {file_size} bytes")
+
+                # Calculate expected minimum file size (duration * sample_rate * 2 bytes * 0.8 for tolerance)
+                expected_min_size = int(duration * MIC_SAMPLE_RATE * 2 * 0.8)
+
+                if file_size >= expected_min_size:
+                    log_event(f"Recording successful - file size {file_size} >= expected minimum {expected_min_size}")
+                    success = True
+                elif file_size > 10000:  # At least 10KB
+                    log_event(f"Recording partially successful - file size {file_size} (minimum would be {expected_min_size})", "WARNING")
+                    # Accept partial recording if it's substantial
+                    success = True
+                else:
+                    log_event(f"Recording failed - file too small: {file_size} bytes (expected minimum: {expected_min_size})", "ERROR")
+            else:
+                log_event("Output file was not created", "ERROR")
+
+            if success:
                 log_event(f"Microphone recording completed: {output_file}")
                 return True
-            else:
-                # Combine stderr and stdout for full error context
-                error_msg = f"stdout: {result.stdout.strip()}, stderr: {result.stderr.strip()}, returncode: {result.returncode}"
 
-                if "Device or resource busy" in result.stderr:
-                    log_event(f"Microphone device busy (attempt {attempt + 1}), retrying in {retry_delay}s", "WARNING")
-                    if attempt < max_retries - 1:  # Don't sleep on last attempt
-                        time.sleep(retry_delay)
-                        continue
-                elif "No such device" in result.stderr:
-                    log_event(f"Microphone device not found (attempt {attempt + 1}), retrying in {retry_delay}s", "WARNING")
-                    if attempt < max_retries - 1:  # Don't sleep on last attempt
-                        time.sleep(retry_delay)
-                        continue
-                else:
-                    log_error(f"Microphone recording failed: {error_msg}", Exception(error_msg))
-                    break  # Don't retry for other errors
+            # Analyze the error for retry decision
+            error_msg = f"stdout: {result.stdout.strip()}, stderr: {result.stderr.strip()}, returncode: {result.returncode}"
+
+            if "Device or resource busy" in result.stderr:
+                log_event(f"Microphone device busy (attempt {attempt + 1}), will retry with different device", "WARNING")
+            elif "No such device" in result.stderr:
+                log_event(f"Microphone device disconnected during recording (attempt {attempt + 1}), will retry", "WARNING")
+            elif "read error" in result.stderr:
+                log_event(f"Device read error during recording (attempt {attempt + 1}), will retry", "WARNING")
+            else:
+                log_error(f"Microphone recording failed: {error_msg}", Exception(error_msg))
+                # Still retry for unknown errors
+
+            if attempt < max_retries - 1:  # Don't sleep on last attempt
+                time.sleep(retry_delay)
+                continue
 
         except subprocess.TimeoutExpired:
-            log_error(f"Microphone recording timed out (attempt {attempt + 1})", Exception("Recording timeout"))
+            log_error(f"Microphone recording timed out after {timeout_duration}s (attempt {attempt + 1})", Exception("Recording timeout"))
             # Kill any stuck processes
             try:
-                subprocess.run(['pkill', '-f', 'arecord'], timeout=5, capture_output=True)
+                subprocess.run(['pkill', '-9', '-f', 'arecord'], timeout=5, capture_output=True)
             except:
                 pass
             if attempt < max_retries - 1:
@@ -577,7 +681,10 @@ def perform_mixing(config):
 
 def main():
     """Main mixing service loop"""
-    log_event("Mixing service started")
+    log_event("=== MIXING SERVICE STARTING ===")
+    log_event(f"Process ID: {os.getpid()}")
+    log_event(f"Python executable: {os.sys.executable}")
+    log_event(f"Working directory: {os.getcwd()}")
     update_status(mode="Auto", status="initializing")
 
     # Ensure directories exist
@@ -638,12 +745,14 @@ def main():
                 time.sleep(5)
 
     except KeyboardInterrupt:
-        log_event("Mixing service stopped by user")
+        log_event("=== MIXING SERVICE STOPPED BY USER ===")
     except Exception as e:
-        log_error("Unexpected error in main", e)
+        log_error("=== MIXING SERVICE CRASHED ===", e)
     finally:
         update_status(status="stopped")
-        log_event("Mixing service stopped")
+        log_event("=== MIXING SERVICE STOPPING ===")
+        log_event(f"Final process ID: {os.getpid()}")
+        log_event("=== MIXING SERVICE STOPPED ===")
 
 if __name__ == "__main__":
     main()

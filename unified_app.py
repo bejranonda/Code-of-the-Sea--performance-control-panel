@@ -235,13 +235,29 @@ def change_mode(mode_name):
 def start_service(service):
     """Start a service"""
     if service in SERVICES:
+        # Log the start request
+        service_manager.log_event(f"User requested START for {service} via dashboard")
+        persistence_manager.log_service_event(service, "START_REQUESTED", "User clicked START button in dashboard")
+
         script_path = SERVICES[service]['script']
         working_dir = os.path.dirname(script_path) or "."
         success = service_manager.start_service(service, script_path, working_dir)
 
         if not success:
+            # Log failed manual start
+            persistence_manager.log_service_event(service, "MANUAL_START_FAILED", "User clicked START button but service failed to start", False)
             service_manager.log_error(f"Failed to start {service}")
         else:
+            # Log successful manual start
+            persistence_manager.log_service_event(service, "MANUAL_STARTED", "User clicked START button in dashboard - service started successfully")
+
+            # Mark service as manually started (remove from stopped list)
+            try:
+                persistence_manager.mark_service_manually_started(service)
+                service_manager.log_event(f"Marked {service} as manually started")
+            except Exception as e:
+                service_manager.log_error(f"Failed to update manual start state for {service}", e)
+
             # Update persistent service state after successful start
             try:
                 persistence_manager.update_running_services()
@@ -249,6 +265,7 @@ def start_service(service):
                 service_manager.log_error(f"Failed to update service state after starting {service}", e)
     else:
         service_manager.log_error(f"Unknown service: {service}")
+        persistence_manager.log_service_event(service, "INVALID_SERVICE", f"Unknown service requested: {service}", False)
 
     return redirect(url_for("index"))
 
@@ -256,10 +273,26 @@ def start_service(service):
 def stop_service(service):
     """Stop a service"""
     if service in SERVICES:
+        # Log the stop request
+        service_manager.log_event(f"User requested STOP for {service} via dashboard")
+        persistence_manager.log_service_event(service, "STOP_REQUESTED", "User clicked STOP button in dashboard")
+
         success = service_manager.stop_service(service)
         if not success:
+            # Log failed manual stop
+            persistence_manager.log_service_event(service, "MANUAL_STOP_FAILED", "User clicked STOP button but service failed to stop", False)
             service_manager.log_error(f"Failed to stop {service}")
         else:
+            # Log successful manual stop
+            persistence_manager.log_service_event(service, "MANUAL_STOPPED", "User clicked STOP button in dashboard - service stopped successfully")
+
+            # Mark service as manually stopped (prevent auto-restart)
+            try:
+                persistence_manager.mark_service_manually_stopped(service)
+                service_manager.log_event(f"Marked {service} as manually stopped")
+            except Exception as e:
+                service_manager.log_error(f"Failed to update manual stop state for {service}", e)
+
             # Update persistent service state after successful stop
             try:
                 persistence_manager.update_running_services()
@@ -267,6 +300,7 @@ def stop_service(service):
                 service_manager.log_error(f"Failed to update service state after stopping {service}", e)
     else:
         service_manager.log_error(f"Unknown service: {service}")
+        persistence_manager.log_service_event(service, "INVALID_SERVICE", f"Unknown service stop requested: {service}", False)
 
     return redirect(url_for("index"))
 
@@ -1153,10 +1187,13 @@ def radio_stop_scan():
         }), 500
 
 def restore_services_on_startup():
-    """Start all services automatically for exhibition reliability"""
+    """Restore services that were running and not manually stopped"""
     try:
-        print("🔄 Starting all services for exhibition mode...")
-        service_manager.log_event("Starting automatic service startup (all services)")
+        print("🔄 Restoring services based on previous state...")
+        service_manager.log_event("Starting automatic service restoration (respecting manual stops)")
+
+        # Log system startup event
+        persistence_manager.log_service_event("SYSTEM", "STARTUP", "Unified app started - beginning service restoration")
 
         # Wait a moment for system to stabilize
         time.sleep(2)
@@ -1165,8 +1202,8 @@ def restore_services_on_startup():
         print("📋 Restoring dashboard configurations...")
         dashboard_state.restore_unified_config(config_manager)
 
-        # Start all services by default (exhibition mode)
-        restored_services = persistence_manager.restore_services(force_all_services=True)
+        # Only restore services that were running AND not manually stopped
+        restored_services = persistence_manager.restore_services(force_all_services=False)
 
         if restored_services:
             print(f"✅ Restored services: {', '.join(restored_services)}")
