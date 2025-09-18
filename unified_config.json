@@ -15,19 +15,19 @@
     "loop_duration": "8"
   },
   "Fan Service": {
-    "mode": "Lux sensor",
+    "mode": "Random",
     "speed": 0,
     "status_file": "fan/fan_status.json",
     "lux_min": "1",
     "lux_max": "850"
   },
   "_metadata": {
-    "last_updated": "2025-09-18T17:13:19.277847",
+    "last_updated": "2025-09-18T20:24:36.236165",
     "version": "1.0"
   },
   "Broadcast Service": {
     "mode": "Loop",
-    "volume": 83,
+    "volume": 100,
     "status_file": "broadcast/broadcast_status.json"
   },
   "Mixing Service": {

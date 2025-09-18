@@ -1,10 +1,972 @@
-[2025-09-18 17:12:44] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_171236.wav
-[2025-09-18 17:12:44] INFO: Reset audio system before retry 2
-[2025-09-18 17:12:42] INFO: Recording start time: 17:12:42.518
-[2025-09-18 17:12:42] INFO: Starting microphone recording (120s) - attempt 2/3
-[2025-09-18 17:12:42] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 17:12:42] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 17:12:37] ERROR: Microphone recording failed: stdout: , stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+[2025-09-18 20:23:19] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_202316.wav
+[2025-09-18 20:23:19] INFO: Recording start time: 20:23:19.310
+[2025-09-18 20:23:19] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 20:23:19] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 20:23:19] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 20:23:16] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 20:23:16] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 20:23:16] INFO: Master file position: 1560s / 2778.22s
+[2025-09-18 20:23:15] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 20:23:08] INFO: Removed old file: mixed_audio_20250918_200922.mp3
+[2025-09-18 20:23:08] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_202058.mp3
+[2025-09-18 20:23:02] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 20:23:02] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1440s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_202058.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_202058.mp3
+[2025-09-18 20:23:02] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_202058.wav
+[2025-09-18 20:23:02] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 20:23:02] INFO: Output file size: 10584044 bytes
+[2025-09-18 20:23:02] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_202058.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 20:23:02] INFO: arecord return code: 0
+[2025-09-18 20:23:02] INFO: Actual recording duration: 120.07s (expected: 120s)
+[2025-09-18 20:23:02] INFO: Recording end time: 20:23:02.219
+[2025-09-18 20:21:02] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_202058.wav
+[2025-09-18 20:21:02] INFO: Recording start time: 20:21:02.097
+[2025-09-18 20:21:02] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 20:21:02] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 20:21:02] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 20:20:59] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 20:20:58] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 20:20:58] INFO: Master file position: 1440s / 2778.22s
+[2025-09-18 20:20:58] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 20:20:51] INFO: Removed old file: mixed_audio_20250918_200703.mp3
+[2025-09-18 20:20:51] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_201836.mp3
+[2025-09-18 20:20:40] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 20:20:40] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1320s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201836.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_201836.mp3
+[2025-09-18 20:20:40] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201836.wav
+[2025-09-18 20:20:40] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 20:20:40] INFO: Output file size: 10584044 bytes
+[2025-09-18 20:20:40] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201836.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 20:20:40] INFO: arecord return code: 0
+[2025-09-18 20:20:40] INFO: Actual recording duration: 120.06s (expected: 120s)
+[2025-09-18 20:20:40] INFO: Recording end time: 20:20:40.073
+[2025-09-18 20:18:40] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201836.wav
+[2025-09-18 20:18:39] INFO: Recording start time: 20:18:39.954
+[2025-09-18 20:18:39] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 20:18:39] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 20:18:39] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 20:18:36] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 20:18:36] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 20:18:36] INFO: Master file position: 1320s / 2778.22s
+[2025-09-18 20:18:36] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 20:18:29] INFO: Removed old file: mixed_audio_20250918_200444.mp3
+[2025-09-18 20:18:29] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_201615.mp3
+[2025-09-18 20:18:18] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 20:18:18] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1200s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201615.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_201615.mp3
+[2025-09-18 20:18:18] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201615.wav
+[2025-09-18 20:18:18] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 20:18:18] INFO: Output file size: 10584044 bytes
+[2025-09-18 20:18:18] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201615.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 20:18:18] INFO: arecord return code: 0
+[2025-09-18 20:18:18] INFO: Actual recording duration: 120.07s (expected: 120s)
+[2025-09-18 20:18:18] INFO: Recording end time: 20:18:18.592
+[2025-09-18 20:16:18] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201615.wav
+[2025-09-18 20:16:18] INFO: Recording start time: 20:16:18.441
+[2025-09-18 20:16:18] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 20:16:18] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 20:16:18] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 20:16:15] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 20:16:15] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 20:16:15] INFO: Master file position: 1200s / 2778.22s
+[2025-09-18 20:16:14] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 20:16:07] INFO: Removed old file: mixed_audio_20250918_200314.mp3
+[2025-09-18 20:16:07] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_201357.mp3
+[2025-09-18 20:16:00] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 20:16:00] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1080s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201357.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_201357.mp3
+[2025-09-18 20:16:00] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201357.wav
+[2025-09-18 20:16:00] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 20:16:00] INFO: Output file size: 10584044 bytes
+[2025-09-18 20:16:00] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201357.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 20:16:00] INFO: arecord return code: 0
+[2025-09-18 20:16:00] INFO: Actual recording duration: 120.06s (expected: 120s)
+[2025-09-18 20:16:00] INFO: Recording end time: 20:16:00.821
+[2025-09-18 20:14:00] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201357.wav
+[2025-09-18 20:14:00] INFO: Recording start time: 20:14:00.717
+[2025-09-18 20:14:00] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 20:14:00] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 20:14:00] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 20:13:57] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 20:13:57] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 20:13:57] INFO: Master file position: 1080s / 2778.22s
+[2025-09-18 20:13:57] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 20:13:50] INFO: Removed old file: mixed_audio_20250918_200056.mp3
+[2025-09-18 20:13:50] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_201140.mp3
+[2025-09-18 20:13:44] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 20:13:44] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 960s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201140.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_201140.mp3
+[2025-09-18 20:13:44] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201140.wav
+[2025-09-18 20:13:44] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 20:13:44] INFO: Output file size: 10584044 bytes
+[2025-09-18 20:13:44] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201140.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 20:13:44] INFO: arecord return code: 0
+[2025-09-18 20:13:44] INFO: Actual recording duration: 120.06s (expected: 120s)
+[2025-09-18 20:13:44] INFO: Recording end time: 20:13:44.066
+[2025-09-18 20:11:44] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_201140.wav
+[2025-09-18 20:11:43] INFO: Recording start time: 20:11:43.923
+[2025-09-18 20:11:43] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 20:11:43] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 20:11:43] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 20:11:40] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 20:11:40] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 20:11:40] INFO: Master file position: 960s / 2778.22s
+[2025-09-18 20:11:40] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 20:11:33] INFO: Removed old file: mixed_audio_20250918_195836.mp3
+[2025-09-18 20:11:33] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_200922.mp3
+[2025-09-18 20:11:25] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 20:11:25] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 840s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200922.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_200922.mp3
+[2025-09-18 20:11:25] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200922.wav
+[2025-09-18 20:11:25] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 20:11:25] INFO: Output file size: 10584044 bytes
+[2025-09-18 20:11:25] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200922.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 20:11:25] INFO: arecord return code: 0
+[2025-09-18 20:11:25] INFO: Actual recording duration: 120.08s (expected: 120s)
+[2025-09-18 20:11:25] INFO: Recording end time: 20:11:25.625
+[2025-09-18 20:09:25] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200922.wav
+[2025-09-18 20:09:25] INFO: Recording start time: 20:09:25.454
+[2025-09-18 20:09:25] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 20:09:25] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 20:09:25] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 20:09:22] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 20:09:22] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 20:09:22] INFO: Master file position: 840s / 2778.22s
+[2025-09-18 20:09:21] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 20:09:14] INFO: Removed old file: mixed_audio_20250918_195618.mp3
+[2025-09-18 20:09:14] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_200703.mp3
+[2025-09-18 20:09:06] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 20:09:06] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 720s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200703.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_200703.mp3
+[2025-09-18 20:09:06] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200703.wav
+[2025-09-18 20:09:06] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 20:09:06] INFO: Output file size: 10584044 bytes
+[2025-09-18 20:09:06] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200703.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 20:09:06] INFO: arecord return code: 0
+[2025-09-18 20:09:06] INFO: Actual recording duration: 120.07s (expected: 120s)
+[2025-09-18 20:09:06] INFO: Recording end time: 20:09:06.615
+[2025-09-18 20:07:06] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200703.wav
+[2025-09-18 20:07:06] INFO: Recording start time: 20:07:06.477
+[2025-09-18 20:07:06] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 20:07:06] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 20:07:06] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 20:07:03] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 20:07:03] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 20:07:03] INFO: Master file position: 720s / 2778.22s
+[2025-09-18 20:07:02] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 20:06:55] INFO: Removed old file: mixed_audio_20250918_195349.mp3
+[2025-09-18 20:06:55] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_200444.mp3
+[2025-09-18 20:06:47] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 20:06:47] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 600s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200444.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_200444.mp3
+[2025-09-18 20:06:47] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200444.wav
+[2025-09-18 20:06:47] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 20:06:47] INFO: Output file size: 10584044 bytes
+[2025-09-18 20:06:47] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200444.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 20:06:47] INFO: arecord return code: 0
+[2025-09-18 20:06:47] INFO: Actual recording duration: 120.06s (expected: 120s)
+[2025-09-18 20:06:47] INFO: Recording end time: 20:06:47.517
+[2025-09-18 20:04:47] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200444.wav
+[2025-09-18 20:04:47] INFO: Recording start time: 20:04:47.283
+[2025-09-18 20:04:47] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 20:04:47] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 20:04:47] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 20:04:44] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 20:04:44] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 20:04:44] INFO: Master file position: 600s / 2778.22s
+[2025-09-18 20:04:43] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 20:04:36] INFO: Removed old file: mixed_audio_20250918_191507.mp3
+[2025-09-18 20:04:36] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_200314.mp3
+[2025-09-18 20:04:32] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 20:04:32] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 480s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200314.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_200314.mp3
+[2025-09-18 20:04:32] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200314.wav
+[2025-09-18 20:04:32] WARNING: Recording partially successful - file size 6571540 (minimum would be 8467200)
+[2025-09-18 20:04:32] INFO: Output file size: 6571540 bytes
+[2025-09-18 20:04:32] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200314.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+arecord: pcm_read:2221: read error: No such device
+
+[2025-09-18 20:04:32] INFO: arecord return code: 1
+[2025-09-18 20:04:32] INFO: Actual recording duration: 74.63s (expected: 120s)
+[2025-09-18 20:04:32] INFO: Recording end time: 20:04:32.533
+[2025-09-18 20:03:17] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200314.wav
+[2025-09-18 20:03:17] INFO: Recording start time: 20:03:17.810
+[2025-09-18 20:03:17] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 20:03:17] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 20:03:17] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 20:03:14] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 20:03:14] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 20:03:14] INFO: Master file position: 480s / 2778.22s
+[2025-09-18 20:03:14] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 20:03:06] INFO: Removed old file: mixed_audio_20250918_191243.mp3
+[2025-09-18 20:03:06] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_200056.mp3
+[2025-09-18 20:02:59] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 20:02:59] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 360s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200056.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_200056.mp3
+[2025-09-18 20:02:59] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200056.wav
+[2025-09-18 20:02:59] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 20:02:59] INFO: Output file size: 10584044 bytes
+[2025-09-18 20:02:59] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200056.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 20:02:59] INFO: arecord return code: 0
+[2025-09-18 20:02:59] INFO: Actual recording duration: 120.04s (expected: 120s)
+[2025-09-18 20:02:59] INFO: Recording end time: 20:02:59.295
+[2025-09-18 20:00:59] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_200056.wav
+[2025-09-18 20:00:59] INFO: Recording start time: 20:00:59.184
+[2025-09-18 20:00:59] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 20:00:59] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 20:00:59] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 20:00:56] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 20:00:56] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 20:00:56] INFO: Master file position: 360s / 2778.22s
+[2025-09-18 20:00:55] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 20:00:48] INFO: Removed old file: mixed_audio_20250918_191020.mp3
+[2025-09-18 20:00:48] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_195836.mp3
+[2025-09-18 20:00:39] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 20:00:39] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 240s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195836.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_195836.mp3
+[2025-09-18 20:00:39] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195836.wav
+[2025-09-18 20:00:39] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 20:00:39] INFO: Output file size: 10584044 bytes
+[2025-09-18 20:00:39] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195836.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 20:00:39] INFO: arecord return code: 0
+[2025-09-18 20:00:39] INFO: Actual recording duration: 120.08s (expected: 120s)
+[2025-09-18 20:00:39] INFO: Recording end time: 20:00:39.527
+[2025-09-18 19:58:39] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195836.wav
+[2025-09-18 19:58:39] INFO: Recording start time: 19:58:39.375
+[2025-09-18 19:58:39] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:58:39] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:58:39] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:58:36] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:58:36] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:58:36] INFO: Master file position: 240s / 2778.22s
+[2025-09-18 19:58:35] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:58:28] INFO: Removed old file: mixed_audio_20250918_190755.mp3
+[2025-09-18 19:58:28] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_195618.mp3
+[2025-09-18 19:58:22] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 19:58:22] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 120s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195618.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_195618.mp3
+[2025-09-18 19:58:22] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195618.wav
+[2025-09-18 19:58:22] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 19:58:22] INFO: Output file size: 10584044 bytes
+[2025-09-18 19:58:22] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195618.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 19:58:22] INFO: arecord return code: 0
+[2025-09-18 19:58:22] INFO: Actual recording duration: 120.08s (expected: 120s)
+[2025-09-18 19:58:22] INFO: Recording end time: 19:58:22.068
+[2025-09-18 19:56:21] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195618.wav
+[2025-09-18 19:56:21] INFO: Recording start time: 19:56:21.943
+[2025-09-18 19:56:21] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:56:21] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:56:21] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:56:18] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:56:18] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:56:18] INFO: Master file position: 120s / 2778.22s
+[2025-09-18 19:56:18] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:56:11] INFO: Removed old file: mic_recording_20250918_174850.wav
+[2025-09-18 19:56:11] INFO: Removed old file: mic_recording_20250918_181208.wav
+[2025-09-18 19:56:11] INFO: Removed old file: mixed_audio_20250918_190533.mp3
+[2025-09-18 19:56:11] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_195349.mp3
+[2025-09-18 19:56:06] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 19:56:06] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195349.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_195349.mp3
+[2025-09-18 19:56:06] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195349.wav
+[2025-09-18 19:56:06] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 19:56:06] INFO: Output file size: 10584044 bytes
+[2025-09-18 19:56:06] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195349.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 19:56:06] INFO: arecord return code: 0
+[2025-09-18 19:56:06] INFO: Actual recording duration: 133.38s (expected: 120s)
+[2025-09-18 19:56:06] INFO: Recording end time: 19:56:06.173
+[2025-09-18 19:53:52] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_195349.wav
+[2025-09-18 19:53:52] INFO: Recording start time: 19:53:52.743
+[2025-09-18 19:53:52] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:53:52] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:53:52] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:53:49] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:53:49] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:53:49] INFO: Master file position: 0s / 2778.22s
+[2025-09-18 19:53:46] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:53:46] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
+[2025-09-18 19:53:46] INFO: Working directory: /home/payas/cos
+[2025-09-18 19:53:46] INFO: Python executable: /home/payas/venv/bin/python
+[2025-09-18 19:53:46] INFO: Process ID: 1017
+[2025-09-18 19:53:46] INFO: === MIXING SERVICE STARTING ===
+[2025-09-18 19:45:16] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_194513.wav
+[2025-09-18 19:45:16] INFO: Recording start time: 19:45:16.785
+[2025-09-18 19:45:16] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:45:16] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:45:16] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:45:13] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:45:13] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:45:13] INFO: Master file position: 0s / 2778.22s
+[2025-09-18 19:45:10] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:45:10] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
+[2025-09-18 19:45:10] INFO: Working directory: /home/payas/cos/mixing
+[2025-09-18 19:45:10] INFO: Python executable: /home/payas/venv/bin/python
+[2025-09-18 19:45:10] INFO: Process ID: 104386
+[2025-09-18 19:45:10] INFO: === MIXING SERVICE STARTING ===
+[2025-09-18 19:17:35] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191731.wav
+[2025-09-18 19:17:34] INFO: Recording start time: 19:17:34.988
+[2025-09-18 19:17:34] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:17:34] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:17:34] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:17:31] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:17:31] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:17:31] INFO: Master file position: 1560s / 2778.22s
+[2025-09-18 19:17:28] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:17:21] INFO: Removed old file: mixed_audio_20250918_190311.mp3
+[2025-09-18 19:17:21] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_191507.mp3
+[2025-09-18 19:17:11] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 19:17:11] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1440s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191507.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_191507.mp3
+[2025-09-18 19:17:11] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191507.wav
+[2025-09-18 19:17:11] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 19:17:11] INFO: Output file size: 10584044 bytes
+[2025-09-18 19:17:11] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191507.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 19:17:11] INFO: arecord return code: 0
+[2025-09-18 19:17:11] INFO: Actual recording duration: 120.13s (expected: 120s)
+[2025-09-18 19:17:11] INFO: Recording end time: 19:17:11.099
+[2025-09-18 19:15:10] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191507.wav
+[2025-09-18 19:15:10] INFO: Recording start time: 19:15:10.845
+[2025-09-18 19:15:10] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:15:10] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:15:10] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:15:07] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:15:07] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:15:07] INFO: Master file position: 1440s / 2778.22s
+[2025-09-18 19:15:04] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:14:57] INFO: Removed old file: mixed_audio_20250918_190211.mp3
+[2025-09-18 19:14:57] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_191243.mp3
+[2025-09-18 19:14:46] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 19:14:46] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1320s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191243.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_191243.mp3
+[2025-09-18 19:14:46] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191243.wav
+[2025-09-18 19:14:46] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 19:14:46] INFO: Output file size: 10584044 bytes
+[2025-09-18 19:14:46] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191243.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 19:14:46] INFO: arecord return code: 0
+[2025-09-18 19:14:46] INFO: Actual recording duration: 120.09s (expected: 120s)
+[2025-09-18 19:14:46] INFO: Recording end time: 19:14:46.740
+[2025-09-18 19:12:46] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191243.wav
+[2025-09-18 19:12:46] INFO: Recording start time: 19:12:46.602
+[2025-09-18 19:12:46] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:12:46] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:12:46] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:12:43] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:12:43] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:12:43] INFO: Master file position: 1320s / 2778.22s
+[2025-09-18 19:12:40] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:12:33] INFO: Removed old file: mixed_audio_20250918_185947.mp3
+[2025-09-18 19:12:33] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_191020.mp3
+[2025-09-18 19:12:23] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 19:12:23] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1200s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191020.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_191020.mp3
+[2025-09-18 19:12:23] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191020.wav
+[2025-09-18 19:12:23] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 19:12:23] INFO: Output file size: 10584044 bytes
+[2025-09-18 19:12:23] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191020.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 19:12:23] INFO: arecord return code: 0
+[2025-09-18 19:12:23] INFO: Actual recording duration: 120.08s (expected: 120s)
+[2025-09-18 19:12:23] INFO: Recording end time: 19:12:23.278
+[2025-09-18 19:10:23] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_191020.wav
+[2025-09-18 19:10:23] INFO: Recording start time: 19:10:23.150
+[2025-09-18 19:10:23] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:10:23] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:10:23] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:10:20] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:10:20] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:10:20] INFO: Master file position: 1200s / 2778.22s
+[2025-09-18 19:10:16] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:10:09] INFO: Removed old file: mixed_audio_20250918_185723.mp3
+[2025-09-18 19:10:09] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_190755.mp3
+[2025-09-18 19:09:58] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 19:09:58] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1080s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190755.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_190755.mp3
+[2025-09-18 19:09:58] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190755.wav
+[2025-09-18 19:09:58] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 19:09:58] INFO: Output file size: 10584044 bytes
+[2025-09-18 19:09:58] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190755.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 19:09:58] INFO: arecord return code: 0
+[2025-09-18 19:09:58] INFO: Actual recording duration: 120.22s (expected: 120s)
+[2025-09-18 19:09:58] INFO: Recording end time: 19:09:58.708
+[2025-09-18 19:07:58] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190755.wav
+[2025-09-18 19:07:58] INFO: Recording start time: 19:07:58.427
+[2025-09-18 19:07:58] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:07:58] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:07:58] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:07:55] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:07:55] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:07:55] INFO: Master file position: 1080s / 2778.22s
+[2025-09-18 19:07:54] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:07:47] INFO: Removed old file: mixed_audio_20250918_185500.mp3
+[2025-09-18 19:07:47] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_190533.mp3
+[2025-09-18 19:07:37] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 19:07:37] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 960s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190533.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_190533.mp3
+[2025-09-18 19:07:37] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190533.wav
+[2025-09-18 19:07:37] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 19:07:37] INFO: Output file size: 10584044 bytes
+[2025-09-18 19:07:37] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190533.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 19:07:37] INFO: arecord return code: 0
+[2025-09-18 19:07:37] INFO: Actual recording duration: 120.06s (expected: 120s)
+[2025-09-18 19:07:37] INFO: Recording end time: 19:07:37.148
+[2025-09-18 19:05:37] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190533.wav
+[2025-09-18 19:05:37] INFO: Recording start time: 19:05:37.043
+[2025-09-18 19:05:37] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:05:37] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:05:37] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:05:33] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:05:33] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:05:33] INFO: Master file position: 960s / 2778.22s
+[2025-09-18 19:05:32] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:05:25] INFO: Removed old file: mixed_audio_20250918_185236.mp3
+[2025-09-18 19:05:25] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_190311.mp3
+[2025-09-18 19:05:15] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 19:05:15] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 840s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190311.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_190311.mp3
+[2025-09-18 19:05:15] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190311.wav
+[2025-09-18 19:05:15] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 19:05:15] INFO: Output file size: 10584044 bytes
+[2025-09-18 19:05:15] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190311.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 19:05:15] INFO: arecord return code: 0
+[2025-09-18 19:05:15] INFO: Actual recording duration: 120.10s (expected: 120s)
+[2025-09-18 19:05:15] INFO: Recording end time: 19:05:15.214
+[2025-09-18 19:03:15] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190311.wav
+[2025-09-18 19:03:15] INFO: Recording start time: 19:03:15.061
+[2025-09-18 19:03:15] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:03:15] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:03:15] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:03:11] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:03:11] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:03:11] INFO: Master file position: 840s / 2778.22s
+[2025-09-18 19:03:08] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:02:47] INFO: Removed old file: mixed_audio_20250918_185013.mp3
+[2025-09-18 19:02:47] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_190211.mp3
+[2025-09-18 19:02:41] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 19:02:41] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 720s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190211.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_190211.mp3
+[2025-09-18 19:02:41] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190211.wav
+[2025-09-18 19:02:41] WARNING: Recording partially successful - file size 2326530 (minimum would be 8467200)
+[2025-09-18 19:02:41] INFO: Output file size: 2326530 bytes
+[2025-09-18 19:02:41] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190211.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+arecord: pcm_read:2221: read error: No such device
+
+[2025-09-18 19:02:41] INFO: arecord return code: 1
+[2025-09-18 19:02:41] INFO: Actual recording duration: 26.45s (expected: 120s)
+[2025-09-18 19:02:41] INFO: Recording end time: 19:02:41.190
+[2025-09-18 19:02:14] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_190211.wav
+[2025-09-18 19:02:14] INFO: Recording start time: 19:02:14.685
+[2025-09-18 19:02:14] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 19:02:14] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 19:02:14] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 19:02:11] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 19:02:11] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 19:02:11] INFO: Master file position: 720s / 2778.22s
+[2025-09-18 19:02:08] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 19:02:00] INFO: Removed old file: mixed_audio_20250918_184752.mp3
+[2025-09-18 19:02:00] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_185947.mp3
+[2025-09-18 19:01:50] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 19:01:50] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 600s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185947.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_185947.mp3
+[2025-09-18 19:01:50] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185947.wav
+[2025-09-18 19:01:50] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 19:01:50] INFO: Output file size: 10584044 bytes
+[2025-09-18 19:01:50] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185947.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 19:01:50] INFO: arecord return code: 0
+[2025-09-18 19:01:50] INFO: Actual recording duration: 120.17s (expected: 120s)
+[2025-09-18 19:01:50] INFO: Recording end time: 19:01:50.585
+[2025-09-18 18:59:50] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185947.wav
+[2025-09-18 18:59:50] INFO: Recording start time: 18:59:50.318
+[2025-09-18 18:59:50] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:59:50] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:59:50] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:59:47] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:59:47] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:59:47] INFO: Master file position: 600s / 2778.22s
+[2025-09-18 18:59:43] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:59:36] INFO: Removed old file: mixed_audio_20250918_184532.mp3
+[2025-09-18 18:59:36] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_185723.mp3
+[2025-09-18 18:59:26] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:59:26] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 480s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185723.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_185723.mp3
+[2025-09-18 18:59:26] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185723.wav
+[2025-09-18 18:59:26] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:59:26] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:59:26] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185723.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:59:26] INFO: arecord return code: 0
+[2025-09-18 18:59:26] INFO: Actual recording duration: 120.10s (expected: 120s)
+[2025-09-18 18:59:26] INFO: Recording end time: 18:59:26.780
+[2025-09-18 18:57:26] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185723.wav
+[2025-09-18 18:57:26] INFO: Recording start time: 18:57:26.626
+[2025-09-18 18:57:26] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:57:26] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:57:26] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:57:23] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:57:23] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:57:23] INFO: Master file position: 480s / 2778.22s
+[2025-09-18 18:57:19] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:57:12] INFO: Removed old file: mixed_audio_20250918_184309.mp3
+[2025-09-18 18:57:12] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_185500.mp3
+[2025-09-18 18:57:03] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:57:03] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 360s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185500.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_185500.mp3
+[2025-09-18 18:57:03] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185500.wav
+[2025-09-18 18:57:03] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:57:03] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:57:03] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185500.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:57:03] INFO: arecord return code: 0
+[2025-09-18 18:57:03] INFO: Actual recording duration: 120.06s (expected: 120s)
+[2025-09-18 18:57:03] INFO: Recording end time: 18:57:03.431
+[2025-09-18 18:55:03] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185500.wav
+[2025-09-18 18:55:03] INFO: Recording start time: 18:55:03.311
+[2025-09-18 18:55:03] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:55:03] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:55:03] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:55:00] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:55:00] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:55:00] INFO: Master file position: 360s / 2778.22s
+[2025-09-18 18:54:56] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:54:49] INFO: Removed old file: mixed_audio_20250918_184045.mp3
+[2025-09-18 18:54:49] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_185236.mp3
+[2025-09-18 18:54:39] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:54:39] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 240s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185236.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_185236.mp3
+[2025-09-18 18:54:39] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185236.wav
+[2025-09-18 18:54:39] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:54:39] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:54:39] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185236.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:54:39] INFO: arecord return code: 0
+[2025-09-18 18:54:39] INFO: Actual recording duration: 120.09s (expected: 120s)
+[2025-09-18 18:54:39] INFO: Recording end time: 18:54:39.843
+[2025-09-18 18:52:39] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185236.wav
+[2025-09-18 18:52:39] INFO: Recording start time: 18:52:39.716
+[2025-09-18 18:52:39] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:52:39] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:52:39] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:52:36] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:52:36] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:52:36] INFO: Master file position: 240s / 2778.22s
+[2025-09-18 18:52:33] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:52:26] INFO: Removed old file: mixed_audio_20250918_183820.mp3
+[2025-09-18 18:52:26] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_185013.mp3
+[2025-09-18 18:52:17] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:52:17] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 120s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185013.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_185013.mp3
+[2025-09-18 18:52:17] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185013.wav
+[2025-09-18 18:52:17] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:52:17] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:52:17] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185013.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:52:17] INFO: arecord return code: 0
+[2025-09-18 18:52:17] INFO: Actual recording duration: 120.16s (expected: 120s)
+[2025-09-18 18:52:17] INFO: Recording end time: 18:52:17.032
+[2025-09-18 18:50:16] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_185013.wav
+[2025-09-18 18:50:16] INFO: Recording start time: 18:50:16.718
+[2025-09-18 18:50:16] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:50:16] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:50:16] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:50:13] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:50:13] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:50:13] INFO: Master file position: 120s / 2778.22s
+[2025-09-18 18:50:12] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:50:05] INFO: Removed old file: mixed_audio_20250918_183554.mp3
+[2025-09-18 18:50:05] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_184752.mp3
+[2025-09-18 18:49:56] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:49:56] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184752.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_184752.mp3
+[2025-09-18 18:49:56] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184752.wav
+[2025-09-18 18:49:56] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:49:56] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:49:56] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184752.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:49:56] INFO: arecord return code: 0
+[2025-09-18 18:49:56] INFO: Actual recording duration: 120.09s (expected: 120s)
+[2025-09-18 18:49:56] INFO: Recording end time: 18:49:56.120
+[2025-09-18 18:47:56] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184752.wav
+[2025-09-18 18:47:55] INFO: Recording start time: 18:47:55.982
+[2025-09-18 18:47:55] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:47:55] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:47:55] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:47:52] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:47:52] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:47:52] INFO: Master file position: 0s / 2778.22s
+[2025-09-18 18:47:52] INFO: Master file reached end (2778.22s), restarting from beginning
+[2025-09-18 18:47:49] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:47:42] INFO: Removed old file: mixed_audio_20250918_183329.mp3
+[2025-09-18 18:47:42] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_184532.mp3
+[2025-09-18 18:47:35] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:47:35] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2760s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184532.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_184532.mp3
+[2025-09-18 18:47:35] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184532.wav
+[2025-09-18 18:47:35] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:47:35] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:47:35] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184532.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:47:35] INFO: arecord return code: 0
+[2025-09-18 18:47:35] INFO: Actual recording duration: 120.14s (expected: 120s)
+[2025-09-18 18:47:35] INFO: Recording end time: 18:47:35.608
+[2025-09-18 18:45:35] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184532.wav
+[2025-09-18 18:45:35] INFO: Recording start time: 18:45:35.353
+[2025-09-18 18:45:35] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:45:35] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:45:35] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:45:32] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:45:32] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:45:32] INFO: Master file position: 2760s / 2778.22s
+[2025-09-18 18:45:30] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:45:23] INFO: Removed old file: mixed_audio_20250918_183107.mp3
+[2025-09-18 18:45:23] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_184309.mp3
+[2025-09-18 18:45:13] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:45:13] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2640s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184309.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_184309.mp3
+[2025-09-18 18:45:13] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184309.wav
+[2025-09-18 18:45:13] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:45:13] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:45:13] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184309.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:45:13] INFO: arecord return code: 0
+[2025-09-18 18:45:13] INFO: Actual recording duration: 120.11s (expected: 120s)
+[2025-09-18 18:45:13] INFO: Recording end time: 18:45:13.040
+[2025-09-18 18:43:12] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184309.wav
+[2025-09-18 18:43:12] INFO: Recording start time: 18:43:12.860
+[2025-09-18 18:43:12] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:43:12] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:43:12] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:43:09] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:43:09] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:43:09] INFO: Master file position: 2640s / 2778.22s
+[2025-09-18 18:43:06] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:42:59] INFO: Removed old file: mixed_audio_20250918_182842.mp3
+[2025-09-18 18:42:59] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_184045.mp3
+[2025-09-18 18:42:48] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:42:48] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2520s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184045.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_184045.mp3
+[2025-09-18 18:42:48] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184045.wav
+[2025-09-18 18:42:48] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:42:48] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:42:48] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184045.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:42:48] INFO: arecord return code: 0
+[2025-09-18 18:42:48] INFO: Actual recording duration: 120.10s (expected: 120s)
+[2025-09-18 18:42:48] INFO: Recording end time: 18:42:48.515
+[2025-09-18 18:40:48] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_184045.wav
+[2025-09-18 18:40:48] INFO: Recording start time: 18:40:48.365
+[2025-09-18 18:40:48] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:40:48] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:40:48] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:40:45] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:40:45] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:40:45] INFO: Master file position: 2520s / 2778.22s
+[2025-09-18 18:40:41] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:40:34] INFO: Removed old file: mixed_audio_20250918_182617.mp3
+[2025-09-18 18:40:34] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_183820.mp3
+[2025-09-18 18:40:23] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:40:23] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2400s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183820.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_183820.mp3
+[2025-09-18 18:40:23] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183820.wav
+[2025-09-18 18:40:23] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:40:23] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:40:23] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183820.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:40:23] INFO: arecord return code: 0
+[2025-09-18 18:40:23] INFO: Actual recording duration: 120.19s (expected: 120s)
+[2025-09-18 18:40:23] INFO: Recording end time: 18:40:23.761
+[2025-09-18 18:38:23] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183820.wav
+[2025-09-18 18:38:23] INFO: Recording start time: 18:38:23.481
+[2025-09-18 18:38:23] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:38:23] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:38:23] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:38:20] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:38:20] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:38:20] INFO: Master file position: 2400s / 2778.22s
+[2025-09-18 18:38:16] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:38:09] INFO: Removed old file: mixed_audio_20250918_182355.mp3
+[2025-09-18 18:38:09] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_183554.mp3
+[2025-09-18 18:37:57] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:37:57] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2280s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183554.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_183554.mp3
+[2025-09-18 18:37:57] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183554.wav
+[2025-09-18 18:37:57] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:37:57] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:37:57] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183554.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:37:57] INFO: arecord return code: 0
+[2025-09-18 18:37:57] INFO: Actual recording duration: 120.11s (expected: 120s)
+[2025-09-18 18:37:57] INFO: Recording end time: 18:37:57.772
+[2025-09-18 18:35:57] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183554.wav
+[2025-09-18 18:35:57] INFO: Recording start time: 18:35:57.574
+[2025-09-18 18:35:57] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:35:57] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:35:57] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:35:54] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:35:54] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:35:54] INFO: Master file position: 2280s / 2778.22s
+[2025-09-18 18:35:51] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:35:43] INFO: Removed old file: mixed_audio_20250918_182131.mp3
+[2025-09-18 18:35:43] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_183329.mp3
+[2025-09-18 18:35:33] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:35:33] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2160s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183329.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_183329.mp3
+[2025-09-18 18:35:33] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183329.wav
+[2025-09-18 18:35:33] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:35:33] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:35:33] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183329.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:35:33] INFO: arecord return code: 0
+[2025-09-18 18:35:33] INFO: Actual recording duration: 120.13s (expected: 120s)
+[2025-09-18 18:35:33] INFO: Recording end time: 18:35:33.315
+[2025-09-18 18:33:33] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183329.wav
+[2025-09-18 18:33:33] INFO: Recording start time: 18:33:33.018
+[2025-09-18 18:33:32] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:33:32] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:33:32] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:33:29] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:33:29] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:33:29] INFO: Master file position: 2160s / 2778.22s
+[2025-09-18 18:33:28] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:33:21] INFO: Removed old file: mixed_audio_20250918_181906.mp3
+[2025-09-18 18:33:21] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_183107.mp3
+[2025-09-18 18:33:10] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:33:10] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2040s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183107.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_183107.mp3
+[2025-09-18 18:33:10] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183107.wav
+[2025-09-18 18:33:10] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:33:10] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:33:10] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183107.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:33:10] INFO: arecord return code: 0
+[2025-09-18 18:33:10] INFO: Actual recording duration: 120.15s (expected: 120s)
+[2025-09-18 18:33:10] INFO: Recording end time: 18:33:10.772
+[2025-09-18 18:31:10] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_183107.wav
+[2025-09-18 18:31:10] INFO: Recording start time: 18:31:10.552
+[2025-09-18 18:31:10] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:31:10] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:31:10] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:31:07] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:31:07] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:31:07] INFO: Master file position: 2040s / 2778.22s
+[2025-09-18 18:31:03] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:30:56] INFO: Removed old file: mixed_audio_20250918_181645.mp3
+[2025-09-18 18:30:56] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_182842.mp3
+[2025-09-18 18:30:45] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:30:45] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1920s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182842.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_182842.mp3
+[2025-09-18 18:30:45] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182842.wav
+[2025-09-18 18:30:45] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:30:45] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:30:45] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182842.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:30:45] INFO: arecord return code: 0
+[2025-09-18 18:30:45] INFO: Actual recording duration: 120.10s (expected: 120s)
+[2025-09-18 18:30:45] INFO: Recording end time: 18:30:45.530
+[2025-09-18 18:28:45] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182842.wav
+[2025-09-18 18:28:45] INFO: Recording start time: 18:28:45.373
+[2025-09-18 18:28:45] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:28:45] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:28:45] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:28:42] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:28:42] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:28:42] INFO: Master file position: 1920s / 2778.22s
+[2025-09-18 18:28:38] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:28:31] INFO: Removed old file: mixed_audio_20250918_181501.mp3
+[2025-09-18 18:28:31] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_182617.mp3
+[2025-09-18 18:28:21] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:28:21] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1800s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182617.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_182617.mp3
+[2025-09-18 18:28:21] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182617.wav
+[2025-09-18 18:28:21] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:28:21] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:28:21] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182617.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:28:21] INFO: arecord return code: 0
+[2025-09-18 18:28:21] INFO: Actual recording duration: 120.16s (expected: 120s)
+[2025-09-18 18:28:21] INFO: Recording end time: 18:28:21.345
+[2025-09-18 18:26:21] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182617.wav
+[2025-09-18 18:26:21] INFO: Recording start time: 18:26:21.120
+[2025-09-18 18:26:21] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:26:21] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:26:21] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:26:18] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:26:17] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:26:17] INFO: Master file position: 1800s / 2778.22s
+[2025-09-18 18:26:16] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:26:09] INFO: Removed old file: mixed_audio_20250918_181231.mp3
+[2025-09-18 18:26:09] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_182355.mp3
+[2025-09-18 18:25:59] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:25:59] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1680s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182355.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_182355.mp3
+[2025-09-18 18:25:59] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182355.wav
+[2025-09-18 18:25:59] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:25:59] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:25:59] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182355.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:25:59] INFO: arecord return code: 0
+[2025-09-18 18:25:59] INFO: Actual recording duration: 120.09s (expected: 120s)
+[2025-09-18 18:25:59] INFO: Recording end time: 18:25:59.244
+[2025-09-18 18:23:59] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182355.wav
+[2025-09-18 18:23:59] INFO: Recording start time: 18:23:59.112
+[2025-09-18 18:23:59] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:23:59] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:23:59] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:23:55] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:23:55] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:23:55] INFO: Master file position: 1680s / 2778.22s
+[2025-09-18 18:23:52] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:23:45] INFO: Removed old file: mixed_audio_20250918_181107.mp3
+[2025-09-18 18:23:45] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_182131.mp3
+[2025-09-18 18:23:35] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:23:35] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1560s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182131.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_182131.mp3
+[2025-09-18 18:23:35] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182131.wav
+[2025-09-18 18:23:35] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:23:35] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:23:35] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182131.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:23:35] INFO: arecord return code: 0
+[2025-09-18 18:23:35] INFO: Actual recording duration: 120.08s (expected: 120s)
+[2025-09-18 18:23:34] INFO: Recording end time: 18:23:34.982
+[2025-09-18 18:21:34] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_182131.wav
+[2025-09-18 18:21:34] INFO: Recording start time: 18:21:34.850
+[2025-09-18 18:21:34] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:21:34] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:21:34] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:21:31] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:21:31] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:21:31] INFO: Master file position: 1560s / 2778.22s
+[2025-09-18 18:21:28] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:21:21] INFO: Removed old file: mixed_audio_20250918_181007.mp3
+[2025-09-18 18:21:21] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_181906.mp3
+[2025-09-18 18:21:10] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:21:10] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1440s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181906.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_181906.mp3
+[2025-09-18 18:21:10] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181906.wav
+[2025-09-18 18:21:10] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:21:10] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:21:10] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181906.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:21:10] INFO: arecord return code: 0
+[2025-09-18 18:21:10] INFO: Actual recording duration: 120.13s (expected: 120s)
+[2025-09-18 18:21:10] INFO: Recording end time: 18:21:10.194
+[2025-09-18 18:19:10] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181906.wav
+[2025-09-18 18:19:09] INFO: Recording start time: 18:19:09.998
+[2025-09-18 18:19:09] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:19:09] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:19:09] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:19:06] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:19:06] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:19:06] INFO: Master file position: 1440s / 2778.22s
+[2025-09-18 18:19:05] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:18:58] INFO: Removed old file: mixed_audio_20250918_180759.mp3
+[2025-09-18 18:18:58] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_181645.mp3
+[2025-09-18 18:18:48] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:18:48] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1320s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181645.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_181645.mp3
+[2025-09-18 18:18:48] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181645.wav
+[2025-09-18 18:18:48] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
+[2025-09-18 18:18:48] INFO: Output file size: 10584044 bytes
+[2025-09-18 18:18:48] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181645.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+
+[2025-09-18 18:18:48] INFO: arecord return code: 0
+[2025-09-18 18:18:48] INFO: Actual recording duration: 120.06s (expected: 120s)
+[2025-09-18 18:18:48] INFO: Recording end time: 18:18:48.896
+[2025-09-18 18:16:48] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181645.wav
+[2025-09-18 18:16:48] INFO: Recording start time: 18:16:48.782
+[2025-09-18 18:16:48] INFO: Starting microphone recording (120s) - attempt 1/3
+[2025-09-18 18:16:48] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:16:48] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:16:45] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:16:45] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:16:45] INFO: Master file position: 1320s / 2778.22s
+[2025-09-18 18:16:42] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
+[2025-09-18 18:16:35] INFO: Removed old file: mixed_audio_20250918_180121.mp3
+[2025-09-18 18:16:35] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_181501.mp3
+[2025-09-18 18:16:26] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
+[2025-09-18 18:16:26] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1200s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181501.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_181501.mp3
+[2025-09-18 18:16:26] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181501.wav
+[2025-09-18 18:16:26] WARNING: Recording partially successful - file size 6251786 (minimum would be 8467200)
+[2025-09-18 18:16:26] INFO: Output file size: 6251786 bytes
+[2025-09-18 18:16:26] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181501.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
+arecord: pcm_read:2221: read error: No such device
+
+[2025-09-18 18:16:26] INFO: arecord return code: 1
+[2025-09-18 18:16:26] INFO: Actual recording duration: 70.95s (expected: 120s)
+[2025-09-18 18:16:26] INFO: Recording end time: 18:16:26.278
+[2025-09-18 18:15:15] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181501.wav
+[2025-09-18 18:15:15] INFO: Reset audio system before retry 3
+[2025-09-18 18:15:12] INFO: Recording start time: 18:15:12.989
+[2025-09-18 18:15:12] INFO: Starting microphone recording (120s) - attempt 3/3
+[2025-09-18 18:15:12] INFO: Detected microphone device: plughw:1,0
+[2025-09-18 18:15:12] INFO: Successfully detected working microphone: plughw:1,0
+[2025-09-18 18:15:09] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+
+arecord: main:831: audio open error: Connection refused
+[2025-09-18 18:15:09] INFO: PulseAudio detected - using pulse device for better compatibility
+[2025-09-18 18:15:07] ERROR: Microphone recording failed: stdout: , stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
 
 arecord: main:831: audio open error: Connection refused, returncode: 1
 Exception: stdout: , stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
@@ -13,988 +975,26 @@ arecord: main:831: audio open error: Connection refused, returncode: 1
 Traceback:
 NoneType: None
 
-[2025-09-18 17:12:37] ERROR: Output file was not created
-[2025-09-18 17:12:37] INFO: arecord stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+[2025-09-18 18:15:07] ERROR: Output file was not created
+[2025-09-18 18:15:07] INFO: arecord stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
 
 arecord: main:831: audio open error: Connection refused
 
-[2025-09-18 17:12:37] INFO: arecord return code: 1
-[2025-09-18 17:12:37] INFO: Actual recording duration: 0.02s (expected: 120s)
-[2025-09-18 17:12:37] INFO: Recording end time: 17:12:37.250
-[2025-09-18 17:12:37] INFO: Executing arecord command: /usr/bin/arecord -D pulse -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_171236.wav
-[2025-09-18 17:12:37] INFO: Recording start time: 17:12:37.169
-[2025-09-18 17:12:37] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 17:12:37] INFO: Detected microphone device: pulse
-[2025-09-18 17:12:37] WARNING: No working microphone found, using pulse fallback
-[2025-09-18 17:12:37] WARNING: Device plughw:3,0 test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-18 17:12:37] WARNING: Device plughw:2,0 test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-18 17:12:37] WARNING: Device default test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-18 17:12:37] WARNING: Device hw:1,0 test failed: ALSA lib confmisc.c:165:(snd_config_get_card) Cannot get card index for 1
-arecord: main:831: audio open error: No such file or directory
-[2025-09-18 17:12:37] WARNING: Device plughw:1,0 test failed: Recording WAVE '/tmp/mic_test_plughw_1,0.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-arecord: pcm_read:2221: read error: No such device
-[2025-09-18 17:12:36] INFO: Master file position: 240s / 2778.22s
-[2025-09-18 17:12:32] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 17:11:57] INFO: Removed old file: mixed_audio_20250918_170114.mp3
-[2025-09-18 17:11:57] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_171135.mp3
-[2025-09-18 17:11:53] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 17:11:53] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 120s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_171135.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_171135.mp3
-[2025-09-18 17:11:53] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_171135.wav
-[2025-09-18 17:11:53] WARNING: Recording partially successful - file size 1234956 (minimum would be 8467200)
-[2025-09-18 17:11:53] INFO: Output file size: 1234956 bytes
-[2025-09-18 17:11:53] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_171135.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-arecord: pcm_read:2221: read error: No such device
-
-[2025-09-18 17:11:53] INFO: arecord return code: 1
-[2025-09-18 17:11:53] INFO: Actual recording duration: 14.17s (expected: 120s)
-[2025-09-18 17:11:53] INFO: Recording end time: 17:11:53.037
-[2025-09-18 17:11:38] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_171135.wav
-[2025-09-18 17:11:38] INFO: Recording start time: 17:11:38.810
-[2025-09-18 17:11:38] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 17:11:38] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 17:11:38] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 17:11:35] INFO: Master file position: 120s / 2778.22s
-[2025-09-18 17:11:31] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 17:11:08] INFO: Removed old file: mixed_audio_20250918_161359.mp3
-[2025-09-18 17:11:08] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_171036.mp3
-[2025-09-18 17:11:05] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 17:11:05] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_171036.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_171036.mp3
-[2025-09-18 17:11:05] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_171036.wav
-[2025-09-18 17:11:05] WARNING: Recording partially successful - file size 529292 (minimum would be 8467200)
-[2025-09-18 17:11:05] INFO: Output file size: 529292 bytes
-[2025-09-18 17:11:04] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_171036.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-arecord: pcm_read:2221: read error: No such device
-
-[2025-09-18 17:11:04] INFO: arecord return code: 1
-[2025-09-18 17:11:04] INFO: Actual recording duration: 6.14s (expected: 120s)
-[2025-09-18 17:11:04] INFO: Recording end time: 17:11:04.975
-[2025-09-18 17:10:58] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_171036.wav
-[2025-09-18 17:10:58] INFO: Reset audio system before retry 2
-[2025-09-18 17:10:56] INFO: Recording start time: 17:10:56.678
-[2025-09-18 17:10:56] INFO: Starting microphone recording (120s) - attempt 2/3
-[2025-09-18 17:10:56] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 17:10:56] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 17:10:38] ERROR: Microphone recording failed: stdout: , stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused, returncode: 1
-Exception: stdout: , stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused, returncode: 1
-Traceback:
-NoneType: None
-
-[2025-09-18 17:10:38] ERROR: Output file was not created
-[2025-09-18 17:10:38] INFO: arecord stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
+[2025-09-18 18:15:07] INFO: arecord return code: 1
+[2025-09-18 18:15:07] INFO: Actual recording duration: 0.02s (expected: 120s)
+[2025-09-18 18:15:07] INFO: Recording end time: 18:15:07.744
+[2025-09-18 18:15:07] INFO: Executing arecord command: /usr/bin/arecord -D pulse -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_181501.wav
+[2025-09-18 18:15:07] INFO: Reset audio system before retry 2
+[2025-09-18 18:15:05] INFO: Recording start time: 18:15:05.608
+[2025-09-18 18:15:05] INFO: Starting microphone recording (120s) - attempt 2/3
+[2025-09-18 18:15:05] INFO: Detected microphone device: pulse
+[2025-09-18 18:15:05] WARNING: No working microphone found, using pulse fallback
+[2025-09-18 18:15:05] WARNING: Device plughw:3,0 test failed: arecord: main:831: audio open error: No such file or directory
+[2025-09-18 18:15:05] WARNING: Device plughw:2,0 test failed: arecord: main:831: audio open error: No such file or directory
+[2025-09-18 18:15:05] WARNING: Device default test failed: arecord: main:831: audio open error: No such file or directory
+[2025-09-18 18:15:05] WARNING: Device hw:1,0 test failed: arecord: main:831: audio open error: Device or resource busy
+[2025-09-18 18:15:05] WARNING: Device plughw:1,0 test failed: arecord: main:831: audio open error: Device or resource busy
+[2025-09-18 18:15:05] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
 
 arecord: main:831: audio open error: Connection refused
-
-[2025-09-18 17:10:38] INFO: arecord return code: 1
-[2025-09-18 17:10:38] INFO: Actual recording duration: 0.02s (expected: 120s)
-[2025-09-18 17:10:38] INFO: Recording end time: 17:10:38.809
-[2025-09-18 17:10:38] INFO: Executing arecord command: /usr/bin/arecord -D pulse -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_171036.wav
-[2025-09-18 17:10:38] INFO: Recording start time: 17:10:38.705
-[2025-09-18 17:10:38] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 17:10:38] INFO: Detected microphone device: pulse
-[2025-09-18 17:10:38] WARNING: No working microphone found, using pulse fallback
-[2025-09-18 17:10:38] WARNING: Device plughw:3,0 test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-18 17:10:38] WARNING: Device plughw:2,0 test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-18 17:10:38] WARNING: Device default test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-18 17:10:38] WARNING: Device hw:1,0 test failed: ALSA lib confmisc.c:165:(snd_config_get_card) Cannot get card index for 1
-arecord: main:831: audio open error: No such file or directory
-[2025-09-18 17:10:38] WARNING: Device plughw:1,0 test failed: Recording WAVE '/tmp/mic_test_plughw_1,0.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-arecord: pcm_read:2221: read error: No such device
-[2025-09-18 17:10:36] INFO: Master file position: 0s / 2778.22s
-[2025-09-18 17:10:31] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 17:10:31] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
-[2025-09-18 17:10:31] INFO: Working directory: /home/payas/cos
-[2025-09-18 17:10:31] INFO: Python executable: /home/payas/venv/bin/python
-[2025-09-18 17:10:31] INFO: Process ID: 1021
-[2025-09-18 17:10:31] INFO: === MIXING SERVICE STARTING ===
-[2025-09-18 17:10:02] INFO: Removed old file: mic_recording_20250918_135823.wav
-[2025-09-18 17:10:02] INFO: Removed old file: mixed_audio_20250918_161138.mp3
-[2025-09-18 17:10:02] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_170850.mp3
-[2025-09-18 17:09:59] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 17:09:59] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170850.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_170850.mp3
-[2025-09-18 17:09:59] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170850.wav
-[2025-09-18 17:09:59] WARNING: Recording partially successful - file size 5413810 (minimum would be 8467200)
-[2025-09-18 17:09:59] INFO: Output file size: 5413810 bytes
-[2025-09-18 17:09:59] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170850.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-arecord: pcm_read:2221: read error: No such device
-
-[2025-09-18 17:09:59] INFO: arecord return code: 1
-[2025-09-18 17:09:59] INFO: Actual recording duration: 61.43s (expected: 120s)
-[2025-09-18 17:09:59] INFO: Recording end time: 17:09:59.334
-[2025-09-18 17:08:57] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170850.wav
-[2025-09-18 17:08:57] INFO: Reset audio system before retry 2
-[2025-09-18 17:08:55] INFO: Recording start time: 17:08:55.841
-[2025-09-18 17:08:55] INFO: Starting microphone recording (120s) - attempt 2/3
-[2025-09-18 17:08:55] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 17:08:55] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 17:08:52] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 17:08:52] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 17:08:50] ERROR: Microphone recording failed: stdout: , stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused, returncode: 1
-Exception: stdout: , stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused, returncode: 1
-Traceback:
-NoneType: None
-
-[2025-09-18 17:08:50] ERROR: Output file was not created
-[2025-09-18 17:08:50] INFO: arecord stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-
-[2025-09-18 17:08:50] INFO: arecord return code: 1
-[2025-09-18 17:08:50] INFO: Actual recording duration: 0.01s (expected: 120s)
-[2025-09-18 17:08:50] INFO: Recording end time: 17:08:50.651
-[2025-09-18 17:08:50] INFO: Executing arecord command: /usr/bin/arecord -D pulse -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170850.wav
-[2025-09-18 17:08:50] INFO: Recording start time: 17:08:50.589
-[2025-09-18 17:08:50] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 17:08:50] INFO: Detected microphone device: pulse
-[2025-09-18 17:08:50] WARNING: No working microphone found, using pulse fallback
-[2025-09-18 17:08:50] WARNING: Device plughw:3,0 test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-18 17:08:50] WARNING: Device plughw:2,0 test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-18 17:08:50] WARNING: Device default test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-18 17:08:50] WARNING: Device hw:1,0 test failed: arecord: main:831: audio open error: Device or resource busy
-[2025-09-18 17:08:50] WARNING: Device plughw:1,0 test failed: arecord: main:831: audio open error: Device or resource busy
-[2025-09-18 17:08:50] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 17:08:50] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 17:08:50] INFO: Master file position: 0s / 2778.22s
-[2025-09-18 17:08:49] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 17:08:49] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
-[2025-09-18 17:08:49] INFO: Working directory: /home/payas/cos/mixing
-[2025-09-18 17:08:49] INFO: Python executable: /home/payas/venv/bin/python
-[2025-09-18 17:08:49] INFO: Process ID: 64620
-[2025-09-18 17:08:49] INFO: === MIXING SERVICE STARTING ===
-[2025-09-18 17:08:03] INFO: Executing arecord command: /usr/bin/arecord -D pulse -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170801.wav
-[2025-09-18 17:08:03] INFO: Recording start time: 17:08:03.131
-[2025-09-18 17:08:03] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 17:08:03] INFO: Detected microphone device: pulse
-[2025-09-18 17:08:03] INFO: Successfully detected working microphone: pulse
-[2025-09-18 17:08:01] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 17:08:01] INFO: Master file position: 360s / 2778.22s
-[2025-09-18 17:08:01] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 17:07:54] INFO: Removed old file: mixed_audio_20250918_160915.mp3
-[2025-09-18 17:07:54] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_170544.mp3
-[2025-09-18 17:07:46] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 17:07:46] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 240s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170544.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_170544.mp3
-[2025-09-18 17:07:46] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170544.wav
-[2025-09-18 17:07:46] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 17:07:46] INFO: Output file size: 10584044 bytes
-[2025-09-18 17:07:46] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170544.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 17:07:46] INFO: arecord return code: 0
-[2025-09-18 17:07:46] INFO: Actual recording duration: 120.35s (expected: 120s)
-[2025-09-18 17:07:46] INFO: Recording end time: 17:07:46.509
-[2025-09-18 17:05:46] INFO: Executing arecord command: /usr/bin/arecord -D pulse -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170544.wav
-[2025-09-18 17:05:46] INFO: Recording start time: 17:05:46.105
-[2025-09-18 17:05:46] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 17:05:46] INFO: Detected microphone device: pulse
-[2025-09-18 17:05:46] INFO: Successfully detected working microphone: pulse
-[2025-09-18 17:05:44] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 17:05:44] INFO: Master file position: 240s / 2778.22s
-[2025-09-18 17:05:44] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 17:05:37] INFO: Removed old file: mixed_audio_20250918_160652.mp3
-[2025-09-18 17:05:37] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_170328.mp3
-[2025-09-18 17:05:30] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 17:05:30] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 120s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170328.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_170328.mp3
-[2025-09-18 17:05:30] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170328.wav
-[2025-09-18 17:05:30] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 17:05:30] INFO: Output file size: 10584044 bytes
-[2025-09-18 17:05:30] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170328.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 17:05:30] INFO: arecord return code: 0
-[2025-09-18 17:05:30] INFO: Actual recording duration: 120.18s (expected: 120s)
-[2025-09-18 17:05:30] INFO: Recording end time: 17:05:30.433
-[2025-09-18 17:03:30] INFO: Executing arecord command: /usr/bin/arecord -D pulse -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170328.wav
-[2025-09-18 17:03:30] INFO: Recording start time: 17:03:30.202
-[2025-09-18 17:03:30] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 17:03:30] INFO: Detected microphone device: pulse
-[2025-09-18 17:03:30] INFO: Successfully detected working microphone: pulse
-[2025-09-18 17:03:28] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 17:03:28] INFO: Master file position: 120s / 2778.22s
-[2025-09-18 17:03:28] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 17:03:21] INFO: Removed old file: mixed_audio_20250918_160429.mp3
-[2025-09-18 17:03:21] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_170114.mp3
-[2025-09-18 17:03:16] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 17:03:16] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170114.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_170114.mp3
-[2025-09-18 17:03:15] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170114.wav
-[2025-09-18 17:03:15] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 17:03:15] INFO: Output file size: 10584044 bytes
-[2025-09-18 17:03:15] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170114.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 17:03:15] INFO: arecord return code: 0
-[2025-09-18 17:03:15] INFO: Actual recording duration: 120.17s (expected: 120s)
-[2025-09-18 17:03:15] INFO: Recording end time: 17:03:15.965
-[2025-09-18 17:01:15] INFO: Executing arecord command: /usr/bin/arecord -D pulse -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_170114.wav
-[2025-09-18 17:01:15] INFO: Recording start time: 17:01:15.744
-[2025-09-18 17:01:15] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 17:01:15] INFO: Detected microphone device: pulse
-[2025-09-18 17:01:15] INFO: Successfully detected working microphone: pulse
-[2025-09-18 17:01:14] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 17:01:14] INFO: Master file position: 0s / 2778.22s
-[2025-09-18 17:01:11] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 17:01:11] INFO: Configuration updated: {'mode': 'Auto', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
-[2025-09-18 17:01:11] INFO: Working directory: /home/payas/cos
-[2025-09-18 17:01:11] INFO: Python executable: /home/payas/venv/bin/python
-[2025-09-18 17:01:11] INFO: Process ID: 61641
-[2025-09-18 17:01:11] INFO: === MIXING SERVICE STARTING ===
-[2025-09-18 16:16:19] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 16:16:12] INFO: Removed old file: mixed_audio_20250918_160206.mp3
-[2025-09-18 16:16:12] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_161359.mp3
-[2025-09-18 16:16:03] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 16:16:03] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 600s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_161359.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_161359.mp3
-[2025-09-18 16:16:03] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_161359.wav
-[2025-09-18 16:16:03] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 16:16:03] INFO: Output file size: 10584044 bytes
-[2025-09-18 16:16:03] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_161359.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 16:16:03] INFO: arecord return code: 0
-[2025-09-18 16:16:03] INFO: Actual recording duration: 120.11s (expected: 120s)
-[2025-09-18 16:16:02] INFO: Recording end time: 16:16:02.996
-[2025-09-18 16:14:02] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_161359.wav
-[2025-09-18 16:14:02] INFO: Recording start time: 16:14:02.832
-[2025-09-18 16:14:02] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 16:14:02] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 16:14:02] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 16:13:59] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 16:13:59] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 16:13:59] INFO: Master file position: 600s / 2778.22s
-[2025-09-18 16:13:58] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 16:13:51] INFO: Removed old file: mixed_audio_20250918_155948.mp3
-[2025-09-18 16:13:51] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_161138.mp3
-[2025-09-18 16:13:42] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 16:13:42] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 480s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_161138.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_161138.mp3
-[2025-09-18 16:13:42] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_161138.wav
-[2025-09-18 16:13:42] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 16:13:42] INFO: Output file size: 10584044 bytes
-[2025-09-18 16:13:42] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_161138.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 16:13:42] INFO: arecord return code: 0
-[2025-09-18 16:13:42] INFO: Actual recording duration: 120.09s (expected: 120s)
-[2025-09-18 16:13:41] INFO: Recording end time: 16:13:41.993
-[2025-09-18 16:11:41] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_161138.wav
-[2025-09-18 16:11:41] INFO: Recording start time: 16:11:41.849
-[2025-09-18 16:11:41] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 16:11:41] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 16:11:41] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 16:11:38] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 16:11:38] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 16:11:38] INFO: Master file position: 480s / 2778.22s
-[2025-09-18 16:11:35] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 16:11:28] INFO: Removed old file: mixed_audio_20250918_155725.mp3
-[2025-09-18 16:11:28] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_160915.mp3
-[2025-09-18 16:11:19] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 16:11:19] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 360s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160915.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_160915.mp3
-[2025-09-18 16:11:19] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160915.wav
-[2025-09-18 16:11:19] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 16:11:19] INFO: Output file size: 10584044 bytes
-[2025-09-18 16:11:19] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160915.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 16:11:19] INFO: arecord return code: 0
-[2025-09-18 16:11:19] INFO: Actual recording duration: 120.10s (expected: 120s)
-[2025-09-18 16:11:19] INFO: Recording end time: 16:11:19.250
-[2025-09-18 16:09:19] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160915.wav
-[2025-09-18 16:09:19] INFO: Recording start time: 16:09:19.096
-[2025-09-18 16:09:19] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 16:09:19] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 16:09:19] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 16:09:15] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 16:09:15] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 16:09:15] INFO: Master file position: 360s / 2778.22s
-[2025-09-18 16:09:12] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 16:09:05] INFO: Removed old file: mixed_audio_20250918_155503.mp3
-[2025-09-18 16:09:05] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_160652.mp3
-[2025-09-18 16:08:56] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 16:08:56] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 240s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160652.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_160652.mp3
-[2025-09-18 16:08:56] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160652.wav
-[2025-09-18 16:08:56] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 16:08:56] INFO: Output file size: 10584044 bytes
-[2025-09-18 16:08:56] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160652.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 16:08:56] INFO: arecord return code: 0
-[2025-09-18 16:08:56] INFO: Actual recording duration: 120.10s (expected: 120s)
-[2025-09-18 16:08:56] INFO: Recording end time: 16:08:56.184
-[2025-09-18 16:06:56] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160652.wav
-[2025-09-18 16:06:56] INFO: Recording start time: 16:06:56.013
-[2025-09-18 16:06:56] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 16:06:56] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 16:06:56] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 16:06:52] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 16:06:52] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 16:06:52] INFO: Master file position: 240s / 2778.22s
-[2025-09-18 16:06:49] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 16:06:42] INFO: Removed old file: mixed_audio_20250918_155238.mp3
-[2025-09-18 16:06:42] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_160429.mp3
-[2025-09-18 16:06:33] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 16:06:33] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 120s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160429.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_160429.mp3
-[2025-09-18 16:06:33] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160429.wav
-[2025-09-18 16:06:33] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 16:06:33] INFO: Output file size: 10584044 bytes
-[2025-09-18 16:06:33] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160429.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 16:06:33] INFO: arecord return code: 0
-[2025-09-18 16:06:33] INFO: Actual recording duration: 120.10s (expected: 120s)
-[2025-09-18 16:06:33] INFO: Recording end time: 16:06:33.285
-[2025-09-18 16:04:33] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160429.wav
-[2025-09-18 16:04:33] INFO: Recording start time: 16:04:33.124
-[2025-09-18 16:04:33] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 16:04:33] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 16:04:33] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 16:04:30] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 16:04:30] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 16:04:29] INFO: Master file position: 120s / 2778.22s
-[2025-09-18 16:04:26] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 16:04:19] INFO: Removed old file: mixed_audio_20250918_155013.mp3
-[2025-09-18 16:04:19] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_160206.mp3
-[2025-09-18 16:04:10] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 16:04:10] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160206.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_160206.mp3
-[2025-09-18 16:04:10] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160206.wav
-[2025-09-18 16:04:10] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 16:04:10] INFO: Output file size: 10584044 bytes
-[2025-09-18 16:04:10] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160206.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 16:04:10] INFO: arecord return code: 0
-[2025-09-18 16:04:10] INFO: Actual recording duration: 120.15s (expected: 120s)
-[2025-09-18 16:04:10] INFO: Recording end time: 16:04:10.337
-[2025-09-18 16:02:10] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_160206.wav
-[2025-09-18 16:02:10] INFO: Recording start time: 16:02:10.121
-[2025-09-18 16:02:10] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 16:02:10] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 16:02:10] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 16:02:06] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 16:02:06] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 16:02:06] INFO: Master file position: 0s / 2778.22s
-[2025-09-18 16:02:06] INFO: Master file reached end (2778.22s), restarting from beginning
-[2025-09-18 16:02:05] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 16:01:58] INFO: Removed old file: mixed_audio_20250918_154751.mp3
-[2025-09-18 16:01:58] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_155948.mp3
-[2025-09-18 16:01:51] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 16:01:51] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2760s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155948.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_155948.mp3
-[2025-09-18 16:01:51] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155948.wav
-[2025-09-18 16:01:51] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 16:01:51] INFO: Output file size: 10584044 bytes
-[2025-09-18 16:01:51] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155948.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 16:01:51] INFO: arecord return code: 0
-[2025-09-18 16:01:51] INFO: Actual recording duration: 120.09s (expected: 120s)
-[2025-09-18 16:01:51] INFO: Recording end time: 16:01:51.865
-[2025-09-18 15:59:51] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155948.wav
-[2025-09-18 15:59:51] INFO: Recording start time: 15:59:51.715
-[2025-09-18 15:59:51] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:59:51] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:59:51] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:59:48] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:59:48] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:59:48] INFO: Master file position: 2760s / 2778.22s
-[2025-09-18 15:59:47] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:59:40] INFO: Removed old file: mixed_audio_20250918_154526.mp3
-[2025-09-18 15:59:40] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_155725.mp3
-[2025-09-18 15:59:28] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:59:28] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2640s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155725.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_155725.mp3
-[2025-09-18 15:59:28] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155725.wav
-[2025-09-18 15:59:28] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:59:28] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:59:28] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155725.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:59:28] INFO: arecord return code: 0
-[2025-09-18 15:59:28] INFO: Actual recording duration: 120.15s (expected: 120s)
-[2025-09-18 15:59:28] INFO: Recording end time: 15:59:28.761
-[2025-09-18 15:57:28] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155725.wav
-[2025-09-18 15:57:28] INFO: Recording start time: 15:57:28.505
-[2025-09-18 15:57:28] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:57:28] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:57:28] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:57:25] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:57:25] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:57:25] INFO: Master file position: 2640s / 2778.22s
-[2025-09-18 15:57:24] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:57:17] INFO: Removed old file: mixed_audio_20250918_154303.mp3
-[2025-09-18 15:57:17] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_155503.mp3
-[2025-09-18 15:57:06] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:57:06] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2520s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155503.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_155503.mp3
-[2025-09-18 15:57:06] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155503.wav
-[2025-09-18 15:57:06] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:57:06] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:57:06] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155503.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:57:06] INFO: arecord return code: 0
-[2025-09-18 15:57:06] INFO: Actual recording duration: 120.10s (expected: 120s)
-[2025-09-18 15:57:06] INFO: Recording end time: 15:57:06.454
-[2025-09-18 15:55:06] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155503.wav
-[2025-09-18 15:55:06] INFO: Recording start time: 15:55:06.271
-[2025-09-18 15:55:06] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:55:06] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:55:06] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:55:03] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:55:03] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:55:03] INFO: Master file position: 2520s / 2778.22s
-[2025-09-18 15:54:59] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:54:52] INFO: Removed old file: mixed_audio_20250918_154040.mp3
-[2025-09-18 15:54:52] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_155238.mp3
-[2025-09-18 15:54:41] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:54:41] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2400s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155238.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_155238.mp3
-[2025-09-18 15:54:41] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155238.wav
-[2025-09-18 15:54:41] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:54:41] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:54:41] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155238.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:54:41] INFO: arecord return code: 0
-[2025-09-18 15:54:41] INFO: Actual recording duration: 120.10s (expected: 120s)
-[2025-09-18 15:54:41] INFO: Recording end time: 15:54:41.546
-[2025-09-18 15:52:41] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155238.wav
-[2025-09-18 15:52:41] INFO: Recording start time: 15:52:41.391
-[2025-09-18 15:52:41] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:52:41] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:52:41] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:52:38] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:52:38] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:52:38] INFO: Master file position: 2400s / 2778.22s
-[2025-09-18 15:52:34] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:52:27] INFO: Removed old file: mixed_audio_20250918_153815.mp3
-[2025-09-18 15:52:27] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_155013.mp3
-[2025-09-18 15:52:17] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:52:17] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2280s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155013.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_155013.mp3
-[2025-09-18 15:52:17] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155013.wav
-[2025-09-18 15:52:17] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:52:17] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:52:17] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155013.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:52:17] INFO: arecord return code: 0
-[2025-09-18 15:52:17] INFO: Actual recording duration: 120.15s (expected: 120s)
-[2025-09-18 15:52:17] INFO: Recording end time: 15:52:17.369
-[2025-09-18 15:50:17] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_155013.wav
-[2025-09-18 15:50:17] INFO: Recording start time: 15:50:17.151
-[2025-09-18 15:50:17] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:50:17] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:50:17] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:50:14] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:50:14] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:50:13] INFO: Master file position: 2280s / 2778.22s
-[2025-09-18 15:50:12] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:50:05] INFO: Removed old file: mixed_audio_20250918_153553.mp3
-[2025-09-18 15:50:05] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_154751.mp3
-[2025-09-18 15:49:55] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:49:55] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2160s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154751.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_154751.mp3
-[2025-09-18 15:49:55] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154751.wav
-[2025-09-18 15:49:55] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:49:55] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:49:55] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154751.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:49:55] INFO: arecord return code: 0
-[2025-09-18 15:49:55] INFO: Actual recording duration: 120.09s (expected: 120s)
-[2025-09-18 15:49:55] INFO: Recording end time: 15:49:55.001
-[2025-09-18 15:47:54] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154751.wav
-[2025-09-18 15:47:54] INFO: Recording start time: 15:47:54.855
-[2025-09-18 15:47:54] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:47:54] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:47:54] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:47:51] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:47:51] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:47:51] INFO: Master file position: 2160s / 2778.22s
-[2025-09-18 15:47:47] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:47:40] INFO: Removed old file: mixed_audio_20250918_153329.mp3
-[2025-09-18 15:47:40] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_154526.mp3
-[2025-09-18 15:47:30] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:47:30] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2040s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154526.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_154526.mp3
-[2025-09-18 15:47:30] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154526.wav
-[2025-09-18 15:47:30] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:47:30] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:47:30] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154526.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:47:30] INFO: arecord return code: 0
-[2025-09-18 15:47:30] INFO: Actual recording duration: 120.15s (expected: 120s)
-[2025-09-18 15:47:30] INFO: Recording end time: 15:47:30.001
-[2025-09-18 15:45:29] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154526.wav
-[2025-09-18 15:45:29] INFO: Recording start time: 15:45:29.780
-[2025-09-18 15:45:29] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:45:29] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:45:29] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:45:26] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:45:26] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:45:26] INFO: Master file position: 2040s / 2778.22s
-[2025-09-18 15:45:25] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:45:18] INFO: Removed old file: mixed_audio_20250918_153105.mp3
-[2025-09-18 15:45:18] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_154303.mp3
-[2025-09-18 15:45:07] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:45:07] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1920s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154303.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_154303.mp3
-[2025-09-18 15:45:07] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154303.wav
-[2025-09-18 15:45:07] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:45:07] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:45:07] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154303.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:45:07] INFO: arecord return code: 0
-[2025-09-18 15:45:07] INFO: Actual recording duration: 120.09s (expected: 120s)
-[2025-09-18 15:45:07] INFO: Recording end time: 15:45:07.248
-[2025-09-18 15:43:07] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154303.wav
-[2025-09-18 15:43:07] INFO: Recording start time: 15:43:07.108
-[2025-09-18 15:43:07] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:43:07] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:43:07] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:43:04] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:43:03] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:43:03] INFO: Master file position: 1920s / 2778.22s
-[2025-09-18 15:43:00] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:42:53] INFO: Removed old file: mixed_audio_20250918_152841.mp3
-[2025-09-18 15:42:53] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_154040.mp3
-[2025-09-18 15:42:43] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:42:43] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1800s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154040.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_154040.mp3
-[2025-09-18 15:42:43] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154040.wav
-[2025-09-18 15:42:43] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:42:43] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:42:43] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154040.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:42:43] INFO: arecord return code: 0
-[2025-09-18 15:42:43] INFO: Actual recording duration: 120.09s (expected: 120s)
-[2025-09-18 15:42:43] INFO: Recording end time: 15:42:43.652
-[2025-09-18 15:40:43] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_154040.wav
-[2025-09-18 15:40:43] INFO: Recording start time: 15:40:43.470
-[2025-09-18 15:40:43] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:40:43] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:40:43] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:40:40] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:40:40] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:40:40] INFO: Master file position: 1800s / 2778.22s
-[2025-09-18 15:40:36] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:40:29] INFO: Removed old file: mixed_audio_20250918_152618.mp3
-[2025-09-18 15:40:29] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_153815.mp3
-[2025-09-18 15:40:18] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:40:18] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1680s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153815.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_153815.mp3
-[2025-09-18 15:40:18] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153815.wav
-[2025-09-18 15:40:18] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:40:18] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:40:18] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153815.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:40:18] INFO: arecord return code: 0
-[2025-09-18 15:40:18] INFO: Actual recording duration: 120.09s (expected: 120s)
-[2025-09-18 15:40:18] INFO: Recording end time: 15:40:18.814
-[2025-09-18 15:38:18] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153815.wav
-[2025-09-18 15:38:18] INFO: Recording start time: 15:38:18.675
-[2025-09-18 15:38:18] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:38:18] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:38:18] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:38:15] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:38:15] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:38:15] INFO: Master file position: 1680s / 2778.22s
-[2025-09-18 15:38:14] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:38:07] INFO: Removed old file: mixed_audio_20250918_152354.mp3
-[2025-09-18 15:38:07] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_153553.mp3
-[2025-09-18 15:37:57] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:37:57] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1560s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153553.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_153553.mp3
-[2025-09-18 15:37:57] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153553.wav
-[2025-09-18 15:37:57] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:37:57] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:37:57] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153553.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:37:57] INFO: arecord return code: 0
-[2025-09-18 15:37:57] INFO: Actual recording duration: 120.10s (expected: 120s)
-[2025-09-18 15:37:57] INFO: Recording end time: 15:37:57.190
-[2025-09-18 15:35:57] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153553.wav
-[2025-09-18 15:35:57] INFO: Recording start time: 15:35:57.027
-[2025-09-18 15:35:57] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:35:57] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:35:57] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:35:53] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:35:53] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:35:53] INFO: Master file position: 1560s / 2778.22s
-[2025-09-18 15:35:50] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:35:43] INFO: Removed old file: mixed_audio_20250918_152130.mp3
-[2025-09-18 15:35:43] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_153329.mp3
-[2025-09-18 15:35:33] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:35:33] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1440s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153329.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_153329.mp3
-[2025-09-18 15:35:33] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153329.wav
-[2025-09-18 15:35:33] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:35:33] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:35:33] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153329.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:35:32] INFO: arecord return code: 0
-[2025-09-18 15:35:32] INFO: Actual recording duration: 120.15s (expected: 120s)
-[2025-09-18 15:35:32] INFO: Recording end time: 15:35:32.982
-[2025-09-18 15:33:32] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153329.wav
-[2025-09-18 15:33:32] INFO: Recording start time: 15:33:32.768
-[2025-09-18 15:33:32] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:33:32] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:33:32] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:33:29] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:33:29] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:33:29] INFO: Master file position: 1440s / 2778.22s
-[2025-09-18 15:33:26] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:33:19] INFO: Removed old file: mixed_audio_20250918_151907.mp3
-[2025-09-18 15:33:19] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_153105.mp3
-[2025-09-18 15:33:08] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:33:08] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1320s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153105.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_153105.mp3
-[2025-09-18 15:33:08] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153105.wav
-[2025-09-18 15:33:08] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:33:08] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:33:08] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153105.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:33:08] INFO: arecord return code: 0
-[2025-09-18 15:33:08] INFO: Actual recording duration: 120.07s (expected: 120s)
-[2025-09-18 15:33:08] INFO: Recording end time: 15:33:08.771
-[2025-09-18 15:31:08] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_153105.wav
-[2025-09-18 15:31:08] INFO: Recording start time: 15:31:08.634
-[2025-09-18 15:31:08] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:31:08] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:31:08] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:31:05] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:31:05] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:31:05] INFO: Master file position: 1320s / 2778.22s
-[2025-09-18 15:31:02] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:30:55] INFO: Removed old file: mixed_audio_20250918_151646.mp3
-[2025-09-18 15:30:55] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_152841.mp3
-[2025-09-18 15:30:45] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:30:45] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1200s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152841.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_152841.mp3
-[2025-09-18 15:30:45] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152841.wav
-[2025-09-18 15:30:45] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:30:45] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:30:45] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152841.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:30:45] INFO: arecord return code: 0
-[2025-09-18 15:30:45] INFO: Actual recording duration: 120.10s (expected: 120s)
-[2025-09-18 15:30:45] INFO: Recording end time: 15:30:45.056
-[2025-09-18 15:28:44] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152841.wav
-[2025-09-18 15:28:44] INFO: Recording start time: 15:28:44.872
-[2025-09-18 15:28:44] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:28:44] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:28:44] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:28:41] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:28:41] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:28:41] INFO: Master file position: 1200s / 2778.22s
-[2025-09-18 15:28:38] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:28:31] INFO: Removed old file: mixed_audio_20250918_151423.mp3
-[2025-09-18 15:28:31] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_152618.mp3
-[2025-09-18 15:28:21] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:28:21] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 1080s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152618.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_152618.mp3
-[2025-09-18 15:28:21] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152618.wav
-[2025-09-18 15:28:21] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:28:21] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:28:21] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152618.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:28:21] INFO: arecord return code: 0
-[2025-09-18 15:28:21] INFO: Actual recording duration: 120.10s (expected: 120s)
-[2025-09-18 15:28:21] INFO: Recording end time: 15:28:21.506
-[2025-09-18 15:26:21] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152618.wav
-[2025-09-18 15:26:21] INFO: Recording start time: 15:26:21.355
-[2025-09-18 15:26:21] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:26:21] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:26:21] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:26:18] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:26:18] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:26:18] INFO: Master file position: 1080s / 2778.22s
-[2025-09-18 15:26:14] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:26:07] INFO: Removed old file: mixed_audio_20250918_151202.mp3
-[2025-09-18 15:26:07] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_152354.mp3
-[2025-09-18 15:25:58] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:25:58] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 960s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152354.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_152354.mp3
-[2025-09-18 15:25:58] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152354.wav
-[2025-09-18 15:25:58] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:25:58] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:25:58] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152354.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:25:58] INFO: arecord return code: 0
-[2025-09-18 15:25:58] INFO: Actual recording duration: 120.17s (expected: 120s)
-[2025-09-18 15:25:58] INFO: Recording end time: 15:25:58.062
-[2025-09-18 15:23:57] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152354.wav
-[2025-09-18 15:23:57] INFO: Recording start time: 15:23:57.795
-[2025-09-18 15:23:57] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:23:57] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:23:57] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:23:54] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:23:54] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:23:54] INFO: Master file position: 960s / 2778.22s
-[2025-09-18 15:23:51] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:23:44] INFO: Removed old file: mixed_audio_20250918_150939.mp3
-[2025-09-18 15:23:44] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_152130.mp3
-[2025-09-18 15:23:34] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:23:34] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 840s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152130.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_152130.mp3
-[2025-09-18 15:23:34] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152130.wav
-[2025-09-18 15:23:34] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:23:34] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:23:34] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152130.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:23:34] INFO: arecord return code: 0
-[2025-09-18 15:23:34] INFO: Actual recording duration: 120.10s (expected: 120s)
-[2025-09-18 15:23:34] INFO: Recording end time: 15:23:34.036
-[2025-09-18 15:21:33] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_152130.wav
-[2025-09-18 15:21:33] INFO: Recording start time: 15:21:33.871
-[2025-09-18 15:21:33] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:21:33] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:21:33] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:21:30] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:21:30] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:21:30] INFO: Master file position: 840s / 2778.22s
-[2025-09-18 15:21:27] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:21:20] INFO: Removed old file: mixed_audio_20250918_150719.mp3
-[2025-09-18 15:21:20] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_151907.mp3
-[2025-09-18 15:21:10] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:21:10] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 720s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151907.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_151907.mp3
-[2025-09-18 15:21:10] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151907.wav
-[2025-09-18 15:21:10] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:21:10] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:21:10] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151907.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:21:10] INFO: arecord return code: 0
-[2025-09-18 15:21:10] INFO: Actual recording duration: 120.16s (expected: 120s)
-[2025-09-18 15:21:10] INFO: Recording end time: 15:21:10.550
-[2025-09-18 15:19:10] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151907.wav
-[2025-09-18 15:19:10] INFO: Recording start time: 15:19:10.313
-[2025-09-18 15:19:10] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:19:10] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:19:10] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:19:07] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:19:07] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:19:07] INFO: Master file position: 720s / 2778.22s
-[2025-09-18 15:19:05] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:18:58] INFO: Removed old file: mixed_audio_20250918_150455.mp3
-[2025-09-18 15:18:58] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_151646.mp3
-[2025-09-18 15:18:49] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:18:49] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 600s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151646.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_151646.mp3
-[2025-09-18 15:18:49] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151646.wav
-[2025-09-18 15:18:49] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:18:49] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:18:49] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151646.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:18:49] INFO: arecord return code: 0
-[2025-09-18 15:18:49] INFO: Actual recording duration: 120.09s (expected: 120s)
-[2025-09-18 15:18:49] INFO: Recording end time: 15:18:49.495
-[2025-09-18 15:16:49] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151646.wav
-[2025-09-18 15:16:49] INFO: Recording start time: 15:16:49.334
-[2025-09-18 15:16:49] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:16:49] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:16:49] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:16:46] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:16:46] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:16:46] INFO: Master file position: 600s / 2778.22s
-[2025-09-18 15:16:42] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:16:35] INFO: Removed old file: mixed_audio_20250918_150234.mp3
-[2025-09-18 15:16:35] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_151423.mp3
-[2025-09-18 15:16:26] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:16:26] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 480s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151423.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_151423.mp3
-[2025-09-18 15:16:26] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151423.wav
-[2025-09-18 15:16:26] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:16:26] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:16:26] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151423.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:16:26] INFO: arecord return code: 0
-[2025-09-18 15:16:26] INFO: Actual recording duration: 120.09s (expected: 120s)
-[2025-09-18 15:16:26] INFO: Recording end time: 15:16:26.448
-[2025-09-18 15:14:26] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151423.wav
-[2025-09-18 15:14:26] INFO: Recording start time: 15:14:26.315
-[2025-09-18 15:14:26] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:14:26] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:14:26] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:14:23] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:14:23] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:14:23] INFO: Master file position: 480s / 2778.22s
-[2025-09-18 15:14:22] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:14:15] INFO: Removed old file: mixed_audio_20250918_150009.mp3
-[2025-09-18 15:14:15] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_151202.mp3
-[2025-09-18 15:14:05] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:14:05] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 360s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151202.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_151202.mp3
-[2025-09-18 15:14:05] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151202.wav
-[2025-09-18 15:14:05] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:14:05] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:14:05] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151202.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:14:05] INFO: arecord return code: 0
-[2025-09-18 15:14:05] INFO: Actual recording duration: 120.10s (expected: 120s)
-[2025-09-18 15:14:05] INFO: Recording end time: 15:14:05.879
-[2025-09-18 15:12:05] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_151202.wav
-[2025-09-18 15:12:05] INFO: Recording start time: 15:12:05.724
-[2025-09-18 15:12:05] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:12:05] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:12:05] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:12:02] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:12:02] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:12:02] INFO: Master file position: 360s / 2778.22s
-[2025-09-18 15:11:59] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:11:52] INFO: Removed old file: mixed_audio_20250918_145744.mp3
-[2025-09-18 15:11:52] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_150939.mp3
-[2025-09-18 15:11:42] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:11:42] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 240s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150939.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_150939.mp3
-[2025-09-18 15:11:42] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150939.wav
-[2025-09-18 15:11:42] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:11:42] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:11:42] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150939.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:11:42] INFO: arecord return code: 0
-[2025-09-18 15:11:42] INFO: Actual recording duration: 120.15s (expected: 120s)
-[2025-09-18 15:11:42] INFO: Recording end time: 15:11:42.911
-[2025-09-18 15:09:42] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150939.wav
-[2025-09-18 15:09:42] INFO: Recording start time: 15:09:42.684
-[2025-09-18 15:09:42] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:09:42] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:09:42] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:09:39] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:09:39] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:09:39] INFO: Master file position: 240s / 2778.22s
-[2025-09-18 15:09:38] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:09:31] INFO: Removed old file: mixed_audio_20250918_145637.mp3
-[2025-09-18 15:09:31] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_150719.mp3
-[2025-09-18 15:09:22] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:09:22] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 120s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150719.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_150719.mp3
-[2025-09-18 15:09:22] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150719.wav
-[2025-09-18 15:09:22] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:09:22] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:09:22] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150719.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:09:22] INFO: arecord return code: 0
-[2025-09-18 15:09:22] INFO: Actual recording duration: 120.09s (expected: 120s)
-[2025-09-18 15:09:22] INFO: Recording end time: 15:09:22.409
-[2025-09-18 15:07:22] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150719.wav
-[2025-09-18 15:07:22] INFO: Recording start time: 15:07:22.272
-[2025-09-18 15:07:22] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:07:22] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:07:22] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:07:19] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:07:19] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:07:19] INFO: Master file position: 120s / 2778.22s
-[2025-09-18 15:07:15] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:07:08] INFO: Removed old file: mixed_audio_20250918_145412.mp3
-[2025-09-18 15:07:08] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_150455.mp3
-[2025-09-18 15:06:59] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:06:59] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 0s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150455.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_150455.mp3
-[2025-09-18 15:06:58] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150455.wav
-[2025-09-18 15:06:58] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:06:58] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:06:58] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150455.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:06:58] INFO: arecord return code: 0
-[2025-09-18 15:06:58] INFO: Actual recording duration: 120.08s (expected: 120s)
-[2025-09-18 15:06:58] INFO: Recording end time: 15:06:58.923
-[2025-09-18 15:04:58] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150455.wav
-[2025-09-18 15:04:58] INFO: Recording start time: 15:04:58.789
-[2025-09-18 15:04:58] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:04:58] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:04:58] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:04:55] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:04:55] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:04:55] INFO: Master file position: 0s / 2778.22s
-[2025-09-18 15:04:55] INFO: Master file reached end (2778.22s), restarting from beginning
-[2025-09-18 15:04:52] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:04:45] INFO: Removed old file: mixed_audio_20250918_145147.mp3
-[2025-09-18 15:04:45] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_150234.mp3
-[2025-09-18 15:04:38] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:04:38] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2760s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150234.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_150234.mp3
-[2025-09-18 15:04:38] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150234.wav
-[2025-09-18 15:04:38] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:04:38] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:04:38] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150234.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:04:38] INFO: arecord return code: 0
-[2025-09-18 15:04:38] INFO: Actual recording duration: 120.08s (expected: 120s)
-[2025-09-18 15:04:38] INFO: Recording end time: 15:04:38.065
-[2025-09-18 15:02:37] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150234.wav
-[2025-09-18 15:02:37] INFO: Recording start time: 15:02:37.934
-[2025-09-18 15:02:37] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:02:37] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:02:37] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:02:34] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:02:34] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:02:34] INFO: Master file position: 2760s / 2778.22s
-[2025-09-18 15:02:31] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 15:02:24] INFO: Removed old file: mixed_audio_20250918_144925.mp3
-[2025-09-18 15:02:24] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_150009.mp3
-[2025-09-18 15:02:13] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 15:02:13] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2640s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150009.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_150009.mp3
-[2025-09-18 15:02:13] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150009.wav
-[2025-09-18 15:02:13] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 15:02:13] INFO: Output file size: 10584044 bytes
-[2025-09-18 15:02:13] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150009.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 15:02:13] INFO: arecord return code: 0
-[2025-09-18 15:02:13] INFO: Actual recording duration: 120.14s (expected: 120s)
-[2025-09-18 15:02:13] INFO: Recording end time: 15:02:13.036
-[2025-09-18 15:00:12] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_150009.wav
-[2025-09-18 15:00:12] INFO: Recording start time: 15:00:12.824
-[2025-09-18 15:00:12] INFO: Starting microphone recording (120s) - attempt 1/3
-[2025-09-18 15:00:12] INFO: Detected microphone device: plughw:1,0
-[2025-09-18 15:00:12] INFO: Successfully detected working microphone: plughw:1,0
-[2025-09-18 15:00:09] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-18 15:00:09] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-18 15:00:09] INFO: Master file position: 2640s / 2778.22s
-[2025-09-18 15:00:06] INFO: Using master file: Neumarkt 4 (Listen 1 original).mp3
-[2025-09-18 14:59:59] INFO: Removed old file: mixed_audio_20250918_144700.mp3
-[2025-09-18 14:59:59] INFO: Audio segment mixing completed successfully: /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_145744.mp3
-[2025-09-18 14:59:47] INFO: Volume levels: Master 100.0% (0.0dB), Mic 65.0% (-21.0dB)
-[2025-09-18 14:59:47] INFO: Mixing audio segment: /home/payas/cos/mixing/../master_audio/Neumarkt 4 (Listen 1 original).mp3 (from 2520s) + /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_145744.wav -> /home/payas/cos/mixing/../broadcast/media/mixed_audio_20250918_145744.mp3
-[2025-09-18 14:59:47] INFO: Microphone recording completed: /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_145744.wav
-[2025-09-18 14:59:47] INFO: Recording successful - file size 10584044 >= expected minimum 8467200
-[2025-09-18 14:59:47] INFO: Output file size: 10584044 bytes
-[2025-09-18 14:59:47] INFO: arecord stderr: Recording WAVE '/home/payas/cos/mixing/../mixed_output/mic_recording_20250918_145744.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-
-[2025-09-18 14:59:47] INFO: arecord return code: 0
-[2025-09-18 14:59:47] INFO: Actual recording duration: 120.14s (expected: 120s)
-[2025-09-18 14:59:47] INFO: Recording end time: 14:59:47.659
-[2025-09-18 14:57:47] INFO: Executing arecord command: /usr/bin/arecord -D plughw:1,0 -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250918_145744.wav
-[2025-09-18 14:57:47] INFO: Recording start time: 14:57:47.459
+[2025-09-18 18:15:05] INFO: PulseAudio detected - using pulse device for better compatibility
