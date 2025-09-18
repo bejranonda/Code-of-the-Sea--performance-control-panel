@@ -206,15 +206,17 @@ def play_file(file_path):
         
         if file_ext == '.mp3':
             players = [
-                ['mpg123', file_path],
-                ['ffplay', '-nodisp', '-autoexit', file_path],
-                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path]
+                ['mpg123', '-a', 'pulse', file_path],  # Use pulse audio output
+                ['ffplay', '-nodisp', '-autoexit', '-af', 'aresample=48000', file_path],  # Force 48kHz for compatibility
+                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path],
+                ['mpg123', file_path]  # Fallback without pulse
             ]
         elif file_ext in ['.wav']:
             players = [
-                ['aplay', file_path],
+                ['aplay', '-D', 'pulse', file_path],  # Use pulse audio device
                 ['ffplay', '-nodisp', '-autoexit', file_path],
-                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path]
+                ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path],
+                ['aplay', file_path]  # Fallback without pulse
             ]
         elif file_ext == '.ogg':
             players = [
@@ -223,30 +225,32 @@ def play_file(file_path):
                 ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path]
             ]
         else:
-            # For other formats, try universal players
+            # For other formats, try universal players with pulse audio
             players = [
-                ['ffplay', '-nodisp', '-autoexit', file_path],
+                ['ffplay', '-nodisp', '-autoexit', '-af', 'aresample=48000', file_path],
                 ['cvlc', '--intf', 'dummy', '--play-and-exit', file_path],
-                ['mpg123', file_path],  # Might work for some formats
-                ['aplay', file_path]    # Last resort
+                ['mpg123', '-a', 'pulse', file_path],  # Might work for some formats
+                ['aplay', '-D', 'pulse', file_path]    # Last resort with pulse
             ]
         
         for player_cmd in players:
             try:
                 # Check if player exists
-                subprocess.run(['which', player_cmd[0]], 
-                             check=True, 
-                             stdout=subprocess.DEVNULL, 
-                             stderr=subprocess.DEVNULL)
-                
+                which_result = subprocess.run(['which', player_cmd[0]],
+                             capture_output=True, text=True)
+                if which_result.returncode != 0:
+                    log_event(f"Player {player_cmd[0]} not found, trying next")
+                    continue
+
                 # Start playback
-                log_event(f"Starting playback: {os.path.basename(file_path)} using {player_cmd[0]}")
-                # Use a simpler approach - create a background script
+                log_event(f"Starting playback: {os.path.basename(file_path)} using {' '.join(player_cmd)}")
+                # Use a more robust approach
                 if player_cmd[0] == 'mpg123':
-                    # Create a simple background script that handles the audio
+                    # Create a more robust background script with pulse audio
                     script_path = f'/tmp/play_{os.getpid()}.sh'
+                    cmd_str = ' '.join([f'"{arg}"' for arg in player_cmd])
                     with open(script_path, 'w') as f:
-                        f.write(f'#!/bin/bash\nmpg123 -q "{file_path}" >/dev/null 2>&1 &\necho $! > /tmp/mpg_pid_{os.getpid()}\n')
+                        f.write(f'#!/bin/bash\nexport PULSE_RUNTIME_PATH=/run/user/$(id -u)/pulse\n{cmd_str} -q 2>/tmp/mpg_error_{os.getpid()} &\necho $! > /tmp/mpg_pid_{os.getpid()}\n')
                     os.chmod(script_path, 0o755)
                     
                     # Execute the script
@@ -301,14 +305,32 @@ def play_file(file_path):
                         playback_process = None
                         return False
                 else:
-                    playback_process = subprocess.Popen(player_cmd, 
-                                                      stdout=subprocess.DEVNULL, 
-                                                      stderr=subprocess.DEVNULL)
+                    # For other players, add environment variables for audio
+                    env = os.environ.copy()
+                    env['PULSE_RUNTIME_PATH'] = f'/run/user/{os.getuid()}/pulse'
+                    env['DISPLAY'] = ':0'  # For ffplay
+
+                    playback_process = subprocess.Popen(player_cmd,
+                                                      stdout=subprocess.DEVNULL,
+                                                      stderr=subprocess.PIPE,
+                                                      env=env)
+
+                    # Give it a moment to start and check for immediate errors
+                    time.sleep(0.5)
+                    if playback_process.poll() is not None:
+                        # Process exited immediately, check for errors
+                        stderr_output = playback_process.stderr.read().decode() if playback_process.stderr else 'No error info'
+                        log_event(f"Player {player_cmd[0]} failed immediately: {stderr_output.strip()}", "WARNING")
+                        continue
                 
                 update_status(current_file=os.path.basename(file_path), playing=True)
                 return True
                 
-            except (subprocess.CalledProcessError, FileNotFoundError):
+            except (subprocess.CalledProcessError, FileNotFoundError) as e:
+                log_event(f"Error testing {player_cmd[0]}: {str(e)}", "WARNING")
+                continue
+            except Exception as e:
+                log_event(f"Unexpected error with {player_cmd[0]}: {str(e)}", "WARNING")
                 continue
         
         log_error(f"No suitable audio player found for: {file_path}")
