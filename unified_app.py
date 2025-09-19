@@ -401,32 +401,32 @@ def restart_pi():
         # Give services time to stop
         time.sleep(2)
 
-        # Create a reboot request file that external process can monitor
+        # Create reboot flag and try multiple reboot methods
         import os
         from datetime import datetime
 
-        reboot_request_file = "/tmp/cos_reboot_request"
-
         try:
-            # Write reboot request with timestamp
-            with open(reboot_request_file, "w") as f:
-                f.write(f"REBOOT_REQUESTED\n{datetime.now().isoformat()}\nRequested via web interface\n")
+            service_manager.log_event("Reboot requested via web interface - creating reboot flag")
 
-            service_manager.log_event("Reboot request file created - external monitoring should handle reboot")
+            # Create reboot flag file
+            with open("/tmp/reboot_now", "w") as f:
+                f.write(f"REBOOT\n{datetime.now().isoformat()}\n")
 
-            # Also try to trigger reboot via systemd user session if available
+            # Try the most direct approach - immediate reboot
             try:
-                result = subprocess.run(["systemctl", "--user", "reboot"],
-                                      capture_output=True, text=True, timeout=3)
-                if result.returncode == 0:
-                    return "Rebooting via user session..."
-            except:
-                pass
+                # This should work if sudo permissions are properly configured
+                os.execl("/usr/bin/sudo", "sudo", "/sbin/reboot")
+            except Exception:
+                # If exec fails, try system call
+                result = os.system("sudo /sbin/reboot")
+                if result == 0:
+                    return "Rebooting now..."
 
-            return "Reboot request submitted - system should reboot within 60 seconds..."
+            # If direct methods fail, return message about flag file
+            return "Reboot flag created - system should reboot shortly..."
 
         except Exception as e:
-            service_manager.log_error(f"Failed to create reboot request: {e}")
+            service_manager.log_error(f"Failed to initiate reboot: {e}")
             return f"Failed to request reboot: {str(e)}", 500
 
     except subprocess.TimeoutExpired:

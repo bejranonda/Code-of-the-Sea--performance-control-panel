@@ -13,7 +13,7 @@
     "loop_duration": "8"
   },
   "Fan Service": {
-    "mode": "Random",
+    "mode": "Cycle",
     "speed": 0,
     "lux_min": "1",
     "lux_max": "850"
