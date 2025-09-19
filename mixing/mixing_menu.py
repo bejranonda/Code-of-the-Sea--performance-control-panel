@@ -685,6 +685,36 @@ def main():
     log_event(f"Process ID: {os.getpid()}")
     log_event(f"Python executable: {os.sys.executable}")
     log_event(f"Working directory: {os.getcwd()}")
+
+    # Clean up any orphaned audio processes that might block recording
+    def cleanup_orphaned_audio_processes():
+        """Kill any orphaned audio processes that might be blocking the audio device"""
+        try:
+            import subprocess
+            # Find and kill orphaned arecord processes
+            result = subprocess.run(['pgrep', 'arecord'], capture_output=True, text=True)
+            if result.returncode == 0:
+                pids = result.stdout.strip().split('\n')
+                for pid in pids:
+                    if pid:
+                        log_event(f"Killing orphaned arecord process: {pid}")
+                        subprocess.run(['kill', pid], capture_output=True)
+
+            # Also check for other audio processes that might be blocking recording
+            for process in ['mpg123', 'aplay', 'paplay', 'ffplay']:
+                result = subprocess.run(['pgrep', process], capture_output=True, text=True)
+                if result.returncode == 0:
+                    pids = result.stdout.strip().split('\n')
+                    for pid in pids:
+                        if pid:
+                            log_event(f"Killing orphaned {process} process: {pid}")
+                            subprocess.run(['kill', pid], capture_output=True)
+        except Exception as e:
+            log_event(f"Error cleaning up orphaned processes: {e}")
+
+    # Clean up orphaned processes before starting
+    cleanup_orphaned_audio_processes()
+
     update_status(mode="Auto", status="initializing")
 
     # Ensure directories exist

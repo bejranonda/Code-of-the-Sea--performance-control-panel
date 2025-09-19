@@ -79,6 +79,29 @@ def log_to_main_log(message, level="INFO"):
     except Exception as e:
         print(f"Failed to write to main log: {e}")
 
+def log_service_event(action, reason, success=True):
+    """Log important events to main service events log for dashboard visibility"""
+    try:
+        service_events_log = "/home/payas/cos/service_events.log"
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        status = "SUCCESS" if success else "FAILED"
+        log_entry = f"[{timestamp}] {status}: BROADCAST SERVICE {action.upper()} - {reason}\n"
+
+        # Read existing logs to keep them manageable (last 1000 entries)
+        existing_logs = []
+        if os.path.exists(service_events_log):
+            with open(service_events_log, 'r') as f:
+                existing_logs = f.readlines()
+
+        # Write new log at the top (newest first)
+        with open(service_events_log, 'w') as f:
+            f.write(log_entry)
+            # Keep only the last 1000 entries to prevent file from growing too large
+            for existing_log in existing_logs[:999]:
+                f.write(existing_log)
+    except Exception as e:
+        print(f"Error logging to service events: {e}")
+
 def log_error(message, exception=None):
     """Log errors with full traceback"""
     error_msg = ""
@@ -305,62 +328,22 @@ def play_file(file_path, volume=50):
                 log_event(f"Starting playback: {os.path.basename(file_path)} using {' '.join(player_cmd)}")
                 # Use a more robust approach
                 if player_cmd[0] == 'mpg123':
-                    # Create a more robust background script with pulse audio
-                    script_path = f'/tmp/play_{os.getpid()}.sh'
-                    cmd_str = ' '.join([f'"{arg}"' for arg in player_cmd])
-                    with open(script_path, 'w') as f:
-                        f.write(f'#!/bin/bash\nexport PULSE_RUNTIME_PATH=/run/user/$(id -u)/pulse\n{cmd_str} -q 2>/tmp/mpg_error_{os.getpid()} &\necho $! > /tmp/mpg_pid_{os.getpid()}\n')
-                    os.chmod(script_path, 0o755)
-                    
-                    # Execute the script
-                    subprocess.run([script_path])
-                    
-                    # Read the PID and create a mock process object
+                    # Use direct subprocess management - no shell scripts or background processes
+                    # Set environment for PulseAudio
+                    env = os.environ.copy()
+                    env['PULSE_RUNTIME_PATH'] = f'/run/user/{os.getuid()}/pulse'
+
+                    # Start mpg123 directly as a managed subprocess (no shell, no &)
                     try:
-                        with open(f'/tmp/mpg_pid_{os.getpid()}', 'r') as f:
-                            pid = int(f.read().strip())
-                        
-                        # Create a simple process-like object to track the PID
-                        class MockProcess:
-                            def __init__(self, pid):
-                                self.pid = pid
-                                self._terminated = False
-                            def poll(self):
-                                if self._terminated:
-                                    return 1  # Already terminated
-                                try:
-                                    os.kill(self.pid, 0)  # Check if process exists
-                                    return None  # Still running
-                                except OSError:
-                                    self._terminated = True
-                                    return 1  # Process ended
-                            def terminate(self):
-                                try:
-                                    os.kill(self.pid, 15)
-                                    self._terminated = True
-                                except OSError:
-                                    pass
-                            def kill(self):
-                                try:
-                                    os.kill(self.pid, 9)
-                                    self._terminated = True
-                                except OSError:
-                                    pass
-                            def wait(self, timeout=None):
-                                # Simple wait implementation
-                                import time
-                                start_time = time.time()
-                                while self.poll() is None:
-                                    if timeout and (time.time() - start_time) > timeout:
-                                        # Just return instead of raising exception
-                                        return -1
-                                    time.sleep(0.1)
-                                return 0
-                                    
-                        playback_process = MockProcess(pid)
-                        
+                        playback_process = subprocess.Popen(
+                            player_cmd + ['-q'],  # Add quiet flag
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL,
+                            env=env,
+                            preexec_fn=os.setsid  # Create new process group to prevent orphaning
+                        )
                     except Exception as e:
-                        log_error(f"MockProcess creation failed: {e}")
+                        log_error(f"Failed to start mpg123: {e}")
                         playback_process = None
                         return False
                 else:
@@ -443,7 +426,35 @@ def broadcast_loop():
     last_playlist_check = 0
     
     log_event("Broadcast loop starting")
-    
+
+    # Clean up any orphaned audio processes that might block device access
+    def cleanup_orphaned_audio_processes():
+        """Kill any orphaned audio processes that might be blocking the audio device"""
+        try:
+            # Find and kill orphaned mpg123 processes
+            result = subprocess.run(['pgrep', 'mpg123'], capture_output=True, text=True)
+            if result.returncode == 0:
+                pids = result.stdout.strip().split('\n')
+                for pid in pids:
+                    if pid:
+                        log_event(f"Killing orphaned mpg123 process: {pid}")
+                        subprocess.run(['kill', pid], capture_output=True)
+
+            # Also check for other audio players that might be stuck
+            for player in ['aplay', 'paplay', 'ogg123', 'ffplay']:
+                result = subprocess.run(['pgrep', player], capture_output=True, text=True)
+                if result.returncode == 0:
+                    pids = result.stdout.strip().split('\n')
+                    for pid in pids:
+                        if pid:
+                            log_event(f"Killing orphaned {player} process: {pid}")
+                            subprocess.run(['kill', pid], capture_output=True)
+        except Exception as e:
+            log_event(f"Error cleaning up orphaned processes: {e}")
+
+    # Clean up orphaned processes before starting
+    cleanup_orphaned_audio_processes()
+
     # Auto-start playing when service starts
     auto_start = True
     
@@ -542,7 +553,31 @@ def broadcast_loop():
             
             # Check if still playing current track
             if playback_process and playback_process.poll() is None:
-                # Still playing
+                # Still playing - but check if process is stuck with high CPU
+                try:
+                    import psutil
+                    process = psutil.Process(playback_process.pid)
+                    cpu_percent = process.cpu_percent(interval=1.0)  # Check CPU over 1 second
+
+                    # If mpg123 is using > 90% CPU, it's likely stuck
+                    if cpu_percent > 90:
+                        health_message = f"Detected stuck mpg123 process (CPU: {cpu_percent:.1f}%), restarting playback"
+                        log_event(health_message)
+                        # Also log to main service events for dashboard visibility
+                        log_service_event("HEALTH MONITORING", f"Killed stuck mpg123 process with {cpu_percent:.1f}% CPU usage", True)
+
+                        playback_process.terminate()
+                        time.sleep(1)
+                        if playback_process.poll() is None:
+                            playback_process.kill()  # Force kill if terminate didn't work
+                        playback_process = None
+                        # Don't advance track - retry current track
+                        continue
+                except (ImportError, psutil.NoSuchProcess, AttributeError):
+                    # psutil not available or process died - continue normally
+                    pass
+
+                # Still playing normally
                 update_status(playing=True, paused=False)
                 time.sleep(0.5)
                 continue
@@ -568,28 +603,49 @@ def broadcast_loop():
                     continue
 
                 log_event(f"DEBUG: About to play file: {os.path.basename(file_path)}")
-                # Try to play the file, but don't crash if it fails
-                try:
-                    if play_file(file_path, volume):
-                        update_status(playing=True, paused=False, current_file=os.path.basename(file_path))
-                        log_event(f"Playing: {os.path.basename(file_path)} at {volume}% volume")
-                        # Give the process a moment to initialize
-                        time.sleep(1.0)
-                        
-                        # Double-check if process is still running after initialization
-                        if playback_process and playback_process.poll() is not None:
-                            log_event(f"File {os.path.basename(file_path)} failed to play continuously, trying next")
+                # Try to play the file with retry mechanism
+                max_retries = 5
+                retry_delay = 5  # Start with 5 seconds
+                retry_count = 0
+
+                while retry_count < max_retries:
+                    try:
+                        if play_file(file_path, volume):
+                            update_status(playing=True, paused=False, current_file=os.path.basename(file_path))
+                            log_event(f"Playing: {os.path.basename(file_path)} at {volume}% volume")
+                            # Give the process a moment to initialize
+                            time.sleep(1.0)
+
+                            # Double-check if process is still running after initialization
+                            if playback_process and playback_process.poll() is not None:
+                                log_event(f"File {os.path.basename(file_path)} failed to play continuously, trying next", "WARNING")
+                                current_index = (current_index + 1) % len(playlist)
+                                playback_process = None
+                                break
+                            else:
+                                # Successfully playing, break out of retry loop
+                                break
+                        else:
+                            # Failed to start, retry with backoff
+                            retry_count += 1
+                            if retry_count < max_retries:
+                                log_event(f"Failed to start playing {os.path.basename(file_path)} (attempt {retry_count}/{max_retries}), retrying in {retry_delay}s...")
+                                time.sleep(retry_delay)
+                                retry_delay = min(retry_delay * 1.5, 30)  # Exponential backoff, max 30s
+                            else:
+                                log_error(f"Failed to start playing {os.path.basename(file_path)} after {max_retries} attempts, trying next track")
+                                current_index = (current_index + 1) % len(playlist)
+
+                    except Exception as e:
+                        retry_count += 1
+                        if retry_count < max_retries:
+                            log_event(f"Error playing {os.path.basename(file_path)} (attempt {retry_count}/{max_retries}): {e}, retrying in {retry_delay}s...")
+                            time.sleep(retry_delay)
+                            retry_delay = min(retry_delay * 1.5, 30)
+                        else:
+                            log_error(f"Error playing {os.path.basename(file_path)} after {max_retries} attempts", e)
                             current_index = (current_index + 1) % len(playlist)
-                            playback_process = None
-                            continue
-                    else:
-                        # Failed to start, skip to next
-                        log_error(f"Failed to start playing {os.path.basename(file_path)}, trying next")
-                        current_index = (current_index + 1) % len(playlist)
-                        
-                except Exception as e:
-                    log_error(f"Error playing {os.path.basename(file_path)}", e)
-                    current_index = (current_index + 1) % len(playlist)
+                            break
             else:
                 # No playlist, wait
                 update_status(playing=False, paused=False, current_file="")
