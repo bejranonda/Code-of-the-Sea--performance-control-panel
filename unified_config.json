@@ -15,14 +15,14 @@
     "loop_duration": "8"
   },
   "Fan Service": {
-    "mode": "Random",
+    "mode": "Cycle",
     "speed": 0,
     "status_file": "fan/fan_status.json",
     "lux_min": "1",
     "lux_max": "850"
   },
   "_metadata": {
-    "last_updated": "2025-09-19T15:23:34.407963",
+    "last_updated": "2025-09-19T21:20:56.103951",
     "version": "1.0"
   },
   "Broadcast Service": {
