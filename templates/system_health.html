@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code of the Sea - System Health Monitor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a6fd8;
+            --secondary: #764ba2;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--gray-800);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        .nav-bar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.secondary {
+            background: var(--gray-600);
+        }
+
+        .nav-btn.secondary:hover {
+            background: var(--gray-700);
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .status-card:hover {
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+        }
+
+        .status-card h3 {
+            color: var(--gray-800);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 12px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .status-healthy { color: var(--success); }
+        .status-warning { color: var(--warning); }
+        .status-error { color: var(--danger); }
+
+        .process-list {
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--gray-100);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .process-item {
+            background: white;
+            margin: 8px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .process-item h4 {
+            color: var(--gray-800);
+            margin-bottom: 8px;
+        }
+
+        .process-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .refresh-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .refresh-btn {
+            padding: 15px 30px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .refresh-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .system-overview {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .overview-stat {
+            padding: 15px;
+            background: var(--gray-100);
+            border-radius: 10px;
+        }
+
+        .overview-stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .overview-stat-label {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .nav-bar {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-heartbeat"></i> Code of the Sea : System Health Monitor</h1>
+
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <a href="/" class="nav-btn">
+                <i class="fas fa-tachometer-alt"></i> Control Panel
+            </a>
+            <a href="/exhibition/dashboard" class="nav-btn">
+                <i class="fas fa-chart-line"></i> Exhibition Monitor
+            </a>
+            <a href="/logs" class="nav-btn secondary">
+                <i class="fas fa-file-alt"></i> System Logs
+            </a>
+            <a href="/exhibition/health" class="nav-btn secondary">
+                <i class="fas fa-code"></i> Health API
+            </a>
+        </div>
+
+        <!-- System Overview -->
+        <div class="system-overview">
+            <h2><i class="fas fa-server"></i> System Overview</h2>
+            <div id="system-status-indicator">
+                <p>Loading system status...</p>
+            </div>
+            <div class="overview-stats" id="overview-stats">
+                <!-- Stats will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Detailed Status Grid -->
+        <div class="status-grid" id="status-grid">
+            <div class="status-card">
+                <h3><i class="fas fa-spinner fa-spin"></i> Loading System Health...</h3>
+                <p>Fetching comprehensive system information...</p>
+            </div>
+        </div>
+
+        <!-- Refresh Section -->
+        <div class="refresh-section">
+            <button class="refresh-btn" onclick="loadSystemHealth()">
+                <i class="fas fa-sync-alt"></i> Refresh Status
+            </button>
+            <p style="margin-top: 10px; color: rgba(255,255,255,0.8);">
+                <small>Auto-refresh every 30 seconds</small>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        async function loadSystemHealth() {
+            try {
+                document.getElementById('system-status-indicator').innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Refreshing...</p>';
+
+                const response = await fetch('/exhibition/health');
+                const data = await response.json();
+                updateHealthDashboard(data);
+            } catch (error) {
+                document.getElementById('status-grid').innerHTML = `
+                    <div class="status-card">
+                        <h3 class="status-error"><i class="fas fa-exclamation-triangle"></i> Connection Error</h3>
+                        <p>Could not load system health data: ${error.message}</p>
+                        <div style="margin-top: 15px;">
+                            <button onclick="loadSystemHealth()" style="padding: 8px 16px; background: var(--danger); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                <i class="fas fa-redo"></i> Retry
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function updateHealthDashboard(data) {
+            // Update system overview
+            const statusClass = data.status === 'healthy' ? 'status-healthy' :
+                              data.status === 'degraded' ? 'status-warning' : 'status-error';
+            const statusIcon = data.status === 'healthy' ? '✅' :
+                             data.status === 'degraded' ? '⚠️' : '❌';
+
+            document.getElementById('system-status-indicator').innerHTML = `
+                <h3 class="${statusClass}">${statusIcon} System Status: ${data.status.toUpperCase()}</h3>
+                <p style="color: var(--gray-600); margin-top: 5px;">Last updated: ${new Date(data.timestamp).toLocaleString()}</p>
+            `;
+
+            // Update overview stats
+            document.getElementById('overview-stats').innerHTML = `
+                <div class="overview-stat">
+                    <div class="overview-stat-value">${Math.round(data.system.uptime_hours * 10) / 10}h</div>
+                    <div class="overview-stat-label">System Uptime</div>
+                </div>
+                <div class="overview-stat">
+                    <div class="overview-stat-value">${data.watchdog.restart_count}</div>
+                    <div class="overview-stat-label">Restart Count</div>
+                </div>
+                <div class="overview-stat">
+                    <div class="overview-stat-value">${data.services.main_service_healthy ? 'Healthy' : 'Issues'}</div>
+                    <div class="overview-stat-label">Service Health</div>
+                </div>
+                <div class="overview-stat">
+                    <div class="overview-stat-value">${data.network.connected ? 'Online' : 'Offline'}</div>
+                    <div class="overview-stat-label">Network Status</div>
+                </div>
+            `;
+
+            // Update detailed status grid
+            document.getElementById('status-grid').innerHTML = `
+                <!-- System Resources -->
+                <div class="status-card">
+                    <h3><i class="fas fa-microchip"></i> System Resources</h3>
+                    <div class="metric">
+                        <span class="metric-label">CPU Usage:</span>
+                        <span class="metric-value ${data.system.cpu_percent > 80 ? 'status-error' : data.system.cpu_percent > 60 ? 'status-warning' : 'status-healthy'}">${data.system.cpu_percent.toFixed(1)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Memory Usage:</span>
+                        <span class="metric-value ${data.system.memory_percent > 85 ? 'status-error' : data.system.memory_percent > 70 ? 'status-warning' : 'status-healthy'}">${data.system.memory_percent.toFixed(1)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Disk Usage:</span>
+                        <span class="metric-value ${data.system.disk_percent > 90 ? 'status-error' : data.system.disk_percent > 80 ? 'status-warning' : 'status-healthy'}">${data.system.disk_percent.toFixed(1)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">CPU Temperature:</span>
+                        <span class="metric-value ${data.system.cpu_temperature > 70 ? 'status-error' : data.system.cpu_temperature > 60 ? 'status-warning' : 'status-healthy'}">${data.system.cpu_temperature.toFixed(1)}°C</span>
+                    </div>
+                </div>
+
+                <!-- Network Status -->
+                <div class="status-card">
+                    <h3><i class="fas fa-wifi"></i> Network Connectivity</h3>
+                    <div class="metric">
+                        <span class="metric-label">WiFi Status:</span>
+                        <span class="metric-value ${data.network.detailed_wifi_status?.wifi?.connected ? 'status-healthy' : 'status-error'}">${data.network.detailed_wifi_status?.wifi?.connected ? '✅ Connected' : '❌ Disconnected'}</span>
+                    </div>
+                    ${data.network.detailed_wifi_status?.wifi?.essid ? `
+                    <div class="metric">
+                        <span class="metric-label">Network:</span>
+                        <span class="metric-value">${data.network.detailed_wifi_status.wifi.essid}</span>
+                    </div>
+                    ` : ''}
+                    ${data.network.detailed_wifi_status?.wifi?.signal_quality_percent ? `
+                    <div class="metric">
+                        <span class="metric-label">Signal Quality:</span>
+                        <span class="metric-value ${data.network.detailed_wifi_status.wifi.signal_quality_percent > 80 ? 'status-healthy' : data.network.detailed_wifi_status.wifi.signal_quality_percent > 50 ? 'status-warning' : 'status-error'}">${data.network.detailed_wifi_status.wifi.signal_quality_percent.toFixed(0)}%</span>
+                    </div>
+                    ` : ''}
+                    ${data.network.detailed_wifi_status?.internet_accessible !== undefined ? `
+                    <div class="metric">
+                        <span class="metric-label">Internet Access:</span>
+                        <span class="metric-value ${data.network.detailed_wifi_status.internet_accessible ? 'status-healthy' : 'status-error'}">${data.network.detailed_wifi_status.internet_accessible ? '🌍 Available' : '🚫 Blocked'}</span>
+                    </div>
+                    ` : ''}
+                </div>
+
+                <!-- Hardware Status -->
+                <div class="status-card">
+                    <h3><i class="fas fa-cogs"></i> Hardware Health</h3>
+                    <div class="metric">
+                        <span class="metric-label">GPIO Devices:</span>
+                        <span class="metric-value ${data.hardware.gpio_devices_ok ? 'status-healthy' : 'status-error'}">${data.hardware.gpio_devices_ok ? '✅ OK' : '❌ Issues'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">I2C Devices:</span>
+                        <span class="metric-value ${data.hardware.i2c_devices_ok ? 'status-healthy' : 'status-error'}">${data.hardware.i2c_devices_ok ? '✅ OK' : '❌ Issues'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Overall Health:</span>
+                        <span class="metric-value ${data.hardware.healthy ? 'status-healthy' : 'status-error'}">${data.hardware.healthy ? '✅ Healthy' : '❌ Issues'}</span>
+                    </div>
+                </div>
+
+                <!-- Service Health -->
+                <div class="status-card">
+                    <h3><i class="fas fa-play-circle"></i> Service Health</h3>
+                    <div class="metric">
+                        <span class="metric-label">Main Service Status:</span>
+                        <span class="metric-value ${data.services.main_service_healthy ? 'status-healthy' : 'status-error'}">${data.services.main_service_healthy ? '✅ Healthy' : '❌ Issues'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Error Count:</span>
+                        <span class="metric-value ${data.services.error_count > 5 ? 'status-error' : data.services.error_count > 0 ? 'status-warning' : 'status-healthy'}">${data.services.error_count}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Last Restart:</span>
+                        <span class="metric-value">${data.services.last_restart || 'No recent restarts'}</span>
+                    </div>
+                    <div style="margin-top: 15px; padding: 10px; background: var(--gray-100); border-radius: 8px; font-size: 0.9rem;">
+                        <strong>Note:</strong> For detailed service control and management, visit the <a href="/" style="color: var(--primary); text-decoration: none; font-weight: bold;">Main Control Panel</a>.
+                    </div>
+                </div>
+
+                <!-- Performance Monitoring -->
+                <div class="status-card">
+                    <h3><i class="fas fa-chart-bar"></i> Performance Monitoring</h3>
+                    <div class="metric">
+                        <span class="metric-label">Memory Leak Detection:</span>
+                        <span class="metric-value ${!data.performance.memory_leak_detected ? 'status-healthy' : 'status-error'}">${!data.performance.memory_leak_detected ? '✅ No Leaks' : '⚠️ Leak Detected'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Resource Intensive Processes:</span>
+                        <span class="metric-value">${data.performance.resource_intensive_processes.length} processes</span>
+                    </div>
+                    ${data.performance.resource_intensive_processes.length > 0 ? `
+                    <div style="margin-top: 10px; font-size: 0.9rem; color: var(--gray-600);">
+                        <strong>High Usage:</strong> ${data.performance.resource_intensive_processes.join(', ')}
+                    </div>
+                    ` : ''}
+                </div>
+
+                <!-- Watchdog Status -->
+                <div class="status-card">
+                    <h3><i class="fas fa-shield-alt"></i> Watchdog Status</h3>
+                    <div class="metric">
+                        <span class="metric-label">Restart Count:</span>
+                        <span class="metric-value">${data.watchdog.restart_count}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">History Length:</span>
+                        <span class="metric-value">${data.watchdog.history_length} records</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Last Check:</span>
+                        <span class="metric-value">${new Date(data.timestamp).toLocaleTimeString()}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load status on page load and set up auto-refresh
+        loadSystemHealth();
+        setInterval(loadSystemHealth, 30000); // Refresh every 30 seconds
+    </script>
+</body>
+</html>
