@@ -19,6 +19,7 @@ from config_manager import ConfigManager
 from hardware_monitor import HardwareMonitor
 from service_persistence import ServicePersistenceManager
 from dashboard_state import DashboardStateManager
+from metrics_recorder import get_metrics_recorder
 
 # Import version information
 try:
@@ -68,6 +69,14 @@ try:
 except Exception as e:
     print(f"⚠️  Exhibition watchdog failed to start: {e}")
     exhibition_watchdog = None
+
+# Initialize metrics recording
+try:
+    metrics_recorder = get_metrics_recorder()
+    metrics_recorder.start_recording()
+    print("✅ Metrics recording initialized successfully (5-minute interval)")
+except Exception as e:
+    print(f"⚠️  Metrics recording failed to start: {e}")
 
 # App configuration
 APP_MODES = {
@@ -600,331 +609,41 @@ def exhibition_health():
 
 @app.route("/exhibition/dashboard")
 def exhibition_dashboard():
-    """Exhibition monitoring dashboard"""
+    """Exhibition monitoring dashboard with charts"""
     try:
-        if not exhibition_watchdog:
-            return "Exhibition watchdog not available", 503
-            
-        # Get recent health history for charts
-        recent_history = exhibition_watchdog.health_history[-50:]  # Last 50 readings
-        
-        dashboard_html = f"""
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Code of the Sea - Exhibition Monitor</title>
-            <meta charset="utf-8">
-            <meta http-equiv="refresh" content="30">
-            <style>
-                body {{ font-family: 'Segoe UI', Arial, sans-serif; margin: 20px; background: #0f172a; color: #e2e8f0; }}
-                .header {{ background: linear-gradient(135deg, #1e40af, #7c3aed); padding: 20px; border-radius: 10px; margin-bottom: 20px; }}
-                .status-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px; }}
-                .status-card {{ background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 20px; }}
-                .status-card h3 {{ margin-top: 0; color: #3b82f6; }}
-                .metric {{ display: flex; justify-content: space-between; margin: 10px 0; }}
-                .metric-label {{ color: #94a3b8; }}
-                .metric-value {{ font-weight: bold; }}
-                .status-healthy {{ color: #10b981; }}
-                .status-warning {{ color: #f59e0b; }}
-                .status-error {{ color: #ef4444; }}
-                .chart-container {{ background: #1e293b; padding: 20px; border-radius: 10px; margin: 20px 0; }}
-                .nav-links {{ margin: 20px 0; }}
-                .nav-links a {{ background: #3b82f6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px; }}
-                .nav-links a:hover {{ background: #2563eb; }}
-                .process-list {{ max-height: 200px; overflow-y: auto; }}
-                .process-item {{ background: #334155; margin: 5px 0; padding: 10px; border-radius: 5px; }}
-            </style>
-        </head>
-        <body>
-            <div class="header">
-                <h1>🌊 Code of the Sea - Exhibition Monitor</h1>
-                <p>Long-term art installation monitoring & stability system</p>
-            </div>
-            
-            <div class="nav-links">
-                <a href="/exhibition/health">API Health</a>
-                <a href="/">Main Control Panel</a>
-                <a href="/logs">System Logs</a>
-            </div>
-            
-            <div id="status-content">
-                <p>Loading exhibition status...</p>
-            </div>
-            
-            <script>
-                async function loadStatus() {{
-                    try {{
-                        const response = await fetch('/exhibition/health');
-                        const data = await response.json();
-                        updateDashboard(data);
-                    }} catch (error) {{
-                        document.getElementById('status-content').innerHTML = `
-                            <div class="status-card">
-                                <h3 class="status-error">❌ Connection Error</h3>
-                                <p>Could not load exhibition status: ${{error.message}}</p>
-                            </div>
-                        `;
-                    }}
-                }}
-                
-                function updateDashboard(data) {{
-                    const statusClass = data.status === 'healthy' ? 'status-healthy' : 
-                                      data.status === 'degraded' ? 'status-warning' : 'status-error';
-                    
-                    const statusIcon = data.status === 'healthy' ? '✅' : 
-                                     data.status === 'degraded' ? '⚠️' : '❌';
-                    
-                    document.getElementById('status-content').innerHTML = `
-                        <div class="status-grid">
-                            <div class="status-card">
-                                <h3 class="${{statusClass}}">${{statusIcon}} System Status: ${{data.status.toUpperCase()}}</h3>
-                                <div class="metric">
-                                    <span class="metric-label">Last Update:</span>
-                                    <span class="metric-value">${{new Date(data.timestamp).toLocaleString()}}</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">Uptime:</span>
-                                    <span class="metric-value">${{Math.round(data.system.uptime_hours * 10) / 10}}h</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">Restart Count:</span>
-                                    <span class="metric-value">${{data.watchdog.restart_count}}</span>
-                                </div>
-                            </div>
-                            
-                            <div class="status-card">
-                                <h3>📊 System Resources</h3>
-                                <div class="metric">
-                                    <span class="metric-label">CPU Usage:</span>
-                                    <span class="metric-value ${{data.system.cpu_percent > 80 ? 'status-error' : data.system.cpu_percent > 60 ? 'status-warning' : 'status-healthy'}}">${{data.system.cpu_percent.toFixed(1)}}%</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">Memory Usage:</span>
-                                    <span class="metric-value ${{data.system.memory_percent > 85 ? 'status-error' : data.system.memory_percent > 70 ? 'status-warning' : 'status-healthy'}}">${{data.system.memory_percent.toFixed(1)}}%</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">Disk Usage:</span>
-                                    <span class="metric-value ${{data.system.disk_percent > 90 ? 'status-error' : data.system.disk_percent > 80 ? 'status-warning' : 'status-healthy'}}">${{data.system.disk_percent.toFixed(1)}}%</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">CPU Temperature:</span>
-                                    <span class="metric-value ${{data.system.cpu_temperature > 70 ? 'status-error' : data.system.cpu_temperature > 60 ? 'status-warning' : 'status-healthy'}}">${{data.system.cpu_temperature.toFixed(1)}}°C</span>
-                                </div>
-                            </div>
-                            
-                            <div class="status-card">
-                                <h3>🌐 WiFi Connection Status</h3>
-                                <div class="metric">
-                                    <span class="metric-label">Connectivity:</span>
-                                    <span class="metric-value ${{data.network.detailed_wifi_status?.wifi?.connected ? 'status-healthy' : 'status-error'}}">${{data.network.detailed_wifi_status?.wifi?.connected ? '✅ Connected' : '❌ Disconnected'}}</span>
-                                </div>
-                                ${{data.network.detailed_wifi_status?.wifi?.essid ? `
-                                <div class="metric">
-                                    <span class="metric-label">Network:</span>
-                                    <span class="metric-value">${{data.network.detailed_wifi_status.wifi.essid}} (${{data.network.detailed_wifi_status.wifi.frequency || 'N/A'}})</span>
-                                </div>
-                                ` : ''}}
-                                ${{data.network.detailed_wifi_status?.wifi?.signal_quality_percent ? `
-                                <div class="metric">
-                                    <span class="metric-label">Signal Quality:</span>
-                                    <span class="metric-value ${{data.network.detailed_wifi_status.wifi.signal_quality_percent > 80 ? 'status-healthy' : data.network.detailed_wifi_status.wifi.signal_quality_percent > 50 ? 'status-warning' : 'status-error'}}">${{data.network.detailed_wifi_status.wifi.signal_quality_percent.toFixed(0)}}% (${{data.network.detailed_wifi_status.wifi.signal_quality}})</span>
-                                </div>
-                                ` : ''}}
-                                ${{data.network.detailed_wifi_status?.wifi?.signal_level ? `
-                                <div class="metric">
-                                    <span class="metric-label">Signal Strength:</span>
-                                    <span class="metric-value ${{data.network.detailed_wifi_status.wifi.signal_level > -50 ? 'status-healthy' : data.network.detailed_wifi_status.wifi.signal_level > -70 ? 'status-warning' : 'status-error'}}">${{data.network.detailed_wifi_status.wifi.signal_level}} dBm</span>
-                                </div>
-                                ` : ''}}
-                                ${{data.network.detailed_wifi_status?.connection_duration ? `
-                                <div class="metric">
-                                    <span class="metric-label">Connected Duration:</span>
-                                    <span class="metric-value">${{data.network.detailed_wifi_status.connection_duration}}</span>
-                                </div>
-                                ` : ''}}
-                                ${{data.network.detailed_wifi_status?.disconnection_count !== undefined ? `
-                                <div class="metric">
-                                    <span class="metric-label">Disconnections Today:</span>
-                                    <span class="metric-value ${{data.network.detailed_wifi_status.disconnection_count > 5 ? 'status-error' : data.network.detailed_wifi_status.disconnection_count > 2 ? 'status-warning' : 'status-healthy'}}">${{data.network.detailed_wifi_status.disconnection_count}}</span>
-                                </div>
-                                ` : ''}}
-                                ${{data.network.detailed_wifi_status?.wifi?.bit_rate ? `
-                                <div class="metric">
-                                    <span class="metric-label">Data Rate:</span>
-                                    <span class="metric-value">${{data.network.detailed_wifi_status.wifi.bit_rate}}</span>
-                                </div>
-                                ` : ''}}
-                                ${{data.network.detailed_wifi_status?.internet_accessible !== undefined ? `
-                                <div class="metric">
-                                    <span class="metric-label">Internet Access:</span>
-                                    <span class="metric-value ${{data.network.detailed_wifi_status.internet_accessible ? 'status-healthy' : 'status-error'}}">${{data.network.detailed_wifi_status.internet_accessible ? '🌍 Available' : '🚫 Blocked'}}</span>
-                                </div>
-                                ` : ''}}
-                                <div style="margin-top: 15px;">
-                                    <button onclick="showWifiLogs()" style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">
-                                        📋 View Connection Log
-                                    </button>
-                                </div>
-                            </div>
+        # Get metrics recorder
+        metrics_recorder = get_metrics_recorder()
 
-                            <div class="status-card">
-                                <h3>🔌 LAN Connection Status</h3>
-                                <div class="metric">
-                                    <span class="metric-label">Connectivity:</span>
-                                    <span class="metric-value ${{data.network.detailed_wifi_status?.ethernet?.connected ? 'status-healthy' : 'status-error'}}">${{data.network.detailed_wifi_status?.ethernet?.connected ? '✅ Connected' : '❌ Disconnected'}}</span>
-                                </div>
-                                ${{data.network.detailed_wifi_status?.ethernet?.ip_address ? `
-                                <div class="metric">
-                                    <span class="metric-label">IP Address:</span>
-                                    <span class="metric-value">${{data.network.detailed_wifi_status.ethernet.ip_address}}</span>
-                                </div>
-                                ` : ''}}
-                                ${{data.network.detailed_wifi_status?.ethernet?.speed ? `
-                                <div class="metric">
-                                    <span class="metric-label">Link Speed:</span>
-                                    <span class="metric-value">${{data.network.detailed_wifi_status.ethernet.speed}}</span>
-                                </div>
-                                ` : ''}}
-                                ${{data.network.detailed_wifi_status?.ethernet?.duplex ? `
-                                <div class="metric">
-                                    <span class="metric-label">Duplex Mode:</span>
-                                    <span class="metric-value">${{data.network.detailed_wifi_status.ethernet.duplex}}</span>
-                                </div>
-                                ` : ''}}
-                                ${{data.network.detailed_wifi_status?.network_stats?.ethernet ? `
-                                <div class="metric">
-                                    <span class="metric-label">RX/TX Packets:</span>
-                                    <span class="metric-value">${{data.network.detailed_wifi_status.network_stats.ethernet.rx_packets.toLocaleString()}} / ${{data.network.detailed_wifi_status.network_stats.ethernet.tx_packets.toLocaleString()}}</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">RX/TX Bytes:</span>
-                                    <span class="metric-value">${{(data.network.detailed_wifi_status.network_stats.ethernet.rx_bytes / 1024 / 1024).toFixed(1)}} MB / ${{(data.network.detailed_wifi_status.network_stats.ethernet.tx_bytes / 1024 / 1024).toFixed(1)}} MB</span>
-                                </div>
-                                ` : ''}}
-                                ${{!data.network.detailed_wifi_status?.ethernet?.connected ? `
-                                <div class="metric">
-                                    <span class="metric-label">Status:</span>
-                                    <span class="metric-value status-info">No Ethernet cable connected</span>
-                                </div>
-                                ` : ''}}
-                            </div>
-                            
-                            <div class="status-card">
-                                <h3>⚙️ Hardware Status</h3>
-                                <div class="metric">
-                                    <span class="metric-label">Overall Health:</span>
-                                    <span class="metric-value ${{data.hardware.healthy ? 'status-healthy' : 'status-error'}}">${{data.hardware.healthy ? '✅ Healthy' : '❌ Issues'}}</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">I2C Devices:</span>
-                                    <span class="metric-value ${{data.hardware.i2c_devices_ok ? 'status-healthy' : 'status-error'}}">${{data.hardware.i2c_devices_ok ? '✅ OK' : '❌ Issues'}}</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">GPIO Devices:</span>
-                                    <span class="metric-value ${{data.hardware.gpio_devices_ok ? 'status-healthy' : 'status-error'}}">${{data.hardware.gpio_devices_ok ? '✅ OK' : '❌ Issues'}}</span>
-                                </div>
-                            </div>
-                            
-                            <div class="status-card">
-                                <h3>🚨 Services & Errors</h3>
-                                <div class="metric">
-                                    <span class="metric-label">Service Health:</span>
-                                    <span class="metric-value ${{data.services.main_service_healthy ? 'status-healthy' : 'status-error'}}">${{data.services.main_service_healthy ? '✅ Healthy' : '❌ Issues'}}</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">Recent Errors:</span>
-                                    <span class="metric-value ${{data.services.error_count > 5 ? 'status-error' : data.services.error_count > 0 ? 'status-warning' : 'status-healthy'}}">${{data.services.error_count}}</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">Memory Leak:</span>
-                                    <span class="metric-value ${{data.performance.memory_leak_detected ? 'status-error' : 'status-healthy'}}">${{data.performance.memory_leak_detected ? '⚠️ Detected' : '✅ None'}}</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">Last Restart:</span>
-                                    <span class="metric-value">${{data.services.last_restart ? new Date(data.services.last_restart).toLocaleString() : 'Never'}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="chart-container">
-                            <h3>🔄 Resource Intensive Processes</h3>
-                            <div class="process-list">
-                                ${{data.performance.resource_intensive_processes.map(proc => `
-                                    <div class="process-item">
-                                        <strong>${{proc.name}}</strong> (PID: ${{proc.pid}}) - 
-                                        CPU: ${{proc.cpu_percent.toFixed(1)}}%, 
-                                        Memory: ${{proc.memory_percent.toFixed(1)}}%
-                                    </div>
-                                `).join('')}}
-                                ${{data.performance.resource_intensive_processes.length === 0 ? '<p style="color: #10b981;">✅ No resource-intensive processes detected</p>' : ''}}
-                            </div>
-                        </div>
-                    `;
-                }}
-                
-                // Load status on page load and refresh every 30 seconds
-                loadStatus();
-                setInterval(loadStatus, 30000);
+        # Get time range from query parameter (default 24 hours)
+        hours = int(request.args.get('hours', 24))
 
-                // WiFi log functions
-                function showWifiLogs() {{
-                    const modal = document.createElement('div');
-                    modal.id = 'wifiLogsModal';
-                    modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; display: flex; align-items: center; justify-content: center;';
+        # Get chart data
+        chart_data = metrics_recorder.get_chart_data(hours)
 
-                    modal.innerHTML = `
-                        <div style="background: #1e293b; padding: 20px; border-radius: 10px; max-width: 800px; max-height: 80%; overflow-y: auto; border: 1px solid #334155;">
-                            <h3 style="color: #3b82f6; margin-top: 0;">📡 WiFi Connection Log</h3>
-                            <div id="wifiLogsContent" style="font-family: monospace; font-size: 12px; background: #0f172a; padding: 15px; border-radius: 4px; max-height: 400px; overflow-y: scroll; color: #e2e8f0;">
-                                Loading WiFi connection logs...
-                            </div>
-                            <div style="margin-top: 15px; text-align: right;">
-                                <button onclick="hideWifiLogs()" style="background: #6b7280; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Close</button>
-                            </div>
-                        </div>
-                    `;
+        # Get current metrics (latest record)
+        records = metrics_recorder.get_records(hours=1)  # Last hour
+        current_stats = records[-1] if records else {
+            'lux_value': 0,
+            'cpu_usage': 0,
+            'cpu_temperature': 0,
+            'disk_usage': 0
+        }
 
-                    document.body.appendChild(modal);
+        # Get system stats
+        stats = metrics_recorder.get_stats()
 
-                    fetch('/wifi_status')
-                        .then(response => response.json())
-                        .then(data => {{
-                            const content = document.getElementById('wifiLogsContent');
-                            if (data.status === 'success' && data.recent_logs && data.recent_logs.length > 0) {{
-                                const logHtml = data.recent_logs.map(log => {{
-                                    const isError = log.includes('ERROR') || log.includes('CONNECTION LOST');
-                                    const isSuccess = log.includes('CONNECTION ESTABLISHED');
-                                    const color = isError ? '#ef4444' : isSuccess ? '#10b981' : '#e2e8f0';
-                                    return `<div style="margin-bottom: 5px; padding: 5px; border-left: 3px solid ${{color}}; color: ${{color}};">${{log}}</div>`;
-                                }}).join('');
-                                content.innerHTML = `
-                                    <div style="margin-bottom: 10px; color: #3b82f6;"><strong>Recent WiFi Events (${{data.log_count}} entries):</strong></div>
-                                    ${{logHtml}}
-                                `;
-                            }} else {{
-                                content.innerHTML = '<div style="color: #6b7280;">No WiFi log entries found. The WiFi monitor may not be running yet.</div>';
-                            }}
-                        }})
-                        .catch(error => {{
-                            document.getElementById('wifiLogsContent').innerHTML = `<div style="color: #ef4444;">Error loading WiFi logs: ${{error}}</div>`;
-                        }});
-                }}
+        return render_template('exhibition_monitor.html',
+                             chart_data=json.dumps(chart_data),
+                             current_stats=current_stats,
+                             stats=stats)
 
-                function hideWifiLogs() {{
-                    const modal = document.getElementById('wifiLogsModal');
-                    if (modal) {{
-                        modal.remove();
-                    }}
-                }}
-            </script>
-        </body>
-        </html>
-        """
-        
-        return dashboard_html
-        
     except Exception as e:
         return f"Error loading exhibition dashboard: {str(e)}", 500
+
+@app.route("/system/health")
+def system_health():
+    """System health monitoring page"""
+    return render_template('system_health.html')
 
 @app.route("/clear_service_logs/<service>")
 def clear_service_logs(service):
