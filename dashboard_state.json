@@ -7,7 +7,7 @@
       "status_file": "led/led_status.json",
       "lux_min": "20",
       "lux_max": "1500",
-      "last_updated": "2025-09-19T11:14:09.231174"
+      "last_updated": "2025-09-19T13:25:21.380380"
     },
     "Radio Service": {
       "mode": "Loop",
@@ -16,7 +16,7 @@
       "status_file": "radio/radio_status.json",
       "mode_selector": "Loop",
       "loop_duration": "8",
-      "last_updated": "2025-09-19T11:14:09.233115"
+      "last_updated": "2025-09-19T13:25:21.381679"
     },
     "Fan Service": {
       "mode": "Random",
@@ -24,13 +24,13 @@
       "status_file": "fan/fan_status.json",
       "lux_min": "1",
       "lux_max": "850",
-      "last_updated": "2025-09-19T11:14:09.235019"
+      "last_updated": "2025-09-19T13:25:21.383318"
     },
     "Broadcast Service": {
       "mode": "Loop",
       "volume": 100,
       "status_file": "broadcast/broadcast_status.json",
-      "last_updated": "2025-09-19T11:14:09.237242"
+      "last_updated": "2025-09-19T13:25:21.384950"
     },
     "Mixing Service": {
       "mode": "Auto",
@@ -39,7 +39,7 @@
       "recording_duration": "120",
       "volume": "75",
       "status_file": "mixing/mixing_status.json",
-      "last_updated": "2025-09-19T11:14:09.239281"
+      "last_updated": "2025-09-19T13:25:21.386917"
     }
   },
   "ui_preferences": {
@@ -49,6 +49,6 @@
   },
   "last_active_services": [],
   "user_selections": {},
-  "timestamp": "2025-09-19T11:14:09.239452",
+  "timestamp": "2025-09-19T13:25:21.387109",
   "version": "2.1.0"
 }
