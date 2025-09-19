@@ -1,7 +1,8 @@
 # Code of the Sea
 ## Raspberry Pi Control Panel for Interactive Art Installation
 
-<img width="1439" height="485" alt="Code of the Sea - Control Panel" src="https://github.com/user-attachments/assets/fc4e5a73-d628-48de-a57d-d57067611a71" />
+<img width="1144" height="597" alt="image" src="https://github.com/user-attachments/assets/90436ee9-17b0-43ad-8159-193f3e4c0d5f" />
+
 
 
 **An art project collaboration between:**
