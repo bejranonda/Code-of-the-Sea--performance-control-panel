@@ -401,15 +401,33 @@ def restart_pi():
         # Give services time to stop
         time.sleep(2)
 
-        # Use subprocess instead of os.system for better control
-        result = subprocess.run(["sudo", "reboot"], capture_output=True, text=True, timeout=10)
+        # Create a reboot request file that external process can monitor
+        import os
+        from datetime import datetime
 
-        if result.returncode != 0:
-            service_manager.log_error(f"Reboot command failed with return code {result.returncode}: {result.stderr}")
-            return f"Reboot failed: {result.stderr}", 500
+        reboot_request_file = "/tmp/cos_reboot_request"
 
-        service_manager.log_event("Reboot command executed successfully")
-        return "Rebooting..."
+        try:
+            # Write reboot request with timestamp
+            with open(reboot_request_file, "w") as f:
+                f.write(f"REBOOT_REQUESTED\n{datetime.now().isoformat()}\nRequested via web interface\n")
+
+            service_manager.log_event("Reboot request file created - external monitoring should handle reboot")
+
+            # Also try to trigger reboot via systemd user session if available
+            try:
+                result = subprocess.run(["systemctl", "--user", "reboot"],
+                                      capture_output=True, text=True, timeout=3)
+                if result.returncode == 0:
+                    return "Rebooting via user session..."
+            except:
+                pass
+
+            return "Reboot request submitted - system should reboot within 60 seconds..."
+
+        except Exception as e:
+            service_manager.log_error(f"Failed to create reboot request: {e}")
+            return f"Failed to request reboot: {str(e)}", 500
 
     except subprocess.TimeoutExpired:
         # Timeout is expected for reboot command

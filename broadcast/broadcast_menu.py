@@ -44,6 +44,10 @@ pause_requested = False
 next_requested = False
 previous_requested = False
 
+# Counter for consecutive playback failures
+consecutive_failure_count = 0
+FAILURE_THRESHOLD = 10
+
 # -------------------------------
 # Logging Functions
 # -------------------------------
@@ -112,9 +116,79 @@ def log_error(message, exception=None):
     else:
         error_msg = message
         log_event(error_msg, "ERROR")
-    
+
     # Also log to main application log
     log_to_main_log(f"Broadcast Service - {error_msg}", "ERROR")
+
+def trigger_service_health_check():
+    """Trigger audio system health check to resolve mpg123 playback issues"""
+    try:
+        import time
+        global playback_process
+
+        log_event(f"Triggering audio system health check due to {consecutive_failure_count} consecutive failures")
+
+        # Step 1: Stop current playback cleanly
+        if playback_process:
+            log_event("Health check: Stopping current playback process")
+            try:
+                playback_process.terminate()
+                time.sleep(1)
+                if playback_process.poll() is None:
+                    playback_process.kill()
+                playback_process = None
+            except Exception as e:
+                log_event(f"Error stopping playback during health check: {e}", "WARNING")
+
+        # Step 2: Kill ALL mpg123 processes (aggressive cleanup)
+        try:
+            log_event("Health check: Killing all mpg123 processes")
+            subprocess.run(['pkill', '-f', 'mpg123'], capture_output=True, timeout=5)
+            time.sleep(2)  # Give time for processes to die
+        except Exception as e:
+            log_event(f"Error killing mpg123 processes: {e}", "WARNING")
+
+        # Step 3: Reset PulseAudio (this is likely what the dashboard does that helps)
+        try:
+            log_event("Health check: Restarting PulseAudio")
+            # Kill pulseaudio - it will auto-restart
+            subprocess.run(['pulseaudio', '--kill'], capture_output=True, timeout=5)
+            time.sleep(2)
+
+            # Start pulseaudio if it didn't auto-restart
+            subprocess.run(['pulseaudio', '--start'], capture_output=True, timeout=5)
+            time.sleep(1)
+
+            log_event("Health check: PulseAudio restart completed")
+        except Exception as e:
+            log_event(f"Error restarting PulseAudio: {e}", "WARNING")
+
+        # Step 4: Test audio system
+        try:
+            log_event("Health check: Testing audio system")
+            result = subprocess.run(['pactl', 'info'], capture_output=True, text=True, timeout=5)
+            if result.returncode == 0:
+                log_event("Health check: Audio system responding")
+            else:
+                log_event("Health check: Audio system not responding", "WARNING")
+        except Exception as e:
+            log_event(f"Error testing audio system: {e}", "WARNING")
+
+        # Step 5: Clear audio device locks
+        try:
+            log_event("Health check: Clearing audio device locks")
+            subprocess.run(['fuser', '-k', '/dev/snd/*'], capture_output=True, timeout=5)
+        except Exception as e:
+            log_event(f"Error clearing audio locks: {e}", "WARNING")
+
+        log_service_event("HEALTH CHECK", f"Audio system health check completed after {consecutive_failure_count} failures")
+
+        # Allow the main loop to retry playback
+        return True
+
+    except Exception as e:
+        log_error("Failed to perform audio system health check", e)
+        return False
 
 def update_status(**kwargs):
     """Update current status and save to file"""
@@ -419,7 +493,7 @@ def stop_playback():
 
 def broadcast_loop():
     """Simplified and more robust broadcast loop"""
-    global current_status, stop_requested, pause_requested, next_requested, previous_requested, playback_process
+    global current_status, stop_requested, pause_requested, next_requested, previous_requested, playback_process, consecutive_failure_count
     
     current_index = 0
     playlist = []
@@ -618,12 +692,23 @@ def broadcast_loop():
 
                             # Double-check if process is still running after initialization
                             if playback_process and playback_process.poll() is not None:
-                                log_event(f"File {os.path.basename(file_path)} failed to play continuously, trying next", "WARNING")
+                                consecutive_failure_count += 1
+                                log_event(f"File {os.path.basename(file_path)} failed to play continuously, trying next (consecutive failures: {consecutive_failure_count})", "WARNING")
+
+                                # Trigger health check if we hit the threshold
+                                if consecutive_failure_count >= FAILURE_THRESHOLD:
+                                    log_event(f"Reached {consecutive_failure_count} consecutive failures, triggering service health check", "WARNING")
+                                    trigger_service_health_check()
+                                    consecutive_failure_count = 0  # Reset counter after health check
+
                                 current_index = (current_index + 1) % len(playlist)
                                 playback_process = None
                                 break
                             else:
-                                # Successfully playing, break out of retry loop
+                                # Successfully playing, reset failure counter and break out of retry loop
+                                if consecutive_failure_count > 0:
+                                    log_event(f"Successfully playing after {consecutive_failure_count} consecutive failures, resetting counter")
+                                consecutive_failure_count = 0
                                 break
                         else:
                             # Failed to start, retry with backoff
@@ -633,7 +718,15 @@ def broadcast_loop():
                                 time.sleep(retry_delay)
                                 retry_delay = min(retry_delay * 1.5, 30)  # Exponential backoff, max 30s
                             else:
-                                log_error(f"Failed to start playing {os.path.basename(file_path)} after {max_retries} attempts, trying next track")
+                                consecutive_failure_count += 1
+                                log_error(f"Failed to start playing {os.path.basename(file_path)} after {max_retries} attempts, trying next track (consecutive failures: {consecutive_failure_count})")
+
+                                # Trigger health check if we hit the threshold
+                                if consecutive_failure_count >= FAILURE_THRESHOLD:
+                                    log_event(f"Reached {consecutive_failure_count} consecutive failures, triggering service health check", "WARNING")
+                                    trigger_service_health_check()
+                                    consecutive_failure_count = 0  # Reset counter after health check
+
                                 current_index = (current_index + 1) % len(playlist)
 
                     except Exception as e:
@@ -643,7 +736,15 @@ def broadcast_loop():
                             time.sleep(retry_delay)
                             retry_delay = min(retry_delay * 1.5, 30)
                         else:
-                            log_error(f"Error playing {os.path.basename(file_path)} after {max_retries} attempts", e)
+                            consecutive_failure_count += 1
+                            log_error(f"Error playing {os.path.basename(file_path)} after {max_retries} attempts (consecutive failures: {consecutive_failure_count})", e)
+
+                            # Trigger health check if we hit the threshold
+                            if consecutive_failure_count >= FAILURE_THRESHOLD:
+                                log_event(f"Reached {consecutive_failure_count} consecutive failures, triggering service health check", "WARNING")
+                                trigger_service_health_check()
+                                consecutive_failure_count = 0  # Reset counter after health check
+
                             current_index = (current_index + 1) % len(playlist)
                             break
             else:
@@ -671,7 +772,7 @@ def broadcast_loop():
 # -------------------------------
 def main():
     """Main service loop"""
-    global playback_thread, stop_requested, pause_requested, next_requested, previous_requested
+    global playback_thread, stop_requested, pause_requested, next_requested, previous_requested, consecutive_failure_count
     
     log_event("Broadcast service starting")
     update_status(mode="Initializing", connection_status="connecting")
