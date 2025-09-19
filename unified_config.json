@@ -1,6 +1,6 @@
 {
   "LED Service": {
-    "mode": "Manual LED",
+    "mode": "Lux sensor",
     "brightness": 100,
     "status_file": "led/led_status.json",
     "lux_min": "20",
@@ -22,12 +22,12 @@
     "lux_max": "850"
   },
   "_metadata": {
-    "last_updated": "2025-09-18T22:25:18.074990",
+    "last_updated": "2025-09-19T11:14:09.224716",
     "version": "1.0"
   },
   "Broadcast Service": {
     "mode": "Loop",
-    "volume": 3,
+    "volume": 100,
     "status_file": "broadcast/broadcast_status.json"
   },
   "Mixing Service": {
