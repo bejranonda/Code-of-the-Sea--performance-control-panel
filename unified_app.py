@@ -390,7 +390,30 @@ def restart_pi():
     try:
         service_manager.log_event("Initiating Raspberry Pi restart")
         service_manager.stop_all_services()
-        os.system("sudo reboot")
+
+        # Use subprocess for more reliable reboot execution
+        import subprocess
+        import time
+
+        # Log the restart attempt
+        service_manager.log_event("Executing system reboot command")
+
+        # Give services time to stop
+        time.sleep(2)
+
+        # Use subprocess instead of os.system for better control
+        result = subprocess.run(["sudo", "reboot"], capture_output=True, text=True, timeout=10)
+
+        if result.returncode != 0:
+            service_manager.log_error(f"Reboot command failed with return code {result.returncode}: {result.stderr}")
+            return f"Reboot failed: {result.stderr}", 500
+
+        service_manager.log_event("Reboot command executed successfully")
+        return "Rebooting..."
+
+    except subprocess.TimeoutExpired:
+        # Timeout is expected for reboot command
+        service_manager.log_event("Reboot command timeout (expected)")
         return "Rebooting..."
     except Exception as e:
         service_manager.log_error("Error restarting Raspberry Pi", e)
