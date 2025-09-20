@@ -26,7 +26,7 @@ try:
     from version_info import get_version
     APP_VERSION = get_version()
 except ImportError:
-    APP_VERSION = "2.1.0"
+    APP_VERSION = "3.0.0"
 
 app = Flask(__name__)
 

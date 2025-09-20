@@ -26,7 +26,7 @@ class DashboardStateManager:
             "last_active_services": [],
             "user_selections": {},
             "timestamp": datetime.now().isoformat(),
-            "version": "2.1.0"
+            "version": "3.0.0"
         }
 
     def save_dashboard_state(self, state_data: Dict[str, Any]) -> bool:
