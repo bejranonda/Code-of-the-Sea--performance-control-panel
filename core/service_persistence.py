@@ -68,7 +68,7 @@ class ServicePersistenceManager:
                 "timestamp": datetime.now().isoformat(),
                 "running_services": list(running_services),
                 "manually_stopped": list(final_manually_stopped),
-                "version": "2.1.0"
+                "version": "3.0.0"
             }
 
             with open(self.state_file, 'w') as f:

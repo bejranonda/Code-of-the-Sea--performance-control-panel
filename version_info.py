@@ -2,17 +2,32 @@
 Version information for Code of the Sea
 """
 
-VERSION = "2.1.0"
+VERSION = "3.0.0"
 VERSION_INFO = {
-    "major": 2,
-    "minor": 1,
+    "major": 3,
+    "minor": 0,
     "patch": 0,
     "release_type": "stable",
-    "build_date": "2025-09-17",
-    "codename": "Enhanced Persistence & Environmental Monitoring"
+    "build_date": "2025-09-20",
+    "codename": "Production-Ready Exhibition System"
 }
 
 RELEASE_NOTES = {
+    "3.0.0": {
+        "date": "2025-09-20",
+        "type": "major",
+        "highlights": [
+            "Production-grade stability for 24/7 art installations",
+            "Enhanced broadcast control with improved mpg123 startup reliability",
+            "Exhibition monitor integration with dedicated monitoring interface",
+            "Advanced metrics collection and system health monitoring",
+            "Optimized resource management for long-running installations",
+            "Control panel screenshots and enhanced documentation",
+            "Zero-maintenance operation with automatic recovery mechanisms"
+        ],
+        "breaking_changes": False,
+        "upgrade_required": False
+    },
     "2.1.0": {
         "date": "2025-09-17",
         "type": "minor",

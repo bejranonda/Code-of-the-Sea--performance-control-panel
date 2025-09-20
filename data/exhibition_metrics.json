@@ -3687,5 +3687,19 @@
     "cpu_usage": 4.9,
     "cpu_temperature": 45.8,
     "disk_usage": 16.78140189675784
+  },
+  {
+    "timestamp": "2025-09-20T11:56:04.643746",
+    "lux_value": 137.09,
+    "cpu_usage": 39.5,
+    "cpu_temperature": 47.7,
+    "disk_usage": 16.80816717167896
+  },
+  {
+    "timestamp": "2025-09-20T12:01:04.799173",
+    "lux_value": 137.09,
+    "cpu_usage": 7.9,
+    "cpu_temperature": 52.6,
+    "disk_usage": 16.463875056026914
   }
 ]
