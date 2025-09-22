@@ -69,7 +69,7 @@ This technical implementation serves as the backbone for immersive art installat
 - **Smart Lux Integration**: VEML7700 sensor with configurable min/max lux values for speed mapping
 - **Speed Control**: Variable fan speed (0-100%) with real-time feedback and current lux display
 - **Temperature Monitoring**: System temperature awareness for cooling decisions
-- **GPIO Integration**: Hardware PWM control via GPIO18 (requires 5V power supply)
+- **GPIO Integration**: Hardware PWM control via GPIO12 (requires 5V power supply)
 
 ### 🌱 **Light Sensor Service**
 - **Ambient Light Detection**: VEML7700 high-accuracy light sensor
@@ -175,7 +175,7 @@ Code of the Sea Control Panel
 │   ├── fan_mic_menu.py - PWM fan control with VEML7700 integration
 │   ├── fan_status.json - Speed, mode tracking, and lux level
 │   ├── Modes: Fixed, Cycle, Random, Lux Sensor (configurable ranges)
-│   ├── GPIO18 PWM control (10Hz frequency)
+│   ├── GPIO12 PWM control (10Hz frequency)
 │   └── Temperature-based speed adjustment with real-time lux display
 │
 ├── 🌱 Light Sensor Service (light_sensor/)
@@ -213,7 +213,7 @@ The Code of the Sea system uses the following hardware components connected to s
 │  │ SCL │    5   6 │    GND   │     ││  ← I2C Clock (GPIO3)
 │  │     │    7   8 │          │     ││
 │  │ GND │    9  10 │          │     ││
-│  │     │   11  12 │  GPIO18  │ PWM ││  ← Fan Control
+│  │     │   11  12 │  GPIO12  │ PWM ││  ← Fan Control
 │  │     │   13  14 │    GND   │     ││
 │  │     │   15  16 │          │     ││
 │  │ 3V3 │   17  18 │          │     ││
@@ -254,7 +254,7 @@ Connection: Via I2C (GPIO2/GPIO3)
 #### **🌀 Fan Control System** (Fan Service)
 ```
 Module: Seeed Grove MOSFET (CJQ4435)
-Control Pin: GPIO18 (PWM)
+Control Pin: GPIO12 (PWM)
 PWM Frequency: 10 Hz
 Control Range: 0-100% duty cycle
 ```
@@ -304,7 +304,7 @@ Format: WAV (converted to MP3)
 ### **PWM Output Summary**
 | Device | Pin | Frequency | Purpose |
 |--------|-----|-----------|---------|
-| Fan MOSFET | GPIO18 | 10 Hz | Cooling control |
+| Fan MOSFET | GPIO12 | 10 Hz | Cooling control |
 
 ## 🚀 Quick Start
 
@@ -380,7 +380,7 @@ code-of-the-sea/
 ├── fan/                        # Environmental control system
 │   ├── fan_mic_menu.py         # PWM fan control and monitoring
 │   ├── fan_status.json         # Speed, mode, temperature tracking
-│   ├── GPIO18 PWM control (10Hz frequency)
+│   ├── GPIO12 PWM control (10Hz frequency)
 │   ├── Multiple modes: Fixed, Cycle, Random, Lux (light-reactive)
 │   └── CPU temperature monitoring integration
 │
@@ -412,9 +412,56 @@ code-of-the-sea/
     └── Media file serving
 ```
 
-## 🛠️ Service Management System (v2.0)
+## 🛠️ Service Management System (v3.0)
 
-**Code of the Sea v2.0** introduces a comprehensive service management system that ensures reliable, single-instance operation of all services with proper startup, shutdown, and monitoring capabilities.
+**Code of the Sea v3.0** introduces a comprehensive service management system that ensures reliable, single-instance operation of all services with proper startup, shutdown, and monitoring capabilities.
+
+### **🔧 Systemd Service Configuration**
+
+The system uses multiple systemd services for automatic startup and management:
+
+#### **cos-control-panel.service** (Main Application)
+- **Description**: Code of the Sea Control Panel - Main Flask web application
+- **User**: payas (runs as regular user, not root)
+- **Working Directory**: `/home/payas/cos`
+- **Command**: `/home/payas/venv/bin/python /home/payas/cos/run.py unified --no-debug`
+- **Auto-restart**: Yes (15-second delay)
+- **Resource Limits**: 768MB RAM, 70% CPU quota
+- **Dependencies**: Waits for network and sound systems, starts after cos-services.service
+
+#### **cos-services.service** (Service Startup)
+- **Description**: COS All Services Startup (Optimized) - Starts all individual services
+- **Type**: oneshot (runs once then exits)
+- **Script**: `/home/payas/cos/scripts/startup_services_optimized.sh`
+- **Startup Logic**: Conflict-aware sequential startup with audio system coordination
+- **Timeout**: 120 seconds for complete startup sequence
+- **Dependencies**: Waits for network and sound systems
+
+#### **Startup Sequence** (startup_services_optimized.sh)
+1. **Phase 1**: Non-audio services (Radio, Fan) - 15-second system readiness wait
+2. **Audio System Check**: Waits for PulseAudio/ALSA to be ready
+3. **Phase 2**: Audio-dependent services (LED primary, then Broadcast)
+4. **Phase 3**: Mixing service (starts in disabled mode to prevent conflicts)
+5. **Health Check**: Verifies all services started successfully
+
+#### **Service Management Commands**
+```bash
+# Check service status
+sudo systemctl status cos-control-panel
+sudo systemctl status cos-services
+
+# Start/stop main services
+sudo systemctl start cos-control-panel
+sudo systemctl stop cos-control-panel
+
+# View logs
+sudo journalctl -u cos-control-panel -f
+sudo journalctl -u cos-services -f
+
+# Enable/disable auto-start
+sudo systemctl enable cos-control-panel
+sudo systemctl disable cos-control-panel
+```
 
 ### **🎯 Key Features**
 - **Single Instance Enforcement**: Prevents duplicate service processes that cause conflicts
@@ -494,7 +541,7 @@ The Code of the Sea system follows a comprehensive startup and management workfl
    ├── Mixing Service: Detect USB audio devices, setup recording
    ├── LED Service: Connect to VEML7700 sensor, initialize Tuya device
    ├── Radio Service: Initialize TEA5767, perform communication test
-   ├── Fan Service: Setup GPIO18 PWM, initialize VEML7700
+   ├── Fan Service: Setup GPIO12 PWM, initialize VEML7700
    └── Light Sensor: VEML7700 I2C initialization
 
 3. Runtime Operation
@@ -855,6 +902,63 @@ For technical support or artistic collaboration inquiries:
 - **v2.1.0** - Enhanced persistence & environmental monitoring
 - **v2.2.0** - Stability improvements and configuration resilience
 - **v3.0.0** - Production-ready exhibition system with enhanced stability
+- **v3.1.0** - Performance mode complete fix & service reliability improvements
+
+### **🚀 v3.1.0 Release Notes**
+
+**Performance Mode Complete Fix & Service Reliability:**
+
+#### **Performance Mode Resolution**
+- ✅ **Root Cause Fixed**: LED service not starting on system restart was the core issue affecting both modes
+- ✅ **Auto Mode Fully Operational**: Microphone input detection working perfectly with real-time RMS values (0.0003-0.01+)
+- ✅ **Manual Mode Fully Operational**: Slider controls respond instantly via `/performing/direct_brightness` endpoint
+- ✅ **Mode Switching Verified**: Seamless switching between Musical LED (auto) and Manual LED modes confirmed
+- ✅ **Configuration Synchronization**: Fixed unified_config.json vs service_config.json discrepancy
+
+#### **Service Management Improvements**
+- ✅ **LED Service Restart Scripts**: Enhanced `/scripts/manage_led_service.sh` with proper PID management
+- ✅ **Service Status Monitoring**: Real-time status file updates with brightness, RMS values, and connection status
+- ✅ **Automatic Recovery**: Service management scripts can detect and restart stuck services
+- ✅ **Configuration Consistency**: All services now use unified configuration management
+
+#### **System Reliability**
+- ✅ **Service Startup Validation**: Comprehensive analysis of systemd service startup sequence
+- ✅ **Configuration File Management**: Proper separation and synchronization of config files
+- ✅ **Real-time Monitoring**: Live performance metrics with continuous status updates
+- ✅ **Error Recovery**: Enhanced error handling with automatic service recovery
+
+**Technical Achievements:**
+- 🎭 **Performance Mode 100% Operational**: Both auto (microphone-reactive) and manual (slider-controlled) modes fully functional
+- 🔧 **Service Reliability**: LED service properly managed with automatic restart capabilities
+- 📊 **Real-time Monitoring**: Live RMS detection with continuous audio input processing
+- 🔄 **Instant Response**: Manual brightness control with immediate LED status updates
+- 📚 **Complete Service Documentation**: Updated with comprehensive service management details
+
+### **🚀 v3.0.1 Release Notes** (Previous Release)
+
+**Performance Mode Fixes & Hardware Updates:**
+
+#### **Performance Mode Reliability**
+- ✅ **Performance Page Auto Mode Fixed**: Resolved microphone input detection issues - auto mode now properly reacts to sound levels
+- ✅ **Performance Page Manual Mode Fixed**: Slider controls now respond correctly to user input
+- ✅ **LED Service Startup**: Fixed LED service not running on system startup, enabling both auto and manual performance modes
+- ✅ **Mode Recognition**: Enhanced mode detection and switching between Musical LED (auto) and Manual LED modes
+
+#### **Hardware Configuration Updates**
+- ✅ **Fan Service Pin Change**: Moved FAN_PIN from GPIO18 to GPIO12 for improved hardware compatibility
+- ✅ **Updated Documentation**: All GPIO pin references updated to reflect GPIO12 usage for fan control
+- ✅ **Hardware Mapping**: Complete documentation update for new pin assignments
+
+#### **System Service Management**
+- ✅ **Systemd Service Review**: Comprehensive analysis of cos-control-panel.service and cos-services.service
+- ✅ **Startup Optimization**: Enhanced startup script with conflict-aware service initialization
+- ✅ **Service Documentation**: Updated README with complete systemd service information
+
+**Technical Achievements:**
+- 🎭 **Performance Mode Operational**: Both auto and manual performance modes fully functional
+- 🔧 **Hardware Pin Optimization**: Fan service relocated to GPIO12 for better system integration
+- 📚 **Complete Documentation**: Updated README with all recent changes and service details
+- ⚡ **Service Reliability**: Enhanced startup sequence and service management
 
 ### **🚀 v3.0.0 Release Notes**
 

@@ -1,28 +1,30 @@
 {
   "LED Service": {
-    "mode": "Lux sensor",
-    "brightness": 100,
+    "mode": "Musical LED",
+    "brightness": 50,
     "status_file": "led/led_status.json",
-    "lux_min": "20",
-    "lux_max": "1500"
+    "lux_min": "23",
+    "lux_max": "1500",
+    "mic_rms_quiet": "0.001",
+    "mic_rms_loud": "0.041"
   },
   "Radio Service": {
-    "mode": "Loop",
-    "frequency": 105.9,
+    "mode": "Scan",
+    "frequency": 101.2,
     "direction": "Up",
     "status_file": "radio/radio_status.json",
-    "mode_selector": "Loop",
-    "loop_duration": "8"
+    "mode_selector": "Scan",
+    "loop_duration": "30"
   },
   "Fan Service": {
-    "mode": "Cycle",
-    "speed": 0,
+    "mode": "Fixed",
+    "speed": 50,
     "status_file": "fan/fan_status.json",
     "lux_min": "1",
     "lux_max": "850"
   },
   "_metadata": {
-    "last_updated": "2025-09-20T11:44:25.821065",
+    "last_updated": "2025-09-22T22:05:19.441590",
     "version": "1.0"
   },
   "Broadcast Service": {
@@ -31,11 +33,16 @@
     "status_file": "broadcast/broadcast_status.json"
   },
   "Mixing Service": {
-    "mode": "Auto",
+    "mode": "Disable",
     "master_volume": "100",
     "mic_volume": "65",
     "recording_duration": "120",
     "volume": "75",
     "status_file": "mixing/mixing_status.json"
+  },
+  "Exhibition Metrics Service": {
+    "recording_interval": 60,
+    "max_records": 10000,
+    "data_file": "data/exhibition_metrics.json"
   }
 }

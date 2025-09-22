@@ -17,28 +17,12 @@ except ImportError as e:
     GPIO_AVAILABLE = False
     print(f"Warning: RPi.GPIO library not available: {e}")
 
-try:
-    import alsaaudio
-    import audioop
-    AUDIO_AVAILABLE = True
-except ImportError as e:
-    AUDIO_AVAILABLE = False
-    print(f"Warning: Audio libraries not available: {e}")
 
-# Try importing VEML7700 libraries for light sensor
-try:
-    import board
-    import busio
-    import adafruit_veml7700
-    VEML7700_AVAILABLE = True
-except ImportError as e:
-    VEML7700_AVAILABLE = False
-    print(f"Warning: VEML7700 libraries not available: {e}")
 
 # -------------------------------
 # Configuration
 # -------------------------------
-FAN_PIN = 18   # Use GPIO18 (supports hardware PWM)
+FAN_PIN = 12   # Use GPIO12 (supports hardware PWM)
 PWM_FREQUENCY = 200  # 25 kHz PWM (good for fans)
 
 CONFIG_FILE = os.path.join(os.path.dirname(__file__), "..", "service_config.json")  # Absolute path to parent directory
@@ -49,14 +33,10 @@ STATUS_FILE = os.path.join(os.path.dirname(__file__), "fan_status.json")
 # Global Variables
 # -------------------------------
 pwm = None
-last_random_time = 0  # Track last random speed change
-veml7700_sensor = None  # VEML7700 light sensor instance
 current_status = {
     "mode": "Fixed",
     "speed": 0,
     "target_speed": 0,
-    "sound_level": 0,
-    "lux_level": 0,  # Add lux level tracking
     "last_update": None,
     "error_count": 0,
     "connection_status": "disconnected"
@@ -167,16 +147,10 @@ def read_config():
                     mode_mapping = {
                         "fixed": "Fixed",
                         "Fixed": "Fixed",
-                        "cycle": "Cycle",
-                        "Cycle": "Cycle",
-                        "random": "Random",
-                        "Random": "Random",
-                        "sounding": "Sounding",
-                        "Sounding": "Sounding",
-                        "lux": "Lux sensor",
-                        "Lux": "Lux sensor",
-                        "lux sensor": "Lux sensor",
-                        "Lux sensor": "Lux sensor"
+                        "disable": "Disable",
+                        "Disable": "Disable",
+                        "disabled": "Disable",
+                        "Disabled": "Disable"
                     }
                     fan_config["mode"] = mode_mapping.get(fan_config.get("mode", "Fixed"), "Fixed")
 
@@ -323,105 +297,7 @@ def cleanup_gpio():
     except Exception as e:
         log_error("Error during GPIO cleanup", e)
 
-# -------------------------------
-# VEML7700 Light Sensor Functions
-# -------------------------------
-def initialize_veml7700():
-    """Initialize VEML7700 light sensor with error handling"""
-    global veml7700_sensor
 
-    if not VEML7700_AVAILABLE:
-        log_error("VEML7700 libraries not available - cannot initialize light sensor")
-        return False
-
-    try:
-        i2c = busio.I2C(board.SCL, board.SDA)
-        veml7700_sensor = adafruit_veml7700.VEML7700(i2c)
-        veml7700_sensor.integration_time = "100ms"
-        veml7700_sensor.gain = "1x"
-
-        log_event("VEML7700 light sensor initialized successfully")
-        return True
-
-    except Exception as e:
-        log_error("Error initializing VEML7700 sensor", e)
-        return False
-
-def get_lux_level():
-    """Get current lux level with comprehensive error handling"""
-    try:
-        if not veml7700_sensor:
-            return 0
-
-        lux_value = veml7700_sensor.lux
-        update_status(lux_level=lux_value)
-        return lux_value
-
-    except Exception as e:
-        log_error("Error reading lux level", e)
-        current_status["error_count"] += 1
-        return 0
-
-def lux_to_fan_speed(lux_value, config=None):
-    """Convert lux value to fan speed - more light = lower speed, less light = higher speed"""
-    try:
-        # Get configurable min/max lux values with sensible defaults
-        # Default: 1 lux = 100% fan speed, 1000 lux = 0% fan speed
-        if config:
-            lux_min = float(config.get("lux_min", 1))    # Min lux for 100% speed
-            lux_max = float(config.get("lux_max", 1000)) # Max lux for 0% speed
-        else:
-            lux_min = 1
-            lux_max = 1000
-
-        # Ensure valid range
-        if lux_min >= lux_max:
-            log_error(f"Invalid lux range: min={lux_min}, max={lux_max}. Using defaults.")
-            lux_min = 1
-            lux_max = 1000
-
-        # Linear interpolation: lux_min = 100% speed, lux_max = 0% speed
-        if lux_value <= lux_min:
-            return 100  # Very dark - maximum fan speed
-        elif lux_value >= lux_max:
-            return 0    # Very bright - minimum fan speed
-        else:
-            # Linear interpolation between min and max
-            ratio = (lux_value - lux_min) / (lux_max - lux_min)
-            speed = 100 - (ratio * 100)  # Inverse relationship
-            return max(0, min(100, speed))
-
-    except Exception as e:
-        log_error("Error converting lux to fan speed", e)
-        return 50  # Default fallback speed
-
-# -------------------------------
-# Audio Functions
-# -------------------------------
-def get_sound_level():
-    """Get current sound level with comprehensive error handling"""
-    try:
-        if not AUDIO_AVAILABLE:
-            return 0
-            
-        inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NONBLOCK)
-        inp.setchannels(1)
-        inp.setrate(44100)
-        inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
-        inp.setperiodsize(1024)
-
-        l, data = inp.read()
-        if l:
-            rms = audioop.rms(data, 2)
-            level = min(100, int(rms / 100))  # normalize
-            update_status(sound_level=level)
-            return level
-        return 0
-        
-    except Exception as e:
-        log_error("Error reading sound level", e)
-        current_status["error_count"] += 1
-        return 0
 
 # -------------------------------
 # Mode Implementations
@@ -436,59 +312,17 @@ def run_fixed(cfg):
         log_error("Error in fixed mode", e)
         return False
 
-def run_cycle(t):
-    """Cycle speed mode with error handling - sine wave over 2 minutes (0-100%)"""
+
+
+def run_disable():
+    """Disable mode - fan is off and service does nothing"""
     try:
-        # 2 minutes = 120 seconds cycle
-        cycle_period = 120.0
-        # Sine wave from 0 to 100% over 2 minutes
-        speed = int((math.sin(2 * math.pi * t / cycle_period) + 1) * 50)
-        update_status(target_speed=speed, mode="Cycle")
-        return set_fan_speed(speed)
+        update_status(target_speed=0, mode="Disable")
+        return set_fan_speed(0)
     except Exception as e:
-        log_error("Error in cycle mode", e)
+        log_error("Error in disable mode", e)
         return False
 
-def run_random():
-    """Random speed mode with error handling - new random speed every 20 seconds"""
-    try:
-        speed = random.randint(0, 100)  # Full range 0-100%
-        update_status(target_speed=speed, mode="Random")
-        log_event(f"Random mode: new speed {speed}% (20s interval)")
-        return set_fan_speed(speed)
-    except Exception as e:
-        log_error("Error in random mode", e)
-        return False
-
-def run_sounding():
-    """Sound-reactive mode with error handling"""
-    try:
-        level = get_sound_level()
-        # Map sound level to fan speed (20-100% range)
-        speed = max(20, min(100, 20 + level))
-        update_status(target_speed=speed, mode="Sounding")
-        return set_fan_speed(speed)
-    except Exception as e:
-        log_error("Error in sounding mode", e)
-        return False
-
-def run_lux():
-    """Light-reactive mode with error handling - more light = lower speed, less light = higher speed"""
-    try:
-        # Get configuration for customizable lux ranges
-        config = read_config()
-        lux_level = get_lux_level()
-        speed = int(lux_to_fan_speed(lux_level, config))
-        update_status(target_speed=speed, mode="Lux sensor")
-
-        # Log only significant changes to avoid log spam
-        if abs(speed - current_status.get("speed", 0)) > 5:
-            log_event(f"Lux sensor mode: {lux_level:.2f} lux -> {speed}% fan speed")
-
-        return set_fan_speed(speed)
-    except Exception as e:
-        log_error("Error in lux sensor mode", e)
-        return False
 
 # -------------------------------
 # Main Loop
@@ -504,12 +338,6 @@ def main():
         log_error("Failed to initialize GPIO, continuing in monitoring-only mode")
         # Don't exit - continue running in monitoring mode without GPIO control
 
-    # Initialize VEML7700 sensor for Lux mode (optional)
-    veml7700_initialized = initialize_veml7700()
-    if veml7700_initialized:
-        log_event("VEML7700 sensor available for Lux mode")
-    else:
-        log_event("VEML7700 sensor not available - Lux mode will not work", "WARNING")
     
     last_config = {}
     t = 0
@@ -528,25 +356,8 @@ def main():
                 success = False
                 if mode == "Fixed":
                     success = run_fixed(cfg)
-                elif mode == "Cycle":
-                    success = run_cycle(t)
-                elif mode == "Random":
-                    # Only change speed every 20 seconds
-                    global last_random_time
-                    if t - last_random_time >= 20.0:
-                        success = run_random()
-                        last_random_time = t
-                    else:
-                        # Maintain current speed
-                        success = True
-                elif mode == "Sounding":
-                    success = run_sounding()
-                elif mode in ["Lux", "Lux sensor"]:  # Support both names during transition
-                    if veml7700_initialized:
-                        success = run_lux()
-                    else:
-                        log_error("Lux sensor mode requested but VEML7700 sensor not available")
-                        set_fan_speed(0)
+                elif mode == "Disable":
+                    success = run_disable()
                 else:
                     log_error(f"Unknown mode: {mode}")
                     set_fan_speed(0)
