@@ -464,6 +464,21 @@
     
     <!-- Navigation Links -->
     <div style="text-align: center; margin: 20px 0;">
+      <a href="/performing" style="
+        display: inline-block;
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin: 0 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+        font-size: 16px;
+      " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <i class="fas fa-theater-masks"></i> Performance Mode
+      </a>
       <a href="/exhibition/dashboard" style="
         display: inline-block;
         background: linear-gradient(135deg, #667eea, #764ba2);
@@ -708,12 +723,6 @@
               <span>Target Speed:</span>
               <span><strong>{{ "%.1f"|format(status.get('target_speed', 0)) }}%</strong></span>
             </div>
-            {% if status.get('mode') == 'Lux' %}
-            <div class="service-status-item">
-              <span>Light Level:</span>
-              <span><strong>{{ "%.2f"|format(status.get('lux_level', 0)) }} lux</strong></span>
-            </div>
-            {% endif %}
             <div class="service-status-item">
               <span>Connection:</span>
               <span class="status {{ 'running' if status.get('connection_status') == 'connected' else 'error' }}">
@@ -950,9 +959,10 @@
               <div class="form-group">
                 <label class="form-label">Mode:</label>
                 <select name="mode" class="form-select" required onchange="toggleSliders(this.value, '{{ service_name }}')">
-                  <option value="Musical LED" {% if configs[service_name]["mode"]=="Musical LED" %}selected{% endif %}>Musical LED</option>
                   <option value="Lux sensor" {% if configs[service_name]["mode"] in ["Lighting LED", "Lux sensor"] %}selected{% endif %}>Lux sensor</option>
                   <option value="Manual LED" {% if configs[service_name]["mode"]=="Manual LED" %}selected{% endif %}>Manual LED</option>
+                  <option value="Musical LED" {% if configs[service_name]["mode"]=="Musical LED" %}selected{% endif %}>Musical LED</option>
+                  <option value="Disable" {% if configs[service_name]["mode"]=="Disable" %}selected{% endif %}>Disable</option>
                 </select>
               </div>
               <div class="form-group" id="ledBrightnessGroup" style="display: {% if configs[service_name]['mode'] == 'Manual LED' %}block{% else %}none{% endif %};">
@@ -1030,6 +1040,7 @@
                   <option value="Fixed" {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') == 'Fixed') or (configs[service_name]['mode'] == 'Fixed') %}selected{% endif %}>Manual Frequency</option>
                   <option value="Scan" {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') in ['Scan', 'Scanning', 'Scanned']) or (configs[service_name]['mode'] == 'Scan') %}selected{% endif %}>Scan Once</option>
                   <option value="Loop" {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') == 'Loop') or (configs[service_name]['mode'] == 'Loop') %}selected{% endif %}>Loop Stations</option>
+                  <option value="Disable" {% if (service_name in service_statuses and service_statuses[service_name] and service_statuses[service_name].get('mode') == 'Disable') or (configs[service_name]['mode'] == 'Disable') %}selected{% endif %}>Disable</option>
                 </select>
               </div>
 
@@ -1105,9 +1116,8 @@
                 <label class="form-label">Mode:</label>
                 <select name="mode" class="form-select" required onchange="toggleSliders(this.value, '{{ service_name }}')">
                   <option value="Fixed" {% if configs[service_name]["mode"]=="Fixed" %}selected{% endif %}>Fixed</option>
-                  <option value="Cycle" {% if configs[service_name]["mode"]=="Cycle" %}selected{% endif %}>Cycle</option>
-                  <option value="Random" {% if configs[service_name]["mode"]=="Random" %}selected{% endif %}>Random</option>
-                  <option value="Lux sensor" {% if configs[service_name]["mode"] in ["Lux", "Lux sensor"] %}selected{% endif %}>Lux sensor</option>
+                  <option value="Sounding" {% if configs[service_name]["mode"]=="Sounding" %}selected{% endif %}>Sounding</option>
+                  <option value="Disable" {% if configs[service_name]["mode"]=="Disable" %}selected{% endif %}>Disable</option>
                 </select>
               </div>
               <div class="form-group" id="fanSpeedGroup" style="display: {% if configs[service_name]['mode'] == 'Fixed' %}block{% else %}none{% endif %};">
@@ -1118,39 +1128,13 @@
                   <span class="slider-value" id="speedValue">{{ configs[service_name]['speed'] }}%</span>
                 </div>
               </div>
-              <!-- Lux Range Configuration for Lux sensor mode -->
-              <div class="form-group" id="fanLuxRangeGroup" style="display: {% if configs[service_name]['mode'] in ['Lux', 'Lux sensor'] %}block{% else %}none{% endif %};">
-                <label class="form-label">Lux Range Configuration:</label>
-                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 10px;">
-                  <div style="color: #6b7280; font-size: 12px; margin-bottom: 10px;">
-                    Configure the light range for fan speed control: low lux = high speed, high lux = low speed
-                  </div>
-
-                  <div style="margin-bottom: 10px;">
-                    <label class="form-label" style="font-size: 14px; margin-bottom: 5px;">Min Lux (100% speed):</label>
-                    <div class="slider-container">
-                      <input type="range" name="lux_min" min="1" max="100" step="1" value="{{ configs[service_name].get('lux_min', 1) }}"
-                             class="slider" id="fanLuxMinSlider" oninput="updateSliderValue('fanLuxMinSlider', 'fanLuxMinValue')">
-                      <span class="slider-value" id="fanLuxMinValue">{{ configs[service_name].get('lux_min', 1) }} lux</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label class="form-label" style="font-size: 14px; margin-bottom: 5px;">Max Lux (0% speed):</label>
-                    <div class="slider-container">
-                      <input type="range" name="lux_max" min="100" max="5000" step="50" value="{{ configs[service_name].get('lux_max', 1000) }}"
-                             class="slider" id="fanLuxMaxSlider" oninput="updateSliderValue('fanLuxMaxSlider', 'fanLuxMaxValue')">
-                      <span class="slider-value" id="fanLuxMaxValue">{{ configs[service_name].get('lux_max', 1000) }} lux</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
             {% elif service_name == "Broadcast Service" %}
               <div class="form-group">
                 <label class="form-label">Mode:</label>
                 <select name="mode" class="form-select" required>
                   <option value="Loop" {% if configs[service_name]["mode"]=="Loop" %}selected{% endif %}>Loop</option>
                   <option value="Random" {% if configs[service_name]["mode"]=="Random" %}selected{% endif %}>Random</option>
+                  <option value="Disable" {% if configs[service_name]["mode"]=="Disable" %}selected{% endif %}>Disable</option>
                 </select>
               </div>
               <div class="form-group">
@@ -1167,6 +1151,7 @@
                 <select name="mode" class="form-select" required>
                   <option value="Auto" {% if configs[service_name]["mode"]=="Auto" %}selected{% endif %}>Auto</option>
                   <option value="Once" {% if configs[service_name]["mode"]=="Once" %}selected{% endif %}>Once</option>
+                  <option value="Disable" {% if configs[service_name]["mode"]=="Disable" %}selected{% endif %}>Disable</option>
                 </select>
               </div>
               <div class="form-group">
@@ -1229,7 +1214,7 @@
         valueElement.textContent = value + ' MHz';
       } else if (sliderId === 'recordingDurationSlider') {
         valueElement.textContent = value + 's';
-      } else if (sliderId === 'luxMinSlider' || sliderId === 'luxMaxSlider' || sliderId === 'fanLuxMinSlider' || sliderId === 'fanLuxMaxSlider') {
+      } else if (sliderId === 'luxMinSlider' || sliderId === 'luxMaxSlider') {
         valueElement.textContent = value + ' lux';
       } else {
         valueElement.textContent = value + '%';
@@ -1247,9 +1232,7 @@
         directionGroup.style.display = (mode === 'Search') ? 'block' : 'none';
       } else if (serviceName === 'Fan Service') {
         const speedGroup = document.getElementById('fanSpeedGroup');
-        const fanLuxRangeGroup = document.getElementById('fanLuxRangeGroup');
         speedGroup.style.display = (mode === 'Fixed') ? 'block' : 'none';
-        fanLuxRangeGroup.style.display = (mode === 'Lux sensor' || mode === 'Lux') ? 'block' : 'none';
       }
     }
 
@@ -1542,8 +1525,6 @@
       updateSliderValue('recordingDurationSlider', 'recordingDurationValue');
       updateSliderValue('luxMinSlider', 'luxMinValue');
       updateSliderValue('luxMaxSlider', 'luxMaxValue');
-      updateSliderValue('fanLuxMinSlider', 'fanLuxMinValue');
-      updateSliderValue('fanLuxMaxSlider', 'fanLuxMaxValue');
 
       // Always try to load stations list for radio service
       const stationsList = document.getElementById('stationsList');
@@ -1615,6 +1596,7 @@
           console.error(`Error checking health for ${serviceName}:`, error);
         });
     }
+
 
   </script>
 

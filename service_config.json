@@ -1,20 +1,22 @@
 {
   "LED Service": {
     "mode": "Lux sensor",
-    "brightness": 100,
-    "lux_min": "20",
-    "lux_max": "1500"
+    "brightness": 50,
+    "lux_min": "1",
+    "lux_max": "500",
+    "mic_rms_quiet": "0.001",
+    "mic_rms_loud": "0.003"
   },
   "Radio Service": {
-    "mode": "Loop",
-    "frequency": 105.9,
+    "mode": "Scan",
+    "frequency": 101.2,
     "direction": "Up",
-    "mode_selector": "Loop",
-    "loop_duration": "8"
+    "mode_selector": "Scan",
+    "loop_duration": "30"
   },
   "Fan Service": {
-    "mode": "Cycle",
-    "speed": 0,
+    "mode": "Fixed",
+    "speed": 50,
     "lux_min": "1",
     "lux_max": "850"
   },
@@ -26,10 +28,15 @@
     "mode": "Auto"
   },
   "Mixing Service": {
-    "mode": "Auto",
+    "mode": "Disable",
     "master_volume": "100",
     "mic_volume": "65",
     "recording_duration": "120",
     "volume": "75"
+  },
+  "Exhibition Metrics Service": {
+    "recording_interval": 60,
+    "max_records": 10000,
+    "data_file": "data/exhibition_metrics.json"
   }
 }

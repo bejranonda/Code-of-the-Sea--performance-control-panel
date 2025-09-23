@@ -106,12 +106,182 @@ FIXED_KELVIN_TEMP = 2900
 FIXED_TUYA_CCT_VALUE = int((FIXED_KELVIN_TEMP - 2700) * (TUYA_CCT_MAX - TUYA_CCT_MIN) / (6500 - 2700) + TUYA_CCT_MIN)
 
 # --- Audio Configuration (for Musical LED mode) ---
-SAMPLERATE = 44100
+SAMPLERATE = 44100 # 44100 default
 CHANNELS = 1
-BLOCKSIZE = 2048
-MIC_RMS_QUIET = 0.001  # Lowered to match typical ambient levels
-MIC_RMS_LOUD = 0.01     # Lowered to be more sensitive to audio
-RMS_SMOOTHING_WINDOW = 5
+BLOCKSIZE = 4096
+
+def cleanup_audio_processes():
+    """Clean up audio processes that might interfere with Musical mode."""
+    import subprocess
+    import time
+
+    log_event("Cleaning up audio processes before Musical mode startup...")
+
+    try:
+        # Kill any existing audio processes that might be using the microphone
+        audio_processes = ['arecord', 'parecord', 'pulseaudio', 'alsa_in', 'alsa_out']
+
+        for process in audio_processes:
+            try:
+                result = subprocess.run(['pkill', '-f', process], capture_output=True, timeout=3)
+                if result.returncode == 0:
+                    log_event(f"Stopped {process} processes")
+                else:
+                    log_event(f"No {process} processes found to stop")
+            except Exception as e:
+                log_event(f"Error stopping {process}: {e}")
+
+        # Stop and restart PulseAudio to clear any audio device locks
+        try:
+            log_event("Restarting PulseAudio to clear device locks...")
+            subprocess.run(['pulseaudio', '--kill'], capture_output=True, timeout=5)
+            time.sleep(1)  # Wait for cleanup
+            subprocess.run(['pulseaudio', '--start'], capture_output=True, timeout=5)
+            time.sleep(2)  # Wait for initialization
+
+            # Also try systemctl restart as a more thorough restart
+            subprocess.run(['systemctl', '--user', 'restart', 'pulseaudio'], capture_output=True, timeout=10)
+            time.sleep(1)  # Wait for systemctl restart
+            log_event("PulseAudio restarted successfully via both methods")
+        except Exception as e:
+            log_event(f"PulseAudio restart failed: {e}")
+
+        # Clear any ALSA device locks and reset USB audio device
+        try:
+            # Reset ALSA state
+            subprocess.run(['sudo', 'fuser', '-k', '/dev/snd/*'], capture_output=True, timeout=3)
+            log_event("Cleared ALSA device locks")
+
+            # Try to reset the USB audio device
+            subprocess.run(['sudo', 'alsamixer', '--card=1', '--exit'], capture_output=True, timeout=3)
+            log_event("Reset USB audio device")
+        except Exception as e:
+            log_event(f"ALSA cleanup warning: {e}")
+
+
+    except Exception as e:
+        log_event(f"Audio cleanup error: {e}")
+
+def detect_audio_input_device():
+    """Auto-detect the best available audio input device."""
+    import sounddevice as sd
+    import subprocess
+
+    log_event("Detecting available audio input devices...")
+
+    # First, ensure PulseAudio can see the USB microphone
+    try:
+        result = subprocess.run(['pactl', 'list', 'short', 'sources'], capture_output=True, text=True, timeout=5)
+        if result.returncode == 0:
+            for line in result.stdout.split('\n'):
+                if 'USB_Audio_Device' in line and 'input' in line:
+                    source_name = line.split('\t')[1]
+                    log_event(f"Found USB Audio input source: {source_name}")
+                    # Set as default input source
+                    try:
+                        subprocess.run(['pactl', 'set-default-source', source_name], capture_output=True, timeout=3)
+                        log_event(f"Set USB Audio as default input source: {source_name}")
+                    except Exception as e:
+                        log_event(f"Failed to set default source: {e}")
+                    break
+    except Exception as e:
+        log_event(f"Failed to configure PulseAudio sources: {e}")
+
+    # Method 1: Check for USB Audio devices via ALSA
+    try:
+        result = subprocess.run(['arecord', '-l'], capture_output=True, text=True, timeout=5)
+        if result.returncode == 0:
+            lines = result.stdout.split('\n')
+            for line in lines:
+                if 'USB Audio' in line and 'device' in line:
+                    # Extract card number from line like "card 1: Device [USB Audio Device], device 0:"
+                    parts = line.split(':')
+                    if len(parts) >= 2:
+                        card_part = parts[0].strip()
+                        if 'card' in card_part:
+                            card_num = card_part.split('card')[1].strip().split()[0]
+                            device_spec = f"plughw:{card_num},0"
+                            log_event(f"Found USB Audio device: {device_spec}")
+
+                            # Test if the device actually works
+                            try:
+                                with sd.InputStream(device=device_spec, samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE):
+                                    log_event(f"USB Audio device {device_spec} is working")
+                                    return device_spec
+                            except Exception as e:
+                                log_event(f"USB Audio device {device_spec} test failed: {e}")
+    except Exception as e:
+        log_event(f"Failed to check ALSA devices: {e}")
+
+    # Method 2: Check sounddevice for devices with input channels
+    try:
+        devices = sd.query_devices()
+        for i, device in enumerate(devices):
+            if device['max_input_channels'] > 0:
+                device_name = device['name']
+                log_event(f"Found input device {i}: {device_name} ({device['max_input_channels']} channels)")
+
+                # Prefer USB Audio devices
+                if 'USB Audio' in device_name or 'USB' in device_name:
+                    try:
+                        with sd.InputStream(device=i, samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE):
+                            log_event(f"USB device {i} ({device_name}) is working")
+                            return i
+                    except Exception as e:
+                        log_event(f"USB device {i} test failed: {e}")
+
+                # Try pulse device if available
+                elif 'pulse' in device_name.lower():
+                    try:
+                        with sd.InputStream(device=i, samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE):
+                            log_event(f"PulseAudio device {i} ({device_name}) is working")
+                            return i
+                    except Exception as e:
+                        log_event(f"PulseAudio device {i} test failed: {e}")
+
+                # Try default device if available
+                elif 'default' in device_name.lower():
+                    try:
+                        with sd.InputStream(device=i, samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE):
+                            log_event(f"Default device {i} ({device_name}) is working")
+                            return i
+                    except Exception as e:
+                        log_event(f"Default device {i} test failed: {e}")
+    except Exception as e:
+        log_event(f"Failed to query sounddevice: {e}")
+
+    # Method 3: Try common device specifications
+    common_devices = ['pulse', 'default', 'plughw:1,0', 'plughw:0,0']
+    for device in common_devices:
+        try:
+            with sd.InputStream(device=device, samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE):
+                log_event(f"Fallback device '{device}' is working")
+                return device
+        except Exception as e:
+            log_event(f"Fallback device '{device}' failed: {e}")
+
+    log_event("No working audio input device found", "WARNING")
+    return None
+# Default RMS thresholds - will be overridden by config if available
+MIC_RMS_QUIET = 0.002   # RMS value considered "quiet" / "emotional" music
+MIC_RMS_LOUD = 0.04     # RMS value considered "loud" / "crazy" music
+
+# Load RMS configuration from unified config if available
+try:
+    unified_config_path = os.path.join(os.path.dirname(__file__), '..', 'unified_config.json')
+    if os.path.exists(unified_config_path):
+        with open(unified_config_path, 'r') as f:
+            unified_config = json.load(f)
+            led_config = unified_config.get('LED Service', {})
+            MIC_RMS_QUIET = float(led_config.get('mic_rms_quiet', MIC_RMS_QUIET))
+            MIC_RMS_LOUD = float(led_config.get('mic_rms_loud', MIC_RMS_LOUD))
+            log_event(f"Loaded RMS config: QUIET={MIC_RMS_QUIET:.4f}, LOUD={MIC_RMS_LOUD:.3f}")
+except Exception as e:
+    try:
+        log_event(f"Using default RMS values: QUIET={MIC_RMS_QUIET:.4f}, LOUD={MIC_RMS_LOUD:.3f}")
+    except:
+        pass
+RMS_SMOOTHING_WINDOW = 1
 rms_history = collections.deque(maxlen=RMS_SMOOTHING_WINDOW)
 
 # --- Light Sensor Configuration (for Lighting LED mode) ---
@@ -119,11 +289,20 @@ SENSOR_LUX_MIN = 20
 SENSOR_LUX_MAX = 1500
 
 # --- Command Rate Limiting ---
-MIN_COMMAND_INTERVAL_SECONDS = 0.2
-COMMAND_TIMEOUT_SECONDS = 0.5
-BRIGHTNESS_MINIMUM_CHANGE = 1  # Minimum brightness change required to trigger update
+MIN_COMMAND_INTERVAL_SECONDS = 0.3
+COMMAND_TIMEOUT_SECONDS = 0.3
+BRIGHTNESS_MINIMUM_CHANGE = 18  # Minimum brightness change required to trigger update
 last_command_time = 0
 previous_brightness_percent = -1
+
+# --- Hardware-Controlled Smooth Transitions ---
+current_brightness = 0.0            # Current brightness for display tracking
+
+# --- RMS Statistics Tracking ---
+current_rms = 0.0
+max_rms_minute = 0.0
+min_rms_minute = 999.0
+rms_minute_start = time.time()
 
 # --- Global Variables ---
 d = None
@@ -140,6 +319,9 @@ current_status = {
     "brightness": 0,
     "power_state": False,
     "lux_level": 0,  # Add lux level tracking
+    "current_rms": 0.0,  # Add RMS tracking
+    "max_rms_minute": 0.0,
+    "min_rms_minute": 0.0,
     "last_update": None,
     "error_count": 0,
     "connection_status": "disconnected",
@@ -300,6 +482,29 @@ def load_lux_history():
         lux_history = []
         last_recorded_lux = None
 
+async def read_lux_sensor():
+    """Read the latest lux value from sensor/history"""
+    global lux_history
+    try:
+        # Try to get the latest lux value from the history
+        if lux_history and len(lux_history) > 0:
+            return lux_history[-1].get('lux', 0.0)
+
+        # If no history in memory, try to load from file
+        if os.path.exists(LUX_HISTORY_FILE):
+            with open(LUX_HISTORY_FILE, "r") as f:
+                file_lux_history = json.load(f)
+                if file_lux_history and len(file_lux_history) > 0:
+                    return file_lux_history[-1].get('lux', 0.0)
+
+        # Default fallback value
+        log_event("No lux data available, returning default value 0.0")
+        return 0.0
+
+    except Exception as e:
+        log_error("Error reading lux sensor", e)
+        return 0.0
+
 def update_status(**kwargs):
     """Update current status and save to file"""
     global current_status
@@ -362,7 +567,7 @@ def map_range(value, in_min, in_max, out_min, out_max):
 def get_brightness_from_rms(rms):
     """Maps RMS to LED brightness for Musical LED mode."""
     try:
-        brightness = map_range(rms, MIC_RMS_QUIET, MIC_RMS_LOUD, 1, 100)  # Minimum 1% instead of 0%
+        brightness = map_range(rms, MIC_RMS_QUIET, MIC_RMS_LOUD, 0, 100)  # Map to 0-100% like lighting.py
         return max(1, min(100, brightness))  # Clamp to valid range
     except Exception as e:
         log_error(f"Error calculating brightness from RMS {rms}", e)
@@ -397,13 +602,9 @@ async def set_brightness_and_power(brightness_percent, force_update=False, verbo
     
     try:
         current_time = time.monotonic()
-        
+               
         # Rate limiting check
         if not force_update and (current_time - last_command_time) < MIN_COMMAND_INTERVAL_SECONDS:
-            return
-        
-        # Check if brightness change is significant
-        if not force_update and abs(brightness_percent - previous_brightness_percent) < BRIGHTNESS_MINIMUM_CHANGE:
             return
         
         # Determine power state
@@ -431,11 +632,16 @@ async def set_brightness_and_power(brightness_percent, force_update=False, verbo
         if should_be_on:
             try:
                 tuya_brightness = int(map_range(brightness_percent, 0, 100, TUYA_BRIGHTNESS_MIN, TUYA_BRIGHTNESS_MAX))
+
+                # Log command being sent
+                if verbose_logging:
+                    log_event(f"LED Command: DP {DP_ID_WORK_MODE}='white', DP {DP_ID_BRIGHTNESS}={tuya_brightness} (Target: {brightness_percent:.1f}%)")
+
                 await asyncio.wait_for(asyncio.to_thread(d.set_value, DP_ID_WORK_MODE, 'white'), timeout=COMMAND_TIMEOUT_SECONDS)
                 await asyncio.wait_for(asyncio.to_thread(d.set_value, DP_ID_BRIGHTNESS, tuya_brightness), timeout=COMMAND_TIMEOUT_SECONDS)
-                
+
                 if verbose_logging:
-                    log_event(f"Brightness set to {brightness_percent:.1f}% (Tuya: {tuya_brightness})")
+                    log_event(f"LED Command completed: Brightness {brightness_percent:.1f}% (Tuya: {tuya_brightness})")
                 update_status(brightness=brightness_percent)
                 
             except asyncio.TimeoutError:
@@ -474,16 +680,19 @@ async def musical_led_mode():
     log_event("Starting Musical LED mode with mixing service coordination")
     update_status(mode="Musical LED")
 
+    # Clean up any audio processes that might interfere
+    # cleanup_audio_processes()  # Temporarily disabled to test direct approach
+
     # Turn on LED at start
     await set_brightness_and_power(50, force_update=True)  # Start with 50% brightness
 
-    # Try to use audio input with error resilience
+    # Try to use audio input with same approach as working lighting.py
     audio_available = False
     try:
-        # Test audio device availability first
-        with sd.InputStream(samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE) as test_stream:
+        # Test default audio device first (device=6 pulse or None for default)
+        with sd.InputStream(device=None, samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE) as test_stream:
             audio_available = True
-            log_event("Audio input device available for Musical LED mode")
+            log_event("Default audio input device available for Musical LED mode")
     except Exception as e:
         log_error("Audio device unavailable for Musical LED mode, falling back to lux monitoring", e)
         # Fall back to lux-based lighting instead of crashing
@@ -491,9 +700,12 @@ async def musical_led_mode():
         return
 
     try:
-        # Initialize audio stream
-        stream = sd.InputStream(samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE)
+        # Initialize audio stream using default device (None)
+        log_event(f"Initializing audio stream - Samplerate: {SAMPLERATE}, Channels: {CHANNELS}, Blocksize: {BLOCKSIZE}")
+        stream = sd.InputStream(device=None, samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE)
+        log_event("Using default audio device for audio stream")
         stream.start()
+        log_event(f"Audio stream started successfully - Device: {stream.device}, Active: {stream.active}")
         fallback_mode = False
         last_mixing_check = 0
 
@@ -510,9 +722,14 @@ async def musical_led_mode():
                 if check_mixing_service_active():
                     if stream is not None:
                         log_event("Mixing service recording detected - temporarily releasing audio device")
-                        stream.close()
-                        stream = None
-                        fallback_mode = True
+                        try:
+                            stream.stop()
+                            stream.close()
+                            stream = None
+                            fallback_mode = True
+                            log_event("Audio device successfully released for mixing service")
+                        except Exception as e:
+                            log_error("Error releasing audio device for mixing service", e)
 
                     # Use lux-based lighting while mixing service is recording
                     if fallback_mode:
@@ -536,9 +753,10 @@ async def musical_led_mode():
                     if fallback_mode and stream is None:
                         try:
                             log_event("Mixing service recording finished - resuming audio input")
-                            stream = sd.InputStream(samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE)
+                            stream = sd.InputStream(device=1, samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE)
                             stream.start()
                             fallback_mode = False
+                            log_event(f"Audio input resumed successfully - Device: {stream.device}, Active: {stream.active}")
                         except Exception as e:
                             log_error("Failed to resume audio input, staying in fallback mode", e)
                             fallback_mode = True
@@ -551,21 +769,61 @@ async def musical_led_mode():
                 continue
 
             try:
+                # Direct read approach like working lighting.py - no need to check available
                 data, overflowed = stream.read(BLOCKSIZE)
                 if overflowed:
-                    log_event("Audio buffer overflowed", "WARNING")
+                    log_event(f"Audio buffer overflowed - blocksize: {BLOCKSIZE}", "WARNING")
+                    update_status(error_count=current_status.get("error_count", 0) + 1)
 
-                current_rms = np.sqrt(np.mean(data**2))
-                rms_history.append(current_rms)
+                current_rms_value = np.sqrt(np.mean(data**2))
+                rms_history.append(current_rms_value)
                 smoothed_rms = np.mean(rms_history)
 
+                # Log audio processing every minute to track stream health
+                if int(current_time) % 60 == 0:
+                    log_event(f"Audio stream health check - RMS: {smoothed_rms:.6f}, Available data: {len(data)}, Stream active: {stream.active}")
+
+                # Log if RMS drops to zero unexpectedly (might indicate stream issue)
+                if smoothed_rms == 0.0 and len(rms_history) >= RMS_SMOOTHING_WINDOW:
+                    log_event(f"Warning: Zero RMS detected - Data length: {len(data)}, Stream available: {len(data)}", "WARNING")
+
+                # Update global RMS statistics
+                global current_rms, max_rms_minute, min_rms_minute, rms_minute_start
+                current_rms = smoothed_rms
+                current_time = time.time()
+
+                # Reset min/max every minute
+                if current_time - rms_minute_start > 60:
+                    max_rms_minute = current_rms
+                    min_rms_minute = current_rms
+                    rms_minute_start = current_time
+                else:
+                    max_rms_minute = max(max_rms_minute, current_rms)
+                    min_rms_minute = min(min_rms_minute, current_rms)
+
+                # Update status with RMS data for API access
+                update_status(
+                    current_rms=current_rms,
+                    max_rms_minute=max_rms_minute,
+                    min_rms_minute=min_rms_minute
+                )
+
+                # Use hardware-controlled smooth transitions - let Tuya controller handle smoothing
                 brightness_percent = get_brightness_from_rms(smoothed_rms)
 
-                # Log significant brightness changes in Musical LED mode
-                if abs(brightness_percent - previous_brightness_percent) >= 10:  # Log changes >= 10%
-                    log_event(f"Musical LED - Brightness: {brightness_percent:.1f}% (RMS: {smoothed_rms:.4f})")
+                # Update global current_brightness for display purposes
+                global current_brightness
+                current_brightness = brightness_percent
 
-                await set_brightness_and_power(brightness_percent, verbose_logging=False)
+                # Only send brightness updates when there's a meaningful change to allow hardware smooth transitions
+                brightness_change = abs(brightness_percent - previous_brightness_percent)
+
+                if brightness_change >= BRIGHTNESS_MINIMUM_CHANGE:  # Update when change >= defined
+                    tuya_brightness = int(map_range(brightness_percent, 1, 100, TUYA_BRIGHTNESS_MIN, TUYA_BRIGHTNESS_MAX))
+                    log_event(f"Musical LED - RMS: {smoothed_rms:.4f} -> Brightness: {brightness_percent:.1f}% (Tuya: {tuya_brightness})")
+
+                    # Send to hardware and let Tuya controller handle smooth transition
+                    await set_brightness_and_power(brightness_percent, verbose_logging=False)
 
                 try:
                     print(f"Musical LED - RMS: {smoothed_rms:.4f} -> Brightness: {brightness_percent:.1f}%", end='\r')
@@ -575,7 +833,25 @@ async def musical_led_mode():
                 await asyncio.sleep(0.01)
 
             except Exception as e:
-                log_error("Error in musical LED processing", e)
+                error_type = type(e).__name__
+                error_msg = str(e)
+                log_error(f"Error in musical LED processing - Type: {error_type}, Message: {error_msg}, Stream state: {stream.active if stream else 'None'}", e)
+                update_status(error_count=current_status.get("error_count", 0) + 1)
+
+                # Try to recover from audio stream errors
+                if stream and ("closed" in error_msg.lower() or "device" in error_msg.lower()):
+                    log_event("Audio stream appears corrupted, attempting to recreate stream", "WARNING")
+                    try:
+                        stream.stop()
+                        stream.close()
+                        stream = sd.InputStream(samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE)
+                        stream.start()
+                        log_event("Audio stream successfully recreated", "INFO")
+                    except Exception as stream_error:
+                        log_error("Failed to recreate audio stream, entering fallback mode", stream_error)
+                        fallback_mode = True
+                        stream = None
+
                 await asyncio.sleep(0.1)
 
     except Exception as e:
@@ -624,6 +900,14 @@ async def lighting_led_mode():
     # Check if Tuya LED is available
     tuya_available = current_status.get("connection_status") == "connected"
 
+    # Turn on LED at start of lux sensor mode
+    if tuya_available and d is not None:
+        try:
+            await set_brightness_and_power(50, force_update=True)  # Start with 50% brightness
+            log_event("LED turned ON for lux sensor mode")
+        except Exception as e:
+            log_error("Failed to turn on LED for lux sensor mode", e)
+
     while True:
         # Check if mode changed
         config = load_config()
@@ -634,6 +918,9 @@ async def lighting_led_mode():
             # Always read and display lux value
             lux_value = veml7700.lux
             brightness_percent = get_brightness_from_lux(lux_value, config)
+
+            # Save lux value to history for monitoring and exhibition display
+            save_lux_history(lux_value)
 
             # Try to control Tuya LED if available
             if tuya_available and d is not None:
@@ -672,17 +959,17 @@ async def manual_led_mode():
                 
             brightness_percent = float(config.get("brightness", 50))
             
-            # Update only if brightness changed
+            # Update only if brightness changed - let hardware handle smooth transitions
             if brightness_percent != last_brightness:
                 await set_brightness_and_power(brightness_percent, force_update=True)
-                log_event(f"Manual brightness set to {brightness_percent}%")
+                log_event(f"Manual brightness -> {brightness_percent}% (Hardware Smooth Transition)")
                 last_brightness = brightness_percent
                 
             try:
                 print(f"Manual LED - Brightness: {brightness_percent:.1f}%", end='\r')
             except (BrokenPipeError, OSError):
                 pass  # Ignore broken pipe errors in background service
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.1)  # Check config 10 times per second for fast response
             
         except Exception as e:
             log_error("Error in manual LED mode", e)
@@ -715,6 +1002,38 @@ async def initialize_tuya_device():
         update_status(connection_status="error", tuya_available=False)
         return False
 
+async def disable_mode():
+    """Disable mode - LED is off and service does nothing"""
+    global d
+    log_event("Disable mode started")
+    update_status(mode="Disable")
+
+    try:
+        # Turn off LED
+        if d:
+            await asyncio.wait_for(asyncio.to_thread(d.set_value, DP_ID_POWER, False), timeout=COMMAND_TIMEOUT_SECONDS)
+            update_status(power_state=False, brightness=0)
+
+        while True:
+            try:
+                config = load_config()
+                # Check if mode changed
+                if config["mode"] != "Disable":
+                    log_event("Mode changed from Disable")
+                    break
+
+                # Do nothing in disable mode
+                await asyncio.sleep(2)
+
+            except Exception as e:
+                log_error("Error in disable mode loop", e)
+                await asyncio.sleep(2)
+
+    except Exception as e:
+        log_error("Error in disable mode", e)
+
+    log_event("Disable mode stopped")
+
 async def main():
     """Main function that switches between modes based on config."""
     global d, power_on_state
@@ -746,6 +1065,8 @@ async def main():
                     await lighting_led_mode()
                 elif mode == "Manual LED":
                     await manual_led_mode()
+                elif mode == "Disable":
+                    await disable_mode()
                 else:
                     log_error(f"Unknown mode: {mode}")
                     await asyncio.sleep(1)

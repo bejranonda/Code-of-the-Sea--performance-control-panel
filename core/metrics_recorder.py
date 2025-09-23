@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Metrics Recording System for Exhibition Monitor
-Records lux values, CPU usage, CPU temperature, and disk usage every 5 minutes
+Records lux values, CPU usage, CPU temperature, and disk usage at configurable intervals
 """
 
 import json
@@ -11,18 +11,28 @@ import threading
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
 from hardware_monitor import HardwareMonitor
+from config_manager import ConfigManager
 
 
 class MetricsRecorder:
     """Records and manages system metrics for exhibition monitoring"""
 
-    def __init__(self, data_file: str = None, max_records: int = 10000):
-        self.data_file = data_file or os.path.join(
-            os.path.dirname(__file__), '..', 'data', 'exhibition_metrics.json'
+    def __init__(self, data_file: str = None, max_records: int = None):
+        # Initialize config manager
+        self.config_manager = ConfigManager()
+
+        # Get metrics service configuration
+        metrics_config = self.config_manager.get_service_config("Exhibition Metrics Service")
+
+        # Set up configuration values
+        self.data_file = data_file or metrics_config.get(
+            'data_file',
+            os.path.join(os.path.dirname(__file__), '..', 'data', 'exhibition_metrics.json')
         )
-        self.max_records = max_records
+        self.max_records = max_records or metrics_config.get('max_records', 10000)
+        self.recording_interval = metrics_config.get('recording_interval', 60)
+
         self.hardware_monitor = HardwareMonitor()
-        self.recording_interval = 300  # 5 minutes in seconds
         self.recording_thread = None
         self.should_stop = False
         self.last_lux_file = os.path.join(
@@ -186,7 +196,7 @@ class MetricsRecorder:
         }
 
     def start_recording(self):
-        """Start automatic recording every 5 minutes"""
+        """Start automatic recording at configured interval"""
         if self.recording_thread and self.recording_thread.is_alive():
             return
 
@@ -211,7 +221,7 @@ class MetricsRecorder:
             except Exception as e:
                 print(f"Error in recording loop: {e}")
 
-            # Wait for next interval (5 minutes)
+            # Wait for next interval
             for _ in range(self.recording_interval):
                 if self.should_stop:
                     break

@@ -1,6 +1,8 @@
 {
-  "timestamp": "2025-09-20T11:44:25.826445",
+  "timestamp": "2025-09-23T16:46:18.895662",
   "running_services": [],
-  "manually_stopped": [],
-  "version": "2.1.0"
+  "manually_stopped": [
+    "LED Service"
+  ],
+  "version": "3.0.0"
 }

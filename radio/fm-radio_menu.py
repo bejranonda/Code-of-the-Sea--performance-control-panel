@@ -123,8 +123,16 @@ def read_config():
             mode_mapping = {
                 "fixed": "Fixed",
                 "Fixed": "Fixed",
-                "search": "Search", 
-                "Search": "Search"
+                "search": "Search",
+                "Search": "Search",
+                "scan": "Scan",
+                "Scan": "Scan",
+                "loop": "Loop",
+                "Loop": "Loop",
+                "disable": "Disable",
+                "Disable": "Disable",
+                "disabled": "Disable",
+                "Disabled": "Disable"
             }
             radio_config["mode"] = mode_mapping.get(radio_config.get("mode", "Fixed"), "Fixed")
             
@@ -686,6 +694,11 @@ def main():
                     # LOOP MODE: Cycle through stations with timing
                     handle_loop_mode()
                     time.sleep(1)  # Check every second for timing
+
+                elif mode == "Disable":
+                    # DISABLE MODE: Service does nothing
+                    update_status(mode="Disable", frequency=0, signal_level=0)
+                    time.sleep(2)  # Do nothing in disable mode
 
                 else:
                     # In other modes (like Scanning), minimal operations

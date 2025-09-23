@@ -327,7 +327,10 @@
                 <button class="time-btn active" onclick="changeTimeRange(1)">1 Hour</button>
                 <button class="time-btn" onclick="changeTimeRange(6)">6 Hours</button>
                 <button class="time-btn" onclick="changeTimeRange(24)">24 Hours</button>
+                <button class="time-btn" onclick="changeTimeRange(72)">3 Days</button>
                 <button class="time-btn" onclick="changeTimeRange(168)">7 Days</button>
+                <button class="time-btn" onclick="changeTimeRange(336)">2 Weeks</button>
+                <button class="time-btn" onclick="changeTimeRange(672)">4 Weeks</button>
             </div>
             <div>
                 <span class="status-indicator status-online"></span>
@@ -410,6 +413,30 @@
             }
 
             console.log('Initializing charts...');
+            // Helper function to format timestamps for better readability
+            function formatTimestampLabels(timestamps) {
+                return timestamps.map(timestamp => {
+                    const date = new Date(timestamp);
+                    const now = new Date();
+                    const hoursDiff = (now - date) / (1000 * 60 * 60);
+
+                    if (hoursDiff < 1) {
+                        // Last hour: show minutes
+                        return date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+                    } else if (hoursDiff < 24) {
+                        // Last 24 hours: show hour and minute
+                        return date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+                    } else if (hoursDiff < 168) {
+                        // Last week: show day and hour
+                        return date.toLocaleDateString([], {weekday: 'short'}) + ' ' +
+                               date.toLocaleTimeString([], {hour: '2-digit'});
+                    } else {
+                        // Longer periods: show date only
+                        return date.toLocaleDateString([], {month: 'short', day: 'numeric'});
+                    }
+                });
+            }
+
             // Common chart options
             const commonOptions = {
                 responsive: true,
@@ -421,7 +448,18 @@
                 },
                 scales: {
                     x: {
-                        type: 'category'
+                        type: 'category',
+                        ticks: {
+                            maxTicksLimit: 10,
+                            callback: function(value, index, values) {
+                                // Skip some labels for better readability
+                                const totalTicks = values.length;
+                                if (totalTicks > 20) {
+                                    return index % Math.ceil(totalTicks / 10) === 0 ? this.getLabelForValue(value) : '';
+                                }
+                                return this.getLabelForValue(value);
+                            }
+                        }
                     },
                     y: {
                         beginAtZero: true
@@ -429,12 +467,15 @@
                 }
             };
 
+            // Format timestamp labels for better readability
+            const formattedLabels = formatTimestampLabels(chartData.timestamps);
+
             // Lux Chart
             try {
                 charts.lux = new Chart(document.getElementById('luxChart'), {
                     type: 'line',
                     data: {
-                        labels: chartData.timestamps,
+                        labels: formattedLabels,
                         datasets: [{
                             label: 'Lux Level',
                             data: chartData.lux_values,
@@ -467,7 +508,7 @@
             charts.cpu = new Chart(document.getElementById('cpuChart'), {
                 type: 'line',
                 data: {
-                    labels: chartData.timestamps,
+                    labels: formattedLabels,
                     datasets: [{
                         data: chartData.cpu_usage,
                         borderColor: '#3b82f6',
@@ -496,7 +537,7 @@
             charts.temp = new Chart(document.getElementById('tempChart'), {
                 type: 'line',
                 data: {
-                    labels: chartData.timestamps,
+                    labels: formattedLabels,
                     datasets: [{
                         data: chartData.cpu_temperature,
                         borderColor: '#ef4444',
@@ -524,7 +565,7 @@
             charts.disk = new Chart(document.getElementById('diskChart'), {
                 type: 'line',
                 data: {
-                    labels: chartData.timestamps,
+                    labels: formattedLabels,
                     datasets: [{
                         data: chartData.disk_usage,
                         borderColor: '#10b981',
@@ -553,12 +594,31 @@
         function changeTimeRange(hours) {
             currentTimeRange = hours;
 
-            // Update button states
+            // Update button states - remove active class from all buttons
             document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
+
+            // Add active class to the clicked button
             event.target.classList.add('active');
 
             // Reload page with new time range
             window.location.href = `/exhibition/dashboard?hours=${hours}`;
+        }
+
+        // Initialize correct active button on page load
+        function initializeActiveButton() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentHours = parseInt(urlParams.get('hours')) || 1;
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
+
+            // Find and activate the correct button
+            document.querySelectorAll('.time-btn').forEach(btn => {
+                const btnOnClick = btn.getAttribute('onclick');
+                if (btnOnClick && btnOnClick.includes(`changeTimeRange(${currentHours})`)) {
+                    btn.classList.add('active');
+                }
+            });
         }
 
         function refreshData() {
@@ -573,6 +633,7 @@
         // Initialize charts when page loads
         document.addEventListener('DOMContentLoaded', function() {
             initializeCharts();
+            initializeActiveButton();
         });
     </script>
 </body>

@@ -3,8 +3,9 @@
 
 LED_SCRIPT="/home/payas/cos/led/lighting_menu.py"
 PYTHON_PATH="/home/payas/venv/bin/python"
-PIDFILE="/tmp/led_service.pid"
+PIDFILE="/home/payas/cos/led/led_service.pid"  # Moved from /tmp to project directory
 LOGFILE="/home/payas/cos/led/led_service_management.log"
+STATUSFILE="/home/payas/cos/led/led_status.json"
 
 # Function to log events with timestamp
 log_event() {
@@ -12,26 +13,60 @@ log_event() {
     echo "LED SERVICE SCRIPT: $1"
 }
 
+# Function to detect and adopt orphaned processes
+adopt_orphan() {
+    local orphan_pids=$(pgrep -f "lighting_menu.py" 2>/dev/null)
+    if [ -n "$orphan_pids" ]; then
+        # Check if orphan is actually working by checking status file age
+        if [ -f "$STATUSFILE" ]; then
+            local status_age=$(($(date +%s) - $(stat -c %Y "$STATUSFILE" 2>/dev/null || echo 0)))
+            if [ $status_age -lt 30 ]; then  # Status file updated within 30 seconds
+                # Orphan is working, adopt it
+                local main_pid=$(echo $orphan_pids | awk '{print $1}')
+                echo $main_pid > "$PIDFILE"
+                log_event "Adopted working orphaned process (PID: $main_pid) - PID file recreated"
+                return 0
+            else
+                log_event "Found orphaned process with stale status (age: ${status_age}s) - will terminate and restart"
+                pkill -f "lighting_menu.py" 2>/dev/null
+                sleep 2
+            fi
+        else
+            log_event "Found orphaned process with no status file - will terminate and restart"
+            pkill -f "lighting_menu.py" 2>/dev/null
+            sleep 2
+        fi
+    fi
+    return 1
+}
+
 start_service() {
     log_event "START command received - checking for existing instances"
 
-    # First kill any existing instances
-    EXISTING_PIDS=$(pgrep -f "lighting_menu.py" 2>/dev/null)
-    if [ -n "$EXISTING_PIDS" ]; then
-        log_event "Found existing instances: $EXISTING_PIDS - terminating them"
-        pkill -f "lighting_menu.py"
-        sleep 2
-    fi
-
+    # Check if we have a valid PID file first
     if [ -f "$PIDFILE" ]; then
         PID=$(cat "$PIDFILE")
         if ps -p "$PID" > /dev/null 2>&1; then
             log_event "Service already running (PID: $PID) - start request ignored"
-            return 1
+            return 0
         else
-            log_event "Removing stale PID file"
+            log_event "PID file exists but process not running - removing stale PID file"
             rm -f "$PIDFILE"
         fi
+    fi
+
+    # Try to adopt orphaned processes first (avoid unnecessary restarts)
+    if adopt_orphan; then
+        log_event "Successfully adopted orphaned process - no restart needed"
+        return 0
+    fi
+
+    # Kill any remaining instances after orphan adoption failed
+    EXISTING_PIDS=$(pgrep -f "lighting_menu.py" 2>/dev/null)
+    if [ -n "$EXISTING_PIDS" ]; then
+        log_event "Found remaining instances: $EXISTING_PIDS - terminating them"
+        pkill -f "lighting_menu.py"
+        sleep 2
     fi
 
     log_event "Starting LED service..."
@@ -100,12 +135,23 @@ status_service() {
             return 0
         else
             log_event "PID file exists but process is not running (stale PID file)"
-            return 1
+            rm -f "$PIDFILE"
+            # Check for orphans after removing stale PID file
+            if adopt_orphan; then
+                log_event "Adopted orphaned process during status check"
+                return 0
+            else
+                return 1
+            fi
         fi
     else
-        if pgrep -f "lighting_menu.py" > /dev/null; then
+        # No PID file - check for orphans and try to adopt them
+        if adopt_orphan; then
+            log_event "Found and adopted orphaned process during status check"
+            return 0
+        elif pgrep -f "lighting_menu.py" > /dev/null; then
             ORPHAN_PIDS=$(pgrep -f "lighting_menu.py")
-            log_event "Service appears to be running but no PID file found (orphan PIDs: $ORPHAN_PIDS)"
+            log_event "Found non-working orphaned processes (PIDs: $ORPHAN_PIDS)"
             return 2
         else
             log_event "Service is not running"
