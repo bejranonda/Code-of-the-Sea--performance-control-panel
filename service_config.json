@@ -4,8 +4,8 @@
     "brightness": 50,
     "lux_min": "1",
     "lux_max": "100",
-    "mic_rms_quiet": "0.002",
-    "mic_rms_loud": "0.009"
+    "mic_rms_quiet": "0.001",
+    "mic_rms_loud": "0.013"
   },
   "Radio Service": {
     "mode": "Scan",
