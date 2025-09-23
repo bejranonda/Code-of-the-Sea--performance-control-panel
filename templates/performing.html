@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code of the Sea - Performing Mode</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #667eea;
+      --primary-dark: #5a6fd8;
+      --secondary: #764ba2;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --info: #3b82f6;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: var(--gray-800);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      font-weight: 700;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .status-display {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: var(--gray-100);
+      border-radius: 15px;
+    }
+
+    .status-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--gray-800);
+      margin-bottom: 10px;
+    }
+
+    .status-value {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+
+    .mode-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .mode-button {
+      padding: 20px;
+      border: 3px solid var(--gray-300);
+      border-radius: 15px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .mode-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .mode-button.active {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    .mode-button i {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .control-panel {
+      background: var(--gray-100);
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+    }
+
+    .slider-container {
+      margin: 20px 0;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 12px;
+      border-radius: 6px;
+      background: var(--gray-200);
+      outline: none;
+      opacity: 1;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .slider::-webkit-slider-thumb:hover {
+      background: var(--primary-dark);
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Firefox compatibility */
+    .slider::-moz-range-thumb {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      border: none;
+    }
+
+    .slider::-moz-range-track {
+      width: 100%;
+      height: 12px;
+      background: var(--gray-200);
+      border-radius: 6px;
+      border: none;
+    }
+
+    .slider-value {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-left: 15px;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-back {
+      background: var(--gray-600);
+      color: white;
+    }
+
+    .audio-levels {
+      background: #e0f2fe;
+      padding: 20px;
+      border-radius: 12px;
+      border: 2px solid #b3e5fc;
+      margin: 20px 0;
+    }
+
+    .audio-levels h3 {
+      color: #01579b;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .level-display {
+      font-family: monospace;
+      font-size: 1rem;
+      color: #0277bd;
+      line-height: 1.6;
+    }
+
+    .level-bar {
+      width: 100%;
+      height: 20px;
+      background: var(--gray-200);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .level-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--success), var(--warning), var(--danger));
+      transition: width 0.1s ease;
+      border-radius: 10px;
+    }
+
+    .other-services {
+      background: rgba(239, 68, 68, 0.1);
+      border: 2px solid rgba(239, 68, 68, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .other-services h3 {
+      color: var(--danger);
+      margin-bottom: 15px;
+    }
+
+    .service-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .service-item {
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      border-left: 4px solid var(--danger);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .mode-selector {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-theater-masks"></i> Performance Mode</h1>
+
+    <!-- Navigation -->
+    <div style="text-align: center; margin: 20px 0;">
+      <a href="/" class="btn btn-back">
+        <i class="fas fa-arrow-left"></i> Back to Control Panel
+      </a>
+    </div>
+
+    <div class="card">
+      <!-- Current Status Display -->
+      <div class="status-display">
+        <div class="status-title">LED Status</div>
+        <div class="status-value" id="brightnessDisplay">0%</div>
+        <div style="color: var(--gray-600); margin-top: 10px;">
+          Mode: <span id="currentMode" style="font-weight: bold;">Disable</span>
+        </div>
+      </div>
+
+      <!-- Mode Selector -->
+      <div class="mode-selector">
+        <div class="mode-button" id="autoMode" onclick="setPerformingMode('auto')">
+          <i class="fas fa-microphone"></i>
+          <div>Auto</div>
+          <small style="opacity: 0.8;">Microphone Control</small>
+        </div>
+        <div class="mode-button" id="manualMode" onclick="setPerformingMode('manual')">
+          <i class="fas fa-sliders-h"></i>
+          <div>Manual</div>
+          <small style="opacity: 0.8;">Manual Control</small>
+        </div>
+        <div class="mode-button active" id="disableMode" onclick="setPerformingMode('disable')">
+          <i class="fas fa-stop"></i>
+          <div>Disable</div>
+          <small style="opacity: 0.8;">Disabled</small>
+        </div>
+      </div>
+
+      <!-- Control Panels -->
+      <div id="autoControls" class="control-panel" style="display: none;">
+        <h3><i class="fas fa-microphone"></i> Automatic Microphone Control</h3>
+        <div class="audio-levels">
+          <h3>Real-time Audio Levels</h3>
+          <div class="level-display">
+            <div>Current RMS: <span id="currentRms">--</span></div>
+            <div>Max (1min): <span id="maxRms">--</span></div>
+            <div>Min (1min): <span id="minRms">--</span></div>
+          </div>
+          <div class="level-bar">
+            <div class="level-fill" id="audioLevelBar" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- RMS Configuration -->
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin: 20px 0; border: 2px solid #e9ecef;">
+          <h4 style="margin-bottom: 15px; color: var(--gray-800);"><i class="fas fa-cog"></i> RMS Sensitivity Settings</h4>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px;">
+            <div>
+              <label style="font-weight: 600; margin-bottom: 5px; display: block;">Quiet Threshold:</label>
+              <input type="number" id="micRmsQuiet" step="0.001" min="0" max="1"
+                     style="width: 100%; padding: 8px; border: 2px solid var(--gray-300); border-radius: 6px; font-size: 1rem;"
+                     onchange="updateRmsSettings()" oninput="validateRmsInput(this)">
+              <small style="color: var(--gray-600); font-size: 0.9rem;">Minimum RMS for LED activation</small>
+            </div>
+
+            <div>
+              <label style="font-weight: 600; margin-bottom: 5px; display: block;">Loud Threshold:</label>
+              <input type="number" id="micRmsLoud" step="0.001" min="0" max="1"
+                     style="width: 100%; padding: 8px; border: 2px solid var(--gray-300); border-radius: 6px; font-size: 1rem;"
+                     onchange="updateRmsSettings()" oninput="validateRmsInput(this)">
+              <small style="color: var(--gray-600); font-size: 0.9rem;">Maximum RMS for full brightness</small>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 15px;">
+            <button onclick="setRmsToCurrentMinMax()" class="btn btn-primary" style="margin-right: 10px;">
+              <i class="fas fa-sync"></i> Set to Current Min/Max
+            </button>
+            <button onclick="resetRmsToDefaults()" class="btn" style="background: var(--gray-500); color: white;">
+              <i class="fas fa-undo"></i> Reset to Defaults
+            </button>
+          </div>
+
+          <div id="rmsError" style="color: var(--danger); margin-top: 10px; font-size: 0.9rem; display: none;"></div>
+        </div>
+
+        <p style="color: var(--gray-600); margin-top: 15px;">
+          LED brightness automatically adjusts based on microphone input levels between the quiet and loud thresholds.
+        </p>
+      </div>
+
+      <div id="manualControls" class="control-panel" style="display: none;">
+        <h3><i class="fas fa-sliders-h"></i> Manual Brightness Control</h3>
+        <div class="slider-container">
+          <label style="font-weight: 600; margin-bottom: 10px; display: block;">Brightness:</label>
+          <input type="range" id="brightnessSlider" min="0" max="100" value="0"
+                 class="slider" oninput="updateBrightness(this.value)" onchange="updateBrightness(this.value)">
+          <span class="slider-value" id="sliderValue">0%</span>
+        </div>
+        <p style="color: var(--gray-600); margin-top: 15px;">
+          Drag the slider to instantly control LED brightness.
+        </p>
+      </div>
+
+      <div id="disableControls" class="control-panel">
+        <h3><i class="fas fa-stop"></i> Performance Mode Disabled</h3>
+        <p style="color: var(--gray-600);">
+          LED service is disabled. Select Auto or Manual mode to begin performing.
+        </p>
+      </div>
+
+      <!-- Other Services Status -->
+      <div class="other-services" id="otherServicesPanel" style="display: none;">
+        <h3><i class="fas fa-exclamation-triangle"></i> Other Services Stopped</h3>
+        <p style="margin-bottom: 15px;">The following services have been stopped to prioritize performance:</p>
+        <div class="service-list" id="stoppedServicesList">
+          <!-- Services will be populated here -->
+        </div>
+        <p style="margin-top: 15px; font-size: 0.9rem; color: var(--gray-600);">
+          These services will automatically restart when you exit performance mode.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentPerformingMode = 'stop';
+    let updateInterval = null;
+    let brightnessUpdateTimeout = null;
+
+    function setPerformingMode(mode) {
+      // Update UI
+      document.querySelectorAll('.mode-button').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(mode + 'Mode').classList.add('active');
+
+      // Hide all control panels
+      document.getElementById('autoControls').style.display = 'none';
+      document.getElementById('manualControls').style.display = 'none';
+      document.getElementById('disableControls').style.display = 'none';
+
+      // Show relevant control panel
+      if (mode === 'auto') {
+        document.getElementById('autoControls').style.display = 'block';
+        document.getElementById('otherServicesPanel').style.display = 'block';
+        startAudioMonitoring();
+        loadRmsSettings();
+      } else if (mode === 'manual') {
+        document.getElementById('manualControls').style.display = 'block';
+        document.getElementById('otherServicesPanel').style.display = 'block';
+        stopAudioMonitoring();
+      } else {
+        document.getElementById('disableControls').style.display = 'block';
+        document.getElementById('otherServicesPanel').style.display = 'none';
+        stopAudioMonitoring();
+      }
+
+      currentPerformingMode = mode;
+      document.getElementById('currentMode').textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
+
+      // Send mode change to server
+      updatePerformingMode(mode);
+
+      // Save mode to localStorage for persistence across page reloads
+      localStorage.setItem('performingMode', mode);
+    }
+
+    function updateBrightness(value) {
+      console.log('updateBrightness called with value:', value);
+
+      // Update display elements
+      const sliderValueEl = document.getElementById('sliderValue');
+      const brightnessDisplayEl = document.getElementById('brightnessDisplay');
+
+      if (sliderValueEl) {
+        sliderValueEl.textContent = value + '%';
+      }
+      if (brightnessDisplayEl) {
+        brightnessDisplayEl.textContent = value + '%';
+      }
+
+      // Send brightness update to server with debouncing (only in manual mode)
+      if (currentPerformingMode === 'manual') {
+        // Clear any pending update
+        if (brightnessUpdateTimeout) {
+          clearTimeout(brightnessUpdateTimeout);
+        }
+
+        // Set a new timeout to update after 50ms of no changes for fastest response
+        brightnessUpdateTimeout = setTimeout(() => {
+          setBrightness(value);
+          brightnessUpdateTimeout = null;
+        }, 50);
+      }
+    }
+
+    function startAudioMonitoring() {
+      if (updateInterval) return;
+
+      updateInterval = setInterval(() => {
+        fetch('/api/led_rms_status')
+          .then(response => response.json())
+          .then(data => {
+            if (data.current_rms !== undefined) {
+              document.getElementById('currentRms').textContent = data.current_rms.toFixed(4);
+              document.getElementById('maxRms').textContent = data.max_rms.toFixed(4);
+              document.getElementById('minRms').textContent = data.min_rms.toFixed(4);
+              document.getElementById('brightnessDisplay').textContent = data.brightness.toFixed(1) + '%';
+
+              // Update audio level bar (scale RMS to percentage)
+              const rmsPercent = Math.min(100, (data.current_rms / 0.1) * 100);
+              document.getElementById('audioLevelBar').style.width = rmsPercent + '%';
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching audio levels:', error);
+          });
+      }, 200); // Update every 200ms for smooth audio feedback
+    }
+
+    function stopAudioMonitoring() {
+      if (updateInterval) {
+        clearInterval(updateInterval);
+        updateInterval = null;
+      }
+    }
+
+    function updatePerformingMode(mode) {
+      const formData = new FormData();
+      formData.append('mode', mode === 'auto' ? 'Musical LED' : mode === 'manual' ? 'Manual LED' : 'Disable');
+      formData.append('brightness', mode === 'manual' ? document.getElementById('brightnessSlider').value : 50);
+
+      fetch('/performing/set_mode', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          if (data.stopped_services) {
+            updateStoppedServicesList(data.stopped_services);
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error updating performing mode:', error);
+      });
+    }
+
+    function setBrightness(brightness) {
+      console.log('setBrightness called with:', brightness);
+
+      // Validate brightness value on frontend
+      const brightnessValue = parseInt(brightness);
+      if (isNaN(brightnessValue) || brightnessValue < 0 || brightnessValue > 100) {
+        console.error('Invalid brightness value:', brightness);
+        alert('Invalid brightness value. Must be between 0 and 100.');
+        return;
+      }
+
+      // Try URL-encoded form data instead of FormData
+      const params = new URLSearchParams();
+      params.append('brightness', brightnessValue.toString());
+
+      console.log('Sending URLSearchParams with brightness:', brightnessValue);
+
+      fetch('/performing/direct_brightness', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params,
+        cache: 'no-cache'
+      })
+      .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+
+        if (!response.ok) {
+          return response.text().then(text => {
+            console.error('Response text:', text);
+            throw new Error(`HTTP error! status: ${response.status} - ${text}`);
+          });
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Brightness updated successfully:', data);
+        if (data.status === 'success') {
+          console.log('Brightness confirmed set to:', data.brightness);
+        } else {
+          console.error('Server returned error:', data.message);
+          alert('Server error: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error setting brightness:', error);
+        alert('Failed to update brightness: ' + error.message);
+      });
+    }
+
+    // RMS Settings Functions
+    function validateRmsInput(input) {
+      const value = parseFloat(input.value);
+      const errorDiv = document.getElementById('rmsError');
+
+      // Clear previous error styles
+      input.style.borderColor = 'var(--gray-300)';
+      errorDiv.style.display = 'none';
+
+      if (isNaN(value) || value < 0 || value > 1) {
+        input.style.borderColor = 'var(--danger)';
+        errorDiv.textContent = 'RMS values must be between 0 and 1';
+        errorDiv.style.display = 'block';
+        return false;
+      }
+
+      // Check if quiet > loud
+      const quietInput = document.getElementById('micRmsQuiet');
+      const loudInput = document.getElementById('micRmsLoud');
+      const quietVal = parseFloat(quietInput.value);
+      const loudVal = parseFloat(loudInput.value);
+
+      if (!isNaN(quietVal) && !isNaN(loudVal) && quietVal >= loudVal) {
+        input.style.borderColor = 'var(--danger)';
+        errorDiv.textContent = 'Quiet threshold must be less than loud threshold';
+        errorDiv.style.display = 'block';
+        return false;
+      }
+
+      return true;
+    }
+
+    function updateRmsSettings() {
+      const quietInput = document.getElementById('micRmsQuiet');
+      const loudInput = document.getElementById('micRmsLoud');
+
+      // Validate both inputs
+      if (!validateRmsInput(quietInput) || !validateRmsInput(loudInput)) {
+        return;
+      }
+
+      const quietValue = parseFloat(quietInput.value);
+      const loudValue = parseFloat(loudInput.value);
+
+      // Send update to server
+      const formData = new FormData();
+      formData.append('mic_rms_quiet', quietValue);
+      formData.append('mic_rms_loud', loudValue);
+
+      fetch('/performing/update_rms', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          console.log('RMS settings updated successfully');
+        } else {
+          console.error('Failed to update RMS settings:', data.message);
+          alert('Failed to update RMS settings: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error updating RMS settings:', error);
+        alert('Error updating RMS settings: ' + error.message);
+      });
+    }
+
+    function setRmsToCurrentMinMax() {
+      const currentRms = parseFloat(document.getElementById('currentRms').textContent);
+      const maxRms = parseFloat(document.getElementById('maxRms').textContent);
+      const minRms = parseFloat(document.getElementById('minRms').textContent);
+
+      if (isNaN(maxRms) || isNaN(minRms) || maxRms === 0 || minRms === 0) {
+        alert('No valid RMS data available. Please wait for audio monitoring to collect data.');
+        return;
+      }
+
+      document.getElementById('micRmsQuiet').value = minRms.toFixed(3);
+      document.getElementById('micRmsLoud').value = maxRms.toFixed(3);
+
+      updateRmsSettings();
+    }
+
+    function resetRmsToDefaults() {
+      document.getElementById('micRmsQuiet').value = '0.002';
+      document.getElementById('micRmsLoud').value = '0.04';
+      updateRmsSettings();
+    }
+
+    function loadRmsSettings() {
+      // Load current RMS settings from server
+      fetch('/performing/get_rms_settings')
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            document.getElementById('micRmsQuiet').value = data.mic_rms_quiet || '0.002';
+            document.getElementById('micRmsLoud').value = data.mic_rms_loud || '0.04';
+          }
+        })
+        .catch(error => {
+          console.error('Error loading RMS settings:', error);
+        });
+    }
+
+    function updateStoppedServicesList(services) {
+      const list = document.getElementById('stoppedServicesList');
+      list.innerHTML = '';
+
+      services.forEach(service => {
+        const item = document.createElement('div');
+        item.className = 'service-item';
+        item.innerHTML = `<i class="fas fa-stop-circle"></i> ${service}`;
+        list.appendChild(item);
+      });
+    }
+
+    // Initialize page
+    window.onload = function() {
+      console.log('Page loaded, initializing...');
+
+      // Initialize slider event listeners
+      const slider = document.getElementById('brightnessSlider');
+      if (slider) {
+        console.log('Slider found, setting up event listeners');
+
+        // Add event listeners to ensure slider works across all browsers
+        slider.addEventListener('input', function(e) {
+          console.log('Slider input event:', e.target.value);
+          updateBrightness(e.target.value);
+        });
+
+        slider.addEventListener('change', function(e) {
+          console.log('Slider change event:', e.target.value);
+          updateBrightness(e.target.value);
+        });
+      } else {
+        console.error('Brightness slider not found!');
+      }
+
+      // Check localStorage first, then server status, then fallback to disable
+      let savedMode = localStorage.getItem('performingMode');
+
+      fetch('/performing/status')
+        .then(response => response.json())
+        .then(data => {
+          console.log('Status loaded:', data);
+          // Priority: server status > localStorage > disable
+          let modeToSet = data.current_mode || savedMode || 'disable';
+          setPerformingMode(modeToSet);
+
+          if (data.brightness !== undefined) {
+            const sliderEl = document.getElementById('brightnessSlider');
+            if (sliderEl) {
+              sliderEl.value = data.brightness;
+            }
+            document.getElementById('sliderValue').textContent = data.brightness + '%';
+            document.getElementById('brightnessDisplay').textContent = data.brightness + '%';
+          }
+        })
+        .catch(error => {
+          console.error('Error loading status:', error);
+          // Fallback to localStorage or disable
+          setPerformingMode(savedMode || 'disable');
+        });
+    };
+  </script>
+</body>
+</html>

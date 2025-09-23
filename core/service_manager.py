@@ -62,7 +62,11 @@ class ServiceManager:
         """Start a service with comprehensive error handling"""
         try:
             self.cleanup_processes()
-            
+
+            # For LED Service, use the management script instead of direct Python execution
+            if name == "LED Service":
+                return self._start_led_service_via_script()
+
             # Stop any existing instance of this service before starting
             if name in self.processes and psutil.pid_exists(self.processes[name].pid):
                 self.log_event(f"Stopping existing instance of {name} before starting new one")
@@ -81,25 +85,25 @@ class ServiceManager:
                     time.sleep(1)
             except Exception as e:
                 self.log_event(f"Error checking for existing {script_name} processes: {e}")
-            
+
             # Set working directory
             if not working_dir:
                 working_dir = os.path.dirname(script_path) or "."
-            
+
             self.log_event(f"Script path: {script_path}, Working dir: {working_dir}, Full path: {os.path.abspath(working_dir)}")
-            
+
             # Check if virtual environment should be used
             venv_python = self._get_venv_python()
-            
+
             # Use absolute path for script to avoid path resolution issues
             abs_script_path = os.path.abspath(script_path)
-            
+
             if venv_python:
                 cmd = [venv_python, abs_script_path]
                 self.log_event(f"Using virtual environment: {venv_python}")
             else:
                 cmd = ["python3", abs_script_path]
-            
+
             # All services redirect stdout/stderr to null to avoid broken pipe errors
             proc = subprocess.Popen(
                 cmd,
@@ -160,36 +164,89 @@ class ServiceManager:
                 return full_path
         
         return None
-    
+
+    def _start_led_service_via_script(self) -> bool:
+        """Start LED service using the management script"""
+        try:
+            script_path = "/home/payas/cos/scripts/manage_led_service.sh"
+            result = subprocess.run([script_path, "start"], capture_output=True, text=True, timeout=10)
+
+            if result.returncode == 0:
+                self.log_event("LED service started successfully via management script")
+                # Don't track the process in self.processes since it's managed by the script
+                return True
+            else:
+                self.log_error(f"LED service start script failed: {result.stderr}")
+                return False
+
+        except Exception as e:
+            self.log_error(f"Error starting LED service via script", e)
+            return False
+
+    def _stop_led_service_via_script(self) -> bool:
+        """Stop LED service using the management script"""
+        try:
+            script_path = "/home/payas/cos/scripts/manage_led_service.sh"
+            result = subprocess.run([script_path, "stop"], capture_output=True, text=True, timeout=10)
+
+            if result.returncode == 0:
+                self.log_event("LED service stopped successfully via management script")
+                return True
+            else:
+                self.log_error(f"LED service stop script failed: {result.stderr}")
+                return False
+
+        except Exception as e:
+            self.log_error(f"Error stopping LED service via script", e)
+            return False
+
     def stop_service(self, name: str) -> bool:
         """Stop a service with comprehensive error handling"""
         try:
+            # For LED Service, use the management script
+            if name == "LED Service":
+                return self._stop_led_service_via_script()
+
             if name not in self.processes:
                 self.log_event(f"Service {name} not running")
                 return True
-            
+
             proc = self.processes[name]
             try:
-                # Graceful shutdown
-                os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
-                self.log_event(f"Stopped service: {name}")
-                
-                # Wait for graceful shutdown
-                time.sleep(0.5)
-                
-                # Force kill if still running
-                if psutil.pid_exists(proc.pid):
-                    os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
-                    self.log_event(f"Force killed service: {name}")
-                    
+                # Get our own process group to avoid killing ourselves
+                our_pgid = os.getpgid(os.getpid())
+                target_pgid = os.getpgid(proc.pid)
+
+                # Safety check: Don't kill our own process group
+                if target_pgid == our_pgid:
+                    self.log_event(f"WARNING: {name} is in same process group as dashboard - using direct process kill")
+                    # Kill only the specific process, not the whole group
+                    proc.terminate()
+                    time.sleep(0.5)
+                    if psutil.pid_exists(proc.pid):
+                        proc.kill()
+                        self.log_event(f"Force killed process for {name}")
+                else:
+                    # Graceful shutdown of process group
+                    os.killpg(target_pgid, signal.SIGTERM)
+                    self.log_event(f"Stopped service: {name}")
+
+                    # Wait for graceful shutdown
+                    time.sleep(0.5)
+
+                    # Force kill if still running
+                    if psutil.pid_exists(proc.pid):
+                        os.killpg(target_pgid, signal.SIGKILL)
+                        self.log_event(f"Force killed service: {name}")
+
             except ProcessLookupError:
                 self.log_event(f"Process for {name} already terminated")
             except Exception as e:
                 self.log_error(f"Error stopping service {name}", e)
-            
+
             self.processes.pop(name, None)
             return True
-            
+
         except Exception as e:
             self.log_error(f"Unexpected error stopping service {name}", e)
             return False

@@ -765,6 +765,10 @@ def main():
                             config["mode"] = "Auto"
                             write_config(config)
 
+                elif mode == "Disable":
+                    # Disable mode - service does nothing
+                    update_status(mode="Disable", status="disabled")
+
                 else:
                     update_status(status="idle")
 

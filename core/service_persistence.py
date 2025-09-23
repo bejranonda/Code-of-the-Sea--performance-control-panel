@@ -140,13 +140,36 @@ class ServicePersistenceManager:
                 with open(pid_file, 'r') as f:
                     pid = int(f.read().strip())
 
-                # Check if process with this PID exists
+                # Use psutil for safer process checking instead of os.kill()
                 try:
-                    os.kill(pid, 0)  # Signal 0 checks if process exists
-                    return True
-                except OSError:
+                    import psutil
+                    if psutil.pid_exists(pid):
+                        # Double-check it's actually our service process
+                        proc = psutil.Process(pid)
+                        # Check if it's not a zombie and has a reasonable name
+                        if proc.status() != psutil.STATUS_ZOMBIE:
+                            return True
+
                     # PID file exists but process doesn't - clean up stale PID file
                     os.remove(pid_file)
+
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    # Process doesn't exist - clean up stale PID file
+                    try:
+                        os.remove(pid_file)
+                    except:
+                        pass
+                except ImportError:
+                    # Fallback to original method if psutil not available
+                    try:
+                        os.kill(pid, 0)  # Signal 0 checks if process exists
+                        return True
+                    except OSError:
+                        # PID file exists but process doesn't - clean up stale PID file
+                        try:
+                            os.remove(pid_file)
+                        except:
+                            pass
 
             return False
 

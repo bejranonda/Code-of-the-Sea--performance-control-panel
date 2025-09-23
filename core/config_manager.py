@@ -40,6 +40,11 @@ class ConfigManager:
                 "mic_volume": 65,
                 "recording_duration": 30,
                 "status_file": "mixing/mixing_status.json"
+            },
+            "Exhibition Metrics Service": {
+                "recording_interval": 60,
+                "max_records": 10000,
+                "data_file": "data/exhibition_metrics.json"
             }
         }
     
@@ -152,6 +157,11 @@ class ConfigManager:
                 processed["speed"] = int(processed["speed"])
             elif service_name == "Broadcast Service" and "volume" in processed:
                 processed["volume"] = int(processed["volume"])
+            elif service_name == "Exhibition Metrics Service":
+                if "recording_interval" in processed:
+                    processed["recording_interval"] = int(processed["recording_interval"])
+                if "max_records" in processed:
+                    processed["max_records"] = int(processed["max_records"])
         except ValueError as e:
             print(f"Error converting config values for {service_name}: {e}")
         

@@ -388,6 +388,10 @@
                         <span class="metric-label">WiFi Status:</span>
                         <span class="metric-value ${data.network.detailed_wifi_status?.wifi?.connected ? 'status-healthy' : 'status-error'}">${data.network.detailed_wifi_status?.wifi?.connected ? '✅ Connected' : '❌ Disconnected'}</span>
                     </div>
+                    <div class="metric">
+                        <span class="metric-label">LAN Connection:</span>
+                        <span class="metric-value ${data.network.interfaces?.eth0 ? 'status-healthy' : 'status-error'}">${data.network.interfaces?.eth0 ? '🔌 Connected' : '❌ Disconnected'}</span>
+                    </div>
                     ${data.network.detailed_wifi_status?.wifi?.essid ? `
                     <div class="metric">
                         <span class="metric-label">Network:</span>
@@ -406,6 +410,10 @@
                         <span class="metric-value ${data.network.detailed_wifi_status.internet_accessible ? 'status-healthy' : 'status-error'}">${data.network.detailed_wifi_status.internet_accessible ? '🌍 Available' : '🚫 Blocked'}</span>
                     </div>
                     ` : ''}
+                    <div class="metric clickable" onclick="showLastLostConnection()" style="cursor: pointer; background: var(--gray-100); padding: 8px; border-radius: 5px; margin-top: 10px;">
+                        <span class="metric-label">📊 Show last lost connection</span>
+                        <span class="metric-value">Click to view</span>
+                    </div>
                 </div>
 
                 <!-- Hardware Status -->
@@ -432,9 +440,9 @@
                         <span class="metric-label">Main Service Status:</span>
                         <span class="metric-value ${data.services.main_service_healthy ? 'status-healthy' : 'status-error'}">${data.services.main_service_healthy ? '✅ Healthy' : '❌ Issues'}</span>
                     </div>
-                    <div class="metric">
+                    <div class="metric clickable" onclick="showErrorDetails()" style="cursor: pointer; background: var(--gray-100); padding: 8px; border-radius: 5px;">
                         <span class="metric-label">Error Count:</span>
-                        <span class="metric-value ${data.services.error_count > 5 ? 'status-error' : data.services.error_count > 0 ? 'status-warning' : 'status-healthy'}">${data.services.error_count}</span>
+                        <span class="metric-value ${data.services.error_count > 5 ? 'status-error' : data.services.error_count > 0 ? 'status-warning' : 'status-healthy'}">${data.services.error_count} (Click to show details)</span>
                     </div>
                     <div class="metric">
                         <span class="metric-label">Last Restart:</span>
@@ -470,9 +478,9 @@
                         <span class="metric-label">Restart Count:</span>
                         <span class="metric-value">${data.watchdog.restart_count}</span>
                     </div>
-                    <div class="metric">
+                    <div class="metric clickable" onclick="showWatchdogHistory()" style="cursor: pointer; background: var(--gray-100); padding: 8px; border-radius: 5px;">
                         <span class="metric-label">History Length:</span>
-                        <span class="metric-value">${data.watchdog.history_length} records</span>
+                        <span class="metric-value">${data.watchdog.history_length} records (Click to show history)</span>
                     </div>
                     <div class="metric">
                         <span class="metric-label">Last Check:</span>
@@ -480,6 +488,18 @@
                     </div>
                 </div>
             `;
+        }
+
+        function showLastLostConnection() {
+            alert('Feature: Show Last Lost Connection\n\nThis would display:\n- Time of last disconnection\n- Duration of outage\n- Reconnection time\n- Connection stability metrics\n\nImplementation coming soon!');
+        }
+
+        function showErrorDetails() {
+            alert('Feature: Error Details\n\nThis would display:\n- Recent error messages\n- Error timestamps\n- Affected services\n- Error severity levels\n\nImplementation coming soon!');
+        }
+
+        function showWatchdogHistory() {
+            alert('Feature: Watchdog History\n\nThis would display:\n- System health timeline\n- Restart events\n- Performance metrics\n- Recovery actions taken\n\nImplementation coming soon!');
         }
 
         // Load status on page load and set up auto-refresh

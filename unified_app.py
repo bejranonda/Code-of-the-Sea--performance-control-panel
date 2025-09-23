@@ -8,6 +8,7 @@ import os
 import sys
 import json
 import time
+from datetime import datetime
 from typing import Dict, Any
 from flask import Flask, render_template, redirect, url_for, request, jsonify, send_from_directory
 
@@ -74,7 +75,7 @@ except Exception as e:
 try:
     metrics_recorder = get_metrics_recorder()
     metrics_recorder.start_recording()
-    print("✅ Metrics recording initialized successfully (5-minute interval)")
+    print("✅ Metrics recording initialized successfully (1-minute interval)")
 except Exception as e:
     print(f"⚠️  Metrics recording failed to start: {e}")
 
@@ -184,6 +185,34 @@ def index():
     try:
         service_manager.cleanup_processes()
 
+        # Auto-switch LED service from Musical mode to Lux mode when returning to dashboard
+        try:
+            service_manager.log_event("Dashboard load: Checking LED service for auto-switch")
+            led_config = config_manager.get_service_config("LED Service")
+            service_manager.log_event(f"Dashboard load: LED config retrieved - mode: {led_config.get('mode') if led_config else 'None'}")
+
+            if led_config and led_config.get("mode") in ["Musical LED", "Manual LED"]:
+                service_manager.log_event(f"Dashboard load: Auto-switching LED from {led_config.get('mode')} to Lux sensor mode")
+
+                # Switch to Lux sensor mode with current brightness
+                current_brightness = led_config.get("brightness", 50)
+                new_led_config = {
+                    "mode": "Lux sensor",
+                    "brightness": current_brightness,
+                    "lux_min": led_config.get("lux_min", "10"),
+                    "lux_max": led_config.get("lux_max", "700")
+                }
+
+                service_manager.log_event(f"Dashboard load: Updating LED config to: {new_led_config}")
+                config_manager.update_service_config("LED Service", new_led_config)
+                # Also save to dashboard state for persistence
+                dashboard_state.save_service_config("LED Service", new_led_config)
+                service_manager.log_event(f"LED auto-switched to Lux sensor mode with brightness {current_brightness}")
+            else:
+                service_manager.log_event(f"Dashboard load: No auto-switch needed - LED mode is {led_config.get('mode') if led_config else 'None'}")
+        except Exception as e:
+            service_manager.log_error("Error auto-switching LED to Lux mode", e)
+
         # Force refresh of all service statuses (checks PID files and processes)
         for service_name in SERVICES.keys():
             try:
@@ -281,35 +310,46 @@ def start_service(service):
 @app.route("/stop/<service>", methods=["POST"])
 def stop_service(service):
     """Stop a service"""
-    if service in SERVICES:
-        # Log the stop request
-        service_manager.log_event(f"User requested STOP for {service} via dashboard")
-        persistence_manager.log_service_event(service, "STOP_REQUESTED", "User clicked STOP button in dashboard")
+    try:
+        if service in SERVICES:
+            # Log the stop request
+            service_manager.log_event(f"User requested STOP for {service} via dashboard")
+            persistence_manager.log_service_event(service, "STOP_REQUESTED", "User clicked STOP button in dashboard")
 
-        success = service_manager.stop_service(service)
-        if not success:
-            # Log failed manual stop
-            persistence_manager.log_service_event(service, "MANUAL_STOP_FAILED", "User clicked STOP button but service failed to stop", False)
-            service_manager.log_error(f"Failed to stop {service}")
+            success = service_manager.stop_service(service)
+            if not success:
+                # Log failed manual stop
+                persistence_manager.log_service_event(service, "MANUAL_STOP_FAILED", "User clicked STOP button but service failed to stop", False)
+                service_manager.log_error(f"Failed to stop {service}")
+            else:
+                # Log successful manual stop
+                persistence_manager.log_service_event(service, "MANUAL_STOPPED", "User clicked STOP button in dashboard - service stopped successfully")
+
+                # Mark service as manually stopped (prevent auto-restart)
+                try:
+                    persistence_manager.mark_service_manually_stopped(service)
+                    service_manager.log_event(f"Marked {service} as manually stopped")
+                except Exception as e:
+                    service_manager.log_error(f"Failed to update manual stop state for {service}", e)
+
+                # Update persistent service state after successful stop
+                try:
+                    persistence_manager.update_running_services()
+                except Exception as e:
+                    service_manager.log_error(f"Failed to update service state after stopping {service}", e)
         else:
-            # Log successful manual stop
-            persistence_manager.log_service_event(service, "MANUAL_STOPPED", "User clicked STOP button in dashboard - service stopped successfully")
+            service_manager.log_error(f"Unknown service: {service}")
+            persistence_manager.log_service_event(service, "INVALID_SERVICE", f"Unknown service stop requested: {service}", False)
 
-            # Mark service as manually stopped (prevent auto-restart)
-            try:
-                persistence_manager.mark_service_manually_stopped(service)
-                service_manager.log_event(f"Marked {service} as manually stopped")
-            except Exception as e:
-                service_manager.log_error(f"Failed to update manual stop state for {service}", e)
-
-            # Update persistent service state after successful stop
-            try:
-                persistence_manager.update_running_services()
-            except Exception as e:
-                service_manager.log_error(f"Failed to update service state after stopping {service}", e)
-    else:
-        service_manager.log_error(f"Unknown service: {service}")
-        persistence_manager.log_service_event(service, "INVALID_SERVICE", f"Unknown service stop requested: {service}", False)
+    except Exception as e:
+        # Critical safety net to prevent dashboard crashes
+        service_manager.log_error(f"CRITICAL: Unexpected error in stop_service endpoint for {service}", e)
+        try:
+            persistence_manager.log_service_event(service, "STOP_CRITICAL_ERROR", f"Dashboard stop endpoint crashed: {str(e)}", False)
+        except:
+            # Even logging failed - write to a simple log file
+            with open("/tmp/dashboard_crash.log", "a") as f:
+                f.write(f"[{datetime.now()}] CRITICAL STOP ERROR for {service}: {str(e)}\n")
 
     return redirect(url_for("index"))
 
@@ -667,6 +707,7 @@ def clear_service_logs(service):
     
     return redirect(url_for('index'))
 
+
 @app.route("/api/status")
 def api_status():
     """API endpoint for system status"""
@@ -681,6 +722,36 @@ def api_status():
     except Exception as e:
         service_manager.log_error("Error getting API status", e)
         return jsonify({"error": str(e)}), 500
+
+@app.route("/api/led_rms_status")
+def api_led_rms_status():
+    """API endpoint for LED RMS statistics"""
+    try:
+        # Read RMS data from LED status file instead of importing module
+        led_status = config_manager.read_service_status("LED Service")
+
+        if led_status:
+            return jsonify({
+                "current_rms": float(led_status.get("current_rms", 0.0)),
+                "max_rms": float(led_status.get("max_rms_minute", 0.0)),
+                "min_rms": float(led_status.get("min_rms_minute", 0.0)),
+                "brightness": float(led_status.get("brightness", 0.0))
+            })
+        else:
+            return jsonify({
+                "current_rms": 0.0,
+                "max_rms": 0.0,
+                "min_rms": 0.0,
+                "brightness": 0.0
+            })
+    except Exception as e:
+        service_manager.log_error("Error reading LED RMS status", e)
+        return jsonify({
+            "current_rms": 0.0,
+            "max_rms": 0.0,
+            "min_rms": 0.0,
+            "brightness": 0.0
+        }), 500
 
 @app.route("/health/<service>")
 def service_health(service):
@@ -868,6 +939,318 @@ def radio_scan_partial():
             "message": str(e),
             "stations": []
         }), 500
+
+@app.route("/performing")
+def performing_page():
+    """Performance mode page"""
+    return render_template('performing.html')
+
+@app.route("/performing/status", methods=["GET"])
+def performing_status():
+    """Get current performing mode status"""
+    try:
+        led_config = config_manager.get_service_config("LED Service")
+        led_status = config_manager.read_service_status("LED Service")
+
+        # Determine current performing mode based on LED mode
+        led_mode = led_config.get("mode", "Disable")
+        if led_mode == "Musical LED":
+            current_mode = "auto"
+        elif led_mode == "Manual LED":
+            current_mode = "manual"
+        else:
+            current_mode = "disable"
+
+        brightness = led_status.get("brightness", 0) if led_status else 0
+
+        return jsonify({
+            "status": "success",
+            "current_mode": current_mode,
+            "brightness": brightness,
+            "led_mode": led_mode
+        })
+    except Exception as e:
+        service_manager.log_error("Error getting performing status", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/performing/set_mode", methods=["POST"])
+def set_performing_mode():
+    """Set performing mode and manage other services"""
+    try:
+        mode = request.form.get('mode')  # Musical LED, Manual LED, or Disable
+        brightness = int(request.form.get('brightness', 50))
+
+        stopped_services = []
+
+        if mode in ["Musical LED", "Manual LED"]:
+            # Stop all other services when entering performance mode to ensure LED service has full audio access
+            service_manager.log_event(f"Performance mode {mode}: Stopping all other services for optimal audio performance")
+
+            for service_name in SERVICES:
+                if service_name != "LED Service":
+                    if service_manager.is_service_running(service_name):
+                        stopped_services.append(service_name)
+                        service_manager.stop_service(service_name)
+                        service_manager.log_event(f"Stopped {service_name} for performance mode")
+
+            # Also explicitly stop mixing service recording state to prevent conflicts
+            try:
+                mixing_status_file = os.path.join('mixing', 'mixing_status.json')
+                if os.path.exists(mixing_status_file):
+                    with open(mixing_status_file, 'r') as f:
+                        mixing_status = json.load(f)
+
+                    if mixing_status.get('recording', False):
+                        mixing_status['recording'] = False
+                        mixing_status['status'] = 'idle'
+
+                        with open(mixing_status_file, 'w') as f:
+                            json.dump(mixing_status, f, indent=2)
+
+                        service_manager.log_event("Performance mode: Disabled mixing service recording state")
+            except Exception as e:
+                service_manager.log_error("Error updating mixing service status for performance mode", e)
+
+            # For Musical LED (Auto mode), stop PulseAudio to prevent audio device conflicts
+            if mode == "Musical LED":
+                try:
+                    import subprocess
+                    # Kill PulseAudio processes that might be blocking audio device access
+                    service_manager.log_event("Performance mode Auto: Stopping PulseAudio to free audio device for LED service")
+                    subprocess.run(['pkill', '-f', 'pulseaudio'], capture_output=True, timeout=5)
+
+                    # Restart LED service to ensure fresh audio access
+                    service_manager.log_event("Performance mode Auto: Restarting LED service for fresh audio access")
+                    subprocess.run(['/home/payas/cos/scripts/manage_led_service.sh', 'restart'], capture_output=True, timeout=10)
+
+                except Exception as e:
+                    service_manager.log_error("Error stopping audio conflicts for Auto mode", e)
+
+        # Update LED service configuration
+        led_config = {
+            "mode": mode,
+            "brightness": brightness
+        }
+
+        success = config_manager.update_service_config("LED Service", led_config)
+
+        if success:
+            # Also save to dashboard state for persistence across restarts
+            dashboard_state.save_service_config("LED Service", led_config)
+            service_manager.log_event(f"Set performing mode: {mode}")
+            return jsonify({
+                "status": "success",
+                "mode": mode,
+                "stopped_services": stopped_services
+            })
+        else:
+            return jsonify({"status": "error", "message": "Failed to update configuration"}), 500
+
+    except Exception as e:
+        service_manager.log_error("Error setting performing mode", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/performing/set_brightness", methods=["POST"])
+def set_performing_brightness():
+    """Set LED brightness for manual mode"""
+    try:
+        # Log comprehensive request details
+        service_manager.log_event(f"=== BRIGHTNESS UPDATE REQUEST ===")
+        service_manager.log_event(f"User-Agent: {request.headers.get('User-Agent', 'Unknown')}")
+        service_manager.log_event(f"Request method: {request.method}")
+        service_manager.log_event(f"Request content_type: {request.content_type}")
+        service_manager.log_event(f"Request form data: {dict(request.form)}")
+        service_manager.log_event(f"Raw request data: {request.data}")
+
+        brightness_str = request.form.get('brightness', '0')
+        service_manager.log_event(f"Extracted brightness value: '{brightness_str}'")
+
+        # Validate brightness value
+        try:
+            brightness = int(brightness_str)
+            if brightness < 0 or brightness > 100:
+                return jsonify({"status": "error", "message": "Brightness must be between 0 and 100"}), 400
+        except ValueError as ve:
+            service_manager.log_error(f"Invalid brightness value: {brightness_str}", ve)
+            return jsonify({"status": "error", "message": f"Invalid brightness value: {brightness_str}"}), 400
+
+        # Get current LED service configuration
+        try:
+            service_manager.log_event("Attempting to get LED service config...")
+            led_config = config_manager.get_service_config("LED Service")
+            service_manager.log_event(f"Current LED config retrieved successfully: {led_config}")
+
+            # Verify config is a dict and can be modified
+            if not isinstance(led_config, dict):
+                service_manager.log_error(f"LED config is not a dict: {type(led_config)}", None)
+                return jsonify({"status": "error", "message": "Invalid LED service configuration format"}), 500
+
+        except Exception as e:
+            service_manager.log_error("Failed to get LED service config", e)
+            return jsonify({"status": "error", "message": "Failed to get LED service configuration"}), 500
+
+        # Update brightness
+        led_config["brightness"] = brightness
+        service_manager.log_event(f"Updating LED config with brightness: {brightness}")
+
+        # Save updated configuration with retry logic
+        success = False
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                service_manager.log_event(f"Saving LED config attempt {attempt + 1}/{max_retries}")
+                success = config_manager.update_service_config("LED Service", led_config)
+                if success:
+                    service_manager.log_event("Config save successful")
+                    break
+                else:
+                    service_manager.log_event(f"Config save returned False on attempt {attempt + 1}")
+                    if attempt < max_retries - 1:
+                        import time
+                        time.sleep(0.1 * (attempt + 1))  # Progressive delay: 100ms, 200ms, 300ms
+            except Exception as e:
+                service_manager.log_error(f"Failed to save LED service config on attempt {attempt + 1}", e)
+                if attempt == max_retries - 1:
+                    return jsonify({"status": "error", "message": "Failed to save LED service configuration"}), 500
+                else:
+                    import time
+                    time.sleep(0.1 * (attempt + 1))
+
+        if success:
+            service_manager.log_event(f"Brightness successfully updated to {brightness}%")
+            response = jsonify({"status": "success", "brightness": brightness})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+            response.headers.add('Access-Control-Allow-Methods', 'POST')
+            return response
+        else:
+            service_manager.log_error("Config update returned False", None)
+            response = jsonify({"status": "error", "message": "Failed to update brightness configuration"})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response, 500
+
+    except Exception as e:
+        service_manager.log_error("Unexpected error in set_performing_brightness", e)
+        return jsonify({"status": "error", "message": f"Unexpected error: {str(e)}"}), 500
+
+@app.route("/performing/test_brightness", methods=["POST"])
+def test_brightness():
+    """Simple test endpoint for brightness debugging"""
+    try:
+        service_manager.log_event("=== TEST BRIGHTNESS REQUEST ===")
+        brightness_str = request.form.get('brightness', 'NOT_FOUND')
+        service_manager.log_event(f"Received brightness: {brightness_str}")
+
+        # Just return what we received, don't try to save anything
+        response = jsonify({"status": "test_success", "received_brightness": brightness_str, "form_data": dict(request.form)})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', 'POST')
+        return response
+    except Exception as e:
+        service_manager.log_error("Error in test_brightness", e)
+        return jsonify({"status": "test_error", "message": str(e)}), 500
+
+@app.route("/performing/direct_brightness", methods=["POST"])
+def direct_brightness_control():
+    """Direct LED brightness control that immediately updates the LED without config polling delays"""
+    try:
+        brightness_str = request.form.get('brightness', '0')
+        brightness = int(brightness_str)
+
+        if brightness < 0 or brightness > 100:
+            return jsonify({"status": "error", "message": "Brightness must be between 0 and 100"}), 400
+
+        service_manager.log_event(f"Direct LED brightness control: {brightness}%")
+
+        # Update config for persistence
+        led_config = config_manager.get_service_config("LED Service")
+        led_config["brightness"] = brightness
+        config_manager.update_service_config("LED Service", led_config)
+
+        # Also trigger immediate LED update by writing to LED status file
+        import json
+        led_status_file = "led/led_status.json"
+        try:
+            # Read current status
+            with open(led_status_file, 'r') as f:
+                led_status = json.load(f)
+
+            # Update brightness and power state
+            led_status["brightness"] = float(brightness)
+            led_status["power_state"] = brightness > 0
+            led_status["mode"] = "Manual LED"
+            led_status["last_update"] = datetime.now().isoformat()
+
+            # Write updated status
+            with open(led_status_file, 'w') as f:
+                json.dump(led_status, f, indent=2)
+
+            service_manager.log_event(f"Direct LED update: brightness={brightness}%, power={'on' if brightness > 0 else 'off'}")
+
+        except Exception as e:
+            service_manager.log_error("Failed to update LED status file", e)
+
+        response = jsonify({"status": "success", "brightness": brightness, "method": "direct"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
+    except ValueError:
+        return jsonify({"status": "error", "message": "Invalid brightness value"}), 400
+    except Exception as e:
+        service_manager.log_error("Error in direct_brightness_control", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/performing/update_rms", methods=["POST"])
+def update_rms_settings():
+    """Update RMS sensitivity settings for auto mode"""
+    try:
+        mic_rms_quiet = float(request.form.get('mic_rms_quiet', 0.002))
+        mic_rms_loud = float(request.form.get('mic_rms_loud', 0.04))
+
+        # Validate values
+        if mic_rms_quiet < 0 or mic_rms_quiet > 1:
+            return jsonify({"status": "error", "message": "Quiet threshold must be between 0 and 1"}), 400
+        if mic_rms_loud < 0 or mic_rms_loud > 1:
+            return jsonify({"status": "error", "message": "Loud threshold must be between 0 and 1"}), 400
+        if mic_rms_quiet >= mic_rms_loud:
+            return jsonify({"status": "error", "message": "Quiet threshold must be less than loud threshold"}), 400
+
+        # Update LED service configuration
+        led_config = config_manager.get_service_config("LED Service")
+        led_config["mic_rms_quiet"] = str(mic_rms_quiet)
+        led_config["mic_rms_loud"] = str(mic_rms_loud)
+
+        success = config_manager.update_service_config("LED Service", led_config)
+        if success:
+            # Also save to dashboard state for persistence
+            dashboard_state.save_service_config("LED Service", led_config)
+            service_manager.log_event(f"Updated RMS settings: quiet={mic_rms_quiet}, loud={mic_rms_loud}")
+            return jsonify({
+                "status": "success",
+                "mic_rms_quiet": mic_rms_quiet,
+                "mic_rms_loud": mic_rms_loud
+            })
+        else:
+            return jsonify({"status": "error", "message": "Failed to update configuration"}), 500
+
+    except Exception as e:
+        service_manager.log_error("Error updating RMS settings", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/performing/get_rms_settings", methods=["GET"])
+def get_rms_settings():
+    """Get current RMS sensitivity settings"""
+    try:
+        led_config = config_manager.get_service_config("LED Service")
+        return jsonify({
+            "status": "success",
+            "mic_rms_quiet": float(led_config.get("mic_rms_quiet", 0.002)),
+            "mic_rms_loud": float(led_config.get("mic_rms_loud", 0.04))
+        })
+    except Exception as e:
+        service_manager.log_error("Error getting RMS settings", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/wifi_status", methods=["GET"])
 def wifi_status_api():

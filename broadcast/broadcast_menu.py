@@ -827,20 +827,28 @@ def main():
                     update_status(mode=mode)
                     last_config_check = current_time
                 
-                # Check if broadcast thread is still alive, restart if needed
-                if not playback_thread.is_alive() and not stop_requested:
-                    log_event("Broadcast thread died, restarting...", "WARNING")
-                    stop_requested = False
-                    # Reset all control flags
-                    pause_requested = False
-                    next_requested = False
-                    previous_requested = False
-                    # Create new thread
-                    playback_thread = threading.Thread(target=broadcast_loop, daemon=True)
-                    playback_thread.start()
-                    log_event("Broadcast loop restarted")
-                    # Give it a moment to start
-                    time.sleep(1)
+                # Check if we should be disabled
+                if mode == "Disable":
+                    # Stop playback if running
+                    if playback_thread.is_alive():
+                        stop_requested = True
+                        log_event("Stopping broadcast for Disable mode")
+                    update_status(mode="Disable", playing=False, current_file=None)
+                else:
+                    # Check if broadcast thread is still alive, restart if needed
+                    if not playback_thread.is_alive() and not stop_requested:
+                        log_event("Broadcast thread died, restarting...", "WARNING")
+                        stop_requested = False
+                        # Reset all control flags
+                        pause_requested = False
+                        next_requested = False
+                        previous_requested = False
+                        # Create new thread
+                        playback_thread = threading.Thread(target=broadcast_loop, daemon=True)
+                        playback_thread.start()
+                        log_event("Broadcast loop restarted")
+                        # Give it a moment to start
+                        time.sleep(1)
                 
                 # Sleep longer to reduce CPU usage
                 time.sleep(5)
