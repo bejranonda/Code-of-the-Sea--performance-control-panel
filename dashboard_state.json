@@ -2,11 +2,9 @@
   "mode": "dashboard",
   "service_configs": {
     "LED Service": {
-      "mode": "Lux sensor",
+      "mode": "Musical LED",
       "brightness": 50,
-      "lux_min": "1",
-      "lux_max": "500",
-      "last_updated": "2025-09-23T16:46:11.244000"
+      "last_updated": "2025-09-23T17:37:33.028783"
     },
     "Radio Service": {
       "mode": "Scan",
@@ -15,7 +13,7 @@
       "status_file": "radio/radio_status.json",
       "mode_selector": "Scan",
       "loop_duration": "30",
-      "last_updated": "2025-09-23T15:57:43.695298"
+      "last_updated": "2025-09-23T17:33:37.962556"
     },
     "Fan Service": {
       "mode": "Fixed",
@@ -23,13 +21,13 @@
       "status_file": "fan/fan_status.json",
       "lux_min": "1",
       "lux_max": "850",
-      "last_updated": "2025-09-23T15:57:43.697835"
+      "last_updated": "2025-09-23T17:33:37.963875"
     },
     "Broadcast Service": {
       "mode": "Loop",
       "volume": 100,
       "status_file": "broadcast/broadcast_status.json",
-      "last_updated": "2025-09-23T15:57:43.700646"
+      "last_updated": "2025-09-23T17:33:37.965314"
     },
     "Mixing Service": {
       "mode": "Disable",
@@ -38,13 +36,13 @@
       "recording_duration": "120",
       "volume": "75",
       "status_file": "mixing/mixing_status.json",
-      "last_updated": "2025-09-23T15:57:43.702927"
+      "last_updated": "2025-09-23T17:33:37.966863"
     },
     "Exhibition Metrics Service": {
       "recording_interval": 60,
       "max_records": 10000,
       "data_file": "data/exhibition_metrics.json",
-      "last_updated": "2025-09-23T15:57:43.705912"
+      "last_updated": "2025-09-23T17:33:37.968247"
     }
   },
   "ui_preferences": {
@@ -54,6 +52,6 @@
   },
   "last_active_services": [],
   "user_selections": {},
-  "timestamp": "2025-09-23T16:46:11.244143",
+  "timestamp": "2025-09-23T17:37:33.028947",
   "version": "3.0.0"
 }
