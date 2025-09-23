@@ -1,12 +1,12 @@
 {
   "LED Service": {
-    "mode": "Lux sensor",
+    "mode": "Musical LED",
     "brightness": 50,
     "status_file": "led/led_status.json",
     "lux_min": "1",
     "lux_max": "500",
     "mic_rms_quiet": "0.001",
-    "mic_rms_loud": "0.003"
+    "mic_rms_loud": "0.008"
   },
   "Radio Service": {
     "mode": "Scan",
@@ -24,7 +24,7 @@
     "lux_max": "850"
   },
   "_metadata": {
-    "last_updated": "2025-09-23T16:46:11.241262",
+    "last_updated": "2025-09-23T17:37:33.027260",
     "version": "1.0"
   },
   "Broadcast Service": {

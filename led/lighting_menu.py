@@ -281,7 +281,7 @@ except Exception as e:
         log_event(f"Using default RMS values: QUIET={MIC_RMS_QUIET:.4f}, LOUD={MIC_RMS_LOUD:.3f}")
     except:
         pass
-RMS_SMOOTHING_WINDOW = 1
+RMS_SMOOTHING_WINDOW = 2
 rms_history = collections.deque(maxlen=RMS_SMOOTHING_WINDOW)
 
 # --- Light Sensor Configuration (for Lighting LED mode) ---
@@ -289,7 +289,7 @@ SENSOR_LUX_MIN = 20
 SENSOR_LUX_MAX = 1500
 
 # --- Command Rate Limiting ---
-MIN_COMMAND_INTERVAL_SECONDS = 0.3
+MIN_COMMAND_INTERVAL_SECONDS = 0.5
 COMMAND_TIMEOUT_SECONDS = 0.3
 BRIGHTNESS_MINIMUM_CHANGE = 18  # Minimum brightness change required to trigger update
 last_command_time = 0
@@ -707,7 +707,48 @@ async def musical_led_mode():
         stream.start()
         log_event(f"Audio stream started successfully - Device: {stream.device}, Active: {stream.active}")
         fallback_mode = False
-        last_mixing_check = 0
+        
+        ### Check conflict with mixing service
+        if check_mixing_service_active():
+            if stream is not None:
+                log_event("Mixing service recording detected - temporarily releasing audio device")
+                try:
+                    stream.stop()
+                    stream.close()
+                    stream = None
+                    fallback_mode = True
+                    log_event("Audio device successfully released for mixing service")
+                except Exception as e:
+                    log_error("Error releasing audio device for mixing service", e)
+
+            # Use lux-based lighting while mixing service is recording
+            if fallback_mode:
+                try:
+                    lux = await read_lux_sensor()
+                    brightness_percent = get_brightness_from_lux(lux)
+                    await set_brightness_and_power(brightness_percent)
+
+                    if current_time % 10 < 1:  # Log every ~10 seconds
+                        log_event(f"Musical LED (fallback) - Lux: {lux:.1f}, Brightness: {brightness_percent:.1f}%")
+
+                except Exception as e:
+                    log_error("Error in Musical LED fallback mode", e)
+
+                await asyncio.sleep(1)
+
+        else:
+            # Mixing service not recording, return to audio mode if needed
+            if fallback_mode and stream is None:
+                try:
+                    log_event("Mixing service recording finished - resuming audio input")
+                    stream = sd.InputStream(device=1, samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE)
+                    stream.start()
+                    fallback_mode = False
+                    log_event(f"Audio input resumed successfully - Device: {stream.device}, Active: {stream.active}")
+                except Exception as e:
+                    log_error("Failed to resume audio input, staying in fallback mode", e)
+                    fallback_mode = True
+
 
         while True:
             # Check if mode changed
@@ -717,51 +758,6 @@ async def musical_led_mode():
 
             current_time = time.time()
 
-            # Check mixing service status every 2 seconds
-            if current_time - last_mixing_check >= 2:
-                if check_mixing_service_active():
-                    if stream is not None:
-                        log_event("Mixing service recording detected - temporarily releasing audio device")
-                        try:
-                            stream.stop()
-                            stream.close()
-                            stream = None
-                            fallback_mode = True
-                            log_event("Audio device successfully released for mixing service")
-                        except Exception as e:
-                            log_error("Error releasing audio device for mixing service", e)
-
-                    # Use lux-based lighting while mixing service is recording
-                    if fallback_mode:
-                        try:
-                            lux = await read_lux_sensor()
-                            brightness_percent = get_brightness_from_lux(lux)
-                            await set_brightness_and_power(brightness_percent)
-
-                            if current_time % 10 < 1:  # Log every ~10 seconds
-                                log_event(f"Musical LED (fallback) - Lux: {lux:.1f}, Brightness: {brightness_percent:.1f}%")
-
-                        except Exception as e:
-                            log_error("Error in Musical LED fallback mode", e)
-
-                        await asyncio.sleep(1)
-                        last_mixing_check = current_time
-                        continue
-
-                else:
-                    # Mixing service not recording, return to audio mode if needed
-                    if fallback_mode and stream is None:
-                        try:
-                            log_event("Mixing service recording finished - resuming audio input")
-                            stream = sd.InputStream(device=1, samplerate=SAMPLERATE, channels=CHANNELS, blocksize=BLOCKSIZE)
-                            stream.start()
-                            fallback_mode = False
-                            log_event(f"Audio input resumed successfully - Device: {stream.device}, Active: {stream.active}")
-                        except Exception as e:
-                            log_error("Failed to resume audio input, staying in fallback mode", e)
-                            fallback_mode = True
-
-                last_mixing_check = current_time
 
             # If we're in fallback mode, continue with lux-based lighting
             if fallback_mode or stream is None:
@@ -925,9 +921,9 @@ async def lighting_led_mode():
             # Try to control Tuya LED if available
             if tuya_available and d is not None:
                 try:
-                    await set_brightness_and_power(brightness_percent)
-                    # Log only significant changes when controlling LED
+                    # Control only significant changes when controlling LED
                     if abs(brightness_percent - current_status.get("brightness", 0)) > 5:
+                        await set_brightness_and_power(brightness_percent)
                         log_event(f"Lux sensor - Lux: {lux_value:.2f} -> Brightness: {brightness_percent:.1f}%")
                 except Exception as e:
                     log_error("Error controlling Tuya LED, continuing with lux monitoring", e)
