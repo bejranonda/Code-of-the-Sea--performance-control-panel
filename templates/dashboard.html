@@ -1024,6 +1024,30 @@
                       <span style="color: #6b7280; font-size: 12px; margin-left: 8px;">RMS level</span>
                     </div>
                   </div>
+
+                  <!-- Below Threshold Behavior Configuration -->
+                  <div style="margin-top: 15px;">
+                    <label class="form-label" style="font-size: 14px; margin-bottom: 5px;">Below Quiet Threshold Behavior:</label>
+                    <select name="musical_led_below_threshold" class="form-select" style="margin-bottom: 10px;" onchange="toggleMinimumBrightness(this.value)">
+                      <option value="off" {% if configs[service_name].get('musical_led_below_threshold', 'off') == 'off' %}selected{% endif %}>Turn LED OFF</option>
+                      <option value="minimum" {% if configs[service_name].get('musical_led_below_threshold', 'off') == 'minimum' %}selected{% endif %}>Keep LED ON at minimum brightness</option>
+                    </select>
+                    <div style="color: #6b7280; font-size: 12px; margin-bottom: 10px;">
+                      Choose whether the LED turns off completely or stays on at minimum brightness when sound is below the quiet threshold.
+                    </div>
+
+                    <div id="minimumBrightnessGroup" style="display: {% if configs[service_name].get('musical_led_below_threshold', 'off') == 'minimum' %}block{% else %}none{% endif %};">
+                      <label class="form-label" style="font-size: 14px; margin-bottom: 5px;">Minimum Brightness:</label>
+                      <div class="slider-container">
+                        <input type="range" name="musical_led_minimum_brightness" min="1" max="20" value="{{ configs[service_name].get('musical_led_minimum_brightness', '3') }}"
+                               class="slider" id="minimumBrightnessSlider" oninput="updateSliderValue('minimumBrightnessSlider', 'minimumBrightnessValue')">
+                        <span class="slider-value" id="minimumBrightnessValue">{{ configs[service_name].get('musical_led_minimum_brightness', '3') }}%</span>
+                      </div>
+                      <div style="color: #6b7280; font-size: 12px;">
+                        LED brightness when sound is below quiet threshold (1-20%).
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             {% elif service_name == "Radio Service" %}
@@ -1268,6 +1292,13 @@
       const directionSelect = document.querySelector('select[name="direction"]');
       if (directionSelect) {
         directionSelect.value = direction;
+      }
+    }
+
+    function toggleMinimumBrightness(mode) {
+      const minimumBrightnessGroup = document.getElementById('minimumBrightnessGroup');
+      if (minimumBrightnessGroup) {
+        minimumBrightnessGroup.style.display = (mode === 'minimum') ? 'block' : 'none';
       }
     }
 

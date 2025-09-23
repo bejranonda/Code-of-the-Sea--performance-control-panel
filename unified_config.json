@@ -5,8 +5,8 @@
     "status_file": "led/led_status.json",
     "lux_min": "1",
     "lux_max": "100",
-    "mic_rms_quiet": "0.002",
-    "mic_rms_loud": "0.009"
+    "mic_rms_quiet": "0.001",
+    "mic_rms_loud": "0.013"
   },
   "Radio Service": {
     "mode": "Scan",
@@ -24,7 +24,7 @@
     "lux_max": "850"
   },
   "_metadata": {
-    "last_updated": "2025-09-23T21:49:57.086488",
+    "last_updated": "2025-09-23T22:32:57.777319",
     "version": "1.0"
   },
   "Broadcast Service": {

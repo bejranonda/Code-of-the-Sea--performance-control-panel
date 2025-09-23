@@ -281,7 +281,7 @@ except Exception as e:
         log_event(f"Using default RMS values: QUIET={MIC_RMS_QUIET:.4f}, LOUD={MIC_RMS_LOUD:.3f}")
     except:
         pass
-RMS_SMOOTHING_WINDOW = 2
+RMS_SMOOTHING_WINDOW = 5
 rms_history = collections.deque(maxlen=RMS_SMOOTHING_WINDOW)
 
 # --- Light Sensor Configuration (for Lighting LED mode) ---
@@ -289,9 +289,9 @@ SENSOR_LUX_MIN = 20
 SENSOR_LUX_MAX = 1500
 
 # --- Command Rate Limiting ---
-MIN_COMMAND_INTERVAL_SECONDS = 0.5
+MIN_COMMAND_INTERVAL_SECONDS = 0.3
 COMMAND_TIMEOUT_SECONDS = 0.3
-BRIGHTNESS_MINIMUM_CHANGE = 18  # Minimum brightness change required to trigger update
+BRIGHTNESS_MINIMUM_CHANGE = 30  # Minimum brightness change required to trigger update
 last_command_time = 0
 previous_brightness_percent = -1
 
@@ -566,11 +566,32 @@ def map_range(value, in_min, in_max, out_min, out_max):
         log_error(f"Error in map_range with value {value}", e)
         return out_min
 
-def get_brightness_from_rms(rms):
-    """Maps RMS to LED brightness for Musical LED mode."""
+def get_brightness_from_rms(rms, config=None):
+    """Maps RMS to LED brightness for Musical LED mode with configurable below-threshold behavior."""
     try:
-        brightness = map_range(rms, MIC_RMS_QUIET, MIC_RMS_LOUD, 0, 100)  # Map to 0-100% like lighting.py
+        # Load configuration for below-threshold behavior
+        below_threshold_mode = "off"  # Default: turn off when below quiet threshold
+        minimum_brightness = 3  # Default minimum brightness when staying on
+
+        if config:
+            below_threshold_mode = config.get("musical_led_below_threshold", "off")
+            minimum_brightness = int(config.get("musical_led_minimum_brightness", 3))
+
+        # Check if RMS is below quiet threshold
+        if rms < MIC_RMS_QUIET:
+            if below_threshold_mode == "off":
+                return 0  # Turn LED completely off
+            else:  # below_threshold_mode == "minimum"
+                return minimum_brightness  # Keep LED on at minimum brightness
+
+        # Normal RMS mapping when above quiet threshold
+        if below_threshold_mode == "off":
+            brightness = map_range(rms, MIC_RMS_QUIET, MIC_RMS_LOUD, 1, 100)  # Start from 1% at quiet threshold
+        else:  # below_threshold_mode == "minimum"
+            brightness = map_range(rms, MIC_RMS_QUIET, MIC_RMS_LOUD, minimum_brightness, 100)  # Start from minimum brightness
+
         return max(1, min(100, brightness))  # Clamp to valid range
+
     except Exception as e:
         log_error(f"Error calculating brightness from RMS {rms}", e)
         return 1  # Return 1% instead of 0% on error
@@ -854,7 +875,8 @@ async def musical_led_mode():
                 )
 
                 # Use hardware-controlled smooth transitions - let Tuya controller handle smoothing
-                brightness_percent = get_brightness_from_rms(smoothed_rms)
+                config = load_config()
+                brightness_percent = get_brightness_from_rms(smoothed_rms, config)
 
                 # Update global current_brightness for display purposes
                 global current_brightness

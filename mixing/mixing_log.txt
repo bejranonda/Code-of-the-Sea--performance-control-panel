@@ -1,3 +1,20 @@
+[2025-09-23 22:03:01] INFO: Configuration updated: {'mode': 'Disable', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
+[2025-09-23 22:03:01] INFO: Working directory: /home/payas/cos
+[2025-09-23 22:03:01] INFO: Python executable: /home/payas/venv/bin/python
+[2025-09-23 22:03:01] INFO: Process ID: 1426
+[2025-09-23 22:03:01] INFO: === MIXING SERVICE STARTING ===
+[2025-09-23 22:02:27] INFO: Configuration updated: {'mode': 'Disable', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
+[2025-09-23 22:02:26] INFO: Killing orphaned mpg123 process: 1124
+[2025-09-23 22:02:26] INFO: Working directory: /home/payas/cos
+[2025-09-23 22:02:26] INFO: Python executable: /home/payas/venv/bin/python
+[2025-09-23 22:02:26] INFO: Process ID: 1224
+[2025-09-23 22:02:26] INFO: === MIXING SERVICE STARTING ===
+[2025-09-23 22:01:54] INFO: Configuration updated: {'mode': 'Disable', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
+[2025-09-23 22:01:54] INFO: Killing orphaned mpg123 process: 1077
+[2025-09-23 22:01:54] INFO: Working directory: /home/payas/cos
+[2025-09-23 22:01:54] INFO: Python executable: /home/payas/venv/bin/python
+[2025-09-23 22:01:54] INFO: Process ID: 1105
+[2025-09-23 22:01:54] INFO: === MIXING SERVICE STARTING ===
 [2025-09-23 20:52:47] INFO: Configuration updated: {'mode': 'Disable', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
 [2025-09-23 20:52:47] INFO: Killing orphaned mpg123 process: 1110
 [2025-09-23 20:52:47] INFO: Working directory: /home/payas/cos
@@ -981,20 +998,3 @@ arecord: main:831: audio open error: No such file or directory
 [2025-09-22 11:49:17] WARNING: Device plughw:2,0 test failed: arecord: main:831: audio open error: No such file or directory
 [2025-09-22 11:49:17] WARNING: Device plughw:1,0 test failed: arecord: main:831: audio open error: No such file or directory
 [2025-09-22 11:49:17] WARNING: Device default test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-22 11:49:17] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-22 11:49:17] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-22 11:49:15] ERROR: Microphone recording failed: stdout: , stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused, returncode: 1
-Exception: stdout: , stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused, returncode: 1
-Traceback:
-NoneType: None
-
-[2025-09-22 11:49:15] ERROR: Output file was not created
-[2025-09-22 11:49:15] INFO: arecord stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
