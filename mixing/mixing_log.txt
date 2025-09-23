@@ -1,3 +1,24 @@
+[2025-09-23 20:52:47] INFO: Configuration updated: {'mode': 'Disable', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
+[2025-09-23 20:52:47] INFO: Killing orphaned mpg123 process: 1110
+[2025-09-23 20:52:47] INFO: Working directory: /home/payas/cos
+[2025-09-23 20:52:47] INFO: Python executable: /home/payas/venv/bin/python
+[2025-09-23 20:52:47] INFO: Process ID: 1123
+[2025-09-23 20:52:47] INFO: === MIXING SERVICE STARTING ===
+[2025-09-23 18:34:25] INFO: Configuration updated: {'mode': 'Disable', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
+[2025-09-23 18:34:25] INFO: Working directory: /home/payas/cos
+[2025-09-23 18:34:25] INFO: Python executable: /home/payas/venv/bin/python
+[2025-09-23 18:34:25] INFO: Process ID: 3095
+[2025-09-23 18:34:25] INFO: === MIXING SERVICE STARTING ===
+[2025-09-23 18:33:51] INFO: Configuration updated: {'mode': 'Disable', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
+[2025-09-23 18:33:51] INFO: Working directory: /home/payas/cos
+[2025-09-23 18:33:51] INFO: Python executable: /home/payas/venv/bin/python
+[2025-09-23 18:33:51] INFO: Process ID: 3003
+[2025-09-23 18:33:51] INFO: === MIXING SERVICE STARTING ===
+[2025-09-23 18:33:19] INFO: Configuration updated: {'mode': 'Disable', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
+[2025-09-23 18:33:19] INFO: Working directory: /home/payas/cos
+[2025-09-23 18:33:19] INFO: Python executable: /home/payas/venv/bin/python
+[2025-09-23 18:33:19] INFO: Process ID: 2899
+[2025-09-23 18:33:19] INFO: === MIXING SERVICE STARTING ===
 [2025-09-23 17:32:45] INFO: Configuration updated: {'mode': 'Disable', 'master_volume': '100', 'mic_volume': '65', 'recording_duration': '120', 'volume': '75'}
 [2025-09-23 17:32:45] INFO: Killing orphaned mpg123 process: 1077
 [2025-09-23 17:32:45] INFO: Working directory: /home/payas/cos
@@ -977,24 +998,3 @@ NoneType: None
 [2025-09-22 11:49:15] INFO: arecord stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
 
 arecord: main:831: audio open error: Connection refused
-
-[2025-09-22 11:49:15] INFO: arecord return code: 1
-[2025-09-22 11:49:15] INFO: Actual recording duration: 0.01s (expected: 120s)
-[2025-09-22 11:49:15] INFO: Recording end time: 11:49:15.558
-[2025-09-22 11:49:15] INFO: Executing arecord command: /usr/bin/arecord -D pulse -f S16_LE -r 44100 -c 1 -d 120 --max-file-time 125 /home/payas/cos/mixing/../mixed_output/mic_recording_20250922_114911.wav
-[2025-09-22 11:49:15] INFO: Reset audio system before retry 2
-[2025-09-22 11:49:13] INFO: Recording start time: 11:49:13.483
-[2025-09-22 11:49:13] INFO: Starting microphone recording (120s) - attempt 2/3
-[2025-09-22 11:49:13] INFO: Detected microphone device: pulse
-[2025-09-22 11:49:13] WARNING: No working microphone found, using pulse fallback
-[2025-09-22 11:49:13] WARNING: Device plughw:3,0 test failed: ALSA lib confmisc.c:165:(snd_config_get_card) Cannot get card index for 3
-arecord: main:831: audio open error: No such file or directory
-[2025-09-22 11:49:13] WARNING: Device plughw:2,0 test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-22 11:49:13] WARNING: Device plughw:1,0 test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-22 11:49:13] WARNING: Device default test failed: arecord: main:831: audio open error: No such file or directory
-[2025-09-22 11:49:13] WARNING: Device pulse test failed: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-
-arecord: main:831: audio open error: Connection refused
-[2025-09-22 11:49:13] INFO: PulseAudio detected - using pulse device for better compatibility
-[2025-09-22 11:49:11] ERROR: Microphone recording failed: stdout: , stderr: ALSA lib pulse.c:242:(pulse_connect) PulseAudio: Unable to connect: Connection refused
-

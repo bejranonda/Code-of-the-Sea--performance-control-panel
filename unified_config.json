@@ -4,9 +4,9 @@
     "brightness": 50,
     "status_file": "led/led_status.json",
     "lux_min": "1",
-    "lux_max": "500",
-    "mic_rms_quiet": "0.001",
-    "mic_rms_loud": "0.008"
+    "lux_max": "100",
+    "mic_rms_quiet": "0.002",
+    "mic_rms_loud": "0.009"
   },
   "Radio Service": {
     "mode": "Scan",
@@ -24,7 +24,7 @@
     "lux_max": "850"
   },
   "_metadata": {
-    "last_updated": "2025-09-23T17:37:33.027260",
+    "last_updated": "2025-09-23T21:49:57.086488",
     "version": "1.0"
   },
   "Broadcast Service": {
