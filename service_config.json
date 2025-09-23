@@ -3,9 +3,9 @@
     "mode": "Musical LED",
     "brightness": 50,
     "lux_min": "1",
-    "lux_max": "500",
-    "mic_rms_quiet": "0.001",
-    "mic_rms_loud": "0.008"
+    "lux_max": "100",
+    "mic_rms_quiet": "0.002",
+    "mic_rms_loud": "0.009"
   },
   "Radio Service": {
     "mode": "Scan",

@@ -1000,6 +1000,32 @@
                   </div>
                 </div>
               </div>
+              <!-- Microphone Threshold Configuration for Musical LED mode -->
+              <div class="form-group" id="ledMicThresholdGroup" style="display: {% if configs[service_name]['mode'] == 'Musical LED' %}block{% else %}none{% endif %};">
+                <label class="form-label">Automatic Microphone Control:</label>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 10px;">
+                  <div style="color: #6b7280; font-size: 12px; margin-bottom: 10px;">
+                    Current microphone thresholds for automatic brightness control
+                    <span style="color: #10b981; font-weight: 600;">● Live (automatically reloaded)</span>
+                  </div>
+
+                  <div style="margin-bottom: 10px;">
+                    <label class="form-label" style="font-size: 14px; margin-bottom: 5px;">Quiet Threshold:</label>
+                    <div style="background: white; padding: 10px; border-radius: 6px; border: 1px solid #d1d5db;">
+                      <span style="font-weight: bold; color: #374151;">{{ configs[service_name].get('mic_rms_quiet', '0.005') }}</span>
+                      <span style="color: #6b7280; font-size: 12px; margin-left: 8px;">RMS level</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="form-label" style="font-size: 14px; margin-bottom: 5px;">Loud Threshold:</label>
+                    <div style="background: white; padding: 10px; border-radius: 6px; border: 1px solid #d1d5db;">
+                      <span style="font-weight: bold; color: #374151;">{{ configs[service_name].get('mic_rms_loud', '0.03') }}</span>
+                      <span style="color: #6b7280; font-size: 12px; margin-left: 8px;">RMS level</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             {% elif service_name == "Radio Service" %}
               <!-- Current Station Display -->
               <div class="form-group">
@@ -1225,8 +1251,10 @@
       if (serviceName === 'LED Service') {
         const brightnessGroup = document.getElementById('ledBrightnessGroup');
         const luxRangeGroup = document.getElementById('ledLuxRangeGroup');
+        const micThresholdGroup = document.getElementById('ledMicThresholdGroup');
         brightnessGroup.style.display = (mode === 'Manual LED') ? 'block' : 'none';
         luxRangeGroup.style.display = (mode === 'Lux sensor' || mode === 'Lighting LED') ? 'block' : 'none';
+        micThresholdGroup.style.display = (mode === 'Musical LED') ? 'block' : 'none';
       } else if (serviceName === 'Radio Service') {
         const directionGroup = document.getElementById('searchDirectionGroup');
         directionGroup.style.display = (mode === 'Search') ? 'block' : 'none';

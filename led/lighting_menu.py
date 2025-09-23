@@ -307,6 +307,8 @@ rms_minute_start = time.time()
 # --- Global Variables ---
 d = None
 power_on_state = False
+last_power_verification_time = 0
+POWER_VERIFICATION_INTERVAL = 30  # Verify power state every 30 seconds
 lux_history = []
 last_recorded_lux = None
 LUX_HISTORY_FILE = os.path.join(os.path.dirname(__file__), "lux_history.json")
@@ -596,6 +598,29 @@ def get_brightness_from_lux(lux_value, config=None):
         log_error(f"Error calculating brightness from lux {lux_value}", e)
         return 0
 
+async def verify_power_state():
+    """Periodically verify actual LED power state to handle failed commands"""
+    global power_on_state, last_power_verification_time
+
+    current_time = time.time()
+    if current_time - last_power_verification_time < POWER_VERIFICATION_INTERVAL:
+        return
+
+    try:
+        if d is not None:
+            status_data = await asyncio.wait_for(asyncio.to_thread(d.status), timeout=2.0)
+            actual_power_state = status_data.get('dps', {}).get(str(DP_ID_POWER), False)
+
+            if actual_power_state != power_on_state:
+                log_event(f"Power state mismatch detected: tracking={power_on_state}, actual={actual_power_state}", "WARNING")
+                power_on_state = actual_power_state
+                update_status(power_state=power_on_state)
+
+        last_power_verification_time = current_time
+    except Exception as e:
+        # Don't log every verification failure to avoid spam
+        pass
+
 async def set_brightness_and_power(brightness_percent, force_update=False, verbose_logging=True):
     """Set LED brightness and power state with comprehensive error handling."""
     global last_command_time, previous_brightness_percent, power_on_state
@@ -609,47 +634,71 @@ async def set_brightness_and_power(brightness_percent, force_update=False, verbo
         
         # Determine power state
         should_be_on = brightness_percent > 0
-        
-        # Handle power state changes
-        if power_on_state != should_be_on:
-            try:
-                # Use boolean values for tinytuya compatibility
-                await asyncio.wait_for(asyncio.to_thread(d.set_value, DP_ID_POWER, should_be_on), timeout=COMMAND_TIMEOUT_SECONDS)
-                power_on_state = should_be_on
-                if verbose_logging:
-                    log_event(f"Power {'ON' if should_be_on else 'OFF'}")
-                update_status(power_state=should_be_on)
-            except asyncio.TimeoutError:
-                log_error("Power command timed out")
-                current_status["error_count"] += 1
-                return
-            except Exception as e:
-                log_error(f"Error setting power state to {should_be_on}", e)
-                current_status["error_count"] += 1
-                return
-        
-        # Set brightness if LED is on
+
+        # Handle power state changes - only send command when state actually needs to change
+        power_command_needed = power_on_state != should_be_on
+
+        # Special case: if brightness goes from 0 to >0, force power ON even if we think it's already on
+        # This handles cases where our tracking is out of sync with actual LED state
+        force_power_on = (should_be_on and previous_brightness_percent == 0 and brightness_percent > 0)
+
+        if verbose_logging:
+            log_event(f"Power state check: current={power_on_state}, should_be={should_be_on}, command_needed={power_command_needed}, force_on={force_power_on}")
+
+        # Verify power state periodically to catch failed commands
+        await verify_power_state()
+
+        # Send power and brightness together in one command when LED should be on
         if should_be_on:
             try:
                 tuya_brightness = int(map_range(brightness_percent, 0, 100, TUYA_BRIGHTNESS_MIN, TUYA_BRIGHTNESS_MAX))
 
+                # Prepare command data - send power, mode, and brightness together
+                command_data = {
+                    str(DP_ID_POWER): True,
+                    str(DP_ID_WORK_MODE): 'white',
+                    str(DP_ID_BRIGHTNESS): tuya_brightness
+                }
+
                 # Log command being sent
                 if verbose_logging:
-                    log_event(f"LED Command: DP {DP_ID_WORK_MODE}='white', DP {DP_ID_BRIGHTNESS}={tuya_brightness} (Target: {brightness_percent:.1f}%)")
+                    log_event(f"LED Combined Command: Power=ON, Mode=white, Brightness={tuya_brightness} (Target: {brightness_percent:.1f}%)")
 
-                await asyncio.wait_for(asyncio.to_thread(d.set_value, DP_ID_WORK_MODE, 'white'), timeout=COMMAND_TIMEOUT_SECONDS)
-                await asyncio.wait_for(asyncio.to_thread(d.set_value, DP_ID_BRIGHTNESS, tuya_brightness), timeout=COMMAND_TIMEOUT_SECONDS)
+                # Send all commands together in one operation
+                await asyncio.wait_for(asyncio.to_thread(d.set_multiple_values, command_data), timeout=COMMAND_TIMEOUT_SECONDS)
+
+                # Update tracking
+                power_on_state = True
 
                 if verbose_logging:
-                    log_event(f"LED Command completed: Brightness {brightness_percent:.1f}% (Tuya: {tuya_brightness})")
-                update_status(brightness=brightness_percent)
-                
+                    log_event(f"LED Combined Command completed: Brightness {brightness_percent:.1f}% (Tuya: {tuya_brightness})")
+
+                update_status(power_state=True, brightness=brightness_percent)
+
             except asyncio.TimeoutError:
-                log_error("Brightness command timed out")
+                log_error("Combined LED command timed out")
                 current_status["error_count"] += 1
                 return
             except Exception as e:
-                log_error(f"Error setting brightness to {brightness_percent}%", e)
+                log_error(f"Error setting combined LED command to {brightness_percent}%", e)
+                current_status["error_count"] += 1
+                return
+
+        # Handle turning OFF when brightness is 0
+        elif not should_be_on and power_on_state:
+            try:
+                # Send power OFF command
+                await asyncio.wait_for(asyncio.to_thread(d.set_value, DP_ID_POWER, False), timeout=COMMAND_TIMEOUT_SECONDS)
+                power_on_state = False
+                if verbose_logging:
+                    log_event("Power OFF")
+                update_status(power_state=False, brightness=0)
+            except asyncio.TimeoutError:
+                log_error("Power OFF command timed out")
+                current_status["error_count"] += 1
+                return
+            except Exception as e:
+                log_error(f"Error setting power OFF", e)
                 current_status["error_count"] += 1
                 return
         
@@ -921,8 +970,13 @@ async def lighting_led_mode():
             # Try to control Tuya LED if available
             if tuya_available and d is not None:
                 try:
-                    # Control only significant changes when controlling LED
-                    if abs(brightness_percent - current_status.get("brightness", 0)) > 5:
+                    # Control significant changes OR power state transitions (On/Off)
+                    current_brightness = current_status.get("brightness", 0)
+                    is_significant_change = abs(brightness_percent - current_brightness) > 5
+                    is_off_to_on_transition = current_brightness == 0 and brightness_percent > 0
+                    is_on_to_off_transition = current_brightness > 0 and brightness_percent == 0
+
+                    if is_significant_change or is_off_to_on_transition or is_on_to_off_transition:
                         await set_brightness_and_power(brightness_percent)
                         log_event(f"Lux sensor - Lux: {lux_value:.2f} -> Brightness: {brightness_percent:.1f}%")
                 except Exception as e:
@@ -957,9 +1011,25 @@ async def manual_led_mode():
             
             # Update only if brightness changed - let hardware handle smooth transitions
             if brightness_percent != last_brightness:
-                await set_brightness_and_power(brightness_percent, force_update=True)
-                log_event(f"Manual brightness -> {brightness_percent}% (Hardware Smooth Transition)")
-                last_brightness = brightness_percent
+                # Try command with immediate retry on timeout for manual mode
+                retry_count = 0
+                max_retries = 2
+                success = False
+
+                while retry_count <= max_retries and not success:
+                    try:
+                        await set_brightness_and_power(brightness_percent, force_update=True)
+                        log_event(f"Manual brightness -> {brightness_percent}% (Hardware Smooth Transition)")
+                        last_brightness = brightness_percent
+                        success = True
+                    except Exception as e:
+                        retry_count += 1
+                        if "timeout" in str(e).lower() and retry_count <= max_retries:
+                            log_event(f"Manual LED command timed out, retrying immediately (attempt {retry_count}/{max_retries})", "WARNING")
+                            await asyncio.sleep(0.1)  # Brief pause before retry
+                        else:
+                            log_error(f"Manual LED command failed after {retry_count} attempts", e)
+                            break
                 
             try:
                 print(f"Manual LED - Brightness: {brightness_percent:.1f}%", end='\r')
@@ -1005,10 +1075,24 @@ async def disable_mode():
     update_status(mode="Disable")
 
     try:
-        # Turn off LED
+        # Turn off LED with better error handling
         if d:
-            await asyncio.wait_for(asyncio.to_thread(d.set_value, DP_ID_POWER, False), timeout=COMMAND_TIMEOUT_SECONDS)
-            update_status(power_state=False, brightness=0)
+            try:
+                await asyncio.wait_for(asyncio.to_thread(d.set_value, DP_ID_POWER, False), timeout=COMMAND_TIMEOUT_SECONDS)
+                global power_on_state
+                power_on_state = False
+                update_status(power_state=False, brightness=0)
+                log_event("LED turned OFF for disable mode")
+            except asyncio.TimeoutError:
+                log_event("LED power off command timed out in disable mode", "WARNING")
+                # Still update our tracking even if command failed
+                power_on_state = False
+                update_status(power_state=False, brightness=0)
+            except Exception as e:
+                log_error("Error turning off LED in disable mode", e)
+                # Still update our tracking even if command failed
+                power_on_state = False
+                update_status(power_state=False, brightness=0)
 
         while True:
             try:
