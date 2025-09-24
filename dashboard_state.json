@@ -2,18 +2,25 @@
   "mode": "dashboard",
   "service_configs": {
     "LED Service": {
-      "mode": "Musical LED",
+      "mode": "Lux sensor",
       "brightness": 50,
-      "last_updated": "2025-09-23T22:32:57.782357"
+      "status_file": "led/led_status.json",
+      "lux_min": "1",
+      "lux_max": "100",
+      "mic_rms_quiet": "0.001",
+      "mic_rms_loud": "0.013",
+      "musical_led_below_threshold": "off",
+      "musical_led_minimum_brightness": "3",
+      "last_updated": "2025-09-24T14:41:19.823992"
     },
     "Radio Service": {
-      "mode": "Scan",
-      "frequency": 101.2,
+      "mode": "Loop",
+      "frequency": 100.1,
       "direction": "Up",
       "status_file": "radio/radio_status.json",
-      "mode_selector": "Scan",
-      "loop_duration": "30",
-      "last_updated": "2025-09-23T22:03:10.570414"
+      "mode_selector": "Loop",
+      "loop_duration": "6",
+      "last_updated": "2025-09-24T14:41:19.824934"
     },
     "Fan Service": {
       "mode": "Fixed",
@@ -21,28 +28,28 @@
       "status_file": "fan/fan_status.json",
       "lux_min": "1",
       "lux_max": "850",
-      "last_updated": "2025-09-23T22:03:10.647127"
+      "last_updated": "2025-09-24T14:41:19.826418"
     },
     "Broadcast Service": {
       "mode": "Loop",
       "volume": 100,
       "status_file": "broadcast/broadcast_status.json",
-      "last_updated": "2025-09-23T22:03:10.661958"
+      "last_updated": "2025-09-24T14:41:19.827836"
     },
     "Mixing Service": {
-      "mode": "Disable",
+      "mode": "Auto",
       "master_volume": "100",
       "mic_volume": "65",
       "recording_duration": "120",
       "volume": "75",
       "status_file": "mixing/mixing_status.json",
-      "last_updated": "2025-09-23T22:03:10.663879"
+      "last_updated": "2025-09-24T14:41:19.829316"
     },
     "Exhibition Metrics Service": {
       "recording_interval": 60,
       "max_records": 10000,
       "data_file": "data/exhibition_metrics.json",
-      "last_updated": "2025-09-23T22:03:10.665882"
+      "last_updated": "2025-09-24T14:41:19.831036"
     }
   },
   "ui_preferences": {
@@ -52,6 +59,6 @@
   },
   "last_active_services": [],
   "user_selections": {},
-  "timestamp": "2025-09-23T22:32:57.782502",
+  "timestamp": "2025-09-24T14:41:19.831172",
   "version": "3.0.0"
 }

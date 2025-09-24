@@ -5,6 +5,9 @@ import time
 import json
 import os
 import traceback
+import signal
+import sys
+import atexit
 from datetime import datetime
 from random import uniform
 
@@ -34,6 +37,7 @@ STATUS_FILE = os.path.join(os.path.dirname(__file__), "radio_status.json")
 # Global Variables
 # -------------------------------
 bus = None
+service_start_time = None
 current_status = {
     "mode": "Fixed",
     "frequency": 99.5,
@@ -163,6 +167,55 @@ def write_config(cfg):
             
     except Exception as e:
         log_error("Error writing config", e)
+
+# -------------------------------
+# Signal Handlers and Cleanup
+# -------------------------------
+def log_service_incident(reason, additional_info=""):
+    """Log service incidents for better debugging"""
+    global service_start_time
+    if service_start_time:
+        uptime = time.time() - service_start_time
+        uptime_str = f"{uptime:.1f} seconds ({uptime/3600:.2f} hours)"
+    else:
+        uptime_str = "unknown"
+
+    incident_msg = f"INCIDENT: Radio service {reason}. Uptime: {uptime_str}."
+    if additional_info:
+        incident_msg += f" Details: {additional_info}"
+
+    log_event(incident_msg, "INCIDENT")
+    log_to_main_log(incident_msg, "INCIDENT")
+
+def signal_handler(signum, frame):
+    """Handle termination signals gracefully"""
+    signal_name = signal.Signals(signum).name
+    log_service_incident(f"received signal {signal_name} ({signum})", f"Signal frame: {frame}")
+    cleanup_and_exit()
+
+def unexpected_exit_handler():
+    """Handle unexpected exits via atexit"""
+    log_service_incident("exiting unexpectedly (atexit handler)", "No signal received")
+
+def cleanup_and_exit():
+    """Clean up resources before exit"""
+    try:
+        log_event("Radio service shutting down gracefully")
+        if bus:
+            # Mute radio before closing
+            set_frequency_with_mute(87.5, mute=True)
+            bus.close()
+            log_event("I2C bus closed")
+        update_status(connection_status="disconnected")
+    except Exception as e:
+        log_error("Error during cleanup", e)
+    sys.exit(0)
+
+# Register signal handlers
+signal.signal(signal.SIGTERM, signal_handler)
+signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGHUP, signal_handler)
+atexit.register(unexpected_exit_handler)
 
 # -------------------------------
 # Hardware Initialization
@@ -511,8 +564,14 @@ def handle_loop_mode():
             return
 
         loop_duration = float(current_status.get("loop_duration", 30))  # Convert to float
-        loop_start_time = current_status.get("loop_start_time", time.time())
+        loop_start_time = current_status.get("loop_start_time")
         current_station_index = current_status.get("current_station_index", 0)
+
+        # Initialize loop_start_time if it's None
+        if loop_start_time is None:
+            loop_start_time = time.time()
+            current_status["loop_start_time"] = loop_start_time
+            update_status(loop_start_time=loop_start_time)
 
         # Check if it's time to switch to the next station
         elapsed_time = time.time() - loop_start_time
@@ -556,7 +615,25 @@ def handle_loop_mode():
 # -------------------------------
 def main():
     """Main service loop with comprehensive error handling"""
-    log_event("Radio service starting")
+    global service_start_time
+    service_start_time = time.time()
+
+    # Enhanced startup logging
+    startup_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    log_event(f"Radio service starting at {startup_time} (PID: {os.getpid()})")
+
+    # Check for previous unexpected shutdown
+    if os.path.exists(STATUS_FILE):
+        try:
+            with open(STATUS_FILE, 'r') as f:
+                last_status = json.load(f)
+                last_update = last_status.get('last_update')
+                if last_update:
+                    log_event(f"Previous service session last active: {last_update}", "INFO")
+        except Exception as e:
+            log_event(f"Could not read previous service status: {e}", "WARN")
+
+    log_service_incident("starting up", f"PID: {os.getpid()}, Start time: {startup_time}")
     update_status(mode="Initializing", connection_status="connecting")
     
     # Initialize hardware
@@ -600,26 +677,17 @@ def main():
                                 best_station = stations[0]
                                 cfg["frequency"] = best_station["frequency"]
 
-                                # Check if we should go to Loop mode or Fixed mode
-                                original_config = read_config()
-                                target_mode = original_config.get("mode_selector", original_config.get("mode", "Fixed"))
-
-                                if target_mode == "Loop":
-                                    # Keep Loop mode and set up station cycling
-                                    cfg["mode"] = "Loop"
-                                    cfg["mode_selector"] = "Loop"
-                                    current_status["stations"] = stations
-                                    current_status["current_station_index"] = 0
-                                    log_event(f"Scan complete: {len(stations)} stations found, switching to Loop mode")
-                                else:
-                                    # Switch to Fixed mode with best station
-                                    cfg["mode"] = "Fixed"
-                                    cfg["mode_selector"] = "Fixed"
-                                    log_event(f"Scan complete: {len(stations)} stations found, switching to Fixed mode")
+                                # After scan once mode, always switch to Loop mode with 6 sec duration
+                                cfg["mode"] = "Loop"
+                                cfg["mode_selector"] = "Loop"
+                                cfg["loop_duration"] = "6"  # Set 6 second loop duration
+                                current_status["stations"] = stations
+                                current_status["current_station_index"] = 0
+                                current_status["loop_duration"] = 6
+                                log_event(f"Scan complete: {len(stations)} stations found, switching to Loop mode with 6 sec duration")
 
                                 write_config(cfg)
 
-                                log_event(f"Scan complete: {len(stations)} stations found, will tune to {best_station['frequency']:.1f} MHz")
                                 # Prepare station list for dashboard display
                                 station_list = []
                                 for station in stations:
@@ -629,21 +697,25 @@ def main():
                                         "stereo": station["stereo"],
                                         "quality": station["quality"]  # Added missing quality field
                                     })
-                                update_status(mode="Fixed", frequency=best_station["frequency"], stations=station_list)
+                                update_status(mode="Loop", frequency=best_station["frequency"], stations=station_list, loop_duration=6)
                                 # Remove duplicate set_frequency call - let main loop handle it via config change
                             else:
-                                log_event("Scan complete: No stations found")
-                                cfg["mode"] = "Fixed"  # Fall back to fixed mode
-                                cfg["mode_selector"] = "Fixed"  # Set mode_selector to Fixed
+                                log_event("Scan complete: No stations found, switching to Loop mode anyway")
+                                cfg["mode"] = "Loop"  # Switch to loop mode even with no stations
+                                cfg["mode_selector"] = "Loop"  # Set mode_selector to Loop
+                                cfg["loop_duration"] = "6"  # Set 6 second loop duration
+                                current_status["loop_duration"] = 6
                                 write_config(cfg)
-                                update_status(mode="Fixed")
+                                update_status(mode="Loop", loop_duration=6)
 
                         except Exception as e:
                             log_error("Error during full band scan", e)
-                            cfg["mode"] = "Fixed"  # Fall back to fixed mode
-                            cfg["mode_selector"] = "Fixed"  # Set mode_selector to Fixed
+                            cfg["mode"] = "Loop"  # Fall back to loop mode
+                            cfg["mode_selector"] = "Loop"  # Set mode_selector to Loop
+                            cfg["loop_duration"] = "6"  # Set 6 second loop duration
+                            current_status["loop_duration"] = 6
                             write_config(cfg)
-                            update_status(mode="Fixed")
+                            update_status(mode="Loop", loop_duration=6)
 
                     elif mode == "Loop":
                         # Loop mode - cycle through found stations with configurable duration
@@ -709,8 +781,9 @@ def main():
                 time.sleep(2)
 
     except KeyboardInterrupt:
-        log_event("Radio service stopped by user")
+        log_service_incident("stopped by user (KeyboardInterrupt)", "SIGINT received")
     except Exception as e:
+        log_service_incident("crashed with unexpected error", f"Exception: {str(e)}")
         log_error("Unexpected error in main", e)
     finally:
         try:
@@ -721,7 +794,7 @@ def main():
                 log_event("I2C bus closed")
         except Exception as e:
             log_error("Error during cleanup", e)
-        
+
         update_status(connection_status="disconnected")
         log_event("Radio service stopped")
 
