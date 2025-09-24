@@ -661,7 +661,7 @@ def perform_mixing(config):
         )
 
         # Cleanup old files in broadcast media directory (keep only 5 newest)
-        cleanup_old_files(BROADCAST_MEDIA_DIR, 5)
+        cleanup_old_files(BROADCAST_MEDIA_DIR, 25)
         # Also cleanup mixed output directory (temp files) - keep only 3 newest to prevent overflow
         cleanup_old_files(MIXED_OUTPUT_DIR, 3)
 

@@ -665,6 +665,37 @@ Real-time Monitoring Pipeline:
 
 ## 🔧 Configuration
 
+### 📁 Playlist File Management
+
+**Playlist File Limit Configuration:**
+
+The broadcast service automatically manages playlist files to prevent storage overflow. By default, only the **5 newest** audio files are kept in the broadcast media directory, with older files automatically deleted.
+
+**To change the playlist file limit:**
+
+1. **Location**: Edit `/home/payas/cos/mixing/mixing_menu.py`
+2. **Line**: 664
+3. **Change**: Replace `5` with your desired number of files to keep
+
+```python
+# Line 664 in mixing/mixing_menu.py
+cleanup_old_files(BROADCAST_MEDIA_DIR, 5)  # Change this 5 to your desired limit
+```
+
+**How it works:**
+- Cleanup happens automatically after each audio mixing operation
+- Files are sorted by modification time (newest first)
+- Only the specified number of newest files are kept
+- Older files are deleted and logged with "Removed old file: filename.mp3"
+- The broadcast media directory is located at `/home/payas/cos/broadcast/media/`
+
+**Examples:**
+```python
+cleanup_old_files(BROADCAST_MEDIA_DIR, 10)  # Keep 10 files
+cleanup_old_files(BROADCAST_MEDIA_DIR, 20)  # Keep 20 files
+cleanup_old_files(BROADCAST_MEDIA_DIR, 3)   # Keep only 3 files
+```
+
 ### Device Configuration (Secure Setup)
 
 **🔐 Important**: Device credentials are stored separately from code for security.

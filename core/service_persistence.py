@@ -350,9 +350,37 @@ def save_current_service_state():
     return manager.save_service_state(current_services)
 
 def restore_previous_services():
-    """Start all services by default for exhibition reliability"""
+    """Start all services by default for exhibition reliability with enhanced robustness"""
     manager = ServicePersistenceManager()
-    return manager.restore_services(force_all_services=True)
+
+    # Enhanced logging for debugging restoration issues
+    print("🔍 SERVICE RESTORATION DEBUG INFO:")
+    print(f"   State file exists: {os.path.exists(manager.state_file)}")
+    print(f"   State file path: {manager.state_file}")
+
+    # Load and display current state for debugging
+    state_data = manager._load_raw_state()
+    if state_data:
+        print(f"   Saved timestamp: {state_data.get('timestamp', 'unknown')}")
+        print(f"   Saved running services: {state_data.get('running_services', [])}")
+        print(f"   Manually stopped services: {state_data.get('manually_stopped', [])}")
+    else:
+        print("   No saved state found - will start all services except manually stopped")
+
+    # Check what services are currently detected as running
+    currently_running = manager.get_currently_running_services()
+    print(f"   Currently running services: {currently_running}")
+
+    # Start all services for exhibition reliability
+    restored = manager.restore_services(force_all_services=True)
+
+    # Log final result
+    final_running = manager.get_currently_running_services()
+    print(f"🏁 SERVICE RESTORATION COMPLETE:")
+    print(f"   Services restored: {restored}")
+    print(f"   Final running services: {final_running}")
+
+    return restored
 
 if __name__ == "__main__":
     import sys

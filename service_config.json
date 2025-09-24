@@ -1,18 +1,20 @@
 {
   "LED Service": {
-    "mode": "Musical LED",
+    "mode": "Lux sensor",
     "brightness": 50,
     "lux_min": "1",
     "lux_max": "100",
     "mic_rms_quiet": "0.001",
-    "mic_rms_loud": "0.013"
+    "mic_rms_loud": "0.013",
+    "musical_led_below_threshold": "off",
+    "musical_led_minimum_brightness": "3"
   },
   "Radio Service": {
-    "mode": "Scan",
-    "frequency": 101.2,
+    "mode": "Loop",
+    "frequency": 100.1,
     "direction": "Up",
-    "mode_selector": "Scan",
-    "loop_duration": "30"
+    "mode_selector": "Loop",
+    "loop_duration": "6"
   },
   "Fan Service": {
     "mode": "Fixed",
@@ -28,7 +30,7 @@
     "mode": "Auto"
   },
   "Mixing Service": {
-    "mode": "Disable",
+    "mode": "Auto",
     "master_volume": "100",
     "mic_volume": "65",
     "recording_duration": "120",
