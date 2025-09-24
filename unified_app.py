@@ -71,6 +71,15 @@ except Exception as e:
     print(f"⚠️  Exhibition watchdog failed to start: {e}")
     exhibition_watchdog = None
 
+# Initialize service protection system
+try:
+    from core.service_protection import start_service_protection
+    service_protection = start_service_protection()
+    print("✅ Service protection system initialized successfully")
+except Exception as e:
+    print(f"⚠️  Service protection system failed to start: {e}")
+    service_protection = None
+
 # Initialize metrics recording
 try:
     metrics_recorder = get_metrics_recorder()
@@ -986,12 +995,47 @@ def set_performing_mode():
             # Stop all other services when entering performance mode to ensure LED service has full audio access
             service_manager.log_event(f"Performance mode {mode}: Stopping all other services for optimal audio performance")
 
+            # Use management scripts to properly stop services
+            script_mapping = {
+                "Fan Service": "scripts/manage_fan_service.sh",
+                "Broadcast Service": "scripts/manage_broadcast_service.sh",
+                "Mixing Service": "scripts/manage_mixing_service.sh",
+                "Radio Service": "scripts/manage_radio_service.sh"
+            }
+
             for service_name in SERVICES:
                 if service_name != "LED Service":
-                    if service_manager.is_service_running(service_name):
-                        stopped_services.append(service_name)
-                        service_manager.stop_service(service_name)
-                        service_manager.log_event(f"Stopped {service_name} for performance mode")
+                    script_path = script_mapping.get(service_name)
+                    if script_path and os.path.exists(script_path):
+                        try:
+                            # Stop the service using its management script
+                            result = subprocess.run([script_path, "stop"],
+                                                  capture_output=True, text=True, timeout=10)
+
+                            if result.returncode == 0:
+                                stopped_services.append(service_name)
+                                service_manager.log_event(f"Stopped {service_name} for performance mode using management script")
+                            else:
+                                service_manager.log_error(f"Failed to stop {service_name}: {result.stderr}")
+                                # Fallback to service manager stop
+                                if service_manager.is_service_running(service_name):
+                                    stopped_services.append(service_name)
+                                    service_manager.stop_service(service_name)
+                                    service_manager.log_event(f"Stopped {service_name} for performance mode using fallback method")
+
+                        except Exception as e:
+                            service_manager.log_error(f"Error stopping {service_name} with script, using fallback", e)
+                            # Fallback to service manager stop
+                            if service_manager.is_service_running(service_name):
+                                stopped_services.append(service_name)
+                                service_manager.stop_service(service_name)
+                                service_manager.log_event(f"Stopped {service_name} for performance mode using fallback method")
+                    else:
+                        # Fallback to service manager stop if script not found
+                        if service_manager.is_service_running(service_name):
+                            stopped_services.append(service_name)
+                            service_manager.stop_service(service_name)
+                            service_manager.log_event(f"Stopped {service_name} for performance mode (no management script found)")
 
             # Also explicitly stop mixing service recording state to prevent conflicts
             try:
@@ -1025,6 +1069,70 @@ def set_performing_mode():
 
                 except Exception as e:
                     service_manager.log_error("Error stopping audio conflicts for Auto mode", e)
+
+        elif mode == "Disable":
+            # When disabling LED performance mode, restart all services and switch LED to Lux sensor mode
+            service_manager.log_event(f"Exiting performance mode: Switching LED to Lux sensor mode and restarting all services")
+
+            # First, switch LED service to Lux sensor mode to prevent audio device conflicts
+            try:
+                led_config_file = os.path.join(os.getcwd(), "led", "led_config.json")
+                if os.path.exists(led_config_file):
+                    with open(led_config_file, 'r') as f:
+                        led_config_data = json.load(f)
+
+                    # Switch to Lux sensor mode (lighting mode)
+                    led_config_data["mode"] = "lighting"
+                    led_config_data["_auto_switched"] = datetime.now().isoformat()
+                    led_config_data["_reason"] = "auto-switch-after-performance-mode"
+
+                    with open(led_config_file, 'w') as f:
+                        json.dump(led_config_data, f, indent=2)
+
+                    service_manager.log_event("Switched LED service to Lux sensor mode to prevent audio conflicts")
+                else:
+                    service_manager.log_error("LED config file not found for auto-switching")
+
+            except Exception as e:
+                service_manager.log_error("Failed to switch LED to Lux sensor mode after performance", e)
+
+            # Restart all essential services (they should have been stopped during performance mode)
+            services_to_restart = ["Fan Service", "Broadcast Service", "Mixing Service", "Radio Service"]
+            restarted_services = []
+
+            for service_name in services_to_restart:
+                try:
+                    # Get the script path for this service
+                    script_mapping = {
+                        "Fan Service": "scripts/manage_fan_service.sh",
+                        "Broadcast Service": "scripts/manage_broadcast_service.sh",
+                        "Mixing Service": "scripts/manage_mixing_service.sh",
+                        "Radio Service": "scripts/manage_radio_service.sh"
+                    }
+
+                    script_path = script_mapping.get(service_name)
+                    if script_path and os.path.exists(script_path):
+                        # Start the service using its management script
+                        result = subprocess.run([script_path, "start"],
+                                              capture_output=True, text=True, timeout=15)
+
+                        if result.returncode == 0:
+                            restarted_services.append(service_name)
+                            service_manager.log_event(f"Restarted {service_name} after performance mode")
+                        else:
+                            service_manager.log_error(f"Failed to restart {service_name}: {result.stderr}")
+                    else:
+                        service_manager.log_error(f"Management script not found for {service_name}")
+
+                except Exception as e:
+                    service_manager.log_error(f"Error restarting {service_name} after performance mode", e)
+
+            # Update the service state to reflect restarted services
+            try:
+                persistence_manager.update_running_services()
+                service_manager.log_event(f"Performance mode exit complete: LED switched to Lux sensor, services restarted: {restarted_services}")
+            except Exception as e:
+                service_manager.log_error("Error updating service state after performance restart", e)
 
         # Update LED service configuration
         led_config = {
