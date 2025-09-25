@@ -291,7 +291,8 @@ SENSOR_LUX_MAX = 1500
 # --- Command Rate Limiting ---
 MIN_COMMAND_INTERVAL_SECONDS = 0.3
 COMMAND_TIMEOUT_SECONDS = 0.3
-BRIGHTNESS_MINIMUM_CHANGE = 30  # Minimum brightness change required to trigger update
+BRIGHTNESS_MINIMUM_CHANGE_HIGHER = 20  # Minimum brightness change required for brighter (increasing)
+BRIGHTNESS_MINIMUM_CHANGE_LOWER = 30   # Minimum brightness change required for darker (decreasing)
 last_command_time = 0
 previous_brightness_percent = -1
 
@@ -312,7 +313,7 @@ POWER_VERIFICATION_INTERVAL = 30  # Verify power state every 30 seconds
 lux_history = []
 last_recorded_lux = None
 LUX_HISTORY_FILE = os.path.join(os.path.dirname(__file__), "lux_history.json")
-LUX_CHANGE_THRESHOLD = 5  # Only record when lux changes by 50 or more
+LUX_CHANGE_THRESHOLD = 10  # Only record when lux changes by 50 or more
 MAX_HISTORY_ENTRIES = 50000  # Maximum number of history entries to keep
 MAX_FILE_SIZE_MB = 20  # Maximum file size in MB before trimming
 
@@ -569,6 +570,15 @@ def map_range(value, in_min, in_max, out_min, out_max):
 def get_brightness_from_rms(rms, config=None):
     """Maps RMS to LED brightness for Musical LED mode with configurable below-threshold behavior."""
     try:
+        # Check if musical LED is active first
+        musical_led_active = "active"  # Default: active
+        if config:
+            musical_led_active = config.get("musical_led_active", "active")
+
+        # If musical LED is set to "off", always return 0 (LED off)
+        if musical_led_active == "off":
+            return 0
+
         # Load configuration for below-threshold behavior
         below_threshold_mode = "off"  # Default: turn off when below quiet threshold
         minimum_brightness = 3  # Default minimum brightness when staying on
@@ -883,9 +893,28 @@ async def musical_led_mode():
                 current_brightness = brightness_percent
 
                 # Only send brightness updates when there's a meaningful change to allow hardware smooth transitions
-                brightness_change = abs(brightness_percent - previous_brightness_percent)
+                brightness_change = brightness_percent - previous_brightness_percent
+                brightness_change_abs = abs(brightness_change)
 
-                if brightness_change >= BRIGHTNESS_MINIMUM_CHANGE:  # Update when change >= defined
+                # Use different thresholds for brighter vs darker changes
+                should_update = False
+                if brightness_change > 0:  # Getting brighter
+                    should_update = brightness_change_abs >= BRIGHTNESS_MINIMUM_CHANGE_HIGHER
+                elif brightness_change < 0:  # Getting darker
+                    should_update = brightness_change_abs >= BRIGHTNESS_MINIMUM_CHANGE_LOWER
+
+                # Special cases: always update when reaching near maximum or minimum brightness
+                # even if it doesn't pass the threshold, to show that it reached the limits
+                # Use more realistic thresholds based on actual brightness ranges
+                is_max_brightness = brightness_percent >= 95  # Near maximum
+                is_min_brightness = brightness_percent <= 5   # Near minimum
+                bypass_threshold = is_max_brightness or is_min_brightness
+
+                # Check if musical LED is set to "off" - always force LED off regardless of RMS
+                config = load_config()
+                musical_led_off = config.get("musical_led_active", "active") == "off"
+
+                if should_update or bypass_threshold or musical_led_off:
                     tuya_brightness = int(map_range(brightness_percent, 1, 100, TUYA_BRIGHTNESS_MIN, TUYA_BRIGHTNESS_MAX))
                     log_event(f"Musical LED - RMS: {smoothed_rms:.4f} -> Brightness: {brightness_percent:.1f}% (Tuya: {tuya_brightness})")
 

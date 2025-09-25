@@ -547,10 +547,37 @@ class ExhibitionWatchdog:
         except:
             return 0
     
+    def is_performance_mode_active(self) -> bool:
+        """Check if performance mode is active - don't restart services during performance mode"""
+        try:
+            flag_file = "/tmp/cos_performance_mode_active"
+            if os.path.exists(flag_file):
+                # Check if flag is stale (older than 10 minutes)
+                import time
+                flag_age = time.time() - os.path.getmtime(flag_file)
+                if flag_age > 600:  # 10 minutes
+                    self.logger.warning(f"Performance mode flag is stale ({flag_age:.1f}s old), removing it")
+                    try:
+                        os.remove(flag_file)
+                        return False
+                    except:
+                        pass
+                else:
+                    return True
+            return False
+        except Exception as e:
+            self.logger.error(f"Error checking performance mode: {e}")
+            return False
+
     def restart_service(self, reason: str):
         """Restart the main service with recovery procedures"""
         if not self.config['recovery']['auto_restart']:
             self.logger.warning(f"Auto-restart disabled. Reason: {reason}")
+            return
+
+        # Check if performance mode is active - avoid restarting during performance
+        if self.is_performance_mode_active():
+            self.logger.info(f"Performance mode is active - postponing service restart. Reason: {reason}")
             return
         
         # Check restart limits

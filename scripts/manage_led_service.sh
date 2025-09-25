@@ -13,6 +13,9 @@ log_event() {
     echo "LED SERVICE SCRIPT: $1"
 }
 
+# Source shared performance mode checking functions
+source "/home/payas/cos/scripts/performance_mode_check.sh"
+
 # Function to detect and adopt orphaned processes
 adopt_orphan() {
     local orphan_pids=$(pgrep -f "lighting_menu.py" 2>/dev/null)
@@ -42,6 +45,16 @@ adopt_orphan() {
 
 start_service() {
     log_event "START command received - checking for existing instances"
+
+    # Check if this service should start during performance mode
+    if ! should_service_start_during_performance "led"; then
+        log_performance_decision "led" "SKIP_START" "Performance mode active but not LED performance mode"
+        return 0
+    fi
+
+    if is_performance_mode_active; then
+        log_performance_decision "led" "ALLOW_START" "LED performance mode requires LED service to run"
+    fi
 
     # Check if we have a valid PID file first
     if [ -f "$PIDFILE" ]; then
