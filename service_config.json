@@ -4,8 +4,8 @@
     "brightness": 50,
     "lux_min": "1",
     "lux_max": "800",
-    "mic_rms_quiet": "0.103",
-    "mic_rms_loud": "0.4",
+    "mic_rms_quiet": "0.001",
+    "mic_rms_loud": "0.025",
     "musical_led_below_threshold": "off",
     "musical_led_minimum_brightness": "3"
   },

@@ -663,6 +663,204 @@ Real-time Monitoring Pipeline:
 - **WiFi Diagnostics**: Network connectivity monitoring
 - **Real-time Updates**: Auto-refreshing status every 15 seconds
 
+## 🛡️ Advanced System Monitoring & Protection
+
+The Code of the Sea system includes a comprehensive multi-layer monitoring and protection system designed for reliable long-term operation in art installations and exhibition environments.
+
+### **🔍 System Monitoring Architecture**
+
+#### **Multi-Layer Monitoring System**
+The system employs three coordinated monitoring layers that work together without conflicts:
+
+1. **Exhibition Watchdog** (`core/exhibition_watchdog.py`) - 120-second intervals
+2. **Service Protection Manager** (`core/service_protection.py`) - 240-second intervals
+3. **Cron-based Monitoring** - 2-3 minute intervals per service
+
+#### **Lock-based Coordination**
+- Uses `/tmp/cos_protection.lock` to prevent monitoring conflicts
+- Staggered timing ensures comprehensive coverage without resource competition
+- Graceful degradation when multiple monitors are active
+
+### **🚨 Exhibition Watchdog System**
+
+The Exhibition Watchdog provides comprehensive system health monitoring optimized for art installations:
+
+#### **Key Features:**
+- **Continuous Health Monitoring**: CPU, memory, temperature, disk usage
+- **Network Stability Tracking**: WiFi diagnostics with interference detection
+- **Hardware Health Checks**: I2C devices (VEML7700, TEA5767), GPIO functionality
+- **Automatic Recovery**: Memory leak detection, zombie process cleanup
+- **Resource Management**: System cleanup, cache management, log rotation
+
+#### **Thresholds and Actions:**
+```
+CPU Usage > 90%        → Process analysis and cleanup
+Memory Usage > 85%     → Memory leak detection and restart
+Temperature > 75°C     → Thermal monitoring and fan control
+Disk Usage > 95%       → Cleanup old logs and temporary files
+Network Failures > 2   → Network stack recovery procedures
+```
+
+#### **Advanced Network Monitoring:**
+- **WiFi Signal Analysis**: Real-time signal strength and interference detection
+- **Power Management Detection**: Identifies WiFi disconnection causes
+- **Gateway Connectivity**: Dynamic gateway detection and testing
+- **DNS Resolution Testing**: Comprehensive network stack validation
+- **Detailed Diagnostics**: Saves WiFi diagnostics to `/home/payas/cos/logs/` for analysis
+
+### **🔧 Service Protection System**
+
+The Service Protection Manager prevents inappropriate service stops and ensures service persistence:
+
+#### **Protection Features:**
+- **Self-Stop Prevention**: Prevents services from entering "Disable" mode inappropriately
+- **Config Restoration**: Automatically restores service configurations from "Disable" to working modes
+- **Performance Mode Awareness**: Allows proper stops during LED performance modes
+- **Automatic Restart**: Restarts crashed or stopped services when appropriate
+
+#### **Service-Specific Protection:**
+```
+Fan Service      → Restored to "Fixed" mode
+Broadcast Service → Restored to "Auto" mode
+Mixing Service   → Restored to "Manual" mode
+Radio Service    → Restored to "Auto" mode
+LED Service      → Restored to "Manual LED" mode
+```
+
+#### **Performance Mode Integration:**
+- **Musical/Manual LED Mode**: Creates `/tmp/cos_performance_mode_active` flag
+- **Service Coordination**: Prevents cron jobs from restarting services during performance
+- **Automatic LED Switching**: Switches LED to "Lux sensor" mode when exiting performance
+- **Audio Conflict Prevention**: Ensures only LED service uses audio device during performance
+
+### **⏰ Automated Monitoring (Cron Jobs)**
+
+Cron-based monitoring provides immediate service restart capabilities:
+
+```bash
+# LED Service monitoring (every 2 minutes)
+*/2 * * * * /home/payas/cos/scripts/manage_led_service.sh status >/dev/null 2>&1 || start
+
+# Other services monitoring (every 3 minutes)
+*/3 * * * * /home/payas/cos/scripts/manage_fan_service.sh status >/dev/null 2>&1 || start
+*/3 * * * * /home/payas/cos/scripts/manage_broadcast_service.sh status >/dev/null 2>&1 || start
+*/3 * * * * /home/payas/cos/scripts/manage_mixing_service.sh status >/dev/null 2>&1 || start
+*/3 * * * * /home/payas/cos/scripts/manage_radio_service.sh status >/dev/null 2>&1 || start
+
+# Service state backup (every 5 minutes)
+*/5 * * * * /home/payas/cos/scripts/periodic_service_backup.sh >/dev/null 2>&1
+```
+
+### **🛠️ Service Management Scripts**
+
+Each service has a dedicated management script with comprehensive functionality:
+
+#### **Script Capabilities:**
+- **Status Checking**: PID-based process verification with cleanup of stale PID files
+- **Safe Starting**: Prevents multiple instances, handles existing processes
+- **Clean Stopping**: Graceful termination with SIGTERM/SIGKILL progression
+- **Process Cleanup**: Removes zombie processes and cleans up temporary files
+- **Logging Integration**: Comprehensive logging of all start/stop operations
+
+#### **Management Script Locations:**
+```
+scripts/manage_led_service.sh      → LED Service management
+scripts/manage_fan_service.sh      → Fan Service management
+scripts/manage_broadcast_service.sh → Broadcast Service management
+scripts/manage_mixing_service.sh   → Mixing Service management
+scripts/manage_radio_service.sh    → Radio Service management
+scripts/manage_unified_app.sh      → Main application management
+```
+
+### **📊 Service State Persistence**
+
+The system maintains service state across restarts and failures:
+
+#### **State Tracking:**
+- **Running Services**: Current active service list
+- **Manually Stopped**: User-initiated service stops (preserved across restarts)
+- **Service History**: Timestamped record of all service state changes
+- **Protection Status**: Per-service protection settings and reasons
+
+#### **State Files:**
+```
+cos_service_state.json           → Current service state
+service_protection.log           → Protection system events
+service_events.log              → Detailed service start/stop history
+/tmp/cos_protection.lock        → Monitoring coordination lock
+/tmp/cos_performance_mode_active → Performance mode flag
+```
+
+### **⚠️ Error Prevention & Recovery**
+
+#### **Common Issues Prevented:**
+- **Audio Device Conflicts**: Automatic LED mode switching prevents device competition
+- **Service Self-Stopping**: Config protection prevents inappropriate "Disable" mode switches
+- **Memory Leaks**: Watchdog detects and handles memory leak patterns
+- **Network Instability**: Advanced WiFi diagnostics and automatic recovery
+- **Hardware Failures**: I2C bus recovery and GPIO reset procedures
+- **Process Zombies**: Automated cleanup of stuck and orphaned processes
+
+#### **Recovery Procedures:**
+- **Service Restart Limits**: Maximum 3 restarts per hour per service
+- **Hardware Reset**: I2C driver reload, GPIO cleanup, PWM reset
+- **Network Recovery**: WiFi interface restart, wpa_supplicant reload, DHCP renewal
+- **Memory Cleanup**: Cache clearing, temp file removal, log rotation
+- **Process Cleanup**: Zombie process elimination, resource release
+
+### **📈 Monitoring Status & Logs**
+
+#### **Real-time Status:**
+```bash
+# Check service protection status
+python3 core/service_protection.py status
+
+# Check exhibition watchdog health
+tail -f logs/cos-watchdog.log
+
+# View service events history
+tail -f service_events.log
+
+# Check cron monitoring
+tail -f /var/log/syslog | grep cos
+```
+
+#### **Log Files:**
+```
+unified_app.log                 → Main application events
+service_protection.log          → Protection system activity
+logs/cos-watchdog.log          → Exhibition watchdog events
+service_events.log             → Service start/stop history
+reboot_monitor.log             → System reboot events
+logs/wifi_diagnostics_*.json   → WiFi connectivity analysis
+```
+
+### **🔄 Performance Mode Service Management**
+
+#### **Performance Mode Behavior:**
+When entering LED performance modes (Musical LED, Manual LED):
+
+1. **Service Stopping**: All non-LED services are stopped using management scripts
+2. **Flag Creation**: `/tmp/cos_performance_mode_active` prevents cron restarts
+3. **Audio Exclusivity**: LED service gets exclusive audio device access
+4. **Protection Coordination**: Service protection system recognizes performance mode
+
+#### **Performance Mode Exit:**
+When exiting performance mode:
+
+1. **LED Auto-Switch**: LED automatically switches to "Lux sensor" mode
+2. **Service Restart**: All stopped services are restarted automatically
+3. **Flag Removal**: Performance mode flag is removed, allowing normal monitoring
+4. **Audio Conflict Prevention**: "Lux sensor" mode prevents audio device conflicts
+
+#### **Audio Device Management:**
+- **Performance Modes**: LED service uses audio input for reactive lighting
+- **Normal Operation**: LED in "Lux sensor" mode allows other services audio access
+- **Conflict Prevention**: Automatic mode switching ensures clean audio device handoff
+- **PulseAudio Integration**: Proper audio device cleanup during mode switches
+
+This comprehensive monitoring system ensures reliable, long-term operation suitable for art installations, exhibitions, and unattended deployments while providing detailed diagnostics and automatic error recovery.
+
 ## 🔧 Configuration
 
 ### 📁 Playlist File Management

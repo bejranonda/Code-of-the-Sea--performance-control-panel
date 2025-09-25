@@ -1,9 +1,9 @@
 {
-  "timestamp": "2025-09-24T22:15:08.662816",
+  "timestamp": "2025-09-25T13:35:01.572631",
   "running_services": [
-    "radio",
     "broadcast",
     "fan",
+    "radio",
     "mixing"
   ],
   "manually_stopped": [],
