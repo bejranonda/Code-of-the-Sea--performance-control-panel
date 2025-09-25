@@ -5,7 +5,15 @@ MIXING_SCRIPT="/home/payas/cos/mixing/mixing_menu.py"
 PYTHON_PATH="/home/payas/venv/bin/python"
 PIDFILE="/tmp/mixing_service.pid"
 
+# Source shared performance mode checking functions
+source "/home/payas/cos/scripts/performance_mode_check.sh"
+
 start_service() {
+    # Check if this service should start during performance mode
+    if ! should_service_start_during_performance "mixing"; then
+        log_performance_decision "mixing" "SKIP_START" "Performance mode active - mixing service should remain stopped"
+        return 0
+    fi
     # First kill any existing instances
     echo "Checking for existing mixing service instances..."
     EXISTING_PIDS=$(pgrep -f "mixing_menu.py" 2>/dev/null)

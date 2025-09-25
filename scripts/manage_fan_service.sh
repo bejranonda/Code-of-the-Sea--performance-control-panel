@@ -12,7 +12,17 @@ log_event() {
     echo "FAN SERVICE SCRIPT: $1"
 }
 
+# Source shared performance mode checking functions
+source "/home/payas/cos/scripts/performance_mode_check.sh"
+
 start_service() {
+    log_event "START command received - checking performance mode"
+
+    # Check if this service should start during performance mode
+    if ! should_service_start_during_performance "fan"; then
+        log_performance_decision "fan" "SKIP_START" "Performance mode active - fan service should remain stopped"
+        return 0
+    fi
     # First kill any existing instances
     echo "Checking for existing fan service instances..."
     EXISTING_PIDS=$(pgrep -f "fan_mic_menu.py" 2>/dev/null)

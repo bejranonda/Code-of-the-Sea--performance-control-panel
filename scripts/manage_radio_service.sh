@@ -12,7 +12,15 @@ log_event() {
     echo "RADIO SERVICE SCRIPT: $1"
 }
 
+# Source shared performance mode checking functions
+source "/home/payas/cos/scripts/performance_mode_check.sh"
+
 start_service() {
+    # Check if this service should start during performance mode
+    if ! should_service_start_during_performance "radio"; then
+        log_performance_decision "radio" "SKIP_START" "Performance mode active - radio service should remain stopped"
+        return 0
+    fi
     # First kill any existing instances
     echo "Checking for existing radio service instances..."
     EXISTING_PIDS=$(pgrep -f "fm-radio_menu.py" 2>/dev/null)

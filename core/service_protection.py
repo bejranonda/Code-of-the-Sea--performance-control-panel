@@ -125,26 +125,53 @@ class ServiceProtectionManager:
     def is_performance_mode_active(self) -> bool:
         """Check if LED performance mode is currently active"""
         try:
-            # Check the actual LED status file for the real-time mode
+            # Primary check: Look for performance mode flag file created by unified_app.py
+            performance_flag = "/tmp/cos_performance_mode_active"
+            if os.path.exists(performance_flag):
+                # Check if flag file is stale (older than 10 minutes)
+                flag_age = time.time() - os.path.getmtime(performance_flag)
+                if flag_age > 600:  # 10 minutes
+                    self.log_event(f"Performance mode flag is stale ({flag_age:.1f}s old), removing it", "WARNING")
+                    try:
+                        os.remove(performance_flag)
+                        return False  # Flag was stale, performance mode is not active
+                    except:
+                        pass
+                else:
+                    return True
+
+            # Secondary check: LED status file for real-time mode
             status_file = os.path.join(self.config_base_path, "led", "led_status.json")
             if os.path.exists(status_file):
                 with open(status_file, 'r') as f:
                     status = json.load(f)
                     mode = status.get("mode", "Disable")
                     # Check if current running mode is a performance mode
-                    return mode in ["Musical LED", "Manual LED"]
+                    if mode in ["Musical LED", "Manual LED"]:
+                        return True
 
-            # Fallback: check config file if status not available
+            # Tertiary check: unified_config.json for LED Service mode
+            unified_config = os.path.join(self.config_base_path, "unified_config.json")
+            if os.path.exists(unified_config):
+                with open(unified_config, 'r') as f:
+                    config = json.load(f)
+                    led_mode = config.get("LED Service", {}).get("mode", "")
+                    if led_mode in ["Musical LED", "Manual LED"]:
+                        return True
+
+            # Fallback: check LED config file if status not available
             config_file = os.path.join(self.config_base_path, "led", "led_config.json")
             if os.path.exists(config_file):
                 with open(config_file, 'r') as f:
                     config = json.load(f)
                     mode = config.get("mode", "disable")
                     # Map LED modes to check for performance modes
-                    return mode in ["auto", "manual"]
+                    if mode in ["auto", "manual"]:
+                        return True
 
             return False
-        except:
+        except Exception as e:
+            self.log_event(f"Error checking performance mode: {e}", "ERROR")
             return False
 
     def get_service_config_mode(self, service_name: str) -> Optional[str]:
@@ -296,6 +323,11 @@ class ServiceProtectionManager:
 
         try:
             performance_mode = self.is_performance_mode_active()
+
+            # Log performance mode state changes for debugging
+            if hasattr(self, '_last_performance_mode') and self._last_performance_mode != performance_mode:
+                self.log_event(f"Performance mode state changed: {self._last_performance_mode} -> {performance_mode}")
+            self._last_performance_mode = performance_mode
 
             for service_name in self.services:
                 state = self.protection_states[service_name]

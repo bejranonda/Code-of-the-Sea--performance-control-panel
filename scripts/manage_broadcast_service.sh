@@ -5,7 +5,15 @@ BROADCAST_SCRIPT="/home/payas/cos/broadcast/broadcast_menu.py"
 PYTHON_PATH="/home/payas/venv/bin/python"
 PIDFILE="/tmp/broadcast_service.pid"
 
+# Source shared performance mode checking functions
+source "/home/payas/cos/scripts/performance_mode_check.sh"
+
 start_service() {
+    # Check if this service should start during performance mode
+    if ! should_service_start_during_performance "broadcast"; then
+        log_performance_decision "broadcast" "SKIP_START" "Performance mode active - broadcast service should remain stopped"
+        return 0
+    fi
     # First kill any existing instances
     echo "Checking for existing broadcast service instances..."
     EXISTING_PIDS=$(pgrep -f "broadcast_menu.py" 2>/dev/null)

@@ -329,9 +329,9 @@
 
     <!-- Navigation -->
     <div style="text-align: center; margin: 20px 0;">
-      <a href="/" class="btn btn-back">
+      <button onclick="exitPerformanceMode()" class="btn btn-back">
         <i class="fas fa-arrow-left"></i> Back to Control Panel
-      </a>
+      </button>
     </div>
 
     <div class="card">
@@ -366,6 +366,28 @@
       <!-- Control Panels -->
       <div id="autoControls" class="control-panel" style="display: none;">
         <h3><i class="fas fa-microphone"></i> Automatic Microphone Control</h3>
+
+        <!-- Musical LED Toggle -->
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin: 20px 0; border: 2px solid #e9ecef;">
+          <h4 style="margin-bottom: 15px; color: var(--gray-800);"><i class="fas fa-toggle-on"></i> Musical LED Control</h4>
+          <div style="display: flex; align-items: center; gap: 20px;">
+            <div style="display: flex; gap: 10px;">
+              <button id="musicalLedActiveBtn" onclick="setMusicalLedActive(true)"
+                      class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem;">
+                <i class="fas fa-play"></i> Active
+              </button>
+              <button id="musicalLedOffBtn" onclick="setMusicalLedActive(false)"
+                      class="btn" style="padding: 10px 20px; font-size: 1rem; background: var(--gray-500); color: white;">
+                <i class="fas fa-stop"></i> Off
+              </button>
+            </div>
+            <div style="color: var(--gray-600); font-size: 0.9rem; flex: 1;">
+              <strong>Active:</strong> LED responds to audio levels<br>
+              <strong>Off:</strong> LED always turned off, regardless of RMS
+            </div>
+          </div>
+        </div>
+
         <div class="audio-levels">
           <h3>Real-time Audio Levels</h3>
           <div class="level-display">
@@ -724,11 +746,67 @@
           if (data.status === 'success') {
             document.getElementById('micRmsQuiet').value = data.mic_rms_quiet || '0.002';
             document.getElementById('micRmsLoud').value = data.mic_rms_loud || '0.04';
+
+            // Load musical LED active state
+            updateMusicalLedButtons(data.musical_led_active || 'active');
           }
         })
         .catch(error => {
           console.error('Error loading RMS settings:', error);
         });
+    }
+
+    function setMusicalLedActive(isActive) {
+      const state = isActive ? 'active' : 'off';
+
+      // Update button states immediately for responsive UI
+      updateMusicalLedButtons(state);
+
+      // Send update to server
+      const formData = new FormData();
+      formData.append('musical_led_active', state);
+
+      fetch('/performing/update_musical_led_active', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          console.log('Musical LED active state updated to:', state);
+        } else {
+          console.error('Failed to update musical LED state:', data.message);
+          alert('Failed to update Musical LED state: ' + data.message);
+          // Revert button state on error
+          loadRmsSettings();
+        }
+      })
+      .catch(error => {
+        console.error('Error updating musical LED state:', error);
+        alert('Error updating Musical LED state: ' + error.message);
+        // Revert button state on error
+        loadRmsSettings();
+      });
+    }
+
+    function updateMusicalLedButtons(state) {
+      const activeBtn = document.getElementById('musicalLedActiveBtn');
+      const offBtn = document.getElementById('musicalLedOffBtn');
+
+      if (state === 'active') {
+        activeBtn.className = 'btn btn-primary';
+        activeBtn.style.background = 'var(--primary)';
+        offBtn.className = 'btn';
+        offBtn.style.background = 'var(--gray-500)';
+        offBtn.style.color = 'white';
+      } else {
+        activeBtn.className = 'btn';
+        activeBtn.style.background = 'var(--gray-500)';
+        activeBtn.style.color = 'white';
+        offBtn.className = 'btn btn-danger';
+        offBtn.style.background = 'var(--danger)';
+        offBtn.style.color = 'white';
+      }
     }
 
     function updateStoppedServicesList(services) {
@@ -742,6 +820,76 @@
         list.appendChild(item);
       });
     }
+
+    function exitPerformanceMode() {
+      // Show user feedback
+      const backButton = document.querySelector('.btn-back');
+      const originalText = backButton.innerHTML;
+      backButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Exiting Performance Mode...';
+      backButton.disabled = true;
+
+      // First, set performance mode to disable
+      updatePerformingModeAsync('disable').then(() => {
+        // Small delay to ensure services restart properly
+        setTimeout(() => {
+          // Navigate back to control panel
+          window.location.href = '/';
+        }, 2000);
+      }).catch(error => {
+        console.error('Error exiting performance mode:', error);
+        // Restore button state and still navigate back
+        backButton.innerHTML = originalText;
+        backButton.disabled = false;
+        alert('Warning: Performance mode may not have been properly disabled. Please check the main dashboard.');
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1000);
+      });
+    }
+
+    function updatePerformingModeAsync(mode) {
+      // Return a promise for the updatePerformingMode function
+      return new Promise((resolve, reject) => {
+        const formData = new FormData();
+        formData.append('mode', mode === 'auto' ? 'Musical LED' : mode === 'manual' ? 'Manual LED' : 'Disable');
+        formData.append('brightness', mode === 'manual' ? document.getElementById('brightnessSlider').value : 50);
+
+        fetch('/performing/set_mode', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            resolve(data);
+          } else {
+            reject(new Error(data.message || 'Failed to update performance mode'));
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+      });
+    }
+
+    // Handle unexpected page exit (browser close, navigation away, etc.)
+    window.addEventListener('beforeunload', function(event) {
+      // Only try to cleanup if we're currently in a performance mode
+      if (currentPerformingMode !== 'disable') {
+        // Send a synchronous request to disable performance mode
+        // Note: This may not always work due to browser restrictions, but it's worth trying
+        try {
+          const formData = new URLSearchParams();
+          formData.append('mode', 'Disable');
+          formData.append('brightness', '50');
+
+          navigator.sendBeacon('/performing/set_mode', formData);
+          console.log('Attempted cleanup on page unload');
+        } catch (error) {
+          console.log('Could not cleanup on page unload:', error);
+        }
+      }
+    });
 
     // Initialize page
     window.onload = function() {

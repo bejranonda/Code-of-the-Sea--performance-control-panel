@@ -992,6 +992,16 @@ def set_performing_mode():
         stopped_services = []
 
         if mode in ["Musical LED", "Manual LED"]:
+            # Create performance mode flag to prevent service protection from restarting services
+            try:
+                performance_flag = "/tmp/cos_performance_mode_active"
+                with open(performance_flag, 'w') as f:
+                    f.write(f"Performance mode {mode} active since: {datetime.now().isoformat()}\n")
+                    f.write("Services should remain stopped until performance mode ends\n")
+                service_manager.log_event(f"Created performance mode flag: {performance_flag}")
+            except Exception as e:
+                service_manager.log_error("Failed to create performance mode flag", e)
+
             # Stop all other services when entering performance mode to ensure LED service has full audio access
             service_manager.log_event(f"Performance mode {mode}: Stopping all other services for optimal audio performance")
 
@@ -1055,10 +1065,23 @@ def set_performing_mode():
             except Exception as e:
                 service_manager.log_error("Error updating mixing service status for performance mode", e)
 
-            # For Musical LED (Auto mode), stop PulseAudio to prevent audio device conflicts
+            # For both performance modes, clean up audio processes that could interfere
+            try:
+                import subprocess
+                # Kill any remaining mpg123 processes that might not have been stopped by service scripts
+                service_manager.log_event(f"Performance mode {mode}: Killing any remaining audio processes (mpg123, etc.)")
+                subprocess.run(['pkill', '-f', 'mpg123'], capture_output=True, timeout=5)
+
+                # Kill other audio processes that might interfere
+                subprocess.run(['pkill', '-f', 'arecord'], capture_output=True, timeout=5)
+                subprocess.run(['pkill', '-f', 'parecord'], capture_output=True, timeout=5)
+
+            except Exception as e:
+                service_manager.log_error(f"Error killing audio processes for {mode}", e)
+
+            # For Musical LED (Auto mode), also stop PulseAudio to prevent audio device conflicts
             if mode == "Musical LED":
                 try:
-                    import subprocess
                     # Kill PulseAudio processes that might be blocking audio device access
                     service_manager.log_event("Performance mode Auto: Stopping PulseAudio to free audio device for LED service")
                     subprocess.run(['pkill', '-f', 'pulseaudio'], capture_output=True, timeout=5)
@@ -1071,6 +1094,15 @@ def set_performing_mode():
                     service_manager.log_error("Error stopping audio conflicts for Auto mode", e)
 
         elif mode == "Disable":
+            # Remove performance mode flag first
+            try:
+                performance_flag = "/tmp/cos_performance_mode_active"
+                if os.path.exists(performance_flag):
+                    os.remove(performance_flag)
+                    service_manager.log_event(f"Removed performance mode flag: {performance_flag}")
+            except Exception as e:
+                service_manager.log_error("Failed to remove performance mode flag", e)
+
             # When disabling LED performance mode, restart all services and switch LED to Lux sensor mode
             service_manager.log_event(f"Exiting performance mode: Switching LED to Lux sensor mode and restarting all services")
 
@@ -1354,10 +1386,36 @@ def get_rms_settings():
         return jsonify({
             "status": "success",
             "mic_rms_quiet": float(led_config.get("mic_rms_quiet", 0.002)),
-            "mic_rms_loud": float(led_config.get("mic_rms_loud", 0.04))
+            "mic_rms_loud": float(led_config.get("mic_rms_loud", 0.04)),
+            "musical_led_active": led_config.get("musical_led_active", "active")
         })
     except Exception as e:
         service_manager.log_error("Error getting RMS settings", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/performing/update_musical_led_active", methods=["POST"])
+def update_musical_led_active():
+    """Update musical LED active state (active/off)"""
+    try:
+        musical_led_active = request.form.get('musical_led_active', 'active')
+
+        # Validate input
+        if musical_led_active not in ['active', 'off']:
+            return jsonify({"status": "error", "message": "Invalid musical_led_active value. Must be 'active' or 'off'."}), 400
+
+        # Update configuration
+        config_manager.update_service_config("LED Service", {"musical_led_active": musical_led_active})
+
+        service_manager.log_event(f"Performance mode: Musical LED active state updated to {musical_led_active}")
+
+        return jsonify({
+            "status": "success",
+            "musical_led_active": musical_led_active,
+            "message": f"Musical LED active state set to {musical_led_active}"
+        })
+
+    except Exception as e:
+        service_manager.log_error("Error updating musical LED active state", e)
         return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/wifi_status", methods=["GET"])

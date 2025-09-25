@@ -47,6 +47,8 @@ This technical implementation serves as the backbone for immersive art installat
 - **Auto-brightness**: Responds to ambient light conditions with configurable min/max lux thresholds
 - **Real-time Control**: Immediate response to user interactions and environmental changes
 - **Power Management**: On/off control with status monitoring and current light level feedback
+- **Musical LED Performance Toggle**: Active/off button to disable LED regardless of audio input
+- **Asymmetric Brightness Thresholds**: Different sensitivity for brighter (20) vs darker (30) changes for optimal musical responsiveness
 
 ### 📻 **Radio Service**
 - **FM Radio Control**: TEA5767 module integration for stable radio reception
@@ -617,6 +619,11 @@ Real-time Monitoring Pipeline:
 - **Auto-brightness**: VEML7700 sensor integration for ambient light response
 - **Power Control**: On/off switching with status feedback
 - **Connection Status**: Real-time device communication monitoring
+- **Musical LED Advanced Options**:
+  - **Performance Toggle**: `musical_led_active` setting ("active" or "off") to disable LED regardless of audio input
+  - **Asymmetric Brightness Thresholds**: Separate sensitivity for brighter (20 points) vs darker (30 points) changes
+  - **Below Threshold Behavior**: `musical_led_below_threshold` configures LED behavior when audio is quiet
+  - **Minimum Brightness**: `musical_led_minimum_brightness` sets lowest LED level when staying on
 
 #### **📻 Radio Service**
 - **Tuning Control**: Manual frequency slider (87.0-108.0 MHz, 0.1 MHz steps) with passive stability
@@ -892,6 +899,78 @@ cleanup_old_files(BROADCAST_MEDIA_DIR, 5)  # Change this 5 to your desired limit
 cleanup_old_files(BROADCAST_MEDIA_DIR, 10)  # Keep 10 files
 cleanup_old_files(BROADCAST_MEDIA_DIR, 20)  # Keep 20 files
 cleanup_old_files(BROADCAST_MEDIA_DIR, 3)   # Keep only 3 files
+```
+
+### 💡 **Musical LED Brightness Configuration**
+
+**Advanced Musical LED Settings:**
+
+The Musical LED mode includes several advanced configuration options for fine-tuning the audio-reactive behavior:
+
+#### **Performance Toggle**
+```json
+"musical_led_active": "active"  // or "off"
+```
+- **"active"**: LED responds to audio/RMS levels normally
+- **"off"**: LED is always turned off, regardless of any audio input
+
+#### **Asymmetric Brightness Thresholds**
+
+The system uses different sensitivity thresholds for brighter vs darker changes to optimize musical responsiveness:
+
+**Constants in `led/lighting_menu.py`:**
+```python
+BRIGHTNESS_MINIMUM_CHANGE_HIGHER = 20  # Minimum change for brighter (increasing)
+BRIGHTNESS_MINIMUM_CHANGE_LOWER = 30   # Minimum change for darker (decreasing)
+```
+
+**How it works:**
+- **Getting Brighter**: LED responds faster to volume increases (20-point threshold)
+- **Getting Darker**: LED is more conservative about dimming (30-point threshold)
+- **Musical Benefit**: More responsive to loud music moments while preventing quick dimming during brief quiet parts
+
+#### **Below Threshold Behavior**
+```json
+"musical_led_below_threshold": "off",     // or "minimum"
+"musical_led_minimum_brightness": "3"     // 0-100 brightness level
+```
+- **"off"**: Turn LED completely off when audio is below quiet threshold
+- **"minimum"**: Keep LED on at minimum brightness level when audio is quiet
+
+#### **RMS Thresholds**
+```json
+"mic_rms_quiet": "0.002",   // RMS value considered "quiet/emotional" music
+"mic_rms_loud": "0.04"      // RMS value considered "loud/energetic" music
+```
+
+**Configuration Examples:**
+
+**Responsive Setup** (for dynamic music):
+```json
+{
+  "musical_led_active": "active",
+  "musical_led_below_threshold": "off",
+  "mic_rms_quiet": "0.001",
+  "mic_rms_loud": "0.03"
+}
+```
+
+**Ambient Setup** (for background music):
+```json
+{
+  "musical_led_active": "active",
+  "musical_led_below_threshold": "minimum",
+  "musical_led_minimum_brightness": "5",
+  "mic_rms_quiet": "0.005",
+  "mic_rms_loud": "0.05"
+}
+```
+
+**Disabled Setup** (LED always off):
+```json
+{
+  "musical_led_active": "off"
+}
 ```
 
 ### Device Configuration (Secure Setup)
