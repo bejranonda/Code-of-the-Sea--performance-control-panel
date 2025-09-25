@@ -312,9 +312,9 @@ POWER_VERIFICATION_INTERVAL = 30  # Verify power state every 30 seconds
 lux_history = []
 last_recorded_lux = None
 LUX_HISTORY_FILE = os.path.join(os.path.dirname(__file__), "lux_history.json")
-LUX_CHANGE_THRESHOLD = 50  # Only record when lux changes by 50 or more
-MAX_HISTORY_ENTRIES = 5000  # Maximum number of history entries to keep
-MAX_FILE_SIZE_MB = 1  # Maximum file size in MB before trimming
+LUX_CHANGE_THRESHOLD = 5  # Only record when lux changes by 50 or more
+MAX_HISTORY_ENTRIES = 50000  # Maximum number of history entries to keep
+MAX_FILE_SIZE_MB = 20  # Maximum file size in MB before trimming
 
 current_status = {
     "mode": "Manual LED",
