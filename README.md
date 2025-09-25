@@ -912,7 +912,7 @@ The Musical LED mode includes several advanced configuration options for fine-tu
 "musical_led_active": "active"  // or "off"
 ```
 - **"active"**: LED responds to audio/RMS levels normally
-- **"off"**: LED is always turned off, regardless of any audio input
+- **"off"**: LED is always turned off, regardless of any audio input (bypasses brightness change thresholds)
 
 #### **Asymmetric Brightness Thresholds**
 
@@ -928,6 +928,7 @@ BRIGHTNESS_MINIMUM_CHANGE_LOWER = 30   # Minimum change for darker (decreasing)
 - **Getting Brighter**: LED responds faster to volume increases (20-point threshold)
 - **Getting Darker**: LED is more conservative about dimming (30-point threshold)
 - **Musical Benefit**: More responsive to loud music moments while preventing quick dimming during brief quiet parts
+- **Threshold Bypass**: Max/min brightness (≥95% or ≤5%) always updates immediately, regardless of thresholds
 
 #### **Below Threshold Behavior**
 ```json
@@ -1211,6 +1212,35 @@ For technical support or artistic collaboration inquiries:
 - **v2.2.0** - Stability improvements and configuration resilience
 - **v3.0.0** - Production-ready exhibition system with enhanced stability
 - **v3.1.0** - Performance mode complete fix & service reliability improvements
+- **v3.2.0** - Enhanced Musical LED performance mode with intelligent threshold management
+
+### **🚀 v3.2.0 Release Notes**
+
+**Enhanced Musical LED Performance Mode with Intelligent Threshold Management:**
+
+#### **Performance Mode Improvements**
+- ✅ **Active Off Button**: The `musical_led_active: "off"` setting now immediately forces LED off regardless of RMS levels, bypassing brightness change thresholds
+- ✅ **Intelligent Threshold Bypass**: LED updates immediately when reaching near-maximum (≥95%) or near-minimum (≤5%) brightness to show system limits
+- ✅ **Realistic Threshold Values**: Updated from 0%/100% to 5%/95% based on actual RMS and lux sensor brightness calculation ranges
+- ✅ **Enhanced Performance Control**: Musical LED off button is now truly responsive during performance mode operation
+
+#### **Technical Enhancements**
+- ✅ **Smart Brightness Management**: Brightness threshold bypass logic now considers actual sensor value ranges (RMS: 0.004-0.006, Lux: 1-800)
+- ✅ **Improved User Feedback**: Users can now see when LED system reaches its practical brightness limits during musical performances
+- ✅ **Configuration Responsiveness**: Musical LED active/off toggle now works instantly without waiting for brightness change thresholds
+- ✅ **Optimized Performance**: Reduced unnecessary LED updates while ensuring critical state changes are immediate
+
+#### **Musical LED Mode Features**
+- ✅ **Performance Toggle Reliability**: `musical_led_active: "off"` now guarantees LED stays off during musical performances
+- ✅ **Threshold Intelligence**: System recognizes when brightness reaches practical limits and updates immediately
+- ✅ **Enhanced Musical Responsiveness**: Maintains existing asymmetric threshold system (20 points brighter, 30 points darker) while adding intelligent bypasses
+- ✅ **Real-time Feedback**: Users can observe LED reaching maximum brightness during loud music or minimum brightness during quiet passages
+
+**Technical Achievements:**
+- 🎭 **Performance Mode Excellence**: Off button now provides immediate, reliable LED control
+- 🔧 **Intelligent Threshold System**: Smart bypass logic for maximum user feedback
+- 📊 **Realistic Range Management**: Updated thresholds based on actual sensor capabilities
+- ⚡ **Instant Response**: Critical brightness changes update immediately regardless of normal thresholds
 
 ### **🚀 v3.1.0 Release Notes**
 
