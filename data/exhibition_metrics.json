@@ -30280,5 +30280,964 @@
     "cpu_usage": 28.6,
     "cpu_temperature": 47.2,
     "disk_usage": 17.2442829279695
+  },
+  {
+    "timestamp": "2025-09-27T18:20:28.170326",
+    "lux_value": 76.34,
+    "cpu_usage": 14.3,
+    "cpu_temperature": 47.2,
+    "disk_usage": 17.26212644458358
+  },
+  {
+    "timestamp": "2025-09-27T18:21:10.808313",
+    "lux_value": 86.55,
+    "cpu_usage": 11.9,
+    "cpu_temperature": 46.7,
+    "disk_usage": 17.266992858205604
+  },
+  {
+    "timestamp": "2025-09-27T18:22:26.732011",
+    "lux_value": 86.55,
+    "cpu_usage": 26.8,
+    "cpu_temperature": 49.7,
+    "disk_usage": 17.312213275496582
+  },
+  {
+    "timestamp": "2025-09-27T18:23:27.158430",
+    "lux_value": 140.31,
+    "cpu_usage": 25.6,
+    "cpu_temperature": 51.1,
+    "disk_usage": 17.437410408460966
+  },
+  {
+    "timestamp": "2025-09-27T18:23:52.061172",
+    "lux_value": 140.31,
+    "cpu_usage": 41.5,
+    "cpu_temperature": 53.6,
+    "disk_usage": 17.490249555274946
+  },
+  {
+    "timestamp": "2025-09-27T18:24:11.070138",
+    "lux_value": 140.31,
+    "cpu_usage": 10.5,
+    "cpu_temperature": 50.1,
+    "disk_usage": 17.499423941611546
+  },
+  {
+    "timestamp": "2025-09-27T18:24:27.499615",
+    "lux_value": 129.56,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 49.7,
+    "disk_usage": 17.504144096900667
+  },
+  {
+    "timestamp": "2025-09-27T18:24:30.305540",
+    "lux_value": 129.56,
+    "cpu_usage": 14.3,
+    "cpu_temperature": 50.1,
+    "disk_usage": 17.504928573413505
+  },
+  {
+    "timestamp": "2025-09-27T18:25:27.779653",
+    "lux_value": 119.35,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 48.2,
+    "disk_usage": 17.521389283971057
+  },
+  {
+    "timestamp": "2025-09-27T18:26:28.118316",
+    "lux_value": 6.45,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 47.7,
+    "disk_usage": 17.450321030392615
+  },
+  {
+    "timestamp": "2025-09-27T18:27:10.991058",
+    "lux_value": 96.77,
+    "cpu_usage": 9.3,
+    "cpu_temperature": 47.7,
+    "disk_usage": 17.454123747048076
+  },
+  {
+    "timestamp": "2025-09-27T18:28:48.191911",
+    "lux_value": 96.77,
+    "cpu_usage": 27.5,
+    "cpu_temperature": 51.6,
+    "disk_usage": 17.49439797344454
+  },
+  {
+    "timestamp": "2025-09-27T18:29:48.595525",
+    "lux_value": 78.49,
+    "cpu_usage": 27.5,
+    "cpu_temperature": 54.0,
+    "disk_usage": 17.625525216997506
+  },
+  {
+    "timestamp": "2025-09-27T18:29:52.601163",
+    "lux_value": 78.49,
+    "cpu_usage": 40.9,
+    "cpu_temperature": 55.0,
+    "disk_usage": 17.63519156318114
+  },
+  {
+    "timestamp": "2025-09-27T18:30:11.934014",
+    "lux_value": 78.49,
+    "cpu_usage": 42.5,
+    "cpu_temperature": 55.5,
+    "disk_usage": 17.681555454711173
+  },
+  {
+    "timestamp": "2025-09-27T18:30:31.069764",
+    "lux_value": 78.49,
+    "cpu_usage": 22.2,
+    "cpu_temperature": 51.1,
+    "disk_usage": 17.69162068725727
+  },
+  {
+    "timestamp": "2025-09-27T18:30:48.950521",
+    "lux_value": 78.49,
+    "cpu_usage": 2.5,
+    "cpu_temperature": 49.7,
+    "disk_usage": 17.69673972890885
+  },
+  {
+    "timestamp": "2025-09-27T18:31:49.265793",
+    "lux_value": 78.49,
+    "cpu_usage": 2.6,
+    "cpu_temperature": 48.2,
+    "disk_usage": 17.713745584161764
+  },
+  {
+    "timestamp": "2025-09-27T18:32:49.595191",
+    "lux_value": 78.49,
+    "cpu_usage": 2.5,
+    "cpu_temperature": 47.2,
+    "disk_usage": 17.647397485872443
+  },
+  {
+    "timestamp": "2025-09-27T18:33:50.051464",
+    "lux_value": 68.28,
+    "cpu_usage": 5.0,
+    "cpu_temperature": 46.3,
+    "disk_usage": 17.664722450215326
+  },
+  {
+    "timestamp": "2025-09-27T18:34:50.366827",
+    "lux_value": 58.06,
+    "cpu_usage": 2.5,
+    "cpu_temperature": 47.2,
+    "disk_usage": 17.642943254824964
+  },
+  {
+    "timestamp": "2025-09-27T18:35:50.690255",
+    "lux_value": 49.46,
+    "cpu_usage": 7.1,
+    "cpu_temperature": 47.2,
+    "disk_usage": 17.6602283305316
+  },
+  {
+    "timestamp": "2025-09-27T18:36:51.042709",
+    "lux_value": 50.53,
+    "cpu_usage": 2.5,
+    "cpu_temperature": 48.2,
+    "disk_usage": 17.638449135141236
+  },
+  {
+    "timestamp": "2025-09-27T18:37:51.341464",
+    "lux_value": 50.53,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 47.2,
+    "disk_usage": 17.640217531348146
+  },
+  {
+    "timestamp": "2025-09-27T18:38:51.675661",
+    "lux_value": 50.53,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 45.3,
+    "disk_usage": 17.640257419984394
+  },
+  {
+    "timestamp": "2025-09-27T18:39:52.048905",
+    "lux_value": 50.53,
+    "cpu_usage": 2.5,
+    "cpu_temperature": 44.8,
+    "disk_usage": 17.653181338128125
+  },
+  {
+    "timestamp": "2025-09-27T18:40:52.413336",
+    "lux_value": 50.53,
+    "cpu_usage": 21.4,
+    "cpu_temperature": 49.2,
+    "disk_usage": 17.31114957853002
+  },
+  {
+    "timestamp": "2025-09-27T18:41:52.781944",
+    "lux_value": 50.53,
+    "cpu_usage": 18.4,
+    "cpu_temperature": 50.6,
+    "disk_usage": 17.31161494595289
+  },
+  {
+    "timestamp": "2025-09-27T18:42:53.132256",
+    "lux_value": 50.53,
+    "cpu_usage": 22.0,
+    "cpu_temperature": 51.6,
+    "disk_usage": 17.31729242851192
+  },
+  {
+    "timestamp": "2025-09-27T18:43:53.461786",
+    "lux_value": 50.53,
+    "cpu_usage": 10.0,
+    "cpu_temperature": 49.7,
+    "disk_usage": 17.317518464117313
+  },
+  {
+    "timestamp": "2025-09-27T18:44:53.721458",
+    "lux_value": 50.53,
+    "cpu_usage": 14.6,
+    "cpu_temperature": 49.7,
+    "disk_usage": 17.317651426238136
+  },
+  {
+    "timestamp": "2025-09-27T18:45:53.996379",
+    "lux_value": 50.53,
+    "cpu_usage": 10.3,
+    "cpu_temperature": 50.1,
+    "disk_usage": 17.31778438835895
+  },
+  {
+    "timestamp": "2025-09-27T18:46:54.318118",
+    "lux_value": 50.53,
+    "cpu_usage": 9.8,
+    "cpu_temperature": 49.2,
+    "disk_usage": 17.31783757320728
+  },
+  {
+    "timestamp": "2025-09-27T18:47:54.582264",
+    "lux_value": 50.53,
+    "cpu_usage": 15.4,
+    "cpu_temperature": 50.6,
+    "disk_usage": 17.317850869419363
+  },
+  {
+    "timestamp": "2025-09-27T18:48:54.935585",
+    "lux_value": 50.53,
+    "cpu_usage": 15.0,
+    "cpu_temperature": 50.1,
+    "disk_usage": 17.31787746184353
+  },
+  {
+    "timestamp": "2025-09-27T18:49:55.241316",
+    "lux_value": 50.53,
+    "cpu_usage": 5.0,
+    "cpu_temperature": 49.7,
+    "disk_usage": 17.31789075805561
+  },
+  {
+    "timestamp": "2025-09-27T18:50:55.539426",
+    "lux_value": 50.53,
+    "cpu_usage": 7.7,
+    "cpu_temperature": 50.6,
+    "disk_usage": 17.31795723911602
+  },
+  {
+    "timestamp": "2025-09-27T18:51:55.790113",
+    "lux_value": 50.53,
+    "cpu_usage": 7.7,
+    "cpu_temperature": 51.1,
+    "disk_usage": 17.317983831540186
+  },
+  {
+    "timestamp": "2025-09-27T18:52:56.047400",
+    "lux_value": 50.53,
+    "cpu_usage": 5.3,
+    "cpu_temperature": 51.1,
+    "disk_usage": 17.317997127752268
+  },
+  {
+    "timestamp": "2025-09-27T18:53:56.347193",
+    "lux_value": 50.53,
+    "cpu_usage": 7.7,
+    "cpu_temperature": 51.1,
+    "disk_usage": 17.318037016388512
+  },
+  {
+    "timestamp": "2025-09-27T18:54:56.688616",
+    "lux_value": 50.53,
+    "cpu_usage": 12.5,
+    "cpu_temperature": 51.1,
+    "disk_usage": 17.318076905024757
+  },
+  {
+    "timestamp": "2025-09-27T18:55:56.981828",
+    "lux_value": 50.53,
+    "cpu_usage": 7.5,
+    "cpu_temperature": 51.6,
+    "disk_usage": 17.318090201236842
+  },
+  {
+    "timestamp": "2025-09-27T18:56:57.310623",
+    "lux_value": 50.53,
+    "cpu_usage": 7.7,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.318130089873087
+  },
+  {
+    "timestamp": "2025-09-27T18:57:57.565747",
+    "lux_value": 50.53,
+    "cpu_usage": 12.5,
+    "cpu_temperature": 51.6,
+    "disk_usage": 17.31816997850933
+  },
+  {
+    "timestamp": "2025-09-27T18:58:57.892833",
+    "lux_value": 50.53,
+    "cpu_usage": 12.8,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.318263051993906
+  },
+  {
+    "timestamp": "2025-09-27T18:59:58.177457",
+    "lux_value": 50.53,
+    "cpu_usage": 12.8,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.31023213989636
+  },
+  {
+    "timestamp": "2025-09-27T19:00:58.534447",
+    "lux_value": 50.53,
+    "cpu_usage": 12.5,
+    "cpu_temperature": 52.6,
+    "disk_usage": 17.318648642144286
+  },
+  {
+    "timestamp": "2025-09-27T19:01:58.806771",
+    "lux_value": 50.53,
+    "cpu_usage": 15.0,
+    "cpu_temperature": 51.6,
+    "disk_usage": 17.31882149290135
+  },
+  {
+    "timestamp": "2025-09-27T19:02:59.093739",
+    "lux_value": 50.53,
+    "cpu_usage": 20.5,
+    "cpu_temperature": 52.6,
+    "disk_usage": 17.318967751234254
+  },
+  {
+    "timestamp": "2025-09-27T19:03:59.376495",
+    "lux_value": 50.53,
+    "cpu_usage": 12.8,
+    "cpu_temperature": 53.6,
+    "disk_usage": 17.31914060199132
+  },
+  {
+    "timestamp": "2025-09-27T19:04:59.682818",
+    "lux_value": 50.53,
+    "cpu_usage": 19.5,
+    "cpu_temperature": 53.1,
+    "disk_usage": 17.319246971687978
+  },
+  {
+    "timestamp": "2025-09-27T19:05:59.974338",
+    "lux_value": 9.14,
+    "cpu_usage": 7.7,
+    "cpu_temperature": 54.0,
+    "disk_usage": 17.31939323002088
+  },
+  {
+    "timestamp": "2025-09-27T19:07:00.294978",
+    "lux_value": 9.14,
+    "cpu_usage": 14.6,
+    "cpu_temperature": 53.1,
+    "disk_usage": 17.319526192141698
+  },
+  {
+    "timestamp": "2025-09-27T19:08:00.556787",
+    "lux_value": 9.14,
+    "cpu_usage": 15.0,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.31965915426252
+  },
+  {
+    "timestamp": "2025-09-27T19:09:00.849519",
+    "lux_value": 9.14,
+    "cpu_usage": 22.0,
+    "cpu_temperature": 53.1,
+    "disk_usage": 17.319818708807507
+  },
+  {
+    "timestamp": "2025-09-27T19:10:01.105314",
+    "lux_value": 9.14,
+    "cpu_usage": 25.0,
+    "cpu_temperature": 52.6,
+    "disk_usage": 17.31997826335249
+  },
+  {
+    "timestamp": "2025-09-27T19:11:01.378825",
+    "lux_value": 9.14,
+    "cpu_usage": 19.5,
+    "cpu_temperature": 53.1,
+    "disk_usage": 17.32011122547331
+  },
+  {
+    "timestamp": "2025-09-27T19:12:01.696640",
+    "lux_value": 9.14,
+    "cpu_usage": 12.2,
+    "cpu_temperature": 53.6,
+    "disk_usage": 17.320217595169964
+  },
+  {
+    "timestamp": "2025-09-27T19:13:02.046921",
+    "lux_value": 9.14,
+    "cpu_usage": 34.1,
+    "cpu_temperature": 52.6,
+    "disk_usage": 17.320337261078702
+  },
+  {
+    "timestamp": "2025-09-27T19:14:02.304913",
+    "lux_value": 9.14,
+    "cpu_usage": 14.3,
+    "cpu_temperature": 53.1,
+    "disk_usage": 17.674162760793564
+  },
+  {
+    "timestamp": "2025-09-27T19:15:02.565458",
+    "lux_value": 9.14,
+    "cpu_usage": 15.0,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.674295722914383
+  },
+  {
+    "timestamp": "2025-09-27T19:16:02.820425",
+    "lux_value": 9.14,
+    "cpu_usage": 10.3,
+    "cpu_temperature": 53.1,
+    "disk_usage": 17.674348907762713
+  },
+  {
+    "timestamp": "2025-09-27T19:17:03.082047",
+    "lux_value": 9.14,
+    "cpu_usage": 15.0,
+    "cpu_temperature": 53.1,
+    "disk_usage": 17.67440209261104
+  },
+  {
+    "timestamp": "2025-09-27T19:18:03.360287",
+    "lux_value": 9.14,
+    "cpu_usage": 5.3,
+    "cpu_temperature": 52.6,
+    "disk_usage": 17.674588239580192
+  },
+  {
+    "timestamp": "2025-09-27T19:19:03.630951",
+    "lux_value": 9.14,
+    "cpu_usage": 13.2,
+    "cpu_temperature": 52.6,
+    "disk_usage": 17.67466801685268
+  },
+  {
+    "timestamp": "2025-09-27T19:20:03.894444",
+    "lux_value": 9.14,
+    "cpu_usage": 12.2,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.674734497913093
+  },
+  {
+    "timestamp": "2025-09-27T19:21:04.210435",
+    "lux_value": 9.14,
+    "cpu_usage": 20.9,
+    "cpu_temperature": 54.5,
+    "disk_usage": 17.665905813090628
+  },
+  {
+    "timestamp": "2025-09-27T19:22:04.512018",
+    "lux_value": 9.14,
+    "cpu_usage": 15.0,
+    "cpu_temperature": 53.6,
+    "disk_usage": 17.675080199427224
+  },
+  {
+    "timestamp": "2025-09-27T19:23:04.772285",
+    "lux_value": 9.14,
+    "cpu_usage": 12.5,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.67523975397221
+  },
+  {
+    "timestamp": "2025-09-27T19:24:05.033995",
+    "lux_value": 9.14,
+    "cpu_usage": 15.8,
+    "cpu_temperature": 53.6,
+    "disk_usage": 17.675412604729278
+  },
+  {
+    "timestamp": "2025-09-27T19:25:05.293043",
+    "lux_value": 9.14,
+    "cpu_usage": 17.5,
+    "cpu_temperature": 53.6,
+    "disk_usage": 17.675492382001767
+  },
+  {
+    "timestamp": "2025-09-27T19:26:05.553595",
+    "lux_value": 9.14,
+    "cpu_usage": 10.0,
+    "cpu_temperature": 53.6,
+    "disk_usage": 17.666278107028923
+  },
+  {
+    "timestamp": "2025-09-27T19:27:06.640327",
+    "lux_value": 9.14,
+    "cpu_usage": 16.3,
+    "cpu_temperature": 50.1,
+    "disk_usage": 17.67561204791051
+  },
+  {
+    "timestamp": "2025-09-27T19:28:06.908044",
+    "lux_value": 9.14,
+    "cpu_usage": 25.6,
+    "cpu_temperature": 50.6,
+    "disk_usage": 17.690078326655755
+  },
+  {
+    "timestamp": "2025-09-27T19:30:00.988333",
+    "lux_value": 9.14,
+    "cpu_usage": 10.3,
+    "cpu_temperature": 48.7,
+    "disk_usage": 17.707403290998638
+  },
+  {
+    "timestamp": "2025-09-27T19:30:18.040134",
+    "lux_value": 9.14,
+    "cpu_usage": 11.6,
+    "cpu_temperature": 50.6,
+    "disk_usage": 17.70926476069012
+  },
+  {
+    "timestamp": "2025-09-27T19:30:36.967971",
+    "lux_value": 9.14,
+    "cpu_usage": 10.0,
+    "cpu_temperature": 49.7,
+    "disk_usage": 17.714317321281293
+  },
+  {
+    "timestamp": "2025-09-27T19:30:56.020292",
+    "lux_value": 9.14,
+    "cpu_usage": 6.8,
+    "cpu_temperature": 49.2,
+    "disk_usage": 17.71975547202284
+  },
+  {
+    "timestamp": "2025-09-27T19:31:01.335518",
+    "lux_value": 9.14,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 48.7,
+    "disk_usage": 17.72129783262436
+  },
+  {
+    "timestamp": "2025-09-27T19:32:01.702710",
+    "lux_value": 9.14,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 46.7,
+    "disk_usage": 17.738596204543075
+  },
+  {
+    "timestamp": "2025-09-27T19:33:02.040143",
+    "lux_value": 9.14,
+    "cpu_usage": 10.0,
+    "cpu_temperature": 50.1,
+    "disk_usage": 17.666424365361824
+  },
+  {
+    "timestamp": "2025-09-27T19:34:02.340253",
+    "lux_value": 34.41,
+    "cpu_usage": 2.5,
+    "cpu_temperature": 48.2,
+    "disk_usage": 17.683709441068462
+  },
+  {
+    "timestamp": "2025-09-27T19:35:02.913539",
+    "lux_value": 34.41,
+    "cpu_usage": 7.0,
+    "cpu_temperature": 47.7,
+    "disk_usage": 17.690955876653167
+  },
+  {
+    "timestamp": "2025-09-27T19:36:03.269825",
+    "lux_value": 34.41,
+    "cpu_usage": 17.1,
+    "cpu_temperature": 47.7,
+    "disk_usage": 17.69103565392566
+  },
+  {
+    "timestamp": "2025-09-27T19:37:21.562037",
+    "lux_value": 30.64,
+    "cpu_usage": 2.5,
+    "cpu_temperature": 48.7,
+    "disk_usage": 17.702536877376616
+  },
+  {
+    "timestamp": "2025-09-27T19:37:29.703807",
+    "lux_value": 30.64,
+    "cpu_usage": 8.7,
+    "cpu_temperature": 48.7,
+    "disk_usage": 17.70334794631362
+  },
+  {
+    "timestamp": "2025-09-27T19:37:48.777498",
+    "lux_value": 30.64,
+    "cpu_usage": 8.8,
+    "cpu_temperature": 47.7,
+    "disk_usage": 17.70879939326725
+  },
+  {
+    "timestamp": "2025-09-27T19:38:07.753348",
+    "lux_value": 30.64,
+    "cpu_usage": 9.5,
+    "cpu_temperature": 48.7,
+    "disk_usage": 17.7142375440088
+  },
+  {
+    "timestamp": "2025-09-27T19:38:21.848666",
+    "lux_value": 30.64,
+    "cpu_usage": 2.5,
+    "cpu_temperature": 45.8,
+    "disk_usage": 17.718279592481736
+  },
+  {
+    "timestamp": "2025-09-27T19:39:22.107620",
+    "lux_value": 30.64,
+    "cpu_usage": 2.5,
+    "cpu_temperature": 46.3,
+    "disk_usage": 17.735564668188374
+  },
+  {
+    "timestamp": "2025-09-27T19:40:22.425725",
+    "lux_value": 30.64,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 46.7,
+    "disk_usage": 17.673444765341138
+  },
+  {
+    "timestamp": "2025-09-27T19:41:22.821756",
+    "lux_value": 30.64,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 46.7,
+    "disk_usage": 17.690743137259858
+  },
+  {
+    "timestamp": "2025-09-27T19:42:23.163706",
+    "lux_value": 30.64,
+    "cpu_usage": 2.4,
+    "cpu_temperature": 46.3,
+    "disk_usage": 17.66901712671782
+  },
+  {
+    "timestamp": "2025-09-27T19:43:23.463440",
+    "lux_value": 20.43,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 46.7,
+    "disk_usage": 17.686302202424457
+  },
+  {
+    "timestamp": "2025-09-27T19:44:23.720757",
+    "lux_value": 20.43,
+    "cpu_usage": 4.9,
+    "cpu_temperature": 47.7,
+    "disk_usage": 17.66462937673075
+  },
+  {
+    "timestamp": "2025-09-27T19:45:24.022098",
+    "lux_value": 18.28,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 47.2,
+    "disk_usage": 17.681901156225308
+  },
+  {
+    "timestamp": "2025-09-27T19:46:24.271554",
+    "lux_value": 18.28,
+    "cpu_usage": 31.6,
+    "cpu_temperature": 47.7,
+    "disk_usage": 17.704079237978128
+  },
+  {
+    "timestamp": "2025-09-27T19:47:24.519870",
+    "lux_value": 18.28,
+    "cpu_usage": 2.4,
+    "cpu_temperature": 47.7,
+    "disk_usage": 17.669043719141985
+  },
+  {
+    "timestamp": "2025-09-27T19:48:24.764077",
+    "lux_value": 18.28,
+    "cpu_usage": 5.1,
+    "cpu_temperature": 48.7,
+    "disk_usage": 17.669216569899053
+  },
+  {
+    "timestamp": "2025-09-27T19:49:25.072148",
+    "lux_value": 18.28,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 48.7,
+    "disk_usage": 17.6694027168682
+  },
+  {
+    "timestamp": "2025-09-27T19:50:25.315136",
+    "lux_value": 18.28,
+    "cpu_usage": 12.5,
+    "cpu_temperature": 48.2,
+    "disk_usage": 17.669575567625266
+  },
+  {
+    "timestamp": "2025-09-27T19:51:25.595351",
+    "lux_value": 18.28,
+    "cpu_usage": 9.8,
+    "cpu_temperature": 48.2,
+    "disk_usage": 17.669775010806497
+  },
+  {
+    "timestamp": "2025-09-27T19:52:25.830332",
+    "lux_value": 18.28,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 48.7,
+    "disk_usage": 17.66994786156356
+  },
+  {
+    "timestamp": "2025-09-27T19:53:26.075179",
+    "lux_value": 30.64,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 50.1,
+    "disk_usage": 17.670134008532713
+  },
+  {
+    "timestamp": "2025-09-27T19:54:26.327401",
+    "lux_value": 30.64,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 47.7,
+    "disk_usage": 17.67028026686561
+  },
+  {
+    "timestamp": "2025-09-27T19:55:26.585122",
+    "lux_value": 30.64,
+    "cpu_usage": 54.8,
+    "cpu_temperature": 50.6,
+    "disk_usage": 17.31670739518031
+  },
+  {
+    "timestamp": "2025-09-27T19:56:26.897304",
+    "lux_value": 30.64,
+    "cpu_usage": 25.0,
+    "cpu_temperature": 52.6,
+    "disk_usage": 17.31778438835895
+  },
+  {
+    "timestamp": "2025-09-27T19:57:27.163161",
+    "lux_value": 30.64,
+    "cpu_usage": 37.5,
+    "cpu_temperature": 55.0,
+    "disk_usage": 17.318090201236842
+  },
+  {
+    "timestamp": "2025-09-27T19:58:27.430075",
+    "lux_value": 30.64,
+    "cpu_usage": 17.1,
+    "cpu_temperature": 50.6,
+    "disk_usage": 17.318263051993906
+  },
+  {
+    "timestamp": "2025-09-27T19:59:27.685006",
+    "lux_value": 30.64,
+    "cpu_usage": 5.0,
+    "cpu_temperature": 50.1,
+    "disk_usage": 17.318435902750974
+  },
+  {
+    "timestamp": "2025-09-27T20:00:27.951802",
+    "lux_value": 30.64,
+    "cpu_usage": 5.1,
+    "cpu_temperature": 50.1,
+    "disk_usage": 17.323302316372995
+  },
+  {
+    "timestamp": "2025-09-27T20:01:28.218768",
+    "lux_value": 30.64,
+    "cpu_usage": 7.5,
+    "cpu_temperature": 49.7,
+    "disk_usage": 17.323488463342144
+  },
+  {
+    "timestamp": "2025-09-27T20:02:28.495898",
+    "lux_value": 30.64,
+    "cpu_usage": 9.8,
+    "cpu_temperature": 51.1,
+    "disk_usage": 17.323674610311294
+  },
+  {
+    "timestamp": "2025-09-27T20:03:28.797782",
+    "lux_value": 30.64,
+    "cpu_usage": 14.6,
+    "cpu_temperature": 51.6,
+    "disk_usage": 17.323807572432113
+  },
+  {
+    "timestamp": "2025-09-27T20:04:29.079291",
+    "lux_value": 30.64,
+    "cpu_usage": 12.2,
+    "cpu_temperature": 50.6,
+    "disk_usage": 17.323993719401262
+  },
+  {
+    "timestamp": "2025-09-27T20:05:29.381027",
+    "lux_value": 30.64,
+    "cpu_usage": 5.1,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.32416657015833
+  },
+  {
+    "timestamp": "2025-09-27T20:06:29.697050",
+    "lux_value": 30.64,
+    "cpu_usage": 35.0,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.329086168628677
+  },
+  {
+    "timestamp": "2025-09-27T20:07:30.056601",
+    "lux_value": 30.64,
+    "cpu_usage": 10.0,
+    "cpu_temperature": 51.1,
+    "disk_usage": 17.329259019385745
+  },
+  {
+    "timestamp": "2025-09-27T20:08:30.318966",
+    "lux_value": 30.64,
+    "cpu_usage": 7.7,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.329458462566976
+  },
+  {
+    "timestamp": "2025-09-27T20:09:30.571699",
+    "lux_value": 30.64,
+    "cpu_usage": 12.5,
+    "cpu_temperature": 52.6,
+    "disk_usage": 17.32963131332404
+  },
+  {
+    "timestamp": "2025-09-27T20:10:30.864036",
+    "lux_value": 30.64,
+    "cpu_usage": 9.8,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.329764275444862
+  },
+  {
+    "timestamp": "2025-09-27T20:11:31.128903",
+    "lux_value": 30.64,
+    "cpu_usage": 17.1,
+    "cpu_temperature": 50.6,
+    "disk_usage": 17.32989723756568
+  },
+  {
+    "timestamp": "2025-09-27T20:12:31.453262",
+    "lux_value": 30.64,
+    "cpu_usage": 12.8,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.33020305044357
+  },
+  {
+    "timestamp": "2025-09-27T20:13:31.789724",
+    "lux_value": 30.64,
+    "cpu_usage": 0.0,
+    "cpu_temperature": 51.1,
+    "disk_usage": 17.3304024936248
+  },
+  {
+    "timestamp": "2025-09-27T20:14:32.167412",
+    "lux_value": 30.64,
+    "cpu_usage": 10.3,
+    "cpu_temperature": 54.0,
+    "disk_usage": 17.33094763832016
+  },
+  {
+    "timestamp": "2025-09-27T20:15:32.444332",
+    "lux_value": 30.64,
+    "cpu_usage": 12.2,
+    "cpu_temperature": 53.1,
+    "disk_usage": 17.331107192865147
+  },
+  {
+    "timestamp": "2025-09-27T20:16:32.711252",
+    "lux_value": 30.64,
+    "cpu_usage": 26.8,
+    "cpu_temperature": 52.6,
+    "disk_usage": 17.331293339834293
+  },
+  {
+    "timestamp": "2025-09-27T20:17:33.052620",
+    "lux_value": 30.64,
+    "cpu_usage": 5.3,
+    "cpu_temperature": 52.6,
+    "disk_usage": 17.331479486803445
+  },
+  {
+    "timestamp": "2025-09-27T20:18:33.323534",
+    "lux_value": 30.64,
+    "cpu_usage": 7.9,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.33166563377259
+  },
+  {
+    "timestamp": "2025-09-27T20:19:33.631612",
+    "lux_value": 30.64,
+    "cpu_usage": 10.5,
+    "cpu_temperature": 53.6,
+    "disk_usage": 17.331878373165903
+  },
+  {
+    "timestamp": "2025-09-27T20:20:33.950882",
+    "lux_value": 30.64,
+    "cpu_usage": 26.3,
+    "cpu_temperature": 51.6,
+    "disk_usage": 17.332064520135052
+  },
+  {
+    "timestamp": "2025-09-27T20:21:34.257057",
+    "lux_value": 30.64,
+    "cpu_usage": 10.3,
+    "cpu_temperature": 53.6,
+    "disk_usage": 17.322504543648073
+  },
+  {
+    "timestamp": "2025-09-27T20:22:34.520620",
+    "lux_value": 30.64,
+    "cpu_usage": 7.7,
+    "cpu_temperature": 53.1,
+    "disk_usage": 17.33242351786127
+  },
+  {
+    "timestamp": "2025-09-27T20:23:34.781697",
+    "lux_value": 30.64,
+    "cpu_usage": 9.8,
+    "cpu_temperature": 53.1,
+    "disk_usage": 17.332596368618333
+  },
+  {
+    "timestamp": "2025-09-27T20:24:35.036590",
+    "lux_value": 30.64,
+    "cpu_usage": 10.0,
+    "cpu_temperature": 52.1,
+    "disk_usage": 17.332649553466663
+  },
+  {
+    "timestamp": "2025-09-27T20:25:35.305555",
+    "lux_value": 30.64,
+    "cpu_usage": 7.9,
+    "cpu_temperature": 51.1,
+    "disk_usage": 17.332649553466663
+  },
+  {
+    "timestamp": "2025-09-27T20:26:35.588287",
+    "lux_value": 30.64,
+    "cpu_usage": 7.3,
+    "cpu_temperature": 51.6,
+    "disk_usage": 17.332662849678744
   }
 ]

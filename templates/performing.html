@@ -607,6 +607,21 @@
         return;
       }
 
+      // Ensure we're in manual mode before setting brightness
+      if (currentPerformingMode !== 'manual') {
+        console.log('Not in manual mode, switching to manual first');
+        setPerformingMode('manual');
+        // Wait a moment for mode switch to complete, then set brightness
+        setTimeout(() => {
+          setBrightnessDirectly(brightnessValue);
+        }, 500);
+        return;
+      }
+
+      setBrightnessDirectly(brightnessValue);
+    }
+
+    function setBrightnessDirectly(brightnessValue) {
       // Try URL-encoded form data instead of FormData
       const params = new URLSearchParams();
       params.append('brightness', brightnessValue.toString());

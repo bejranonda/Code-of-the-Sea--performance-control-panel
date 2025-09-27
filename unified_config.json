@@ -1,15 +1,15 @@
 {
   "LED Service": {
-    "mode": "Lux sensor",
+    "mode": "Musical LED",
     "brightness": 50,
     "status_file": "led/led_status.json",
     "lux_min": "1",
     "lux_max": "800",
-    "mic_rms_quiet": "0.002",
-    "mic_rms_loud": "0.02",
-    "musical_led_below_threshold": "off",
+    "mic_rms_quiet": "0.001",
+    "mic_rms_loud": "0.007",
+    "musical_led_below_threshold": "minimum",
     "musical_led_minimum_brightness": "3",
-    "musical_led_active": "active"
+    "musical_led_active": "off"
   },
   "Radio Service": {
     "mode": "Loop",
@@ -27,7 +27,7 @@
     "lux_max": "850"
   },
   "_metadata": {
-    "last_updated": "2025-09-27T18:06:03.153840",
+    "last_updated": "2025-09-27T20:20:21.821526",
     "version": "1.0"
   },
   "Broadcast Service": {

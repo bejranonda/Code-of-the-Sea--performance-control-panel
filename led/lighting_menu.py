@@ -281,7 +281,7 @@ except Exception as e:
         log_event(f"Using default RMS values: QUIET={MIC_RMS_QUIET:.4f}, LOUD={MIC_RMS_LOUD:.3f}")
     except:
         pass
-RMS_SMOOTHING_WINDOW = 5
+RMS_SMOOTHING_WINDOW = 3 # standard 3
 rms_history = collections.deque(maxlen=RMS_SMOOTHING_WINDOW)
 
 # --- Light Sensor Configuration (for Lighting LED mode) ---
@@ -291,8 +291,8 @@ SENSOR_LUX_MAX = 1500
 # --- Command Rate Limiting ---
 MIN_COMMAND_INTERVAL_SECONDS = 0.3
 COMMAND_TIMEOUT_SECONDS = 0.3
-BRIGHTNESS_MINIMUM_CHANGE_HIGHER = 10  # Minimum brightness change required for brighter (increasing)
-BRIGHTNESS_MINIMUM_CHANGE_LOWER = 35   # Minimum brightness change required for darker (decreasing)
+BRIGHTNESS_MINIMUM_CHANGE_HIGHER = 1  # Minimum brightness change required for brighter (increasing) standard 1
+BRIGHTNESS_MINIMUM_CHANGE_LOWER = 35   # Minimum brightness change required for darker (decreasing) standard 35
 last_command_time = 0
 previous_brightness_percent = -1
 
