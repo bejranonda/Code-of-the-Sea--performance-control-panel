@@ -1,8 +1,8 @@
 # Code of the Sea
 ## Raspberry Pi Control Panel for Interactive Art Installation
 
-<img width="1144" height="597" alt="image" src="https://github.com/user-attachments/assets/90436ee9-17b0-43ad-8159-193f3e4c0d5f" />
-
+<img width="1462" height="502" alt="image" src="https://github.com/user-attachments/assets/a4d79fc7-3c47-4410-a2a4-a64a531083ca" />
+*Control Panel* to config, trigger and monitor all services
 
 
 **An art project collaboration between:**
@@ -87,6 +87,16 @@ This technical implementation serves as the backbone for immersive art installat
 - **Hardware Monitoring**: CPU, memory, temperature, and uptime tracking
 - **Mobile Responsive**: Optimized for tablets and smartphones
 - **Exhibition Monitor**: Dedicated monitoring interface for installations
+
+<img width="874" height="914" alt="image" src="https://github.com/user-attachments/assets/a6cc80d9-fe9c-4755-9625-6520aa96af3a" />
+User-Interface during *Performance Mode*
+
+<img width="1484" height="805" alt="image" src="https://github.com/user-attachments/assets/de0df485-1ec9-452e-9f14-19c987b18f3e" />
+*Exhibition Monitor* to observe the environment and resources used in the technical parts
+
+<img width="1476" height="724" alt="image" src="https://github.com/user-attachments/assets/f1d5cb9b-0c4e-462e-b4b8-e51861337363" />
+*System Health Monitor* to observe the technical issues in hardware
+
 
 ## 💡 Recommended Lux Configuration
 
