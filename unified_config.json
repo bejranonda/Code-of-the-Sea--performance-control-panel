@@ -1,6 +1,6 @@
 {
   "LED Service": {
-    "mode": "Musical LED",
+    "mode": "Lux sensor",
     "brightness": 50,
     "status_file": "led/led_status.json",
     "lux_min": "1",
@@ -27,7 +27,7 @@
     "lux_max": "850"
   },
   "_metadata": {
-    "last_updated": "2025-09-25T20:09:12.980325",
+    "last_updated": "2025-09-27T18:06:03.153840",
     "version": "1.0"
   },
   "Broadcast Service": {

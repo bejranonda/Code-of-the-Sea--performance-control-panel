@@ -1,6 +1,6 @@
 {
   "LED Service": {
-    "mode": "Musical LED",
+    "mode": "Lux sensor",
     "brightness": 50,
     "lux_min": "1",
     "lux_max": "800",

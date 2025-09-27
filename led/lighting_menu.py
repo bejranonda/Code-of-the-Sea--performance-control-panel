@@ -291,8 +291,8 @@ SENSOR_LUX_MAX = 1500
 # --- Command Rate Limiting ---
 MIN_COMMAND_INTERVAL_SECONDS = 0.3
 COMMAND_TIMEOUT_SECONDS = 0.3
-BRIGHTNESS_MINIMUM_CHANGE_HIGHER = 20  # Minimum brightness change required for brighter (increasing)
-BRIGHTNESS_MINIMUM_CHANGE_LOWER = 30   # Minimum brightness change required for darker (decreasing)
+BRIGHTNESS_MINIMUM_CHANGE_HIGHER = 10  # Minimum brightness change required for brighter (increasing)
+BRIGHTNESS_MINIMUM_CHANGE_LOWER = 35   # Minimum brightness change required for darker (decreasing)
 last_command_time = 0
 previous_brightness_percent = -1
 
@@ -310,6 +310,8 @@ d = None
 power_on_state = False
 last_power_verification_time = 0
 POWER_VERIFICATION_INTERVAL = 30  # Verify power state every 30 seconds
+last_reconnect_attempt = 0
+RECONNECT_INTERVAL = 60  # Try to reconnect every 60 seconds when Tuya is unavailable
 lux_history = []
 last_recorded_lux = None
 LUX_HISTORY_FILE = os.path.join(os.path.dirname(__file__), "lux_history.json")
@@ -838,6 +840,11 @@ async def musical_led_mode():
 
             current_time = time.time()
 
+            # Try to reconnect to Tuya if it's not available
+            if not current_status.get("tuya_available", False):
+                reconnection_successful = await attempt_tuya_reconnection()
+                if reconnection_successful:
+                    log_event("Tuya device reconnected in Musical LED mode")
 
             # If we're in fallback mode, continue with lux-based lighting
             if fallback_mode or stream is None:
@@ -1018,6 +1025,13 @@ async def lighting_led_mode():
             # Save lux value to history for monitoring and exhibition display
             save_lux_history(lux_value)
 
+            # Try to reconnect to Tuya if it's not available
+            if not tuya_available:
+                reconnection_successful = await attempt_tuya_reconnection()
+                if reconnection_successful:
+                    tuya_available = True
+                    log_event("Tuya device reconnected, resuming LED control")
+
             # Try to control Tuya LED if available
             if tuya_available and d is not None:
                 try:
@@ -1057,7 +1071,13 @@ async def manual_led_mode():
             config = load_config()
             if config["mode"] != "Manual LED":
                 break
-                
+
+            # Try to reconnect to Tuya if it's not available
+            if not current_status.get("tuya_available", False):
+                reconnection_successful = await attempt_tuya_reconnection()
+                if reconnection_successful:
+                    log_event("Tuya device reconnected in Manual LED mode")
+
             brightness_percent = float(config.get("brightness", 50))
             
             # Update only if brightness changed - let hardware handle smooth transitions
@@ -1116,6 +1136,53 @@ async def initialize_tuya_device():
         return False
     except Exception as e:
         log_error(f"Error connecting to Tuya device - continuing with lux monitoring only: {e}")
+        update_status(connection_status="error", tuya_available=False)
+        return False
+
+async def attempt_tuya_reconnection():
+    """Attempt to reconnect to Tuya device when it's unavailable"""
+    global d, power_on_state, last_reconnect_attempt
+
+    current_time = time.time()
+
+    # Check if enough time has passed since last reconnection attempt
+    if current_time - last_reconnect_attempt < RECONNECT_INTERVAL:
+        return False
+
+    # Only attempt reconnection if Tuya is currently unavailable
+    if current_status.get("tuya_available", False):
+        return False
+
+    last_reconnect_attempt = current_time
+    log_event("Attempting Tuya device reconnection...")
+
+    try:
+        # Close existing connection if any
+        if d:
+            try:
+                d.close()
+            except:
+                pass
+
+        # Create new device connection
+        d = tinytuya.BulbDevice(dev_id=DEVICE_ID, address=DEVICE_IP, local_key=DEVICE_KEY)
+        d.set_version(PROTOCOL_VERSION)
+        d.set_socketPersistent(True)
+
+        # Test connection with shorter timeout for reconnection attempts
+        status_data = await asyncio.wait_for(asyncio.to_thread(d.status), timeout=3.0)
+        power_on_state = status_data.get('dps', {}).get(str(DP_ID_POWER), False)
+
+        log_event(f"Tuya device reconnection successful! Status: {status_data}")
+        update_status(connection_status="connected", power_state=power_on_state, tuya_available=True)
+        return True
+
+    except asyncio.TimeoutError:
+        log_event("Tuya device reconnection timed out, will retry in 60 seconds", "WARNING")
+        update_status(connection_status="timeout", tuya_available=False)
+        return False
+    except Exception as e:
+        log_event(f"Tuya device reconnection failed: {e}, will retry in 60 seconds", "WARNING")
         update_status(connection_status="error", tuya_available=False)
         return False
 
