@@ -1178,6 +1178,40 @@ python -c "import RPi.GPIO as GPIO; GPIO.setmode(GPIO.BCM); GPIO.setup(18, GPIO.
 
 This project is open-source and available under the MIT License. See LICENSE file for details.
 
+## 🙏 Credits and Attribution
+
+**Code of the Sea** is an original collaborative work by **Werapol Bejranonda** (Engineer) and **Eunji Lee** (Artist).
+
+### Third-Party Open Source Libraries
+
+This project builds upon the following open-source libraries and hardware interfaces:
+
+#### **Core Python Libraries**
+- **[Flask](https://flask.palletsprojects.com/)** - Web framework for the control panel (BSD-3-Clause License)
+- **[psutil](https://github.com/giampaolo/psutil)** - System and hardware monitoring (BSD-3-Clause License)
+
+#### **Hardware Control Libraries**
+- **[TinyTuya](https://github.com/jasonacox/tinytuya)** - Tuya smart device control for LED integration (MIT License)
+- **[Adafruit CircuitPython VEML7700](https://github.com/adafruit/Adafruit_CircuitPython_VEML7700)** - Light sensor interface (MIT License)
+- **[RPi.GPIO](https://sourceforge.net/projects/raspberry-gpio-python/)** - Raspberry Pi GPIO control (MIT License)
+- **[smbus2](https://github.com/kplindegaard/smbus2)** - I2C communication for sensors (MIT License)
+
+#### **Audio Processing**
+- **[mpg123](https://www.mpg123.de/)** - Audio playback engine (LGPL 2.1)
+- **[FFmpeg](https://ffmpeg.org/)** - Audio mixing and processing (LGPL/GPL)
+- **[sounddevice](https://github.com/spatialaudio/python-sounddevice)** - Audio input for musical LED mode (MIT License)
+
+#### **Hardware Components**
+- **TEA5767 FM Radio Module** - FM radio tuning
+- **VEML7700 Ambient Light Sensor** - Environmental light detection
+- **Raspberry Pi** - Computing platform
+
+### Development Tools
+- **Python 3** - Primary programming language
+- **systemd** - Service management on Linux
+
+All third-party libraries are used in accordance with their respective licenses. We are grateful to the open-source community for providing these excellent tools that make this project possible.
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit pull requests, report issues, or suggest improvements.
