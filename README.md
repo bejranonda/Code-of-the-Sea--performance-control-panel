@@ -1,13 +1,24 @@
 # Code of the Sea
-## Raspberry Pi Control Panel for Interactive Art Installation
+> *"Technology becomes invisible when art speaks through it."*
+
+*Raspberry Pi Control Panel for Interactive Art Installation*
+
+**Code of the Sea - Control Panel** transforms a Raspberry Pi into a comprehensive control system for interactive art installations, orchestrating LED lighting, FM radio broadcasting, live audio mixing, and environmental monitoring through a unified Flask web interface.
+ 
+Created through collaboration between engineer and artist, this exhibition-tested system has powered immersive art experiences in Germany and South Korea - proving that technical precision and artistic vision can harmonize in a single, elegant platform. Watch it control lights that dance to sound, mix audience voices into soundscapes, and respond to environmental changes in real-time.
 
 <img width="1462" height="502" alt="image" src="https://github.com/user-attachments/assets/a4d79fc7-3c47-4410-a2a4-a64a531083ca" />
 
 *Control Panel: to config, trigger and monitor all services*
 
 **An art project collaboration between:**
-- **Werapol Bejranonda** (Engineer) 
+- **Werapol Bejranonda** (Engineer)
 - **Eunji Lee** (Artist)
+
+**Exhibitions:**
+- **18.10-12.11.2024**: Galerie Markt 21, Weimar, Germany ([@c.keller_weimar](https://www.instagram.com/c.keller_weimar))
+- **02.12-14.12.2024**: 예술 공간 [:틈] (Art Space Teum), Seoul, South Korea ([@art.space.tum](https://www.instagram.com/art.space.tum))
+- **2025**: Supported by Kulturstiftung Thüringen ([@kulturstiftung_thueringen](https://www.instagram.com/kulturstiftung_thueringen))
 
 ---
 
