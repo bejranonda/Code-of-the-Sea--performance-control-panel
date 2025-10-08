@@ -95,3 +95,7 @@ devices.json
 # Local configuration overrides
 *_local.json
 *_private.json
+
+# Claude Code internal files
+CLAUDE.md
+.claude/
