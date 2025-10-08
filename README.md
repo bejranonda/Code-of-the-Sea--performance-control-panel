@@ -39,6 +39,11 @@ This technical implementation serves as the backbone for immersive art installat
 - **Volume Control**: Adjustable audio output levels (0-100%)
 - **Real-time Status**: Current track, playlist position, playback state
 
+<img width="310" height="417" alt="image" src="https://github.com/user-attachments/assets/e3670e45-bb90-41da-b091-444b91ba7f46" />
+
+*Stereo speakers used to output mixed audio*
+
+
 ### 🎙️ **Mixing Service**
 - **Real-time Audio Mixing**: Live microphone recording mixed with master audio tracks
 - **Configurable Recording Duration**: 10-300 second recording segments
@@ -61,6 +66,11 @@ This technical implementation serves as the backbone for immersive art installat
 - **Musical LED Performance Toggle**: Active/off button to disable LED regardless of audio input
 - **Asymmetric Brightness Thresholds**: Different sensitivity for brighter (20) vs darker (30) changes for optimal musical responsiveness
 
+<img width="306" height="320" alt="image" src="https://github.com/user-attachments/assets/c020fee4-96af-475e-a55d-7bfe021e51b6" />
+
+*The LED strip is wirelessly controlled via a Tuya chip.*
+
+
 ### 📻 **Radio Service**
 - **FM Radio Control**: TEA5767 module integration for stable radio reception
 - **Station Scanning**: Full FM band scan (87-108 MHz) with intelligent signal strength detection
@@ -71,6 +81,12 @@ This technical implementation serves as the backbone for immersive art installat
 - **Smart Detection**: Minimum RSSI threshold filtering and stereo preference for optimal stations
 - **Loop Mode**: Automatic station cycling with configurable duration and passive frequency setting
 - **Enhanced Scan Logic**: Proper mode transitions from scan to fixed/loop based on configuration
+
+
+<img width="301" height="381" alt="image" src="https://github.com/user-attachments/assets/ecd14ec2-b673-4fa8-8d71-c2bedb859494" />
+
+*FM radio module used as an audio source for mixing*
+
 
 ### 🌀 **Fan Service**
 - **Cooling Management**: PWM-controlled fan speed regulation with 5V Grove MOSFET
@@ -84,11 +100,22 @@ This technical implementation serves as the backbone for immersive art installat
 - **Temperature Monitoring**: System temperature awareness for cooling decisions
 - **GPIO Integration**: Hardware PWM control via GPIO12 (requires 5V power supply)
 
+<img width="273" height="326" alt="image" src="https://github.com/user-attachments/assets/6f3f720e-2bdd-4dd7-ae26-4d61511f0a9a" />
+
+*PWM-Module regulates the fan speed to control the cooling condition*
+
+
 ### 🌱 **Light Sensor Service**
 - **Ambient Light Detection**: VEML7700 high-accuracy light sensor
 - **Auto Mode**: Automatic brightness adjustment based on environmental conditions
 - **I2C Integration**: Hardware communication via GPIO2/GPIO3
 - **Real-time Monitoring**: Continuous light level feedback
+
+
+<img width="441" height="345" alt="image" src="https://github.com/user-attachments/assets/765c4404-8050-4cb5-a6b3-17243616cedf" />
+
+*The ambient light sensor detects brightness, while the amplifier drives the audio output*
+
 
 ### 🖥️ **Unified Web Interface**
 - **Comprehensive Dashboard**: Single-page control for all services
@@ -247,6 +274,11 @@ The Code of the Sea system uses the following hardware components connected to s
 │  └─────┴──────────┴──────────┴─────┘│
 └─────────────────────────────────────┘
 ```
+
+<img width="373" height="626" alt="image" src="https://github.com/user-attachments/assets/4ae7859f-9abc-4691-b00c-8d888be2b7f1" />
+
+*The Raspberry Pi serves as the central controller for all sensors and actuators*
+
 
 ### **Connected Devices**
 
