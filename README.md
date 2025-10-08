@@ -134,9 +134,16 @@ This technical implementation serves as the backbone for immersive art installat
 
 *Exhibition Monitor: to observe the environment and resources used in the technical parts*
 
+
 <img width="1476" height="724" alt="image" src="https://github.com/user-attachments/assets/f1d5cb9b-0c4e-462e-b4b8-e51861337363" />
 
 *System Health Monitor: to observe the technical issues in hardware*
+
+
+<img width="463" height="307" alt="image" src="https://github.com/user-attachments/assets/05a05f41-fbe6-4657-a68b-17f8ae20a86b" />
+
+*LED controlled by sound level detected by microphone*
+
 
 
 ## 💡 Recommended Lux Configuration
@@ -680,6 +687,7 @@ Real-time Monitoring Pipeline:
   - **Asymmetric Brightness Thresholds**: Separate sensitivity for brighter (20 points) vs darker (30 points) changes
   - **Below Threshold Behavior**: `musical_led_below_threshold` configures LED behavior when audio is quiet
   - **Minimum Brightness**: `musical_led_minimum_brightness` sets lowest LED level when staying on
+
 
 #### **📻 Radio Service**
 - **Tuning Control**: Manual frequency slider (87.0-108.0 MHz, 0.1 MHz steps) with passive stability
