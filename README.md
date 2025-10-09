@@ -26,9 +26,51 @@ Created through collaboration between engineer and artist, this exhibition-teste
 
 ## 🎨 Project Overview
 
-**Code of the Sea** is an interactive art installation that transforms a Raspberry Pi into a comprehensive control system for multimedia art experiences. The project bridges the technical and artistic realms, providing an intuitive web-based interface to control various hardware components including audio broadcasting, LED lighting systems, FM radio, and environmental monitoring.
+**Code of the Sea** is an interactive art installation exploring the future of human adaptation in an age of constant migration—both physical and digital. Inspired by the horseshoe crab's (*limule*) evolutionary success through its protective exoskeleton, this project imagines future nomads who fuse their clothing, shelter, and technology into a single adaptive shell.
 
-This technical implementation serves as the backbone for immersive art installations where visitors can interact with and influence the artistic environment through various controls and real-time feedback systems.
+The control panel transforms a Raspberry Pi into the **nervous system of this technological organism**, orchestrating LED lighting, FM radio broadcasting, live audio mixing, and environmental monitoring through a unified Flask web interface. It bridges technical precision with artistic vision, creating installations where visitors experience technology not as separate tools but as an integrated protective layer—responsive, self-healing, and alive.
+
+Exhibited in Germany and South Korea, the system has proven its exhibition-grade reliability: self-monitoring, automatically recovering from failures, and adapting to environmental changes. Like the ancient horseshoe crab, it survives through intelligent integration—combining light, sound, communication, and environmental sensing into a cohesive whole that protects and enhances the artistic experience.
+
+---
+
+## If you need to understand more
+
+### What It Does (Value for different audiences)
+
+Inspired by the ancient horseshoe crab (*limule*) surviving through its protective exoskeleton, **Code of the Sea** becomes a technological shell that protects and enhances interactive art installations—fusing light, sound, communication, and environmental sensing into a unified platform.
+
+**For Artists & Curators:** Exhibition-ready multimedia controller running autonomously 24/7. Orchestrate audio-reactive lights, mix audience voices into soundscapes, tune FM radio, monitor environmental conditions—all through a single web interface.
+
+**For Exhibition Visitors:** Experience art that breathes and responds. Lights pulse with musical rhythm, your voice becomes part of the sonic landscape, the environment participates—creating immersive spaces where technology dissolves into artistic expression.
+
+**For Developers & Makers:** Production-ready IoT platform demonstrating professional Raspberry Pi orchestration. Real-time hardware control (I2C sensors, PWM outputs, audio processing), comprehensive monitoring, automatic recovery, modular architecture adaptable for any interactive installation.
+
+### The Experience (What people encounter)
+
+In a world of constant movement—physical migration, digital nomadism, cultural displacement—this installation embodies **future nomads** who carry their entire environment integrated as a protective technological shell. *"What will the nomads of the future look like in a world defined by constant movement?"*
+
+The title **"Code of the Sea"** explores how machines interpret human experiences—migration, memory, identity—translating the fluid, boundless nature of existence into discrete signals, like decoding the vast ocean's depths.
+
+**The Installation as Living System:**
+- **Light**: Audio-reactive and ambient-responsive luminous environment
+- **Sound**: Audience voices mixed into master tracks, becoming part of the soundscape
+- **Radio**: Connects to broader electromagnetic spectrum
+- **Environmental Sensing**: Temperature and light monitoring, reacting to gallery space
+
+Together, these create a **robotic, enigmatic form**—a technological organism that protects, responds, and evolves with ecological sustainability.
+
+### How It Works
+
+**Polling-Based Architecture:** Each service independently reads `service_config.json` every second, updating autonomously. Services can crash and restart without affecting others—resilient, self-organizing design.
+
+**Control Flow:** Flask web interface → user adjusts setting → writes to `service_config.json` (1s) → service detects change → updates behavior → writes status (15s) → dashboard displays update.
+
+**Hardware:** I2C sensors share GPIO2/GPIO3 (VEML7700 light sensor at 0x10, TEA5767 FM radio at 0x60). Audio via mpg123/arecord/FFmpeg. PWM fan control on GPIO12. LED service analyzes microphone RMS for audio-reactive lighting.
+
+**24/7 Reliability:** Three monitoring layers (Exhibition Watchdog 120s, Service Protection 240s, Cron 2-3min) ensure automatic recovery. Performance Mode flag prevents audio device conflicts. State persists across power failures (`cos_service_state.json`, `dashboard_state.json`).
+
+---
 
 ## ✨ Features
 
