@@ -38,13 +38,13 @@ Exhibited in Germany and South Korea, the system has proven its exhibition-grade
 
 ### What It Does (Value for different audiences)
 
-Inspired by the ancient horseshoe crab (*limule*) surviving through its protective exoskeleton, **Code of the Sea** becomes a technological shell that protects and enhances interactive art installations—fusing light, sound, communication, and environmental sensing into a unified platform.
+Inspired by the ancient horseshoe crab (*limule*), whose resilient exoskeleton has ensured its survival for millions of years, **Code of the Sea** reimagines this natural armor as a technological shell—one that protects, connects, and amplifies interactive art. The system integrates light, sound, communication, and environmental sensing into a unified, adaptive platform for immersive installations.
 
-**For Artists & Curators:** Exhibition-ready multimedia controller running autonomously 24/7. Orchestrate audio-reactive lights, mix audience voices into soundscapes, tune FM radio, monitor environmental conditions—all through a single web interface.
+- **For Artists & Curators:** Exhibition-ready multimedia controller running autonomously 24/7. Orchestrate audio-reactive lights, mix audience voices into soundscapes, tune FM radio, monitor environmental conditions—all through a single web interface.
 
-**For Exhibition Visitors:** Experience art that breathes and responds. Lights pulse with musical rhythm, your voice becomes part of the sonic landscape, the environment participates—creating immersive spaces where technology dissolves into artistic expression.
+- **For Exhibition Visitors:** Experience art that breathes and responds. Lights pulse with musical rhythm, your voice becomes part of the sonic landscape, the environment participates—creating immersive spaces where technology dissolves into artistic expression.
 
-**For Developers & Makers:** Production-ready IoT platform demonstrating professional Raspberry Pi orchestration. Real-time hardware control (I2C sensors, PWM outputs, audio processing), comprehensive monitoring, automatic recovery, modular architecture adaptable for any interactive installation.
+- **For Developers & Makers:** Production-ready IoT platform demonstrating professional Raspberry Pi orchestration. Real-time hardware control (I2C sensors, PWM outputs, audio processing), comprehensive monitoring, automatic recovery, modular architecture adaptable for any interactive installation.
 
 ### The Experience (What people encounter)
 
