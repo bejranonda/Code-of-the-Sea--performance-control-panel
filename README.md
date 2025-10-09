@@ -34,9 +34,9 @@ Exhibited in Germany and South Korea, the system has proven its exhibition-grade
 
 ---
 
-## If you need to understand more
+## 🧐 If you need to understand more
 
-### What It Does (Value for different audiences)
+### ❓ What It Does (Value for different audiences)
 
 Inspired by the ancient horseshoe crab (*limule*), whose resilient exoskeleton has ensured its survival for millions of years, **Code of the Sea** reimagines this natural armor as a technological shell—one that protects, connects, and amplifies interactive art. The system integrates light, sound, communication, and environmental sensing into a unified, adaptive platform for immersive installations.
 
@@ -46,9 +46,9 @@ Inspired by the ancient horseshoe crab (*limule*), whose resilient exoskeleton h
 
 - **For Developers & Makers:** Production-ready IoT platform demonstrating professional Raspberry Pi orchestration. Real-time hardware control (I2C sensors, PWM outputs, audio processing), comprehensive monitoring, automatic recovery, modular architecture adaptable for any interactive installation.
 
-### The Experience (What people encounter)
+### 🎭 The Experience (What people encounter)
 
-In a world of constant movement—physical migration, digital nomadism, cultural displacement—this installation embodies **future nomads** who carry their entire environment integrated as a protective technological shell. *"What will the nomads of the future look like in a world defined by constant movement?"*
+> "In a world of constant movement—physical migration, digital nomadism, cultural displacement—this installation embodies **future nomads** who carry their entire environment integrated as a protective technological shell."
 
 The title **"Code of the Sea"** explores how machines interpret human experiences—migration, memory, identity—translating the fluid, boundless nature of existence into discrete signals, like decoding the vast ocean's depths.
 
@@ -56,19 +56,43 @@ The title **"Code of the Sea"** explores how machines interpret human experience
 - **Light**: Audio-reactive and ambient-responsive luminous environment
 - **Sound**: Audience voices mixed into master tracks, becoming part of the soundscape
 - **Radio**: Connects to broader electromagnetic spectrum
+- **Wind**: Controlled airflow creates breathing patterns, responds to heat and light
 - **Environmental Sensing**: Temperature and light monitoring, reacting to gallery space
+- **Solar Energy**: Self-sustaining power from 6×2W solar panels, embodying ecological autonomy
 
-Together, these create a **robotic, enigmatic form**—a technological organism that protects, responds, and evolves with ecological sustainability.
+Together, these create a **robotic, enigmatic form**—a technological organism that protects, responds, and evolves with ecological sustainability, powered by renewable energy like natural organisms drawing sustenance from the sun.
 
-### How It Works
+### ⚙️ How It Works
 
-**Polling-Based Architecture:** Each service independently reads `service_config.json` every second, updating autonomously. Services can crash and restart without affecting others—resilient, self-organizing design.
+Think of this system as a **living organism** where each part works independently but contributes to the whole:
 
-**Control Flow:** Flask web interface → user adjusts setting → writes to `service_config.json` (1s) → service detects change → updates behavior → writes status (15s) → dashboard displays update.
+#### **🧠 The Brain: Web Control Panel**
+- You interact with a simple web interface on your phone or computer—adjusting lights, changing music, tuning the radio. Your command travels instantly to the Raspberry Pi's brain.
 
-**Hardware:** I2C sensors share GPIO2/GPIO3 (VEML7700 light sensor at 0x10, TEA5767 FM radio at 0x60). Audio via mpg123/arecord/FFmpeg. PWM fan control on GPIO12. LED service analyzes microphone RMS for audio-reactive lighting.
+#### **💬 The Nervous System: Independent Services**
+- Each function (lights, sound, radio, fan) runs as its own "organ"—checking every second for new instructions, making decisions, and updating its status. If one part fails, the others keep working. Like a living body that heals itself.
 
-**24/7 Reliability:** Three monitoring layers (Exhibition Watchdog 120s, Service Protection 240s, Cron 2-3min) ensure automatic recovery. Performance Mode flag prevents audio device conflicts. State persists across power failures (`cos_service_state.json`, `dashboard_state.json`).
+#### **🎭 Real-Time Response**
+1. **You touch a slider** on the web interface
+2. **Within 1 second**, your command reaches the service
+3. **The service responds immediately** (lights change, music plays, fan speeds up)
+4. **Within 15 seconds**, the dashboard updates to confirm the change
+
+#### **🔧 Smart Hardware**
+- **Light & Temperature Sensors**: Detect brightness and heat levels automatically
+- **FM Radio Module**: Scans and tunes radio frequencies
+- **Audio Processing**: Records your voice, mixes it with music, creates soundscapes
+- **LED Controllers**: Respond to sound levels, making lights dance to music
+- **Fan System**: Creates wind patterns—breathing with the installation, responding to temperature and light
+- **Solar Power**: 6 panels (2W each) harvest sunlight → Waveshare Power Manager → USB-C to Raspberry Pi—completely self-sustaining
+
+#### **🛡️ Self-Healing Design**
+Three guardian systems watch over everything 24/7:
+- **Exhibition Watchdog** checks health every 2 minutes
+- **Service Protection** prevents accidental shutdowns every 4 minutes
+- **Automatic Recovery** restarts crashed services within 2-3 minutes
+
+If the power goes out, everything remembers its settings and resumes automatically when power returns—like a hibernating animal waking up exactly where it left off.
 
 ---
 
@@ -403,6 +427,24 @@ Format: WAV (converted to MP3)
 - **Integration**: Automatic device detection and configuration
 - **Processing**: Real-time volume control and audio mixing
 - **Output**: Synchronized mixed audio files with timestamps
+
+#### **☀️ Solar Power System** (Power Supply)
+```
+Solar Panels: 6 panels × 2W each (12W total)
+Power Manager: Waveshare Solar Power Manager Module D
+Output: 5V/3A via USB-C
+Connection: USB-C → Raspberry Pi power input
+Battery Management: Integrated charge controller
+```
+- **Purpose**: Self-sustaining renewable power for off-grid installations
+- **Capacity**: 12W solar generation for daylight operation
+- **Features**:
+  - Automatic battery charging and discharge management
+  - Power regulation to stable 5V for Raspberry Pi
+  - Integrated over-charge and over-discharge protection
+  - Allows 24/7 operation with battery backup
+- **Ecological Significance**: Enables completely autonomous art installations powered by sunlight
+- **Installation**: Position panels for maximum sun exposure (south-facing in Northern Hemisphere)
 
 ### **I2C Device Summary**
 | Device | Address | Purpose | GPIO Pins |
