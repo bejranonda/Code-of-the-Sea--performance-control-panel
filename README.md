@@ -11,13 +11,15 @@ Created through collaboration between engineer and artist, this exhibition-teste
 
 *Control Panel: to config, trigger and monitor all services*
 
+## 📍 Exhibition
+### Venue
+- **18.10-12.11.2024**: Galerie Markt 21, Weimar, Germany ([@c.keller_weimar](https://www.instagram.com/c.keller_weimar))
+- **02.12-14.12.2024**: 예술 공간 [:틈] (Art Space Teum), Seoul, South Korea ([@art.space.tum](https://www.instagram.com/art.space.tum))
+
+### Collaboration
 **An art project collaboration between:**
 - **Werapol Bejranonda** (Engineer)
 - **Eunji Lee** (Artist)
-
-**Exhibitions:**
-- **18.10-12.11.2024**: Galerie Markt 21, Weimar, Germany ([@c.keller_weimar](https://www.instagram.com/c.keller_weimar))
-- **02.12-14.12.2024**: 예술 공간 [:틈] (Art Space Teum), Seoul, South Korea ([@art.space.tum](https://www.instagram.com/art.space.tum))
 - **2025**: Supported by Kulturstiftung Thüringen ([@kulturstiftung_thueringen](https://www.instagram.com/kulturstiftung_thueringen))
 
 ---
