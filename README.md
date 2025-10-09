@@ -26,11 +26,15 @@ Created through collaboration between engineer and artist, this exhibition-teste
 
 ## 🎨 Project Overview
 
-**Code of the Sea** is an interactive art installation exploring the future of human adaptation in an age of constant migration—both physical and digital. Inspired by the horseshoe crab's (*limule*) evolutionary success through its protective exoskeleton, this project imagines future nomads who fuse their clothing, shelter, and technology into a single adaptive shell.
+**Code of the Sea** is an interactive installation exploring how humans might adapt in an age of constant physical and digital migration. Inspired by the horseshoe crab’s protective shell, it imagines future nomads merging clothing, shelter, and technology into one adaptive shell.
 
-The control panel transforms a Raspberry Pi into the **nervous system of this technological organism**, orchestrating LED lighting, FM radio broadcasting, live audio mixing, and environmental monitoring through a unified Flask web interface. It bridges technical precision with artistic vision, creating installations where visitors experience technology not as separate tools but as an integrated protective layer—responsive, self-healing, and alive.
+The control panel transforms a Raspberry Pi into the **nervous system of this technological organism**, coordinating LEDs, FM radio, live audio, wind, and environmental sensors through a unified Flask web interface. Technology becomes a living, responsive layer—protective, adaptive, and alive.
 
-Exhibited in Germany and South Korea, the system has proven its exhibition-grade reliability: self-monitoring, automatically recovering from failures, and adapting to environmental changes. Like the ancient horseshoe crab, it survives through intelligent integration—combining light, sound, communication, and environmental sensing into a cohesive whole that protects and enhances the artistic experience.
+Exhibited in Germany and South Korea, the system proved exhibition-grade reliable, self-monitoring, and self-healing—an intelligent organism integrating light, sound, and environment into a seamless, resilient whole.
+
+<img width="597" height="319" alt="image" src="https://github.com/user-attachments/assets/fd24e88e-64dc-4f81-89f2-8de3e42079f5" />
+
+*Preparation and validation of the hardware components before the exhibition*
 
 ---
 
@@ -38,7 +42,9 @@ Exhibited in Germany and South Korea, the system has proven its exhibition-grade
 
 ### ❓ What It Does (Value for different audiences)
 
-Inspired by the ancient horseshoe crab (*limule*), whose resilient exoskeleton has ensured its survival for millions of years, **Code of the Sea** reimagines this natural armor as a technological shell—one that protects, connects, and amplifies interactive art. The system integrates light, sound, communication, and environmental sensing into a unified, adaptive platform for immersive installations.
+> "Inspired by the ancient horseshoe crab (*limule*), whose resilient exoskeleton has ensured its survival for millions of years"
+
+**Code of the Sea** reimagines this natural armor as a technological shell—one that protects, connects, and amplifies interactive art. The system integrates light, sound, communication, and environmental sensing into a unified, adaptive platform for immersive installations.
 
 - **For Artists & Curators:** Exhibition-ready multimedia controller running autonomously 24/7. Orchestrate audio-reactive lights, mix audience voices into soundscapes, tune FM radio, monitor environmental conditions—all through a single web interface.
 
@@ -58,13 +64,13 @@ The title **"Code of the Sea"** explores how machines interpret human experience
 - **Radio**: Connects to broader electromagnetic spectrum
 - **Wind**: Controlled airflow creates breathing patterns, responds to heat and light
 - **Environmental Sensing**: Temperature and light monitoring, reacting to gallery space
-- **Solar Energy**: Self-sustaining power from 6×2W solar panels, embodying ecological autonomy
+- **Solar Energy**: Self-sustaining power from 6×2W solar panels, embodying ecological autonomy [*solar panels provide partial energy for the system*]
 
 Together, these create a **robotic, enigmatic form**—a technological organism that protects, responds, and evolves with ecological sustainability, powered by renewable energy like natural organisms drawing sustenance from the sun.
 
 ### ⚙️ How It Works
 
-Think of this system as a **living organism** where each part works independently but contributes to the whole:
+> "Think of this system as a **living organism** where each part works independently but contributes to the whole"
 
 #### **🧠 The Brain: Web Control Panel**
 - You interact with a simple web interface on your phone or computer—adjusting lights, changing music, tuning the radio. Your command travels instantly to the Raspberry Pi's brain.
@@ -445,6 +451,11 @@ Battery Management: Integrated charge controller
   - Allows 24/7 operation with battery backup
 - **Ecological Significance**: Enables completely autonomous art installations powered by sunlight
 - **Installation**: Position panels for maximum sun exposure (south-facing in Northern Hemisphere)
+
+<img width="778" height="459" alt="image" src="https://github.com/user-attachments/assets/c2dfa0e3-0149-48b8-afa1-93447e3a4624" />
+
+*Series of solar panels providing power to the computer (though not sufficient to run the Raspberry Pi)*
+
 
 ### **I2C Device Summary**
 | Device | Address | Purpose | GPIO Pins |
