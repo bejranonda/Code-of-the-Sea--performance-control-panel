@@ -23,7 +23,7 @@ Created through collaboration between engineer and artist, this exhibition-teste
 
 ### Thanks
 - Supported in **2025** by Kulturstiftung Thüringen ([@kulturstiftung_thueringen](https://www.instagram.com/kulturstiftung_thueringen))
-- A huge thank you to Krittaporn Mahaweerarat for her suport for technical installation and preparation of the exhibition setup.
+- A huge thank you to *Krittaporn Mahaweerarat* for her suport for technical installation and preparation of the exhibition setup.
 
 ---
 
