@@ -20,7 +20,10 @@ Created through collaboration between engineer and artist, this exhibition-teste
 **An art project collaboration between:**
 - **Werapol Bejranonda** (Engineer)
 - **Eunji Lee** (Artist)
-- **2025**: Supported by Kulturstiftung Thüringen ([@kulturstiftung_thueringen](https://www.instagram.com/kulturstiftung_thueringen))
+
+### Thanks
+- Supported in **2025** by Kulturstiftung Thüringen ([@kulturstiftung_thueringen](https://www.instagram.com/kulturstiftung_thueringen))
+- A huge thank you to Krittaporn Mahaweerarat for her suport for technical installation and preparation of the exhibition setup.
 
 ---
 
@@ -67,6 +70,11 @@ The title **"Code of the Sea"** explores how machines interpret human experience
 - **Solar Energy**: Self-sustaining power from 6×2W solar panels, embodying ecological autonomy [*solar panels provide partial energy for the system*]
 
 Together, these create a **robotic, enigmatic form**—a technological organism that protects, responds, and evolves with ecological sustainability, powered by renewable energy like natural organisms drawing sustenance from the sun.
+
+<img width="778" height="459" alt="image" src="https://github.com/user-attachments/assets/c2dfa0e3-0149-48b8-afa1-93447e3a4624" />
+
+*Series of solar panels providing power to the computer (though not sufficient to run the Raspberry Pi)*
+
 
 ### ⚙️ How It Works
 
@@ -451,11 +459,6 @@ Battery Management: Integrated charge controller
   - Allows 24/7 operation with battery backup
 - **Ecological Significance**: Enables completely autonomous art installations powered by sunlight
 - **Installation**: Position panels for maximum sun exposure (south-facing in Northern Hemisphere)
-
-<img width="778" height="459" alt="image" src="https://github.com/user-attachments/assets/c2dfa0e3-0149-48b8-afa1-93447e3a4624" />
-
-*Series of solar panels providing power to the computer (though not sufficient to run the Raspberry Pi)*
-
 
 ### **I2C Device Summary**
 | Device | Address | Purpose | GPIO Pins |
