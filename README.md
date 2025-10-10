@@ -23,7 +23,7 @@ Created through collaboration between engineer and artist, this exhibition-teste
 
 ### Thanks
 - Supported in **2025** by Kulturstiftung Thüringen ([@kulturstiftung_thueringen](https://www.instagram.com/kulturstiftung_thueringen))
-- A huge thank you to *Krittaporn Mahaweerarat* for her suport for technical installation and preparation of the exhibition setup.
+- A huge thank you to **Krittaporn Mahaweerarat** for her suport for technical installation and preparation of the exhibition setup.
 
 ---
 
@@ -459,6 +459,10 @@ Battery Management: Integrated charge controller
   - Allows 24/7 operation with battery backup
 - **Ecological Significance**: Enables completely autonomous art installations powered by sunlight
 - **Installation**: Position panels for maximum sun exposure (south-facing in Northern Hemisphere)
+
+<img width="317" height="267" alt="image" src="https://github.com/user-attachments/assets/91d1f646-062f-47cb-b81a-67009578a8ea" />
+
+*Soldering the solar panels to form two groups of five panels each*
 
 ### **I2C Device Summary**
 | Device | Address | Purpose | GPIO Pins |
