@@ -7,9 +7,9 @@
  
 Created through collaboration between engineer and artist, this exhibition-tested system has powered immersive art experiences in Germany and South Korea - proving that technical precision and artistic vision can harmonize in a single, elegant platform. Watch it control lights that dance to sound, mix audience voices into soundscapes, and respond to environmental changes in real-time.
 
-<img width="1462" height="502" alt="image" src="https://github.com/user-attachments/assets/a4d79fc7-3c47-4410-a2a4-a64a531083ca" />
+<img width="930" height="770" alt="image" src="https://github.com/user-attachments/assets/a654442f-cc32-42b2-bd38-6c485f7d4ddc" />
 
-*Control Panel: to config, trigger and monitor all services*
+*Artwork presented on the opening day of the exhibition*
 
 ## 📍 Exhibition
 ### Venue
@@ -24,6 +24,11 @@ Created through collaboration between engineer and artist, this exhibition-teste
 ### Thanks
 - Supported in **2025** by Kulturstiftung Thüringen ([@kulturstiftung_thueringen](https://www.instagram.com/kulturstiftung_thueringen))
 - A huge thank you to **Krittaporn Mahaweerarat** for her suport for technical installation and preparation of the exhibition setup.
+
+
+<img width="1462" height="502" alt="image" src="https://github.com/user-attachments/assets/a4d79fc7-3c47-4410-a2a4-a64a531083ca" />
+
+*Control Panel: to config, trigger and monitor all services*
 
 ---
 
@@ -107,6 +112,11 @@ Three guardian systems watch over everything 24/7:
 - **Automatic Recovery** restarts crashed services within 2-3 minutes
 
 If the power goes out, everything remembers its settings and resumes automatically when power returns—like a hibernating animal waking up exactly where it left off.
+
+
+<img width="1081" height="731" alt="image" src="https://github.com/user-attachments/assets/8851a490-869c-442a-a3b8-d9da3164df6d" />
+
+*Technical components inside the artwork reveal all raw materials.*
 
 ---
 
